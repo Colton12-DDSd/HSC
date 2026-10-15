@@ -1,4 +1,4 @@
-import type { Card } from './cards';
+import { cardStats, type Card, type StatModifier } from './cards';
 export type Target = { p: number; uid?: number };
 import {
   effectFor,
@@ -11,7 +11,7 @@ import {
 export { effectFor, supported } from './effects';
 export interface Unit {
   // Optional so older exported scenarios remain readable. These buffs end on leaving play.
-  modifiers?: { sourceCardId: string; sourceName: string; attack: number; health: number }[];
+  modifiers?: StatModifier[];
   attacksRemaining: number;
   uid: number;
   card: Card;
@@ -111,7 +111,7 @@ function draw(s: Game, p: number) {
   if (c) {
     if (x.hand.length < 10) x.hand.push(c);
     else {
-      x.grave.push(c);
+      x.grave.push(printedCard(c));
       note(s, `${x.name} burns ${c.name}`);
     }
   } else {
@@ -260,6 +260,10 @@ function settle(s: Game) {
     layout.splice(marker, 0, ...summoned);
   }
 }
+function printedCard(c: Card): Card {
+  const { modifiers: _modifiers, ...printed } = c;
+  return printed;
+}
 function summon(
   s: Game,
   p: number,
@@ -271,16 +275,16 @@ function summon(
   if (x.board.length >= 7) throw Error('Battlefield is full');
   x.board.splice(position, 0, {
     uid: s.nextId++,
-    card: c,
-    attack: c.attack ?? 0,
-    health: c.health ?? 1,
-    maxHealth: c.health ?? 1,
+    card: printedCard(c),
+    attack: cardStats(c).attack,
+    health: cardStats(c).health,
+    maxHealth: cardStats(c).health,
     ready: !!c.mechanics?.some((m) => m === 'CHARGE' || m === 'RUSH'),
     rushOnly: !!c.mechanics?.includes('RUSH') && !c.mechanics?.includes('CHARGE'),
     shield: !!c.mechanics?.includes('DIVINE_SHIELD'),
     commander,
     attacksRemaining: c.mechanics?.includes('WINDFURY') ? 2 : 1,
-    modifiers: [],
+    modifiers: structuredClone(c.modifiers ?? []),
   });
   if (commander) x.zone = 'board';
   note(s, `${x.name} summons ${c.name} at position ${position + 1}`);
@@ -363,6 +367,38 @@ function runEffect(
       }
       summon(s, player, e.token, false, Math.min(position + i, p.board.length));
     }
+  }
+  if (e.type === 'zone-buff') {
+    const modifier: StatModifier = {
+      sourceCardId: source!.id,
+      sourceName: source!.name,
+      attack: e.attack,
+      health: e.health,
+    };
+    const eligible = p.hand
+      .map((c, index) => (c.type === 'MINION' ? index : -1))
+      .filter((index) => index >= 0);
+    const selected = new Set(
+      e.random && eligible.length
+        ? [eligible[random(s, eligible.length)]]
+        : e.random
+          ? []
+          : eligible,
+    );
+    p.hand = p.hand.map((c, index) =>
+      selected.has(index) ? { ...c, modifiers: [...(c.modifiers ?? []), { ...modifier }] } : c,
+    );
+    let affected = selected.size;
+    if (e.zone === 'hand-deck')
+      p.deck = p.deck.map((c) => {
+        if (c.type !== 'MINION') return c;
+        affected++;
+        return { ...c, modifiers: [...(c.modifiers ?? []), { ...modifier }] };
+      });
+    note(
+      s,
+      `${p.name}'s ${source!.name} grants +${e.attack}/+${e.health} to ${affected} minion card${affected === 1 ? '' : 's'} in ${e.zone === 'hand-deck' ? 'hand and deck' : 'hand'}${e.random ? ' (seeded random choice)' : ''}`,
+    );
   }
   if (e.type === 'healing-bonus') {
     (p.effects ??= []).push({
@@ -559,7 +595,7 @@ export function applyAction(state: Game, a: Action): Game {
         caster = s.players[w.caster];
       if (w.command) caster.zone = 'command';
       else if (caster.hand.length < 10) caster.hand.push(w.card);
-      else caster.grave.push(w.card);
+      else caster.grave.push(printedCard(w.card));
       note(s, `${p.name} interrupts ${w.card.name}`);
       s.pending = null;
     } else {

@@ -35,6 +35,7 @@ import {
 import {
   type Card,
   type Deck,
+  cardStats,
   classes,
   clean,
   image,
@@ -125,6 +126,11 @@ function CardArt({
         {card.cost} ◈<br />
         {card.name}
       </span>
+      {card.modifiers?.length ? (
+        <small className="card-modifier-badge">
+          {cardStats(card).attack} ⚔ / {cardStats(card).health} ♥ · buffed
+        </small>
+      ) : null}
       <span className={`support ${supported(card) ? 'yes' : ''}`}>
         {supported(card) ? '● Supported' : '○ Metadata only'}
       </span>
@@ -416,6 +422,7 @@ export default function App() {
     inspectTarget?.uid !== undefined
       ? game?.players[inspectTarget.p].board.find((u) => u.uid === inspectTarget.uid)
       : undefined;
+  const inspectedModifiers = inspectedUnit?.modifiers ?? inspect?.modifiers ?? [];
   const targetLabel = targetUnit
     ? `${game?.players[target.p].name}'s ${targetUnit.card.name} (${targetUnit.health}/${targetUnit.maxHealth} HP)`
     : `${game?.players[target.p].name ?? 'Opponent'}'s hero`;
@@ -1699,11 +1706,19 @@ export default function App() {
                     : ''}
                 </div>
               ) : null}
-              {inspectedUnit?.modifiers?.length ? (
+              {!inspectedUnit && inspect.modifiers?.length ? (
+                <div className="live-card-stats">
+                  <b>Enhanced card stats</b>
+                  <br />
+                  {cardStats(inspect).attack} attack · {cardStats(inspect).health} health · buffs
+                  carry into play
+                </div>
+              ) : null}
+              {inspectedModifiers.length ? (
                 <section className="active-modifiers" aria-label="Lasting effects">
                   <b>Lasting effects</b>
                   <ul>
-                    {inspectedUnit.modifiers.map((modifier, index) => (
+                    {inspectedModifiers.map((modifier, index) => (
                       <li key={index}>
                         <strong>{modifier.sourceName}</strong>: {signed(modifier.attack)} attack /{' '}
                         {signed(modifier.health)} maximum health
@@ -1711,8 +1726,9 @@ export default function App() {
                     ))}
                   </ul>
                   <small>
-                    Persists across turns and after the source dies. Ends when this minion leaves
-                    the battlefield.
+                    {inspectedUnit
+                      ? 'Persists across turns and after the source dies. Ends when this minion leaves the battlefield.'
+                      : 'Carries from hand or deck into play. Ends when this minion leaves the battlefield.'}
                   </small>
                 </section>
               ) : inspectedUnit &&
@@ -1723,7 +1739,7 @@ export default function App() {
                   sources.
                 </p>
               ) : null}
-              {inspectedUnit ? (
+              {inspectedUnit || inspectedModifiers.length ? (
                 <small className="printed-stats-label">Printed card stats</small>
               ) : null}
               <div className="stat-pills">

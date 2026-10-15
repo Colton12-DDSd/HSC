@@ -1,4 +1,11 @@
+export interface StatModifier {
+  sourceCardId: string;
+  sourceName: string;
+  attack: number;
+  health: number;
+}
 export interface Card {
+  modifiers?: StatModifier[];
   id: string;
   dbfId: number;
   name: string;
@@ -106,4 +113,15 @@ export function parseDeck(value: unknown, cards: Card[]): Deck {
     commander: d.commander,
     cards: d.cards,
   };
+}
+
+/** Printed card data stays unchanged; physical cards carry their own enchantments. */
+export function cardStats(card: Card) {
+  return (card.modifiers ?? []).reduce(
+    (stats, modifier) => ({
+      attack: stats.attack + modifier.attack,
+      health: stats.health + modifier.health,
+    }),
+    { attack: card.attack ?? 0, health: card.health ?? 1 },
+  );
 }

@@ -10,7 +10,14 @@ export type Effect =
   | { type: 'heal-friendly'; amount: number }
   | { type: 'damage-all'; amount: number; heroes?: boolean }
   | { type: 'enemy-heroes'; amount: number }
-  | { type: 'healing-bonus'; amount: number };
+  | { type: 'healing-bonus'; amount: number }
+  | {
+      type: 'zone-buff';
+      zone: 'hand' | 'hand-deck';
+      attack: number;
+      health: number;
+      random?: boolean;
+    };
 // Explicit registry: display text is never interpreted as executable behavior.
 export const effects: Record<string, Effect> = {
   CS2_029: { type: 'damage', amount: 6 },
@@ -44,6 +51,11 @@ function token(
   };
 }
 export const battlecries: Record<string, Effect> = {
+  AT_054: { type: 'zone-buff', zone: 'hand-deck', attack: 1, health: 1 },
+  CFM_753: { type: 'zone-buff', zone: 'hand', attack: 1, health: 1 },
+  CFM_853: { type: 'zone-buff', zone: 'hand', attack: 1, health: 1, random: true },
+  CFM_685: { type: 'zone-buff', zone: 'hand', attack: 5, health: 5, random: true },
+  WON_137: { type: 'zone-buff', zone: 'hand', attack: 5, health: 5, random: true },
   CATA_216: { type: 'healing-bonus', amount: 2 },
   CS2_189: { type: 'damage', amount: 1 },
   CS2_117: { type: 'heal', amount: 3 },

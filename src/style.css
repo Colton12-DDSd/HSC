@@ -2015,3 +2015,19 @@ footer > span:last-child {
   color: #afc4aa;
   margin-top: 5px;
 }
+
+.card-modifier-badge {
+  position: absolute;
+  bottom: 17px;
+  left: 6px;
+  right: 6px;
+  border: 1px solid #d6bb75;
+  border-radius: 4px;
+  padding: 3px;
+  background: #463b22ef;
+  color: #fbe5a4;
+  z-index: 3;
+  font-size: 9px;
+  text-align: center;
+  pointer-events: none;
+}

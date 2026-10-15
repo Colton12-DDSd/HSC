@@ -11,10 +11,16 @@ interface Expected {
   trigger: 'Battlecry' | 'Deathrattle';
   kind: string;
   amount?: number;
+  zone?: string;
   tokens?: [string, number, number, boolean][];
 }
 // Independent expectations checked against the imported text, not generated from executable effects.
 const expected: Record<string, Expected> = {
+  AT_054: { trigger: 'Battlecry', kind: 'zone-buff', amount: 1, zone: 'hand-deck' },
+  CFM_753: { trigger: 'Battlecry', kind: 'zone-buff', amount: 1, zone: 'hand' },
+  CFM_853: { trigger: 'Battlecry', kind: 'zone-buff', amount: 1, zone: 'hand' },
+  CFM_685: { trigger: 'Battlecry', kind: 'zone-buff', amount: 5, zone: 'hand' },
+  WON_137: { trigger: 'Battlecry', kind: 'zone-buff', amount: 5, zone: 'hand' },
   CATA_216: { trigger: 'Battlecry', kind: 'healing-bonus', amount: 2 },
   CS2_189: { trigger: 'Battlecry', kind: 'damage', amount: 1 },
   CS2_141: { trigger: 'Battlecry', kind: 'damage', amount: 1 },
@@ -66,13 +72,14 @@ function summon(s: Game, p: number, c: Card) {
 function play(s: Game, c: Card, target?: { p: number; uid?: number }, position?: number) {
   const next = structuredClone(s);
   next.players[0].mana = 10;
-  next.players[0].hand = [c];
+  next.players[0].hand =
+    expected[cleanId(c.id)]?.kind === 'zone-buff' ? [c, card('CS2_182'), card('CS2_029')] : [c];
   return applyAction(next, { type: 'cast', p: 0, index: 0, target, position });
 }
 describe('Every enabled Battlecry and Deathrattle printing', () => {
   it('has an independent audit expectation for every enabled trigger card', () => {
-    expect(audited).toHaveLength(26);
-    expect(new Set(audited.map((c) => c.name)).size).toBe(22);
+    expect(audited).toHaveLength(32);
+    expect(new Set(audited.map((c) => c.name)).size).toBe(26);
     for (const c of audited) expect(expected[cleanId(c.id)], c.id).toBeDefined();
     const enabledByMechanic = cards.filter(
       (c) => supported(c) && c.mechanics?.some((m) => ['BATTLECRY', 'DEATHRATTLE'].includes(m)),
@@ -134,6 +141,18 @@ describe('Every enabled Battlecry and Deathrattle printing', () => {
       expect(s.players[0].effects).toEqual([
         { kind: 'healing-bonus', amount: 2, sourceCardId: id, sourceName: c.name },
       ]);
+    if (e.kind === 'zone-buff') {
+      expect(s.players[0].hand[0].modifiers).toEqual([
+        { sourceCardId: id, sourceName: c.name, attack: e.amount, health: e.amount },
+      ]);
+      expect(s.players[0].hand[1].modifiers).toBeUndefined();
+      expect(
+        s.players[0].deck.every(
+          (c) => (c.modifiers?.length ?? 0) === (e.zone === 'hand-deck' ? 1 : 0),
+        ),
+      ).toBe(true);
+      expect(s.players[1].deck.every((c) => !c.modifiers?.length)).toBe(true);
+    }
     const owner = e.trigger === 'Battlecry' ? 0 : 1;
     if (e.kind === 'draw') {
       expect(s.players[owner].hand).toHaveLength(1);
