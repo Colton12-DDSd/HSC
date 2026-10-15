@@ -1,6 +1,14 @@
 import type { Card } from './cards';
 import { db } from './storage';
-export async function loadCollection(): Promise<Card[]> {
+let collectionRequest: Promise<Card[]> | undefined;
+export function loadCollection(): Promise<Card[]> {
+  collectionRequest ??= fetchCollection().catch((error) => {
+    collectionRequest = undefined;
+    throw error;
+  });
+  return collectionRequest;
+}
+async function fetchCollection(): Promise<Card[]> {
   if (db) {
     const cards: Card[] = [];
     for (let from = 0; ; from += 1000) {

@@ -42,20 +42,20 @@ The importer can query Blizzard's authenticated game-data card endpoint using BL
 
 ## Dedicated Supabase setup: HC / HSC
 
-Target organization: **HC**. Target project: **HSC**. The connector in this session still exposes only Designer Palms. No cloud project was created and no remote migration/import ran. No changes were made to the Designer Palms Oasis database.
+Connected organization: **HC**. Dedicated project: **HSC** (`voxjyzgkvhkxxomdsmgq`, us-east-2). Both migrations are applied; 6,470 metadata records and their implementation states are imported. The app is configured in ignored .env.local using only the publishable key. No changes were made to Designer Palms Oasis. Public API retrieval, anonymous write denial and transactional owner-isolation checks passed. No test accounts/decks were retained.
 
-1. Refresh/reconnect the Supabase plugin and confirm HC is visible. Use a dedicated project in HC; review the quoted cost before project creation. Do not link this workspace to Oasis.
-2. Apply supabase/migrations/20261015174605_initial_schema.sql to HSC using its SQL editor or link the Supabase CLI to HSC and run its migration workflow. Inspect `npx supabase --help` for the installed CLI's commands before linking/pushing.
+1. HSC already exists and is configured. For future operations, use the HSC connector account and this project reference; do not link this workspace to Oasis.
+2. Existing migrations are already applied. Use new versioned migration files for later schema changes. Inspect `npx supabase --help` before using the CLI.
 3. Copy .env.example to .env.local. Set VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY to HSC's public connection values. Restart Vite.
 4. Configure Supabase Auth's site/redirect URL for the development origin. Use the app's connection settings to request an email sign-in link.
 5. For backend imports only, set SUPABASE_URL and SUPABASE_SECRET_KEY in your shell. Never put the secret under a VITE_ prefix, paste it into chat, or commit it. Run `npm run import:cards`. The importer can also load .env.local if supplied there; the file is ignored by Git.
-6. Check import_jobs, card counts, selected card metadata, anonymous public reads, signed-in owner-only deck reads/writes, and Supabase security advisors on the live HSC project. These live checks are pending; embedded PostgreSQL checks are included in npm test.
+6. Run `node scripts/verify-cloud.mjs` for public API smoke checks. Owner isolation was verified on live HSC in a rolled-back fixture transaction using scripts/verify-owner-access.sql. Security advisors report zero findings. Actual email sign-in and UI cloud deck saving still need the user to sign in; no email was sent during setup.
 
 Tables: cards, decks, deck_cards, card_implementations and import_jobs. RLS is enabled on all tables. Public roles can read card metadata/implementation metadata. Deck rows and their contents require ownership. Import jobs and metadata writes are backend-only. The save_deck RPC is SECURITY INVOKER and saves draft contents atomically under RLS. Draft saves allow incomplete decks; match readiness is a separate validation step.
 
 ## Small database footprint
 
-The card snapshot is about 2.85 MB of raw JSON before indexes, PostgreSQL overhead and duplicated searchable columns; measure actual database size after import. Store one raw JSONB per source card plus searchable metadata, no images, no original XML or animation assets, and no per-game snapshots in PostgreSQL. Imports use batches of 100 and upsert by hearthstone_id. Repeated imports update records rather than duplicate them. Source hashes and job counts record provenance. Keep complete raw source archives on disk, outside public/.
+Live measurement after import: all five app tables and their indexes occupy 8,986,624 bytes (about 8.6 MiB); Supabase platform tables are additional. There are zero Storage objects. The local card snapshot is about 2.85 MB of raw JSON. Store one raw JSONB per source card plus searchable metadata, no images, no original XML or animation assets, and no per-game snapshots in PostgreSQL. Imports use batches of 100 and upsert by hearthstone_id. Repeated imports update records rather than duplicate them. Source hashes and job counts record provenance. Keep complete raw source archives on disk, outside public/.
 
 ## Code map
 
@@ -70,10 +70,14 @@ The card snapshot is about 2.85 MB of raw JSON before indexes, PostgreSQL overhe
 
 ## Remaining milestones
 
-1. Provision HSC after refreshing the plugin; run and verify the cloud import and Auth/deck flow.
+1. Complete the user email sign-in flow and verify cloud draft saving from the UI. HSC provisioning, metadata import and database owner-isolation verification are complete.
 2. Finish authoritative Wild format and ban verification, then enable validated user-deck play.
 3. Expand the effect registry and implementation-status synchronization with the database; implement deathrattles, triggered event queues, transformations, token generation and remaining class powers. The current engine does not claim these work.
 4. Add proper interactive commander replacement prompts for all future removal/transform/bounce effects. Death currently defaults to the command zone and offers a destination choice through the lab before the commander is recast.
 5. Deploy the authoritative host and implement rooms, reconnect, hidden state, server-owned timers and persistence.
 
 See docs/VERIFICATION.md and docs/SIMULATOR-RESEARCH.md.
+
+## Import without a local backend secret
+
+The initial cloud import used the authorized HSC connector: run `npm run import:cards` to refresh source data, then `node --experimental-strip-types scripts/export-import-sql.mjs` to generate 100-card upsert transactions and a manifest in ignored data/import-batches/. An authorized backend/connector starts the manifest job in import_jobs, executes each batch once in order, and completes the job only when imported_count + updated_count matches the manifest count. Batch writes also synchronize supported/not-implemented statuses; partial/tested statuses are preserved. A failure rolls back that batch. Never execute these backend SQL files from the public browser. For a fully automated scheduled backend, the existing SUPABASE_SECRET_KEY importer remains available.

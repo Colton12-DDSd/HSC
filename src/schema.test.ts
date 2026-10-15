@@ -2,13 +2,18 @@ import { PGlite } from '@electric-sql/pglite';
 import { readFileSync } from 'node:fs';
 import { describe, it, expect } from 'vitest';
 const migration = readFileSync('supabase/migrations/20261015174605_initial_schema.sql', 'utf8');
+const backendMigration = readFileSync(
+  'supabase/migrations/20261015181509_clarify_backend_import_access.sql',
+  'utf8',
+);
 describe('Supabase schema integration (embedded PostgreSQL)', () => {
   it('migrates, upserts metadata and isolates private decks using RLS', async () => {
     const pg = new PGlite();
     await pg.exec(
-      `create role anon; create role authenticated; create schema auth; create table auth.users(id uuid primary key); create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$; grant usage on schema auth,public to anon,authenticated; grant execute on function auth.uid() to anon,authenticated;`,
+      `create role anon; create role authenticated; create role service_role bypassrls; create schema auth; create table auth.users(id uuid primary key); create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$; grant usage on schema auth,public to anon,authenticated; grant execute on function auth.uid() to anon,authenticated;`,
     );
     await pg.exec(migration);
+    await pg.exec(backendMigration);
     const a = '00000000-0000-0000-0000-000000000001',
       b = '00000000-0000-0000-0000-000000000002';
     await pg.query('insert into auth.users(id) values ($1),($2)', [a, b]);

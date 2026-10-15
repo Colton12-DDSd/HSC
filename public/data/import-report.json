@@ -1,14 +1,19 @@
 {
   "source": "https://api.hearthstonejson.com/v1/latest/enUS/cards.collectible.json",
   "source_version": "sha256:71be4da8bada839392c8b823af12ddd9e771a05fc6b974db8cea64b00c30f805",
-  "started_at": "2026-10-15T18:01:43.014Z",
-  "completed_at": "2026-10-15T18:01:43.771Z",
+  "started_at": "2026-10-15T18:11:25.995+00:00",
+  "completed_at": "2026-10-15T18:14:19.816297+00:00",
   "imported_count": 6470,
   "updated_count": 0,
   "failed_count": 0,
-  "status": "local_complete",
+  "status": "complete",
   "error_log": [],
   "format_verified": false,
   "format_version": null,
-  "total_source_count": 8328
+  "total_source_count": 8328,
+  "id": "d7fb5e97-1e76-4e1a-8620-54b85713c691",
+  "project_id": "voxjyzgkvhkxxomdsmgq",
+  "organization": "HC",
+  "database_count": 6470,
+  "transport": "authorized_supabase_connector"
 }

@@ -1,0 +1,24 @@
+{
+  "cards": 6470,
+  "decks": 0,
+  "storage_objects": 0,
+  "app_tables_bytes": 8986624,
+  "job": {
+    "id": "d7fb5e97-1e76-4e1a-8620-54b85713c691",
+    "source": "https://api.hearthstonejson.com/v1/latest/enUS/cards.collectible.json",
+    "source_version": "sha256:71be4da8bada839392c8b823af12ddd9e771a05fc6b974db8cea64b00c30f805",
+    "started_at": "2026-10-15T18:11:25.995+00:00",
+    "completed_at": "2026-10-15T18:14:19.816297+00:00",
+    "imported_count": 6470,
+    "updated_count": 0,
+    "failed_count": 0,
+    "status": "complete",
+    "error_log": []
+  },
+  "security_advisor_findings": 0,
+  "anonymous_reads_verified": true,
+  "anonymous_writes_denied": true,
+  "owner_isolation_verified": true,
+  "images_stored": 0,
+  "format_verified": false
+}

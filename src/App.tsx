@@ -364,7 +364,7 @@ export default function App() {
           <div className="header-right">
             <span className="connection">
               <i />
-              {session ? 'Supabase connected' : 'Local workspace'}
+              {session ? 'HSC · signed in' : db ? 'HSC · guest' : 'Local workspace'}
             </span>
             <button className="avatar" onClick={() => setShowSettings(true)}>
               HC
