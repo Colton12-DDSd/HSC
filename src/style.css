@@ -1992,3 +1992,26 @@ footer > span:last-child {
   color: #aeb99f;
   font-size: 11px;
 }
+
+.player-effects {
+  margin: 9px 0;
+  padding: 7px 10px;
+  border: 1px solid #719773;
+  border-radius: 5px;
+  background: #253e2c;
+  color: #d3edce;
+  font-size: 11px;
+}
+.player-effects summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.player-effects ul {
+  padding-left: 17px;
+  margin: 7px 0;
+}
+.player-effects small {
+  display: block;
+  color: #afc4aa;
+  margin-top: 5px;
+}

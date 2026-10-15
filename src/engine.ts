@@ -24,6 +24,8 @@ export interface Unit {
   commander: boolean;
 }
 export interface Player {
+  // Game-wide effects survive their source minion leaving play; optional for old replays.
+  effects?: { kind: 'healing-bonus'; amount: number; sourceCardId: string; sourceName: string }[];
   name: string;
   class: string;
   health: number;
@@ -175,7 +177,15 @@ export function attackError(
   return null;
 }
 /** Heroes may grow above their starting 40; minions heal only to their current maximum. */
-function heal(target: Player | Unit, amount: number) {
+export function healingBonus(player: Player) {
+  return (player.effects ?? []).reduce(
+    (total, effect) => total + (effect.kind === 'healing-bonus' ? effect.amount : 0),
+    0,
+  );
+}
+function heal(target: Player | Unit, amount: number, controller?: Player) {
+  // Absorbed/zero damage must never manufacture a Lifesteal heal.
+  if (amount > 0 && controller) amount += healingBonus(controller);
   const before = target.health;
   target.health =
     'maxHealth' in target
@@ -327,7 +337,7 @@ function runEffect(
     const name = 'card' in t ? `${s.players[target.p].name}'s ${t.card.name}` : `${t.name}'s hero`;
     if (e.type === 'damage') note(s, `${name} takes ${damage(s, target, e.amount)} damage`);
     if (e.type === 'heal') {
-      note(s, `${name} restores ${heal(t, e.amount)} health`);
+      note(s, `${name} restores ${heal(t, e.amount, p)} health`);
     }
     if (e.type === 'buff' && 'attack' in t) {
       t.attack += e.attack;
@@ -354,9 +364,24 @@ function runEffect(
       summon(s, player, e.token, false, Math.min(position + i, p.board.length));
     }
   }
+  if (e.type === 'healing-bonus') {
+    (p.effects ??= []).push({
+      kind: 'healing-bonus',
+      amount: e.amount,
+      sourceCardId: source!.id,
+      sourceName: source!.name,
+    });
+    note(
+      s,
+      `${p.name} gains +${e.amount} healing for the rest of the game from ${source!.name} (total +${healingBonus(p)})`,
+    );
+  }
   if (e.type === 'heal-friendly') {
-    for (const t of [p, ...p.board]) heal(t, e.amount);
-    note(s, `${p.name} restores up to ${e.amount} health to all friendly characters`);
+    for (const t of [p, ...p.board]) heal(t, e.amount, p);
+    note(
+      s,
+      `${p.name} restores up to ${e.amount + healingBonus(p)} health to all friendly characters`,
+    );
   }
   if (e.type === 'enemy-heroes') {
     // Untargeted "enemy hero" effects apply to every living opponent in Commander.
@@ -507,6 +532,7 @@ export function createGame(
       heroAttack: 0,
       heroReady: true,
       replacement: false,
+      effects: [],
     };
     s.players.push(p);
     for (let j = 0; j < 4; j++) draw(s, i);
@@ -613,12 +639,12 @@ export function applyAction(state: Game, a: Action): Game {
     if ('attack' in t) {
       const retaliation = damage(s, { p: a.p, uid: u?.uid }, t.attack);
       if (retaliation > 0 && t.card.mechanics?.includes('POISONOUS') && u) u.health = 0;
-      if (t.card.mechanics?.includes('LIFESTEAL')) heal(enemy, retaliation);
+      if (t.card.mechanics?.includes('LIFESTEAL')) heal(enemy, retaliation, enemy);
     }
     if (u) {
       u.attacksRemaining--;
       u.ready = u.attacksRemaining > 0;
-      if (u.card.mechanics?.includes('LIFESTEAL')) heal(p, dealt);
+      if (u.card.mechanics?.includes('LIFESTEAL')) heal(p, dealt, p);
     } else p.heroReady = false;
     note(
       s,
@@ -636,7 +662,7 @@ export function applyAction(state: Game, a: Action): Game {
     if (p.class === 'MAGE') damage(s, a.target!, 1);
     if (p.class === 'PRIEST') {
       const t = getTarget(s, a.target!);
-      heal(t, 2);
+      heal(t, 2, p);
     }
     if (p.class === 'HUNTER') runEffect(s, a.p, { type: 'enemy-heroes', amount: 2 });
     if (p.class === 'WARLOCK') {

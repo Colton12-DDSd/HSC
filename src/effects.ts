@@ -9,7 +9,8 @@ export type Effect =
   | { type: 'summon'; token: Card; amount: number }
   | { type: 'heal-friendly'; amount: number }
   | { type: 'damage-all'; amount: number; heroes?: boolean }
-  | { type: 'enemy-heroes'; amount: number };
+  | { type: 'enemy-heroes'; amount: number }
+  | { type: 'healing-bonus'; amount: number };
 // Explicit registry: display text is never interpreted as executable behavior.
 export const effects: Record<string, Effect> = {
   CS2_029: { type: 'damage', amount: 6 },
@@ -43,6 +44,7 @@ function token(
   };
 }
 export const battlecries: Record<string, Effect> = {
+  CATA_216: { type: 'healing-bonus', amount: 2 },
   CS2_189: { type: 'damage', amount: 1 },
   CS2_117: { type: 'heal', amount: 3 },
   CS2_141: { type: 'damage', amount: 1 },

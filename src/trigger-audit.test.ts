@@ -15,6 +15,7 @@ interface Expected {
 }
 // Independent expectations checked against the imported text, not generated from executable effects.
 const expected: Record<string, Expected> = {
+  CATA_216: { trigger: 'Battlecry', kind: 'healing-bonus', amount: 2 },
   CS2_189: { trigger: 'Battlecry', kind: 'damage', amount: 1 },
   CS2_141: { trigger: 'Battlecry', kind: 'damage', amount: 1 },
   CS2_150: { trigger: 'Battlecry', kind: 'damage', amount: 2 },
@@ -70,8 +71,8 @@ function play(s: Game, c: Card, target?: { p: number; uid?: number }, position?:
 }
 describe('Every enabled Battlecry and Deathrattle printing', () => {
   it('has an independent audit expectation for every enabled trigger card', () => {
-    expect(audited).toHaveLength(25);
-    expect(new Set(audited.map((c) => c.name)).size).toBe(21);
+    expect(audited).toHaveLength(26);
+    expect(new Set(audited.map((c) => c.name)).size).toBe(22);
     for (const c of audited) expect(expected[cleanId(c.id)], c.id).toBeDefined();
     const enabledByMechanic = cards.filter(
       (c) => supported(c) && c.mechanics?.some((m) => ['BATTLECRY', 'DEATHRATTLE'].includes(m)),
@@ -129,6 +130,10 @@ describe('Every enabled Battlecry and Deathrattle printing', () => {
         );
       }
     }
+    if (e.kind === 'healing-bonus')
+      expect(s.players[0].effects).toEqual([
+        { kind: 'healing-bonus', amount: 2, sourceCardId: id, sourceName: c.name },
+      ]);
     const owner = e.trigger === 'Battlecry' ? 0 : 1;
     if (e.kind === 'draw') {
       expect(s.players[owner].hand).toHaveLength(1);
@@ -235,7 +240,7 @@ describe('Lasting buffs', () => {
     expect(s.players[0].board[0].modifiers).toHaveLength(1);
   });
   it('keeps game-wide and aura cards blocked with an honest explanation', () => {
-    for (const id of ['BT_020', 'BT_026', 'CATA_216']) {
+    for (const id of ['BT_020', 'BT_026']) {
       expect(supported(card(id))).toBe(false);
       expect(unsupportedReason(card(id))).toMatch(/tracking|persistent/);
     }

@@ -60,6 +60,7 @@ import {
   effectTargetError,
   attackError,
   attackReadinessError,
+  healingBonus,
 } from './engine';
 import { targetFor, deathrattleFor, unsupportedReason } from './effects';
 import { db, saveCloud, loadCloud, download } from './storage';
@@ -1165,6 +1166,19 @@ export default function App() {
                               </span>
                             </button>
                           </div>
+                          {p.effects?.length ? (
+                            <details className="player-effects">
+                              <summary>Healing +{healingBonus(p)} · rest of game</summary>
+                              <ul>
+                                {p.effects.map((effect, index) => (
+                                  <li key={index}>
+                                    {effect.sourceName}: +{effect.amount} to your healing effects
+                                  </li>
+                                ))}
+                              </ul>
+                              <small>Stacks and remains active after the source leaves play.</small>
+                            </details>
+                          ) : null}
                           <div
                             data-local-board={i === 0 ? '' : undefined}
                             className={`board-slots ${p.board.length ? 'occupied' : ''} ${i === 0 && placing && !game.pending ? 'choosing-placement' : ''}`}
@@ -1661,6 +1675,12 @@ export default function App() {
               deathrattleFor(inspect)?.type === 'enemy-heroes' ? (
                 <p className="commander-rule">
                   Commander rule: this effect hits every living enemy hero; no target is chosen.
+                </p>
+              ) : null}
+              {effectFor(inspect)?.type === 'healing-bonus' ? (
+                <p>
+                  Grants a stacking healing bonus for the rest of the game, even after this minion
+                  leaves play.
                 </p>
               ) : null}
               {inspectInGame ? (
