@@ -1,11 +1,12 @@
 import type { Card } from './cards';
-export type EffectTarget = 'character' | 'friendly-minion' | 'enemy-hero';
+export type EffectTarget = 'character' | 'minion' | 'friendly-minion' | 'enemy-hero';
 export type Effect =
   | { type: 'damage'; amount: number; target?: EffectTarget }
   | { type: 'heal'; amount: number; target?: EffectTarget }
   | { type: 'draw'; amount: number }
   | { type: 'wipe'; amount: number }
-  | { type: 'buff'; attack: number; health: number; target?: EffectTarget }
+  | { type: 'buff'; attack: number; health: number; target?: EffectTarget; expires?: 'turn' }
+  | { type: 'self-buff'; attack: number; health: number; expires: 'turn' }
   | { type: 'summon'; token: Card; amount: number }
   | { type: 'heal-friendly'; amount: number }
   | { type: 'damage-all'; amount: number; heroes?: boolean }
@@ -51,6 +52,12 @@ function token(
   };
 }
 export const battlecries: Record<string, Effect> = {
+  CS2_188: { type: 'buff', attack: 2, health: 0, target: 'minion', expires: 'turn' },
+  EX1_046: { type: 'buff', attack: 2, health: 0, target: 'minion', expires: 'turn' },
+  GVG_011: { type: 'buff', attack: -3, health: 0, target: 'minion', expires: 'turn' },
+  WON_314: { type: 'buff', attack: -3, health: 0, target: 'minion', expires: 'turn' },
+  BT_720: { type: 'self-buff', attack: 4, health: 0, expires: 'turn' },
+  GIL_803: { type: 'self-buff', attack: 3, health: 0, expires: 'turn' },
   AT_054: { type: 'zone-buff', zone: 'hand-deck', attack: 1, health: 1 },
   CFM_753: { type: 'zone-buff', zone: 'hand', attack: 1, health: 1 },
   CFM_853: { type: 'zone-buff', zone: 'hand', attack: 1, health: 1, random: true },

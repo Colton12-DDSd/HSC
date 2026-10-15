@@ -1,6 +1,6 @@
 # Battlecry and Deathrattle: first batch
 
-The local engine supports 184 of the 6,470 collection records. The original trigger batch added 22 records to the previous 155; the tested healing and hand/deck batches add 7 more. See [additional batches](MINION-BATCHES.md). It implements the cards listed here; it does not make every Battlecry or Deathrattle card playable.
+The local engine supports 191 of the 6,470 collection records. The original trigger batch added 22 records to the previous 155; the tested healing, hand/deck, and temporary-Attack batches add 14 more. See [additional batches](MINION-BATCHES.md). It implements the cards listed here; it does not make every Battlecry or Deathrattle card playable.
 
 ## Play and targeting
 
@@ -54,7 +54,7 @@ Card text and stats are taken from the repository's imported metadata snapshot; 
 
 ## Starter test decks
 
-New Hunter starter games include 14 supported neutral Battlecry minions and all 9 supported Deathrattle minions by name before filling the remaining slots. All four players receive 100 singleton cards, excluding their commander, then their decks are shuffled normally. Opening hands are not fixed. Custom decks use only the supplied cards. Existing matches retain their current decks; use **New starter game** to get the updated mix.
+New Hunter starter games prioritize every eligible supported Battlecry and Deathrattle minion by name before filling the remaining slots. All four players receive 100 singleton cards, excluding their commander, then their decks are shuffled normally. Opening hands are not fixed. Custom decks use only the supplied cards. Existing matches retain their current decks; use **New starter game** to get the updated mix.
 
 ## In-game inspection
 
@@ -67,3 +67,7 @@ Heroes start at 40 health and have no gameplay healing cap. Targeted healing, fr
 ## Lasting effect visibility and audit
 
 The [enabled-card audit](TRIGGER-AUDIT.md) covers every enabled Battlecry/Deathrattle printing. Buffed minions display a gold stat-change badge, and their inspectors list source effects and durations. Cleric's buff survives turns and source death, then ends when the affected minion leaves play. Cleansing Cleric's healing bonus is now a supported game-wide effect. Other unimplemented auras and persistent effects have explicit inspector explanations; they are not silently treated as one-time effects.
+
+## Temporary Attack effects
+
+Abusive Sergeant, Dark Iron Dwarf, Shrinkmeister, Ruststeed Raider, and Militia Commander are enabled with explicit end-of-casting-turn expiry. Active effects list their source and duration; temporary stat badges include an hourglass. End turn removes these effects from every player's board, preserving permanent bonuses and damage. A signed modifier history with a nonnegative effective Attack prevents stacked reductions from producing negative combat damage or incorrect expiry recovery. See [batch 3](MINION-BATCHES.md#batch-3-temporary-attack-buffs-and-reductions) for the exact printings and tests.

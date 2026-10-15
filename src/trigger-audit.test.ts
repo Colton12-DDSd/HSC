@@ -16,6 +16,12 @@ interface Expected {
 }
 // Independent expectations checked against the imported text, not generated from executable effects.
 const expected: Record<string, Expected> = {
+  CS2_188: { trigger: 'Battlecry', kind: 'temp-buff', amount: 2 },
+  EX1_046: { trigger: 'Battlecry', kind: 'temp-buff', amount: 2 },
+  GVG_011: { trigger: 'Battlecry', kind: 'temp-buff', amount: -3 },
+  WON_314: { trigger: 'Battlecry', kind: 'temp-buff', amount: -3 },
+  BT_720: { trigger: 'Battlecry', kind: 'self-buff', amount: 4 },
+  GIL_803: { trigger: 'Battlecry', kind: 'self-buff', amount: 3 },
   AT_054: { trigger: 'Battlecry', kind: 'zone-buff', amount: 1, zone: 'hand-deck' },
   CFM_753: { trigger: 'Battlecry', kind: 'zone-buff', amount: 1, zone: 'hand' },
   CFM_853: { trigger: 'Battlecry', kind: 'zone-buff', amount: 1, zone: 'hand' },
@@ -78,8 +84,8 @@ function play(s: Game, c: Card, target?: { p: number; uid?: number }, position?:
 }
 describe('Every enabled Battlecry and Deathrattle printing', () => {
   it('has an independent audit expectation for every enabled trigger card', () => {
-    expect(audited).toHaveLength(32);
-    expect(new Set(audited.map((c) => c.name)).size).toBe(26);
+    expect(audited).toHaveLength(39);
+    expect(new Set(audited.map((c) => c.name)).size).toBe(31);
     for (const c of audited) expect(expected[cleanId(c.id)], c.id).toBeDefined();
     const enabledByMechanic = cards.filter(
       (c) => supported(c) && c.mechanics?.some((m) => ['BATTLECRY', 'DEATHRATTLE'].includes(m)),
@@ -96,13 +102,15 @@ describe('Every enabled Battlecry and Deathrattle printing', () => {
     if (e.trigger === 'Battlecry') {
       if (e.kind === 'buff' || e.kind === 'heal-friendly') s.players[0].board[0].health = 2;
       const target =
-        e.kind === 'buff'
-          ? { p: 0, uid: friendly }
-          : e.kind === 'heal'
-            ? { p: 0 }
-            : e.kind === 'damage'
-              ? { p: 1, uid: enemy }
-              : undefined;
+        e.kind === 'temp-buff'
+          ? { p: 1, uid: enemy }
+          : e.kind === 'buff'
+            ? { p: 0, uid: friendly }
+            : e.kind === 'heal'
+              ? { p: 0 }
+              : e.kind === 'damage'
+                ? { p: 1, uid: enemy }
+                : undefined;
       s = play(s, c, target, 0);
       expect(s.players[0].board[0].card.id).toBe(id);
       if (e.kind === 'damage') expect(s.players[1].board[0].health).toBe(5 - e.amount!);
@@ -153,6 +161,19 @@ describe('Every enabled Battlecry and Deathrattle printing', () => {
       ).toBe(true);
       expect(s.players[1].deck.every((c) => !c.modifiers?.length)).toBe(true);
     }
+    if (e.kind === 'temp-buff') {
+      expect(s.players[1].board[0].attack).toBe(4 + e.amount!);
+      expect(s.players[1].board[0].modifiers?.at(-1)).toMatchObject({
+        attack: e.amount,
+        health: 0,
+        expiresAtTurn: s.turn,
+      });
+    }
+    if (e.kind === 'self-buff') {
+      expect(s.players[0].board[0].attack).toBe(c.attack! + e.amount!);
+      expect(s.players[0].board[0].rushOnly).toBe(true);
+      expect(s.players[0].board[0].modifiers?.at(-1)?.expiresAtTurn).toBe(s.turn);
+    }
     const owner = e.trigger === 'Battlecry' ? 0 : 1;
     if (e.kind === 'draw') {
       expect(s.players[owner].hand).toHaveLength(1);
@@ -184,6 +205,7 @@ describe('Every enabled Battlecry and Deathrattle printing', () => {
       expect(s.players[0].hand).toHaveLength(0);
       expect(s.players[0].deck).toHaveLength(20);
       expect(s.players[0].board).toHaveLength(1);
+      expect(s.players[0].board[0].attack).toBe(c.attack);
       expect(s.log.some((l) => l.includes('triggers Battlecry'))).toBe(false);
     },
   );
@@ -195,6 +217,7 @@ describe('Every enabled Battlecry and Deathrattle printing', () => {
       expect(s.players[0].hand).toHaveLength(0);
       expect(s.players[0].deck).toHaveLength(20);
       expect(s.players[0].board).toHaveLength(1);
+      expect(s.players[0].board[0].attack).toBe(c.attack);
       expect(s.log.some((l) => l.includes('triggers Deathrattle'))).toBe(false);
     },
   );

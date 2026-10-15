@@ -1195,14 +1195,19 @@ export default function App() {
                               const attackChange = u ? u.attack - (u.card.attack ?? 0) : 0;
                               const healthChange = u ? u.maxHealth - (u.card.health ?? 1) : 0;
                               const changedStats = attackChange !== 0 || healthChange !== 0;
+                              const hasTimedEffect = u?.modifiers?.some(
+                                (m) => m.expiresAtTurn !== undefined,
+                              );
                               const modifierSummary = u?.modifiers
                                 ?.map(
-                                  (m) => `${m.sourceName}: ${signed(m.attack)}/${signed(m.health)}`,
+                                  (m) =>
+                                    `${m.sourceName}: ${signed(m.attack)}/${signed(m.health)}${m.expiresAtTurn !== undefined ? ' (until end of turn)' : ''}`,
                                 )
                                 .join('; ');
-                              const lastingLabel = changedStats
-                                ? `Lasting stat changes ${signed(attackChange)}/${signed(healthChange)}${modifierSummary ? ` from ${modifierSummary}` : ''}; until this minion leaves the battlefield`
-                                : '';
+                              const lastingLabel =
+                                changedStats || hasTimedEffect
+                                  ? `Stat changes ${signed(attackChange)}/${signed(healthChange)}${modifierSummary ? ` from ${modifierSummary}` : ''}; ${hasTimedEffect ? 'temporary effects expire at end of this turn' : 'until this minion leaves the battlefield'}`
+                                  : '';
                               const readiness =
                                 u && i === 0 ? attackReadinessError(game, i, u.uid) : null;
                               const canAttack =
@@ -1304,9 +1309,13 @@ export default function App() {
                                       {u.card.mechanics?.includes('TAUNT') ? (
                                         <small className="taunt-label">Taunt</small>
                                       ) : null}
-                                      {changedStats ? (
-                                        <small className="buff-badge" title={lastingLabel}>
+                                      {changedStats || hasTimedEffect ? (
+                                        <small
+                                          className={`buff-badge ${hasTimedEffect ? 'timed-buff' : ''}`}
+                                          title={lastingLabel}
+                                        >
                                           {signed(attackChange)}/{signed(healthChange)}
+                                          {hasTimedEffect ? ' ⏳' : ''}
                                         </small>
                                       ) : null}
                                       {deathrattleFor(u.card) ? (
@@ -1715,19 +1724,22 @@ export default function App() {
                 </div>
               ) : null}
               {inspectedModifiers.length ? (
-                <section className="active-modifiers" aria-label="Lasting effects">
-                  <b>Lasting effects</b>
+                <section className="active-modifiers" aria-label="Active effects">
+                  <b>Active effects</b>
                   <ul>
                     {inspectedModifiers.map((modifier, index) => (
                       <li key={index}>
                         <strong>{modifier.sourceName}</strong>: {signed(modifier.attack)} attack /{' '}
-                        {signed(modifier.health)} maximum health
+                        {signed(modifier.health)} maximum health ·{' '}
+                        {modifier.expiresAtTurn !== undefined
+                          ? 'until end of turn'
+                          : 'until this minion leaves play'}
                       </li>
                     ))}
                   </ul>
                   <small>
                     {inspectedUnit
-                      ? 'Persists across turns and after the source dies. Ends when this minion leaves the battlefield.'
+                      ? 'Temporary effects expire at end of the turn in which they were applied. Other buffs persist until this minion leaves the battlefield, even if their source dies.'
                       : 'Carries from hand or deck into play. Ends when this minion leaves the battlefield.'}
                   </small>
                 </section>

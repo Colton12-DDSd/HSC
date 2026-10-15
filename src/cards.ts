@@ -1,4 +1,5 @@
 export interface StatModifier {
+  expiresAtTurn?: number;
   sourceCardId: string;
   sourceName: string;
   attack: number;

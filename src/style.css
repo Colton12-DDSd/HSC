@@ -2031,3 +2031,9 @@ footer > span:last-child {
   text-align: center;
   pointer-events: none;
 }
+
+.buff-badge.timed-buff {
+  border-color: #99c9ec;
+  color: #e1f1ff;
+  background: #294052ef;
+}

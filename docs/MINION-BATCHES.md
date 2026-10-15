@@ -21,4 +21,22 @@ Hand cards display enhanced Attack/Health badges. Their inspectors show enhanced
 
 Checkpoint: **185 tests** and production build pass after the second batch. Tests include exact per-printing behavior, spells and ownership exclusions, source death, stacking, alias-safe physical card copies, drawing, playing without double application, death/reset, hand-limit burn, interruption, empty pools, and deterministic random selection. Browser verification: Mistcaller enhanced Spider Tank from printed 3/4 to 4/5 in hand; its preview named the source; normal play produced a 4/5 minion with exactly one +1/+1 source record and no console errors.
 
-Current totals: **184 supported collection records**, including **32 Battlecry/Deathrattle printings across 26 minion names**. No database rows or image files were added. Further auras, temporary effects, Libram cost tracking, and other unimplemented card scripts remain blocked.
+Current totals: **184 supported collection records**, including **32 Battlecry/Deathrattle printings across 26 minion names**. No database rows or image files were added. At the batch-2 checkpoint, auras, temporary effects, Libram cost tracking, and other unimplemented card scripts remained blocked; batch 3 below adds temporary Attack effects.
+
+## Batch 3: temporary Attack buffs and reductions
+
+| Minion            | Supported printings   | Battlecry                                       |
+| ----------------- | --------------------- | ----------------------------------------------- |
+| Abusive Sergeant  | CS2_188, CORE_CS2_188 | Give a chosen minion +2 Attack this turn        |
+| Dark Iron Dwarf   | EX1_046               | Give a chosen minion +2 Attack this turn        |
+| Shrinkmeister     | GVG_011, WON_314      | Give a chosen minion -3 Attack this turn        |
+| Ruststeed Raider  | BT_720                | Gain +4 Attack this turn; retain Taunt and Rush |
+| Militia Commander | GIL_803               | Gain +3 Attack this turn; retain Rush           |
+
+Temporary Attack modifiers have an explicit casting-turn expiry. Ending that turn removes them from every board before the next player starts, including effects applied to an enemy minion. They survive source death but cannot grant extra attacks, reset damage, remove keywords, or erase permanent buffs. Effective Attack is clamped at zero while the signed underlying modifiers remain tracked, so stacked reductions recover correctly on expiry. Bots direct negative changes toward enemies.
+
+The battlefield badge includes an hourglass for temporary effects; the inspector's Active effects panel lists each source and its own duration. Temporary modifiers remain visible even when their net stat change is zero. Targeted buffs use the existing explicit minion-target prompt; the self-buff cards resolve without a target. As with the existing alpha targeting flow, chosen targets come from the pre-play board; choosing the newly played source as its own target is not yet supported.
+
+Checkpoint: **215 tests** and production build pass, including **16 dedicated temporary-effect tests** and per-printing audit cases. Browser verification: Ruststeed Raider entered at 5 Attack/8 Health (printed 1/8 plus +4), displayed the hourglass and end-of-turn duration, then returned to 1 Attack/8 Health with Taunt intact on End turn. History recorded the expiry; no browser console errors were observed.
+
+Current totals: **191 supported collection records**, including **39 Battlecry/Deathrattle printings across 31 minion names**. This batch supports temporary Attack changes; temporary Health changes, hero-Attack Battlecries, ongoing auras, and other unimplemented scripts remain blocked.

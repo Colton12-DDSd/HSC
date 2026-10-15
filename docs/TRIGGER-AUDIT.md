@@ -1,11 +1,16 @@
 # Enabled minion trigger audit
 
-Audited 2026-10-15 against the repository's imported card snapshot and explicit Commander rules. Scope: **26 distinct enabled minions, 32 card records**. This is not an implementation audit of every unimplemented minion in the collection.
+Audited 2026-10-15 against the repository's imported card snapshot and explicit Commander rules. Scope: **31 distinct enabled minions, 39 card records**. This is not an implementation audit of every unimplemented minion in the collection.
 
 Every enabled record has its own execution test against independent expected outcomes. The audit also checks that every minion labeled Supported with Battlecry or Deathrattle is covered, so another supported trigger cannot silently bypass this list.
 
 | Minion                | Audited printings     | Execution check                                                     |
 | --------------------- | --------------------- | ------------------------------------------------------------------- |
+| Abusive Sergeant      | CS2_188, CORE_CS2_188 | +2 Attack to a chosen minion until end of turn                      |
+| Dark Iron Dwarf       | EX1_046               | +2 Attack to a chosen minion until end of turn                      |
+| Shrinkmeister         | GVG_011, WON_314      | -3 Attack to a chosen minion until end of turn                      |
+| Ruststeed Raider      | BT_720                | Self +4 Attack this turn, preserving Taunt/Rush                     |
+| Militia Commander     | GIL_803               | Self +3 Attack this turn, preserving Rush                           |
 | Cleansing Cleric      | CATA_216              | Stacking +2 healing for the rest of the game                        |
 | The Mistcaller        | AT_054                | +1/+1 to existing hand and deck minions                             |
 | Grimestreet Outfitter | CFM_753, CORE_CFM_753 | +1/+1 to existing hand minions                                      |
@@ -53,4 +58,6 @@ Cleansing Cleric now creates a supported game-wide healing bonus, listed in the 
 
 Other ongoing rules still require their own implementation. For example, Aldor Attendant and Aldor Truthseeker need game-wide Libram cost tracking; they remain unplayable and show a persistent-tracking explanation in the inspector. Unimplemented auras also have a specific explanation. This classification is display-only; card text is never executed as a script.
 
-Verification: **185 automated tests pass**, including **70 card-audit/persistence cases, plus 19 dedicated persistent-effect cases**. Production build passes. No cloud database or image-storage writes are needed.
+Verification: **215 automated tests pass**, including **84 card-audit/persistence cases, plus 19 dedicated persistent-effect cases and 16 temporary-effect cases**. Production build passes. No cloud database or image-storage writes are needed.
+
+Temporary effects have their own duration records and hourglass indicators. See [batch 3](MINION-BATCHES.md#batch-3-temporary-attack-buffs-and-reductions) for expiry, stacking, target restrictions, and browser verification. General temporary Health changes and auras are not claimed as supported.

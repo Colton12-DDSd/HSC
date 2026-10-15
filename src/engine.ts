@@ -10,6 +10,7 @@ import {
 } from './effects';
 export { effectFor, supported } from './effects';
 export interface Unit {
+  attackBase?: number;
   // Optional so older exported scenarios remain readable. These buffs end on leaving play.
   modifiers?: StatModifier[];
   attacksRemaining: number;
@@ -276,6 +277,7 @@ function summon(
   x.board.splice(position, 0, {
     uid: s.nextId++,
     card: printedCard(c),
+    attackBase: c.attack ?? 0,
     attack: cardStats(c).attack,
     health: cardStats(c).health,
     maxHealth: cardStats(c).health,
@@ -288,6 +290,7 @@ function summon(
   });
   if (commander) x.zone = 'board';
   note(s, `${x.name} summons ${c.name} at position ${position + 1}`);
+  return x.board[position].uid;
 }
 export function effectTargets(s: Game, player: number, card: Card): Target[] {
   const rule = targetFor(effectFor(card));
@@ -296,7 +299,9 @@ export function effectTargets(s: Game, player: number, card: Card): Target[] {
     p.health <= 0
       ? []
       : [
-          ...(rule === 'friendly-minion' || (rule === 'enemy-hero' && index === player)
+          ...(rule === 'minion' ||
+          rule === 'friendly-minion' ||
+          (rule === 'enemy-hero' && index === player)
             ? []
             : [{ p: index }]),
           ...(rule === 'enemy-hero' || (rule === 'friendly-minion' && index !== player)
@@ -321,7 +326,58 @@ export function effectTargetError(
     ? 'Choose a friendly minion for the Battlecry'
     : rule === 'enemy-hero'
       ? 'Choose an enemy hero for the Battlecry'
-      : 'Choose a character target';
+      : rule === 'minion'
+        ? 'Choose a minion for the Battlecry'
+        : 'Choose a character target';
+}
+function applyStatModifier(
+  s: Game,
+  unit: Unit,
+  player: number,
+  effect: { attack: number; health: number; expires?: 'turn' },
+  source?: Card,
+) {
+  // Preserve old scenarios whose preexisting stat changes have no source records.
+  unit.attackBase ??=
+    unit.attack - (unit.modifiers ?? []).reduce((total, m) => total + m.attack, 0);
+  const modifier: StatModifier = {
+    sourceCardId: source?.id ?? 'unknown',
+    sourceName: source?.name ?? 'Effect',
+    attack: effect.attack,
+    health: effect.health,
+    ...(effect.expires === 'turn' ? { expiresAtTurn: s.turn } : {}),
+  };
+  (unit.modifiers ??= []).push(modifier);
+  unit.attack = Math.max(
+    0,
+    unit.attackBase + unit.modifiers.reduce((total, m) => total + m.attack, 0),
+  );
+  unit.health += effect.health;
+  unit.maxHealth += effect.health;
+  note(
+    s,
+    `${s.players[player].name}'s ${unit.card.name} gains ${effect.attack >= 0 ? '+' : ''}${effect.attack}/+${effect.health} from ${modifier.sourceName} (${effect.expires === 'turn' ? 'until end of this turn' : 'until it leaves the battlefield'})`,
+  );
+}
+function expireTurnModifiers(s: Game) {
+  s.players.forEach((p) =>
+    p.board.forEach((unit) => {
+      const expired = (unit.modifiers ?? []).filter(
+        (m) => m.expiresAtTurn !== undefined && m.expiresAtTurn <= s.turn,
+      );
+      if (!expired.length) return;
+      unit.modifiers = unit.modifiers!.filter(
+        (m) => m.expiresAtTurn === undefined || m.expiresAtTurn > s.turn,
+      );
+      unit.attack = Math.max(
+        0,
+        (unit.attackBase ?? unit.card.attack ?? 0) +
+          unit.modifiers.reduce((total, m) => total + m.attack, 0),
+      );
+      for (const modifier of expired)
+        note(s, `${p.name}'s ${unit.card.name}: ${modifier.sourceName} expires at end of turn`);
+    }),
+  );
 }
 function runEffect(
   s: Game,
@@ -330,6 +386,7 @@ function runEffect(
   target?: Target,
   position = s.players[player].board.length,
   source?: Card,
+  sourceUid?: number,
 ) {
   const p = s.players[player];
   if (e.type === 'draw') {
@@ -343,21 +400,11 @@ function runEffect(
     if (e.type === 'heal') {
       note(s, `${name} restores ${heal(t, e.amount, p)} health`);
     }
-    if (e.type === 'buff' && 'attack' in t) {
-      t.attack += e.attack;
-      t.health += e.health;
-      t.maxHealth += e.health;
-      (t.modifiers ??= []).push({
-        sourceCardId: source?.id ?? 'unknown',
-        sourceName: source?.name ?? 'Effect',
-        attack: e.attack,
-        health: e.health,
-      });
-      note(
-        s,
-        `${name} gains +${e.attack}/+${e.health} from ${source?.name ?? 'Effect'} (until it leaves the battlefield)`,
-      );
-    }
+    if (e.type === 'buff' && 'attack' in t) applyStatModifier(s, t, target.p, e, source);
+  }
+  if (e.type === 'self-buff') {
+    const unit = p.board.find((u) => u.uid === sourceUid);
+    if (unit) applyStatModifier(s, unit, player, e, source);
   }
   if (e.type === 'summon') {
     for (let i = 0; i < e.amount; i++) {
@@ -461,13 +508,14 @@ function resolve(s: Game) {
       effectTargets(s, w.caster, w.card).some(
         (t) => t.p === w.target!.p && t.uid === w.target!.uid,
       ));
+  let sourceUid: number | undefined;
   if (w.card.type === 'MINION') {
-    summon(s, w.caster, w.card, w.commander, w.position);
+    sourceUid = summon(s, w.caster, w.card, w.commander, w.position);
     if (w.command) p.casts++;
   }
   if (e && validTarget) {
     if (battlecryFor(w.card)) note(s, `${p.name}'s ${w.card.name} triggers Battlecry`);
-    runEffect(s, w.caster, e, w.target, (w.position ?? p.board.length - 1) + 1, w.card);
+    runEffect(s, w.caster, e, w.target, (w.position ?? p.board.length - 1) + 1, w.card, sourceUid);
   } else if (e && targeted) note(s, `${w.card.name} effect skipped: no valid target`);
   if (w.card.type !== 'MINION') p.grave.push(w.card);
   note(s, `${p.name} resolves ${w.card.name}`);
@@ -492,6 +540,7 @@ function startTurn(s: Game) {
   if (s.winner === null && p.health <= 0) advance(s);
 }
 function advance(s: Game) {
+  expireTurnModifiers(s);
   const p = s.players[s.active];
   p.reserve = p.health > 0 ? Math.min(3, p.reserve + p.mana) : 0;
   p.mana = 0;
@@ -769,7 +818,10 @@ export function botAction(s: Game): Action | null {
   if (i >= 0) {
     const c = x.hand[i],
       targets = effectTargets(s, p, c);
-    const healing = effectFor(c)?.type === 'heal' || effectFor(c)?.type === 'buff';
+    const effect = effectFor(c);
+    const healing =
+      effect?.type === 'heal' ||
+      (effect?.type === 'buff' && effect.attack >= 0 && effect.health >= 0);
     const target = targets.find((t) => (healing ? t.p === p : t.p === enemy)) ?? targets[0];
     return { type: 'cast', p, index: i, target };
   }
