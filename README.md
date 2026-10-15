@@ -29,7 +29,7 @@ Dependencies are pinned, and package-lock.json is tracked. No images are stored 
 - Supabase paginated collection reads, email-link auth and transactional owner-scoped draft save/load are implemented behind configuration.
 - Local four-player turns, 40 health, seven slots, fatigue, regular/reserve mana, clockwise interrupt/pass windows and configurable timeouts, commander zones, successful-cast tax and reductions, combat, elimination and victory.
 - The starter decks contain 100 distinct supported cards, excluding King Krush in their command zones. They use Hunter and neutral cards. The starter sandbox bypasses external Wild validation to allow local rules testing.
-- Supported minion mechanics: Taunt, Divine Shield, Charge, Rush, Lifesteal, Windfury and Poisonous, where those are the card's complete mechanics. Explicit effects: Fireball, Arcane Intellect, Flamestrike, Elven Archer and Earthen Ring Farseer (including matching Core variants). Other effects are blocked. No card text is executed as instructions.
+- Supported minion mechanics: Taunt, Divine Shield, Charge, Rush, Lifesteal, Windfury and Poisonous, plus an explicit first batch of Battlecries and Deathrattles. The local engine supports 177 collection records, including matching Core variants. Fireball, Arcane Intellect and Flamestrike remain supported. See [trigger coverage and multiplayer rules](docs/TRIGGERS.md) for exact card coverage, targeting, death order and limitations. Other effects are blocked. No card text is executed as instructions.
 - Hero powers currently implemented: Mage, Priest, Hunter, Warlock and Warrior. Other classes remain draftable but their powers require implementation. No fabricated default effect substitutes for an unsupported card.
 - Testing lab: any candidate card into hand/board, health/mana/reserve/tax/reductions, turn advance, elimination, destination replacement, reset, priority decisions, detailed logs and deterministic JSON replay.
 - Independent engine and a server-side match adapter with authenticated seat binding, revision checks and hidden-hand/deck projections. This adapter is not deployed. There are no online rooms, networking, reconnection or server timers yet.
@@ -48,7 +48,7 @@ Connected organization: **HC**. Dedicated project: **HSC** (`voxjyzgkvhkxxomdsmg
 2. Existing migrations are already applied. Use new versioned migration files for later schema changes. Inspect `npx supabase --help` before using the CLI.
 3. Copy .env.example to .env.local. Set VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY to HSC's public connection values. Restart Vite.
 4. Configure Supabase Auth's site/redirect URL for the development origin. Use the app's connection settings to request an email sign-in link.
-5. For backend imports only, set SUPABASE_URL and SUPABASE_SECRET_KEY in your shell. Never put the secret under a VITE_ prefix, paste it into chat, or commit it. Run `npm run import:cards`. The importer can also load .env.local if supplied there; the file is ignored by Git.
+5. For backend imports only, set SUPABASE*URL and SUPABASE_SECRET_KEY in your shell. Never put the secret under a VITE* prefix, paste it into chat, or commit it. Run `npm run import:cards`. The importer can also load .env.local if supplied there; the file is ignored by Git.
 6. Run `node scripts/verify-cloud.mjs` for public API smoke checks. Owner isolation was verified on live HSC in a rolled-back fixture transaction using scripts/verify-owner-access.sql. Security advisors report zero findings. Actual email sign-in and UI cloud deck saving still need the user to sign in; no email was sent during setup.
 
 Tables: cards, decks, deck_cards, card_implementations and import_jobs. RLS is enabled on all tables. Public roles can read card metadata/implementation metadata. Deck rows and their contents require ownership. Import jobs and metadata writes are backend-only. The save_deck RPC is SECURITY INVOKER and saves draft contents atomically under RLS. Draft saves allow incomplete decks; match readiness is a separate validation step.
@@ -66,7 +66,7 @@ Live measurement after import: all five app tables and their indexes occupy 8,98
 - src/server/match.ts — future authoritative host boundary. Never host an online match by trusting browser state or client-chosen seat IDs.
 - src/App.tsx, src/style.css — deck builder, tabletop and developer controls.
 - scripts/import-cards.mjs — repeatable source/format fetch and backend-only upsert.
-- src/*.test.ts — engine rules, end-to-end simulated match, PostgreSQL RLS/RPC integration and server-seat tests.
+- src/\*.test.ts — engine rules, end-to-end simulated match, PostgreSQL RLS/RPC integration and server-seat tests.
 
 ## Remaining milestones
 

@@ -1,6 +1,13 @@
 import type { Card } from './cards';
 export type Target = { p: number; uid?: number };
-import { effectFor, supported } from './effects';
+import {
+  effectFor,
+  supported,
+  battlecryFor,
+  deathrattleFor,
+  targetFor,
+  type Effect,
+} from './effects';
 export { effectFor, supported } from './effects';
 export interface Unit {
   attacksRemaining: number;
@@ -180,27 +187,56 @@ function damage(s: Game, t: Target, n: number) {
   x.health -= n;
   return dealt;
 }
+/** Remove deaths in batches; queue their effects by summon ID (global order of play).
+ * New deaths join the tail, so an already queued batch finishes before chained effects. */
 function settle(s: Game) {
-  for (const p of s.players) {
-    p.board = p.board.filter((u) => {
-      if (u.health > 0) return true;
+  const queue: { player: number; unit: Unit; layout: number[] }[] = [];
+  while (true) {
+    for (const p of s.players)
+      if (p.health <= 0) {
+        p.board = [];
+        p.reserve = 0;
+      }
+    const alive = s.players.map((p, i) => (p.health > 0 ? i : -1)).filter((i) => i >= 0);
+    if (alive.length <= 1) {
+      s.winner = alive[0] ?? -1;
+      s.pending = null;
+      note(s, alive.length ? `${s.players[alive[0]].name} wins` : 'Draw');
+      return;
+    }
+    const deaths: typeof queue = [];
+    s.players.forEach((p, player) => {
+      const layout = p.board.map((u) => u.uid);
+      for (const unit of p.board) if (unit.health <= 0) deaths.push({ player, unit, layout });
+      p.board = p.board.filter((u) => u.health > 0);
+    });
+    deaths.sort((a, b) => a.unit.uid - b.unit.uid);
+    for (const entry of deaths) {
+      const p = s.players[entry.player],
+        u = entry.unit;
+      note(s, `${p.name}'s ${u.card.name} dies`);
       if (u.commander) {
         p.zone = 'command';
         p.replacement = true;
         note(s, `${u.card.name} returns to command zone (default replacement)`);
       } else p.grave.push(u.card);
-      return false;
-    });
-    if (p.health <= 0) {
-      p.board = [];
-      p.reserve = 0;
+      if (deathrattleFor(u.card)) queue.push(entry);
     }
-  }
-  const alive = s.players.map((p, i) => (p.health > 0 ? i : -1)).filter((i) => i >= 0);
-  if (alive.length <= 1) {
-    s.winner = alive[0] ?? -1;
-    s.pending = null;
-    note(s, alive.length ? `${s.players[alive[0]].name} wins` : 'Draw');
+    const next = queue.shift();
+    if (!next) return;
+    if (s.players[next.player].health <= 0) continue;
+    const { player, unit, layout } = next;
+    // Retain death slots while processing a batch, including tokens from earlier deaths.
+    const marker = layout.indexOf(unit.uid);
+    const right = new Set(layout.slice(marker + 1));
+    const board = s.players[player].board;
+    const rightIndex = board.findIndex((u) => right.has(u.uid));
+    const position = rightIndex < 0 ? board.length : rightIndex;
+    note(s, `${s.players[player].name}'s ${unit.card.name} triggers Deathrattle`);
+    const before = s.nextId;
+    runEffect(s, player, deathrattleFor(unit.card)!, undefined, position);
+    const summoned = board.filter((u) => u.uid >= before).map((u) => u.uid);
+    layout.splice(marker, 0, ...summoned);
   }
 }
 function summon(
@@ -225,36 +261,134 @@ function summon(
     attacksRemaining: c.mechanics?.includes('WINDFURY') ? 2 : 1,
   });
   if (commander) x.zone = 'board';
+  note(s, `${x.name} summons ${c.name} at position ${position + 1}`);
+}
+export function effectTargets(s: Game, player: number, card: Card): Target[] {
+  const rule = targetFor(effectFor(card));
+  if (!rule) return [];
+  return s.players.flatMap((p, index) =>
+    p.health <= 0
+      ? []
+      : [
+          ...(rule === 'friendly-minion' || (rule === 'enemy-hero' && index === player)
+            ? []
+            : [{ p: index }]),
+          ...(rule === 'enemy-hero' || (rule === 'friendly-minion' && index !== player)
+            ? []
+            : p.board.filter((u) => u.health > 0).map((u) => ({ p: index, uid: u.uid }))),
+        ],
+  );
+}
+export function effectTargetError(
+  s: Game,
+  player: number,
+  card: Card,
+  target?: Target,
+): string | null {
+  const rule = targetFor(effectFor(card));
+  if (!rule) return null;
+  const legal = effectTargets(s, player, card);
+  // A targeted Battlecry may be played without its effect if no target exists.
+  if (!legal.length && card.type === 'MINION') return null;
+  if (target && legal.some((t) => t.p === target.p && t.uid === target.uid)) return null;
+  return rule === 'friendly-minion'
+    ? 'Choose a friendly minion for the Battlecry'
+    : rule === 'enemy-hero'
+      ? 'Choose an enemy hero for the Battlecry'
+      : 'Choose a character target';
+}
+function runEffect(
+  s: Game,
+  player: number,
+  e: Effect,
+  target?: Target,
+  position = s.players[player].board.length,
+) {
+  const p = s.players[player];
+  if (e.type === 'draw') {
+    note(s, `${p.name} draws ${e.amount} card${e.amount === 1 ? '' : 's'}`);
+    for (let i = 0; i < e.amount && p.health > 0; i++) draw(s, player);
+  }
+  if ((e.type === 'damage' || e.type === 'heal' || e.type === 'buff') && target) {
+    const t = getTarget(s, target);
+    const name = 'card' in t ? `${s.players[target.p].name}'s ${t.card.name}` : `${t.name}'s hero`;
+    if (e.type === 'damage') note(s, `${name} takes ${damage(s, target, e.amount)} damage`);
+    if (e.type === 'heal') {
+      const before = t.health;
+      t.health = Math.min('maxHealth' in t ? t.maxHealth : 40, t.health + e.amount);
+      note(s, `${name} restores ${t.health - before} health`);
+    }
+    if (e.type === 'buff' && 'attack' in t) {
+      t.attack += e.attack;
+      t.health += e.health;
+      t.maxHealth += e.health;
+      note(s, `${name} gains +${e.attack}/+${e.health}`);
+    }
+  }
+  if (e.type === 'summon') {
+    for (let i = 0; i < e.amount; i++) {
+      if (p.board.length >= 7) {
+        note(s, `${e.token.name} summon skipped: battlefield full`);
+        break;
+      }
+      summon(s, player, e.token, false, Math.min(position + i, p.board.length));
+    }
+  }
+  if (e.type === 'heal-friendly') {
+    for (const t of [p, ...p.board])
+      t.health = Math.min('maxHealth' in t ? t.maxHealth : 40, t.health + e.amount);
+    note(s, `${p.name} restores up to ${e.amount} health to all friendly characters`);
+  }
+  if (e.type === 'random-enemy-hero') {
+    const enemies = s.players
+      .map((x, i) => (i !== player && x.health > 0 ? i : -1))
+      .filter((i) => i >= 0);
+    if (enemies.length) {
+      const enemy = enemies[random(s, enemies.length)];
+      note(
+        s,
+        `${s.players[enemy].name}'s hero takes ${damage(s, { p: enemy }, e.amount)} Deathrattle damage`,
+      );
+    }
+  }
+  if (e.type === 'wipe' || e.type === 'damage-all') {
+    // Snapshot before damage so every member receives the effect before deaths resolve.
+    const targets = s.players.flatMap((x, i) =>
+      x.health <= 0 || (e.type === 'wipe' && i === player)
+        ? []
+        : [
+            ...x.board.filter((u) => u.health > 0).map((u) => ({ p: i, uid: u.uid })),
+            ...(e.type === 'damage-all' && e.heroes ? [{ p: i }] : []),
+          ],
+    );
+    for (const t of targets) damage(s, t, e.amount);
+    note(
+      s,
+      `${e.amount} damage to ${e.type === 'wipe' ? 'all enemy minions' : e.heroes ? 'ALL characters' : 'all minions'}`,
+    );
+  }
 }
 function resolve(s: Game) {
   const w = s.pending!;
   s.pending = null;
   const p = s.players[w.caster];
+  // Validate against the pre-summon board: a minion cannot target itself with its Battlecry.
+  const e = effectFor(w.card);
+  const targeted = !!targetFor(e);
+  const validTarget =
+    !targeted ||
+    (!!w.target &&
+      effectTargets(s, w.caster, w.card).some(
+        (t) => t.p === w.target!.p && t.uid === w.target!.uid,
+      ));
   if (w.card.type === 'MINION') {
     summon(s, w.caster, w.card, w.commander, w.position);
     if (w.command) p.casts++;
   }
-  const e = effectFor(w.card);
-  if (e) {
-    if (e.type === 'draw') for (let i = 0; i < e.amount; i++) draw(s, w.caster);
-    if (e.type === 'damage' && w.target) damage(s, w.target, e.amount);
-    if (e.type === 'heal' && w.target) {
-      const t = getTarget(s, w.target);
-      t.health = Math.min('maxHealth' in t ? t.maxHealth : 40, t.health + e.amount);
-    }
-    if (e.type === 'buff' && w.target) {
-      const t = getTarget(s, w.target);
-      if ('attack' in t) {
-        t.attack += e.attack;
-        t.health += e.health;
-        t.maxHealth += e.health;
-      }
-    }
-    if (e.type === 'wipe')
-      for (let i = 0; i < 4; i++)
-        if (i !== w.caster)
-          for (const u of s.players[i].board) damage(s, { p: i, uid: u.uid }, e.amount);
-  }
+  if (e && validTarget) {
+    if (battlecryFor(w.card)) note(s, `${p.name}'s ${w.card.name} triggers Battlecry`);
+    runEffect(s, w.caster, e, w.target, (w.position ?? p.board.length - 1) + 1);
+  } else if (e && targeted) note(s, `${w.card.name} effect skipped: no valid target`);
   if (w.card.type !== 'MINION') p.grave.push(w.card);
   note(s, `${p.name} resolves ${w.card.name}`);
   settle(s);
@@ -279,7 +413,7 @@ function startTurn(s: Game) {
 }
 function advance(s: Game) {
   const p = s.players[s.active];
-  p.reserve = Math.min(3, p.reserve + p.mana);
+  p.reserve = p.health > 0 ? Math.min(3, p.reserve + p.mana) : 0;
   p.mana = 0;
   do {
     s.active = (s.active + 1) % 4;
@@ -380,6 +514,7 @@ export function applyAction(state: Game, a: Action): Game {
       note(s, `${p.name} passes`);
       if (!s.pending.queue.length) resolve(s);
     }
+    if (s.winner === null && s.players[s.active].health <= 0) advance(s);
     return s;
   }
   if (a.type === 'commander-destination') {
@@ -415,14 +550,10 @@ export function applyAction(state: Game, a: Action): Game {
       throw Error('Invalid minion placement');
     const cost = a.command ? commandCost(p) : Math.max(0, c.cost - p.reduction - p.handReduction);
     if (p.mana < cost) throw Error('Not enough regular mana');
-    const effect = effectFor(c);
-    if (effect && ['damage', 'heal', 'buff'].includes(effect.type)) {
-      if (!a.target) throw Error('Choose a target');
-      const t = getTarget(s, a.target);
-      if (effect.type === 'buff' && (!('attack' in t) || a.target.p !== a.p))
-        throw Error('Choose a friendly minion');
-    }
-    if (a.target) getTarget(s, a.target);
+    const targetError = effectTargetError(s, a.p, c, a.target);
+    if (targetError) throw Error(targetError);
+    const chosenTarget =
+      targetFor(effectFor(c)) && effectTargets(s, a.p, c).length ? a.target : undefined;
     p.mana -= cost;
     if (c.id === p.commander.id) p.replacement = false;
     if (!a.command) p.hand.splice(a.index!, 1);
@@ -437,7 +568,7 @@ export function applyAction(state: Game, a: Action): Game {
       command: !!a.command,
       commander: c.id === p.commander.id,
       queue,
-      target: a.target,
+      target: chosenTarget,
       position: a.position,
     };
     note(s, `${p.name} casts ${c.name} for ${cost}`);
@@ -498,6 +629,7 @@ export function applyAction(state: Game, a: Action): Game {
     note(s, `${p.name} uses class power`);
     settle(s);
   } else throw Error('Invalid action');
+  if (s.winner === null && s.players[s.active].health <= 0) advance(s);
   return s;
 }
 export function debugAction(state: Game, a: DebugAction): Game {
@@ -543,15 +675,19 @@ export function botAction(s: Game): Action | null {
         return { type: 'attack', p, uid: u.uid, target: { p: enemy, uid: t?.uid } };
     }
   const i = x.hand.findIndex(
-    (c) => supported(c) && c.cost <= x.mana && (c.type !== 'MINION' || x.board.length < 7),
+    (c) =>
+      supported(c) &&
+      c.cost <= x.mana &&
+      (c.type !== 'MINION' || x.board.length < 7) &&
+      (!targetFor(effectFor(c)) || c.type === 'MINION' || effectTargets(s, p, c).length > 0),
   );
-  if (i >= 0)
-    return {
-      type: 'cast',
-      p,
-      index: i,
-      target: effectFor(x.hand[i])?.type === 'buff' ? { p, uid: x.board[0]?.uid } : { p: enemy },
-    };
+  if (i >= 0) {
+    const c = x.hand[i],
+      targets = effectTargets(s, p, c);
+    const healing = effectFor(c)?.type === 'heal' || effectFor(c)?.type === 'buff';
+    const target = targets.find((t) => (healing ? t.p === p : t.p === enemy)) ?? targets[0];
+    return { type: 'cast', p, index: i, target };
+  }
   return { type: 'end', p };
 }
 export interface Replay {

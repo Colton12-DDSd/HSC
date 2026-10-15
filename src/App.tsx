@@ -55,9 +55,12 @@ import {
   commandCost,
   replay,
   effectFor,
+  effectTargets,
+  effectTargetError,
   attackError,
   attackReadinessError,
 } from './engine';
+import { targetFor, deathrattleFor } from './effects';
 import { db, saveCloud, loadCloud, download } from './storage';
 const empty: Deck = {
   version: 1,
@@ -211,7 +214,6 @@ export default function App() {
       position,
       target,
     });
-    cancelPlacement();
   }
   function positionAt(x: number, y: number): number | null {
     const element = document.elementFromPoint(x, y);
@@ -314,6 +316,11 @@ export default function App() {
     target.uid === undefined
       ? undefined
       : game?.players[target.p].board.find((unit) => unit.uid === target.uid);
+  const placingTargets = game && placing ? effectTargets(game, 0, placing.card) : [];
+  const isEffectTarget = (candidate: Target) =>
+    placingTargets.some((t) => t.p === candidate.p && t.uid === candidate.uid);
+  const placingTargetError =
+    game && placing ? effectTargetError(game, 0, placing.card, target) : null;
   const targetLabel = targetUnit
     ? `${game?.players[target.p].name}'s ${targetUnit.card.name} (${targetUnit.health}/${targetUnit.maxHealth} HP)`
     : `${game?.players[target.p].name ?? 'Opponent'}'s hero`;
@@ -996,7 +1003,7 @@ export default function App() {
                         >
                           <div className="player-heading">
                             <button
-                              className={`hero ${target.p === i && target.uid === undefined ? 'targeted' : ''} ${selected !== undefined && i !== 0 ? (attackError(game, 0, selected, { p: i }) ? 'attack-blocked' : 'attackable') : ''}`}
+                              className={`hero ${isEffectTarget({ p: i }) ? 'effect-target' : ''} ${target.p === i && target.uid === undefined ? 'targeted' : ''} ${selected !== undefined && i !== 0 ? (attackError(game, 0, selected, { p: i }) ? 'attack-blocked' : 'attackable') : ''}`}
                               aria-label={`${p.name}'s hero, ${p.health} health`}
                               title={
                                 selected !== undefined && i !== 0
@@ -1127,13 +1134,15 @@ export default function App() {
                                   {u ? (
                                     <button
                                       key={u.uid}
-                                      className={`unit ${selected === u.uid ? 'selected' : ''} ${i === 0 ? (canAttack ? 'can-attack' : 'cannot-attack') : ''} ${target.uid === u.uid ? 'targeted' : ''} ${u.health < u.maxHealth ? 'damaged' : ''} ${u.card.mechanics?.includes('TAUNT') ? 'taunt' : ''} ${selected !== undefined && i !== 0 ? (attackError(game, 0, selected, { p: i, uid: u.uid }) ? 'attack-blocked' : 'attackable') : ''}`}
+                                      className={`unit ${isEffectTarget({ p: i, uid: u.uid }) ? 'effect-target' : ''} ${selected === u.uid ? 'selected' : ''} ${i === 0 ? (canAttack ? 'can-attack' : 'cannot-attack') : ''} ${target.uid === u.uid ? 'targeted' : ''} ${u.health < u.maxHealth ? 'damaged' : ''} ${u.card.mechanics?.includes('TAUNT') ? 'taunt' : ''} ${selected !== undefined && i !== 0 ? (attackError(game, 0, selected, { p: i, uid: u.uid }) ? 'attack-blocked' : 'attackable') : ''}`}
                                       aria-label={`${p.name}'s ${u.card.name}, minion ${j + 1}, ${u.attack} attack, ${u.health} of ${u.maxHealth} health${u.card.mechanics?.includes('TAUNT') ? ', Taunt' : ''}${i === 0 ? `, ${attackStatus}` : ''}`}
                                       title={`${u.card.name} · ${i === 0 ? `${attackStatus} · ` : ''}${u.health}/${u.maxHealth} health · ${Math.max(0, u.maxHealth - u.health)} damage taken · ${clean(u.card.text)}${selected !== undefined && i !== 0 ? ` · ${attackError(game, 0, selected, { p: i, uid: u.uid }) ?? 'Click to attack this minion'}` : ''}`}
                                       onClick={() =>
-                                        i === 0
-                                          ? chooseAttacker(u.uid)
-                                          : chooseTargetOrAttack({ p: i, uid: u.uid })
+                                        placing && targetFor(effectFor(placing.card))
+                                          ? setTarget({ p: i, uid: u.uid })
+                                          : i === 0
+                                            ? chooseAttacker(u.uid)
+                                            : chooseTargetOrAttack({ p: i, uid: u.uid })
                                       }
                                       onContextMenu={(e) => {
                                         e.preventDefault();
@@ -1160,6 +1169,15 @@ export default function App() {
                                       </span>
                                       {u.card.mechanics?.includes('TAUNT') ? (
                                         <small className="taunt-label">Taunt</small>
+                                      ) : null}
+                                      {deathrattleFor(u.card) ? (
+                                        <small
+                                          className="deathrattle-symbol"
+                                          title="Deathrattle: triggers when this minion dies"
+                                          aria-label="Deathrattle"
+                                        >
+                                          ☠
+                                        </small>
                                       ) : null}
                                       {u.health < u.maxHealth ? (
                                         <small
@@ -1195,6 +1213,19 @@ export default function App() {
                     <div className="placement-instructions" role="status">
                       <span>
                         Place <b>{placing.card.name}</b>: release or click a + between minions.
+                        {targetFor(effectFor(placing.card)) ? (
+                          <>
+                            <br />
+                            {placingTargets.length ? (
+                              <>
+                                Battlecry: click a blue-highlighted target before placing.{' '}
+                                {placingTargetError ?? `Target: ${targetLabel}`}
+                              </>
+                            ) : (
+                              'No valid Battlecry targets: the minion will enter without its effect.'
+                            )}
+                          </>
+                        ) : null}
                       </span>
                       <button onClick={cancelPlacement}>
                         Cancel <small>Esc</small>
@@ -1278,7 +1309,7 @@ export default function App() {
                       YOUR HAND{' '}
                       <span>
                         Drag minions onto your board, or click one then a + position. Spells use
-                        your selected target.
+                        your selected target. Targeted Battlecries use that target too.
                       </span>
                     </div>
                     <div>
