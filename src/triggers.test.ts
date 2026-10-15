@@ -97,14 +97,14 @@ describe('Battlecry effects', () => {
     // An old selected target cannot narrow this untargeted effect.
     expect(applyAction(s, { type: 'cast', p: 0, index: 0, target: { p: 0 } })).toEqual(n);
   });
-  it('Darkscale Healer heals only friendly characters and caps their health', () => {
+  it('Darkscale Healer grows hero health while healing only friendly characters', () => {
     let s = summon(setup(), 0, 'CS2_182');
     s = summon(s, 1, 'CS2_182');
     s.players[0].health = 39;
     s.players[0].board[0].health = 2;
     s.players[1].board[0].health = 2;
     const n = cast(s, 'DS1_055');
-    expect(n.players[0].health).toBe(40);
+    expect(n.players[0].health).toBe(41);
     expect(n.players[0].board[0].health).toBe(4);
     expect(n.players[1].board[0].health).toBe(2);
   });
@@ -388,5 +388,91 @@ describe('Untargeted multiplayer enemy effects', () => {
     const n = cast(s, 'EX1_593');
     expect(n.players.map((p) => p.health)).toEqual([40, 0, 0, 0]);
     expect(n.winner).toBe(0);
+  });
+});
+
+describe('Hero health can grow beyond the starting 40', () => {
+  it.each([
+    ['EX1_011', 2],
+    ['CS2_117', 3],
+  ] as const)('%s heals a hero above 40 and above 1000', (id, amount) => {
+    let s = setup();
+    s = cast(s, id, { p: 0 });
+    expect(s.players[0].health).toBe(40 + amount);
+    s = cast(s, id, { p: 0 });
+    expect(s.players[0].health).toBe(40 + 2 * amount);
+    s.players[0].health = 1000;
+    s = cast(s, id, { p: 0 });
+    expect(s.players[0].health).toBe(1000 + amount);
+  });
+  it('group healing grows the hero while respecting each minion maximum', () => {
+    const s = summon(setup(), 0, 'CS2_182');
+    s.players[0].health = 75;
+    s.players[0].board[0].health = 4;
+    const n = cast(s, 'DS1_055');
+    expect(n.players[0].health).toBe(77);
+    expect(n.players[0].board[0].health).toBe(5);
+    expect(n.players[1].health).toBe(40);
+  });
+  it('Priest power heals above 40 but still caps minion health', () => {
+    let s = setup();
+    s.players[0].class = 'PRIEST';
+    s = applyAction(s, { type: 'power', p: 0, target: { p: 0 } });
+    expect(s.players[0].health).toBe(42);
+    for (let i = 0; i < 4; i++) s = applyAction(s, { type: 'end', p: s.active });
+    s = applyAction(s, { type: 'power', p: 0, target: { p: 0 } });
+    expect(s.players[0].health).toBe(44);
+    let minion = summon(setup(), 0, 'CS2_182');
+    minion.players[0].class = 'PRIEST';
+    minion.players[0].board[0].health = 4;
+    minion = applyAction(minion, {
+      type: 'power',
+      p: 0,
+      target: { p: 0, uid: minion.players[0].board[0].uid },
+    });
+    expect(minion.players[0].board[0].health).toBe(5);
+  });
+  it('attacking Lifesteal increases its controller health beyond 40', () => {
+    const lifesteal = cards.find((c) => supported(c) && c.mechanics?.includes('LIFESTEAL'))!;
+    let s = debugAction(setup(), { type: 'summon', p: 0, card: lifesteal });
+    s.players[0].board[0].ready = true;
+    s.players[0].health = 1000;
+    const attack = s.players[0].board[0].attack;
+    s = applyAction(s, { type: 'attack', p: 0, uid: s.players[0].board[0].uid, target: { p: 1 } });
+    expect(s.players[0].health).toBe(1000 + attack);
+    expect(s.players[1].health).toBe(40 - attack);
+  });
+  it('defending Lifesteal can grow the defending hero above 40', () => {
+    const lifesteal = cards.find((c) => supported(c) && c.mechanics?.includes('LIFESTEAL'))!;
+    let s = summon(setup(), 0, 'CS2_182');
+    s = debugAction(s, { type: 'summon', p: 1, card: lifesteal });
+    s.players[0].board[0].ready = true;
+    const attack = s.players[1].board[0].attack;
+    s = applyAction(s, {
+      type: 'attack',
+      p: 0,
+      uid: s.players[0].board[0].uid,
+      target: { p: 1, uid: s.players[1].board[0].uid },
+    });
+    expect(s.players[1].health).toBe(40 + attack);
+  });
+  it('Divine Shield absorption grants no Lifesteal health', () => {
+    const lifesteal = cards.find((c) => supported(c) && c.mechanics?.includes('LIFESTEAL'))!;
+    let s = debugAction(setup(), { type: 'summon', p: 0, card: lifesteal });
+    s = summon(s, 1, 'EX1_008');
+    s.players[0].board[0].ready = true;
+    s = applyAction(s, {
+      type: 'attack',
+      p: 0,
+      uid: s.players[0].board[0].uid,
+      target: { p: 1, uid: s.players[1].board[0].uid },
+    });
+    expect(s.players[0].health).toBe(40);
+  });
+  it('healing cannot revive an eliminated hero', () => {
+    const s = setup();
+    s.players[1].health = 0;
+    expect(() => cast(s, 'CS2_117', { p: 1 })).toThrow(/target/);
+    expect(s.players[1].health).toBe(0);
   });
 });

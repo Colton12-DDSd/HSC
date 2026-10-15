@@ -59,3 +59,7 @@ New starter games include all 12 supported Battlecry minions and all 9 supported
 ## In-game inspection
 
 Hand cards have a separate Inspect button and a right-click preview. Right-click any battlefield minion or commander to open its larger artwork and readable card text. Battlefield previews include current attack, current/max health, damage taken, and active Divine Shield. Use the preview's target button to select a minion for a spell/ability, or to confirm a waiting Battlecry target. Inspection does not play, attack, or spend mana. Local bots and the interruption timer pause until the preview closes. Escape, Back to game, the close button, or the backdrop close it. Keyboard focus stays inside the dialog and returns to its previous control afterward. Collection previews retain deckbuilding actions; in-game previews show game actions.
+
+## Hero health and healing
+
+Heroes start at 40 health and have no gameplay healing cap. Targeted healing, friendly group healing, Priest power, and both attacking and defending Lifesteal can increase a living hero above 40, including repeated gains beyond 1000. Minion healing still stops at that minion's current maximum health, including permanent health buffs. Divine Shield absorption grants no Lifesteal healing. Eliminated heroes cannot be healed back into play.

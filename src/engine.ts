@@ -172,6 +172,15 @@ export function attackError(
     return `${s.players[target.p].name} has Taunt: attack one of their Taunt minions first`;
   return null;
 }
+/** Heroes may grow above their starting 40; minions heal only to their current maximum. */
+function heal(target: Player | Unit, amount: number) {
+  const before = target.health;
+  target.health =
+    'maxHealth' in target
+      ? Math.min(target.maxHealth, target.health + amount)
+      : target.health + amount;
+  return target.health - before;
+}
 function damage(s: Game, t: Target, n: number) {
   const x = getTarget(s, t);
   const dealt = n;
@@ -314,9 +323,7 @@ function runEffect(
     const name = 'card' in t ? `${s.players[target.p].name}'s ${t.card.name}` : `${t.name}'s hero`;
     if (e.type === 'damage') note(s, `${name} takes ${damage(s, target, e.amount)} damage`);
     if (e.type === 'heal') {
-      const before = t.health;
-      t.health = Math.min('maxHealth' in t ? t.maxHealth : 40, t.health + e.amount);
-      note(s, `${name} restores ${t.health - before} health`);
+      note(s, `${name} restores ${heal(t, e.amount)} health`);
     }
     if (e.type === 'buff' && 'attack' in t) {
       t.attack += e.attack;
@@ -335,8 +342,7 @@ function runEffect(
     }
   }
   if (e.type === 'heal-friendly') {
-    for (const t of [p, ...p.board])
-      t.health = Math.min('maxHealth' in t ? t.maxHealth : 40, t.health + e.amount);
+    for (const t of [p, ...p.board]) heal(t, e.amount);
     note(s, `${p.name} restores up to ${e.amount} health to all friendly characters`);
   }
   if (e.type === 'enemy-heroes') {
@@ -594,13 +600,12 @@ export function applyAction(state: Game, a: Action): Game {
     if ('attack' in t) {
       const retaliation = damage(s, { p: a.p, uid: u?.uid }, t.attack);
       if (retaliation > 0 && t.card.mechanics?.includes('POISONOUS') && u) u.health = 0;
-      if (t.card.mechanics?.includes('LIFESTEAL'))
-        enemy.health = Math.min(40, enemy.health + retaliation);
+      if (t.card.mechanics?.includes('LIFESTEAL')) heal(enemy, retaliation);
     }
     if (u) {
       u.attacksRemaining--;
       u.ready = u.attacksRemaining > 0;
-      if (u.card.mechanics?.includes('LIFESTEAL')) p.health = Math.min(40, p.health + dealt);
+      if (u.card.mechanics?.includes('LIFESTEAL')) heal(p, dealt);
     } else p.heroReady = false;
     note(
       s,
@@ -618,7 +623,7 @@ export function applyAction(state: Game, a: Action): Game {
     if (p.class === 'MAGE') damage(s, a.target!, 1);
     if (p.class === 'PRIEST') {
       const t = getTarget(s, a.target!);
-      t.health = Math.min('maxHealth' in t ? t.maxHealth : 40, t.health + 2);
+      heal(t, 2);
     }
     if (p.class === 'HUNTER') runEffect(s, a.p, { type: 'enemy-heroes', amount: 2 });
     if (p.class === 'WARLOCK') {

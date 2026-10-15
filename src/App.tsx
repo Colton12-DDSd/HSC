@@ -1054,7 +1054,7 @@ export default function App() {
                   {tab === 'lab' ? 'DEVELOPER SANDBOX' : 'PULL UP A CHAIR'}
                 </div>
                 <h1>{tab === 'lab' ? 'The testing lab.' : 'The command table.'}</h1>
-                <p>Clockwise turns · 40 health · 3 reserve · last player standing</p>
+                <p>Clockwise turns · start at 40 health · unlimited hero healing · 3 reserve</p>
               </div>
               <div className="play-controls">
                 <button onClick={() => setPaused((p) => !p)}>

@@ -951,8 +951,12 @@ header {
   position: absolute;
   bottom: -6px;
   right: -5px;
-  border-radius: 50%;
-  width: 23px;
+  border-radius: 12px;
+  min-width: 23px;
+  width: max-content;
+  padding: 0 4px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
   height: 23px;
   background: #803c32;
   font-size: 12px;
