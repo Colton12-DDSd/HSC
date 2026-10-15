@@ -441,6 +441,7 @@ describe('Hero health can grow beyond the starting 40', () => {
     s = applyAction(s, { type: 'attack', p: 0, uid: s.players[0].board[0].uid, target: { p: 1 } });
     expect(s.players[0].health).toBe(1000 + attack);
     expect(s.players[1].health).toBe(40 - attack);
+    expect(s.log.at(-1)).toContain(`Lifesteal restores ${attack} health (1000 → ${1000 + attack})`);
   });
   it('defending Lifesteal can grow the defending hero above 40', () => {
     const lifesteal = cards.find((c) => supported(c) && c.mechanics?.includes('LIFESTEAL'))!;
@@ -455,6 +456,11 @@ describe('Hero health can grow beyond the starting 40', () => {
       target: { p: 1, uid: s.players[1].board[0].uid },
     });
     expect(s.players[1].health).toBe(40 + attack);
+    expect(
+      s.log.some((line) =>
+        line.includes(`Lifesteal restores ${attack} health (40 → ${40 + attack})`),
+      ),
+    ).toBe(true);
   });
   it('Divine Shield absorption grants no Lifesteal health', () => {
     const lifesteal = cards.find((c) => supported(c) && c.mechanics?.includes('LIFESTEAL'))!;
@@ -468,6 +474,29 @@ describe('Hero health can grow beyond the starting 40', () => {
       target: { p: 1, uid: s.players[1].board[0].uid },
     });
     expect(s.players[0].health).toBe(40);
+    expect(s.log.at(-1)).not.toContain('Lifesteal restores');
+  });
+  it('logs Grafted Knight healing including a lasting Cleansing Cleric bonus', () => {
+    let s = summon(setup(), 0, 'BE_285');
+    s.players[0].health = 26;
+    s.players[0].effects = [
+      {
+        kind: 'healing-bonus',
+        amount: 2,
+        sourceCardId: 'CATA_216',
+        sourceName: 'Cleansing Cleric',
+      },
+    ];
+    s.players[0].board[0].ready = true;
+    s = summon(s, 3, 'BT_720');
+    s = applyAction(s, {
+      type: 'attack',
+      p: 0,
+      uid: s.players[0].board[0].uid,
+      target: { p: 3, uid: s.players[3].board[0].uid },
+    });
+    expect(s.players[0].health).toBe(31);
+    expect(s.log.at(-1)).toContain("You's Grafted Knight Lifesteal restores 5 health (26 → 31)");
   });
   it('healing cannot revive an eliminated hero', () => {
     const s = setup();

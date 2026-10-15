@@ -12,6 +12,8 @@ import {
 import {
   BookOpen,
   Swords,
+  Sword,
+  Droplet,
   FlaskConical,
   Crown,
   Search,
@@ -77,6 +79,8 @@ const pretty = (s: string) =>
     .toLowerCase()
     .replace(/_/g, ' ')
     .replace(/\b\w/g, (c) => c.toUpperCase());
+const statTone = (value: number, base: number) =>
+  value > base ? 'increased' : value < base ? 'decreased' : 'normal';
 const signed = (value: number) => `${value >= 0 ? '+' : ''}${value}`;
 type Placement = { card: Card; index?: number; command?: boolean };
 type DragSession = { source: Placement; x: number; y: number; moved: boolean };
@@ -1130,9 +1134,9 @@ export default function App() {
                               }}
                             >
                               <span>{['✦', '♜', '❖', '☽'][i]}</span>
-                              <b>
+                              <b className={`stat-${statTone(p.health, 40)}`}>
                                 {p.health}
-                                <small>♥</small>
+                                <Droplet size={10} aria-hidden="true" />
                               </b>
                             </button>
                             <div>
@@ -1294,24 +1298,42 @@ export default function App() {
                                         openInspect(u.card, true, { p: i, uid: u.uid });
                                       }}
                                     >
-                                      <img
-                                        src={image(u.card)}
-                                        alt={u.card.name}
-                                        draggable={false}
-                                      />
+                                      <span className="minion-portrait">
+                                        <img
+                                          src={image(u.card)}
+                                          alt={u.card.name}
+                                          draggable={false}
+                                        />
+                                      </span>
                                       {i === 0 ? (
                                         <small className="attack-status" title={attackStatus}>
                                           {canAttack ? '⚔ ' : ''}
                                           {attackLabel}
                                         </small>
                                       ) : null}
-                                      <span>
-                                        <span>{u.attack} ⚔</span>{' '}
-                                        <span className="minion-health">
-                                          {u.health}/{u.maxHealth} ♥
+                                      <span className="minion-stats">
+                                        <span
+                                          className={`minion-stat minion-attack stat-${statTone(u.attack, u.card.attack ?? 0)}`}
+                                          title={`Attack ${u.attack} · printed base ${u.card.attack ?? 0}`}
+                                        >
+                                          <Sword className="stat-icon" aria-hidden="true" />
+                                          <b>{u.attack}</b>
                                         </span>
-                                        {u.shield ? ' ◇' : ''}
+                                        <span
+                                          className={`minion-stat minion-health stat-${statTone(u.health, u.card.health ?? 1)}`}
+                                          title={`Health ${u.health}/${u.maxHealth} · printed base ${u.card.health ?? 1}`}
+                                        >
+                                          <Droplet className="stat-icon" aria-hidden="true" />
+                                          <b>{u.health}</b>
+                                        </span>
                                       </span>
+                                      {u.shield ? (
+                                        <Shield
+                                          className="divine-shield-mark"
+                                          size={13}
+                                          aria-label="Divine Shield active"
+                                        />
+                                      ) : null}
                                       {u.card.mechanics?.includes('TAUNT') ? (
                                         <small className="taunt-label">Taunt</small>
                                       ) : null}
@@ -1401,8 +1423,8 @@ export default function App() {
                     </div>
                   ) : null}
                   <p className="inspection-hint">
-                    Right-click a minion or commander to inspect it. Use the Inspect button below a
-                    hand card.
+                    Right-click a minion or commander to inspect it. Stat colors compare printed
+                    base: white = normal, red = lower, green = higher.
                   </p>
                   <div className="battle-controls">
                     <span>

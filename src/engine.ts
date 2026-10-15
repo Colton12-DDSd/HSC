@@ -736,21 +736,30 @@ export function applyAction(state: Game, a: Action): Game {
     const t = getTarget(s, a.target),
       enemy = s.players[a.target.p];
     const dealt = damage(s, a.target, atk);
+    const lifestealHeals: string[] = [];
+    const restoreLifesteal = (owner: Player, source: Unit, amount: number) => {
+      const restored = heal(owner, amount, owner);
+      if (restored > 0)
+        lifestealHeals.push(
+          `${owner.name}'s ${source.card.name} Lifesteal restores ${restored} health (${owner.health - restored} → ${owner.health})`,
+        );
+    };
     if (dealt > 0 && u?.card.mechanics?.includes('POISONOUS') && 'attack' in t) t.health = 0;
     if ('attack' in t) {
       const retaliation = damage(s, { p: a.p, uid: u?.uid }, t.attack);
       if (retaliation > 0 && t.card.mechanics?.includes('POISONOUS') && u) u.health = 0;
-      if (t.card.mechanics?.includes('LIFESTEAL')) heal(enemy, retaliation, enemy);
+      if (t.card.mechanics?.includes('LIFESTEAL')) restoreLifesteal(enemy, t, retaliation);
     }
     if (u) {
       u.attacksRemaining--;
       u.ready = u.attacksRemaining > 0;
-      if (u.card.mechanics?.includes('LIFESTEAL')) heal(p, dealt, p);
+      if (u.card.mechanics?.includes('LIFESTEAL')) restoreLifesteal(p, u, dealt);
     } else p.heroReady = false;
     note(
       s,
       `${u?.card.name ?? p.name} attacks ${'card' in t ? `${enemy.name}'s ${t.card.name}` : `${enemy.name}'s hero`} for ${dealt}${'card' in t ? `; defender ${Math.max(0, t.health)}/${t.maxHealth} health` : ''}${u ? `; attacker ${Math.max(0, u.health)}/${u.maxHealth} health` : ''}`,
     );
+    lifestealHeals.forEach((message) => note(s, message));
     settle(s);
   } else if (a.type === 'power') {
     if (p.powerUsed || p.mana < 2) throw Error('Hero power unavailable');
