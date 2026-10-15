@@ -456,7 +456,15 @@ export function createGame(
                 )
                 .map((c) => [c.name, c]),
             ).values(),
-          ].slice(0, 100)),
+          ]
+            // Keep every implemented trigger family in the test deck before filling
+            // remaining slots; source-file ordering used to exclude later expansions.
+            .sort(
+              (a, b) =>
+                Number(!battlecryFor(a) && !deathrattleFor(a)) -
+                Number(!battlecryFor(b) && !deathrattleFor(b)),
+            )
+            .slice(0, 100)),
     ]);
     const p: Player = {
       name: ['You', 'Ember', 'Thorne', 'Lyra'][i],

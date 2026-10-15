@@ -51,3 +51,7 @@ The registry is explicit and shared by collection support labels, bots, and game
 Automated coverage includes all effect families, direct summons versus plays, interruption, invalid/missing targets, healing caps, buffing, placement, full boards, simultaneous and chained deaths, Divine Shield, fatigue, commander replacement, elimination, bots, and deterministic replay. Browser verification covers a targeted Cleric buff and Haunted Creeper's two token summons.
 
 Card text and stats are taken from the repository's imported metadata snapshot; the [official card library](https://hearthstone.blizzard.com/en-us/cards?set=wild&viewMode=table) is the reference for card identities and keyword text. Multiplayer choices and queue semantics above are documented project rules. Cloud implementation statuses remain the original import snapshot until a future metadata sync; runtime labels use the current local registry.
+
+## Starter test decks
+
+New starter games include all 12 supported Battlecry minions and all 9 supported Deathrattle minions by name before filling the remaining slots. All four players receive 100 singleton cards, excluding their commander, then their decks are shuffled normally. Opening hands are not fixed. Custom decks use only the supplied cards. Existing matches retain their current decks; use **New starter game** to get the updated mix.
