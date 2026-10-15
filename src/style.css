@@ -1130,6 +1130,60 @@ header {
 .unit.ready {
   box-shadow: 0 0 6px #79b26a77;
 }
+.unit.damaged .minion-health {
+  color: #ff9f91;
+  font-weight: 700;
+}
+.damage-badge,
+.taunt-label {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: 4px;
+  padding: 2px 3px;
+  font-size: 8px;
+  line-height: 1.1;
+}
+.damage-badge {
+  right: 1px;
+  top: 23px;
+  color: #ffe4d9;
+  background: #913c35;
+  border: 1px solid #d37b68;
+}
+.taunt-label {
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #d9e3ca;
+  background: #344934ee;
+  border: 1px solid #9cae83;
+  font-size: 7px;
+}
+.unit.taunt {
+  border: 2px solid #a5b28d;
+}
+.unit.attackable,
+.hero.attackable {
+  outline: 2px solid #8bcb88;
+  outline-offset: 2px;
+  box-shadow: 0 0 12px #87bf7877;
+  cursor: crosshair;
+}
+.unit.attackable:hover,
+.hero.attackable:hover {
+  outline-color: #e3dfa0;
+  box-shadow: 0 0 17px #d4bd7b88;
+}
+.unit.attack-blocked,
+.hero.attack-blocked {
+  filter: saturate(0.5);
+  opacity: 0.65;
+}
+.combat-instructions {
+  background: #273b27;
+  color: #bed6ab;
+}
 .selected,
 .targeted {
   outline: 2px solid #e1c86e !important;

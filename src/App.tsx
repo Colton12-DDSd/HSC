@@ -55,6 +55,7 @@ import {
   commandCost,
   replay,
   effectFor,
+  attackError,
 } from './engine';
 import { db, saveCloud, loadCloud, download } from './storage';
 const empty: Deck = {
@@ -168,13 +169,16 @@ export default function App() {
     setHoverPosition(null);
   }
   useEffect(() => {
-    if (!placing) return;
+    if (!placing && selected === undefined) return;
     const cancel = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') cancelPlacement();
+      if (event.key === 'Escape') {
+        cancelPlacement();
+        setSelected(undefined);
+      }
     };
     window.addEventListener('keydown', cancel);
     return () => window.removeEventListener('keydown', cancel);
-  }, [placing]);
+  }, [placing, selected]);
   function placementError(source: Placement) {
     if (!game || game.winner !== null || game.players[0].health <= 0) return 'No active match';
     if (game.active !== 0 || game.pending) return 'Wait for your turn and finish priority first';
@@ -304,6 +308,52 @@ export default function App() {
   const errors = useMemo(() => validateDeck(deck, cards), [deck, cards]);
   const deckCards = deck.cards.map((id) => map.get(id)).filter((c): c is Card => !!c);
   const commander = map.get(deck.commander ?? '');
+  const attackingUnit = game?.players[0].board.find((unit) => unit.uid === selected);
+  const targetUnit =
+    target.uid === undefined
+      ? undefined
+      : game?.players[target.p].board.find((unit) => unit.uid === target.uid);
+  const targetLabel = targetUnit
+    ? `${game?.players[target.p].name}'s ${targetUnit.card.name} (${targetUnit.health}/${targetUnit.maxHealth} HP)`
+    : `${game?.players[target.p].name ?? 'Opponent'}'s hero`;
+  const selectedAttackError =
+    game && selected !== undefined
+      ? attackError(game, 0, selected, target)
+      : 'Select a ready friendly minion first';
+  function chooseAttacker(uid: number) {
+    if (!game) return;
+    const unit = game.players[0].board.find((u) => u.uid === uid);
+    if (game.active !== 0 || game.pending || game.winner !== null) {
+      setToast('Wait for your turn and finish priority first');
+      return;
+    }
+    if (!unit?.ready || unit.attack <= 0) {
+      setToast(
+        `${unit?.card.name ?? 'This minion'} cannot attack yet: exhausted, summoning sickness, or no attack`,
+      );
+      return;
+    }
+    cancelPlacement();
+    setSelected((current) => (current === uid ? undefined : uid));
+  }
+  function chooseTargetOrAttack(next: Target) {
+    if (!game || selected === undefined || next.p === 0) {
+      setTarget(next);
+      return;
+    }
+    const error = attackError(game, 0, selected, next);
+    if (error) {
+      setToast(error);
+      return;
+    }
+    const resolved = dispatch({ type: 'attack', p: 0, uid: selected, target: next });
+    if (resolved)
+      setTarget(
+        next.uid !== undefined && !resolved.players[next.p].board.some((u) => u.uid === next.uid)
+          ? { p: next.p }
+          : next,
+      );
+  }
   const selectedNames = new Set(
     [...deckCards, ...(commander ? [commander] : [])].map((card) => card.name),
   );
@@ -401,8 +451,14 @@ export default function App() {
         : applyAction(game, a as Action);
       record.current?.actions.push(a);
       setGame(n);
+      if (
+        target.uid !== undefined &&
+        !n.players[target.p].board.some((unit) => unit.uid === target.uid)
+      )
+        setTarget({ p: target.p });
       setSelected(undefined);
       cancelPlacement();
+      return n;
     } catch (e) {
       setToast((e as Error).message);
     }
@@ -944,9 +1000,19 @@ export default function App() {
                         >
                           <div className="player-heading">
                             <button
-                              className={`hero ${target.p === i && target.uid === undefined ? 'targeted' : ''}`}
-                              title="Select hero as target"
-                              onClick={() => setTarget({ p: i })}
+                              className={`hero ${target.p === i && target.uid === undefined ? 'targeted' : ''} ${selected !== undefined && i !== 0 ? (attackError(game, 0, selected, { p: i }) ? 'attack-blocked' : 'attackable') : ''}`}
+                              aria-label={`${p.name}'s hero, ${p.health} health`}
+                              title={
+                                selected !== undefined && i !== 0
+                                  ? (attackError(game, 0, selected, { p: i }) ??
+                                    `Attack ${p.name}'s hero`)
+                                  : `Select ${p.name}'s hero as target`
+                              }
+                              onClick={() => chooseTargetOrAttack({ p: i })}
+                              onContextMenu={(event) => {
+                                event.preventDefault();
+                                setTarget({ p: i });
+                              }}
                             >
                               <span>{['✦', '♜', '❖', '☽'][i]}</span>
                               <b>
@@ -1025,12 +1091,13 @@ export default function App() {
                                   {u ? (
                                     <button
                                       key={u.uid}
-                                      className={`unit ${selected === u.uid ? 'selected' : ''} ${u.ready ? 'ready' : ''} ${target.uid === u.uid ? 'targeted' : ''}`}
-                                      title={`${u.card.name} · ${clean(u.card.text)}`}
+                                      className={`unit ${selected === u.uid ? 'selected' : ''} ${u.ready ? 'ready' : ''} ${target.uid === u.uid ? 'targeted' : ''} ${u.health < u.maxHealth ? 'damaged' : ''} ${u.card.mechanics?.includes('TAUNT') ? 'taunt' : ''} ${selected !== undefined && i !== 0 ? (attackError(game, 0, selected, { p: i, uid: u.uid }) ? 'attack-blocked' : 'attackable') : ''}`}
+                                      aria-label={`${p.name}'s ${u.card.name}, minion ${j + 1}, ${u.attack} attack, ${u.health} of ${u.maxHealth} health${u.card.mechanics?.includes('TAUNT') ? ', Taunt' : ''}`}
+                                      title={`${u.card.name} · ${u.health}/${u.maxHealth} health · ${Math.max(0, u.maxHealth - u.health)} damage taken · ${clean(u.card.text)}${selected !== undefined && i !== 0 ? ` · ${attackError(game, 0, selected, { p: i, uid: u.uid }) ?? 'Click to attack this minion'}` : ''}`}
                                       onClick={() =>
                                         i === 0
-                                          ? setSelected(u.uid)
-                                          : setTarget({ p: i, uid: u.uid })
+                                          ? chooseAttacker(u.uid)
+                                          : chooseTargetOrAttack({ p: i, uid: u.uid })
                                       }
                                       onContextMenu={(e) => {
                                         e.preventDefault();
@@ -1043,8 +1110,23 @@ export default function App() {
                                         draggable={false}
                                       />
                                       <span>
-                                        {u.attack} ⚔ {u.health} ♥{u.shield ? ' ◇' : ''}
+                                        <span>{u.attack} ⚔</span>{' '}
+                                        <span className="minion-health">
+                                          {u.health}/{u.maxHealth} ♥
+                                        </span>
+                                        {u.shield ? ' ◇' : ''}
                                       </span>
+                                      {u.card.mechanics?.includes('TAUNT') ? (
+                                        <small className="taunt-label">Taunt</small>
+                                      ) : null}
+                                      {u.health < u.maxHealth ? (
+                                        <small
+                                          className="damage-badge"
+                                          title={`${u.maxHealth - u.health} damage taken`}
+                                        >
+                                          −{u.maxHealth - u.health}
+                                        </small>
+                                      ) : null}
                                     </button>
                                   ) : (
                                     <div className="slot" key={j}>
@@ -1077,19 +1159,27 @@ export default function App() {
                       </button>
                     </div>
                   ) : null}
+                  {attackingUnit ? (
+                    <div className="placement-instructions combat-instructions" role="status">
+                      <span>
+                        <b>{attackingUnit.card.name}</b> selected. Click a highlighted enemy minion
+                        or hero to attack. Taunt protects only its owner's board.
+                      </span>
+                      <button onClick={() => setSelected(undefined)}>
+                        Cancel <small>Esc</small>
+                      </button>
+                    </div>
+                  ) : null}
                   <div className="battle-controls">
                     <span>
-                      Target:{' '}
-                      <b>
-                        {game.players[target.p].name}
-                        {target.uid ? ` · minion #${target.uid}` : ''}
-                      </b>
+                      Target: <b>{targetLabel}</b>
                     </span>
                     <button
-                      disabled={selected === undefined || game.active !== 0 || !!game.pending}
+                      disabled={!!selectedAttackError}
+                      title={selectedAttackError ?? `Attack ${targetLabel}`}
                       onClick={() => dispatch({ type: 'attack', p: 0, uid: selected, target })}
                     >
-                      Attack selected
+                      Attack selected target
                     </button>
                     <button
                       disabled={game.active !== 0 || !!game.pending}

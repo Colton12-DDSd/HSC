@@ -121,6 +121,37 @@ function getTarget(s: Game, t: Target) {
   }
   return s.players[t.p];
 }
+/** Shared by the authoritative transition and target highlighting in the UI. */
+export function attackError(
+  s: Game,
+  player: number,
+  uid: number | undefined,
+  target: Target,
+): string | null {
+  if (s.winner !== null) return 'Match is over';
+  const p = s.players[player];
+  if (!p || p.health <= 0) return 'Player is eliminated';
+  if (s.pending) return 'Finish interruption priority first';
+  if (s.active !== player) return 'Not your turn';
+  const unit = uid === undefined ? null : p.board.find((u) => u.uid === uid);
+  if (uid !== undefined && !unit) return 'Attacker is no longer on the board';
+  if ((unit?.attack ?? p.heroAttack) <= 0) return 'This character has no attack';
+  if (unit ? !unit.ready : !p.heroReady) return 'Attacker is exhausted or has summoning sickness';
+  if (target.p === player) return 'Cannot attack a friendly character';
+  let defender;
+  try {
+    defender = getTarget(s, target);
+  } catch {
+    return 'Target is no longer available';
+  }
+  if (unit?.rushOnly && target.uid === undefined) return 'Rush can only attack minions this turn';
+  if (
+    s.players[target.p].board.some((u) => u.card.mechanics?.includes('TAUNT')) &&
+    (!('card' in defender) || !defender.card.mechanics?.includes('TAUNT'))
+  )
+    return `${s.players[target.p].name} has Taunt: attack one of their Taunt minions first`;
+  return null;
+}
 function damage(s: Game, t: Target, n: number) {
   const x = getTarget(s, t);
   const dealt = n;
@@ -400,19 +431,12 @@ export function applyAction(state: Game, a: Action): Game {
     if (!queue.length) resolve(s);
   } else if (a.type === 'end') advance(s);
   else if (a.type === 'attack') {
+    const error = attackError(s, a.p, a.uid, a.target);
+    if (error) throw Error(error);
     const u = a.uid === undefined ? null : p.board.find((u) => u.uid === a.uid);
-    if (a.uid !== undefined && !u) throw Error('Attacker missing');
     const atk = u?.attack ?? p.heroAttack;
-    if ((u ? !u.ready : !p.heroReady) || atk <= 0) throw Error('Attacker exhausted');
-    if (a.target.p === a.p) throw Error('Cannot attack yourself');
     const t = getTarget(s, a.target),
       enemy = s.players[a.target.p];
-    if (u?.rushOnly && !a.target.uid) throw Error('Rush cannot attack a hero this turn');
-    if (
-      enemy.board.some((v) => v.card.mechanics?.includes('TAUNT')) &&
-      (!('card' in t) || !t.card.mechanics?.includes('TAUNT'))
-    )
-      throw Error('Opponent has Taunt');
     const dealt = damage(s, a.target, atk);
     if (dealt > 0 && u?.card.mechanics?.includes('POISONOUS') && 'attack' in t) t.health = 0;
     if ('attack' in t) {
@@ -426,7 +450,10 @@ export function applyAction(state: Game, a: Action): Game {
       u.ready = u.attacksRemaining > 0;
       if (u.card.mechanics?.includes('LIFESTEAL')) p.health = Math.min(40, p.health + dealt);
     } else p.heroReady = false;
-    note(s, `${p.name} attacks ${enemy.name}`);
+    note(
+      s,
+      `${u?.card.name ?? p.name} attacks ${'card' in t ? `${enemy.name}'s ${t.card.name}` : `${enemy.name}'s hero`} for ${dealt}${'card' in t ? `; defender ${Math.max(0, t.health)}/${t.maxHealth} health` : ''}${u ? `; attacker ${Math.max(0, u.health)}/${u.maxHealth} health` : ''}`,
+    );
     settle(s);
   } else if (a.type === 'power') {
     if (p.powerUsed || p.mana < 2) throw Error('Hero power unavailable');
