@@ -63,3 +63,7 @@ Hand cards have a separate Inspect button and a right-click preview. Right-click
 ## Hero health and healing
 
 Heroes start at 40 health and have no gameplay healing cap. Targeted healing, friendly group healing, Priest power, and both attacking and defending Lifesteal can increase a living hero above 40, including repeated gains beyond 1000. Minion healing still stops at that minion's current maximum health, including permanent health buffs. Divine Shield absorption grants no Lifesteal healing. Eliminated heroes cannot be healed back into play.
+
+## Lasting effect visibility and audit
+
+The [enabled-card audit](TRIGGER-AUDIT.md) covers every enabled Battlecry/Deathrattle printing. Buffed minions display a gold stat-change badge, and their inspectors list source effects and durations. Cleric's buff survives turns and source death, then ends when the affected minion leaves play. Auras and game-wide persistent effects remain unsupported and have explicit inspector explanations; they are not silently treated as one-time effects.

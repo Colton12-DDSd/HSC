@@ -1951,3 +1951,44 @@ footer > span:last-child {
   background: #1d3640;
   color: #d1f1fb;
 }
+
+.buff-badge {
+  position: absolute;
+  bottom: 23px;
+  left: 2px;
+  z-index: 3;
+  border: 1px solid #d8be74;
+  border-radius: 4px;
+  background: #514020ee;
+  color: #fff0b3;
+  padding: 2px 3px;
+  font-size: 8px;
+  line-height: 1.1;
+  pointer-events: none;
+}
+.active-modifiers {
+  margin: 12px 0;
+  padding: 12px;
+  border: 1px solid #a38a4c;
+  border-radius: 6px;
+  background: #3b3520;
+  color: #f0dfb1;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.active-modifiers ul {
+  padding-left: 18px;
+  margin: 8px 0;
+}
+.active-modifiers small {
+  display: block;
+  font-size: 11px;
+  color: #c9c3a5;
+}
+
+.printed-stats-label {
+  display: block;
+  margin-top: 12px;
+  color: #aeb99f;
+  font-size: 11px;
+}

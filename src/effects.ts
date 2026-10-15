@@ -115,4 +115,13 @@ export function supported(c: Card) {
   );
 }
 
+export function unsupportedReason(c: Card): string {
+  if (supported(c)) return '';
+  if (/rest of the game|this game|wherever.*are|your deck and hand/i.test(c.text ?? ''))
+    return 'Requires game-wide effect tracking or persistent counters that are not implemented yet.';
+  if (c.mechanics?.some((m) => m === 'AURA' || m === 'ADJACENT_BUFF'))
+    return 'This aura or ongoing effect is not implemented yet.';
+  return 'This card’s complete gameplay effects are not implemented yet.';
+}
+
 export type ImplementationStatus = 'not_implemented' | 'partial' | 'implemented' | 'tested';

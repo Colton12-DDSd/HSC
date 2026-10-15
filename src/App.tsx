@@ -61,7 +61,7 @@ import {
   attackError,
   attackReadinessError,
 } from './engine';
-import { targetFor, deathrattleFor } from './effects';
+import { targetFor, deathrattleFor, unsupportedReason } from './effects';
 import { db, saveCloud, loadCloud, download } from './storage';
 const empty: Deck = {
   version: 1,
@@ -75,6 +75,7 @@ const pretty = (s: string) =>
     .toLowerCase()
     .replace(/_/g, ' ')
     .replace(/\b\w/g, (c) => c.toUpperCase());
+const signed = (value: number) => `${value >= 0 ? '+' : ''}${value}`;
 type Placement = { card: Card; index?: number; command?: boolean };
 type DragSession = { source: Placement; x: number; y: number; moved: boolean };
 type PointerHandlers = Pick<
@@ -1170,6 +1171,17 @@ export default function App() {
                           >
                             {Array.from({ length: 7 }, (_, j) => {
                               const u = p.board[j];
+                              const attackChange = u ? u.attack - (u.card.attack ?? 0) : 0;
+                              const healthChange = u ? u.maxHealth - (u.card.health ?? 1) : 0;
+                              const changedStats = attackChange !== 0 || healthChange !== 0;
+                              const modifierSummary = u?.modifiers
+                                ?.map(
+                                  (m) => `${m.sourceName}: ${signed(m.attack)}/${signed(m.health)}`,
+                                )
+                                .join('; ');
+                              const lastingLabel = changedStats
+                                ? `Lasting stat changes ${signed(attackChange)}/${signed(healthChange)}${modifierSummary ? ` from ${modifierSummary}` : ''}; until this minion leaves the battlefield`
+                                : '';
                               const readiness =
                                 u && i === 0 ? attackReadinessError(game, i, u.uid) : null;
                               const canAttack =
@@ -1236,8 +1248,8 @@ export default function App() {
                                     <button
                                       key={u.uid}
                                       className={`unit ${isEffectTarget({ p: i, uid: u.uid }) ? 'effect-target' : ''} ${selected === u.uid ? 'selected' : ''} ${i === 0 ? (canAttack ? 'can-attack' : 'cannot-attack') : ''} ${target.uid === u.uid ? 'targeted' : ''} ${u.health < u.maxHealth ? 'damaged' : ''} ${u.card.mechanics?.includes('TAUNT') ? 'taunt' : ''} ${selected !== undefined && i !== 0 ? (attackError(game, 0, selected, { p: i, uid: u.uid }) ? 'attack-blocked' : 'attackable') : ''}`}
-                                      aria-label={`${p.name}'s ${u.card.name}, minion ${j + 1}, ${u.attack} attack, ${u.health} of ${u.maxHealth} health${u.card.mechanics?.includes('TAUNT') ? ', Taunt' : ''}${i === 0 ? `, ${attackStatus}` : ''}`}
-                                      title={`${u.card.name} · ${i === 0 ? `${attackStatus} · ` : ''}${u.health}/${u.maxHealth} health · ${Math.max(0, u.maxHealth - u.health)} damage taken · ${clean(u.card.text)}${selected !== undefined && i !== 0 ? ` · ${attackError(game, 0, selected, { p: i, uid: u.uid }) ?? 'Click to attack this minion'}` : ''}`}
+                                      aria-label={`${p.name}'s ${u.card.name}, minion ${j + 1}, ${u.attack} attack, ${u.health} of ${u.maxHealth} health${u.card.mechanics?.includes('TAUNT') ? ', Taunt' : ''}${i === 0 ? `, ${attackStatus}` : ''}${lastingLabel ? `, ${lastingLabel}` : ''}`}
+                                      title={`${u.card.name} · ${lastingLabel ? `${lastingLabel} · ` : ''}${i === 0 ? `${attackStatus} · ` : ''}${u.health}/${u.maxHealth} health · ${Math.max(0, u.maxHealth - u.health)} damage taken · ${clean(u.card.text)}${selected !== undefined && i !== 0 ? ` · ${attackError(game, 0, selected, { p: i, uid: u.uid }) ?? 'Click to attack this minion'}` : ''}`}
                                       onClick={() =>
                                         targetingPlay
                                           ? chooseBattlecryTarget({ p: i, uid: u.uid })
@@ -1270,6 +1282,11 @@ export default function App() {
                                       </span>
                                       {u.card.mechanics?.includes('TAUNT') ? (
                                         <small className="taunt-label">Taunt</small>
+                                      ) : null}
+                                      {changedStats ? (
+                                        <small className="buff-badge" title={lastingLabel}>
+                                          {signed(attackChange)}/{signed(healthChange)}
+                                        </small>
                                       ) : null}
                                       {deathrattleFor(u.card) ? (
                                         <small
@@ -1662,6 +1679,33 @@ export default function App() {
                     : ''}
                 </div>
               ) : null}
+              {inspectedUnit?.modifiers?.length ? (
+                <section className="active-modifiers" aria-label="Lasting effects">
+                  <b>Lasting effects</b>
+                  <ul>
+                    {inspectedUnit.modifiers.map((modifier, index) => (
+                      <li key={index}>
+                        <strong>{modifier.sourceName}</strong>: {signed(modifier.attack)} attack /{' '}
+                        {signed(modifier.health)} maximum health
+                      </li>
+                    ))}
+                  </ul>
+                  <small>
+                    Persists across turns and after the source dies. Ends when this minion leaves
+                    the battlefield.
+                  </small>
+                </section>
+              ) : inspectedUnit &&
+                (inspectedUnit.attack !== (inspect.attack ?? 0) ||
+                  inspectedUnit.maxHealth !== (inspect.health ?? 1)) ? (
+                <p>
+                  Stats differ from the printed card; this older scenario has no recorded effect
+                  sources.
+                </p>
+              ) : null}
+              {inspectedUnit ? (
+                <small className="printed-stats-label">Printed card stats</small>
+              ) : null}
               <div className="stat-pills">
                 <span>{inspect.cost} mana</span>
                 {inspect.attack !== undefined ? (
@@ -1680,7 +1724,7 @@ export default function App() {
                 <span>
                   {supported(inspect)
                     ? 'Gameplay supported in the local engine.'
-                    : 'Metadata only. This card’s gameplay effects are not implemented.'}
+                    : `Metadata only. ${unsupportedReason(inspect)}`}
                   <small>
                     {inspect.wildLegal === null
                       ? 'Wild legality pending verification.'

@@ -10,6 +10,8 @@ import {
 } from './effects';
 export { effectFor, supported } from './effects';
 export interface Unit {
+  // Optional so older exported scenarios remain readable. These buffs end on leaving play.
+  modifiers?: { sourceCardId: string; sourceName: string; attack: number; health: number }[];
   attacksRemaining: number;
   uid: number;
   card: Card;
@@ -243,7 +245,7 @@ function settle(s: Game) {
     const position = rightIndex < 0 ? board.length : rightIndex;
     note(s, `${s.players[player].name}'s ${unit.card.name} triggers Deathrattle`);
     const before = s.nextId;
-    runEffect(s, player, deathrattleFor(unit.card)!, undefined, position);
+    runEffect(s, player, deathrattleFor(unit.card)!, undefined, position, unit.card);
     const summoned = board.filter((u) => u.uid >= before).map((u) => u.uid);
     layout.splice(marker, 0, ...summoned);
   }
@@ -268,6 +270,7 @@ function summon(
     shield: !!c.mechanics?.includes('DIVINE_SHIELD'),
     commander,
     attacksRemaining: c.mechanics?.includes('WINDFURY') ? 2 : 1,
+    modifiers: [],
   });
   if (commander) x.zone = 'board';
   note(s, `${x.name} summons ${c.name} at position ${position + 1}`);
@@ -312,6 +315,7 @@ function runEffect(
   e: Effect,
   target?: Target,
   position = s.players[player].board.length,
+  source?: Card,
 ) {
   const p = s.players[player];
   if (e.type === 'draw') {
@@ -329,7 +333,16 @@ function runEffect(
       t.attack += e.attack;
       t.health += e.health;
       t.maxHealth += e.health;
-      note(s, `${name} gains +${e.attack}/+${e.health}`);
+      (t.modifiers ??= []).push({
+        sourceCardId: source?.id ?? 'unknown',
+        sourceName: source?.name ?? 'Effect',
+        attack: e.attack,
+        health: e.health,
+      });
+      note(
+        s,
+        `${name} gains +${e.attack}/+${e.health} from ${source?.name ?? 'Effect'} (until it leaves the battlefield)`,
+      );
     }
   }
   if (e.type === 'summon') {
@@ -393,7 +406,7 @@ function resolve(s: Game) {
   }
   if (e && validTarget) {
     if (battlecryFor(w.card)) note(s, `${p.name}'s ${w.card.name} triggers Battlecry`);
-    runEffect(s, w.caster, e, w.target, (w.position ?? p.board.length - 1) + 1);
+    runEffect(s, w.caster, e, w.target, (w.position ?? p.board.length - 1) + 1, w.card);
   } else if (e && targeted) note(s, `${w.card.name} effect skipped: no valid target`);
   if (w.card.type !== 'MINION') p.grave.push(w.card);
   note(s, `${p.name} resolves ${w.card.name}`);
