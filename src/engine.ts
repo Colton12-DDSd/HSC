@@ -44,6 +44,7 @@ export interface Pending {
   commander: boolean;
   queue: number[];
   target?: Target;
+  position?: number;
 }
 export interface Game {
   version: 1;
@@ -57,7 +58,14 @@ export interface Game {
   log: string[];
 }
 export type Action =
-  | { type: 'cast'; p: number; index?: number; command?: boolean; target?: Target }
+  | {
+      type: 'cast';
+      p: number;
+      index?: number;
+      command?: boolean;
+      target?: Target;
+      position?: number;
+    }
   | { type: 'pass' | 'interrupt'; p: number }
   | { type: 'end'; p: number }
   | { type: 'attack'; p: number; uid?: number; target: Target }
@@ -151,10 +159,16 @@ function settle(s: Game) {
     note(s, alive.length ? `${s.players[alive[0]].name} wins` : 'Draw');
   }
 }
-function summon(s: Game, p: number, c: Card, commander = false) {
+function summon(
+  s: Game,
+  p: number,
+  c: Card,
+  commander = false,
+  position = s.players[p].board.length,
+) {
   const x = s.players[p];
   if (x.board.length >= 7) throw Error('Battlefield is full');
-  x.board.push({
+  x.board.splice(position, 0, {
     uid: s.nextId++,
     card: c,
     attack: c.attack ?? 0,
@@ -173,7 +187,7 @@ function resolve(s: Game) {
   s.pending = null;
   const p = s.players[w.caster];
   if (w.card.type === 'MINION') {
-    summon(s, w.caster, w.card, w.commander);
+    summon(s, w.caster, w.card, w.commander, w.position);
     if (w.command) p.casts++;
   }
   const e = effectFor(w.card);
@@ -347,6 +361,14 @@ export function applyAction(state: Game, a: Action): Game {
     if (!supported(c)) throw Error('This card effect is not implemented');
     if (!['MINION', 'SPELL'].includes(c.type)) throw Error('Card type unsupported');
     if (c.type === 'MINION' && p.board.length >= 7) throw Error('Seven minion limit');
+    if (
+      a.position !== undefined &&
+      (c.type !== 'MINION' ||
+        !Number.isInteger(a.position) ||
+        a.position < 0 ||
+        a.position > p.board.length)
+    )
+      throw Error('Invalid minion placement');
     const cost = a.command ? commandCost(p) : Math.max(0, c.cost - p.reduction - p.handReduction);
     if (p.mana < cost) throw Error('Not enough regular mana');
     const effect = effectFor(c);
@@ -372,6 +394,7 @@ export function applyAction(state: Game, a: Action): Game {
       commander: c.id === p.commander.id,
       queue,
       target: a.target,
+      position: a.position,
     };
     note(s, `${p.name} casts ${c.name} for ${cost}`);
     if (!queue.length) resolve(s);

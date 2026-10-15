@@ -1,5 +1,14 @@
 import { loadCollection } from './collection';
-import { useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  Fragment,
+  useDeferredValue,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+  type ButtonHTMLAttributes,
+} from 'react';
 import {
   BookOpen,
   Swords,
@@ -60,25 +69,36 @@ const pretty = (s: string) =>
     .toLowerCase()
     .replace(/_/g, ' ')
     .replace(/\b\w/g, (c) => c.toUpperCase());
+type Placement = { card: Card; index?: number; command?: boolean };
+type DragSession = { source: Placement; x: number; y: number; moved: boolean };
+type PointerHandlers = Pick<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  'onPointerDown' | 'onPointerMove' | 'onPointerUp' | 'onPointerCancel'
+>;
 function CardArt({
   card,
   onClick,
   selected = false,
+  pointerHandlers,
 }: {
   card: Card;
   onClick?: () => void;
   selected?: boolean;
+  pointerHandlers?: PointerHandlers;
 }) {
   return (
     <button
       className={`card-art ${selected ? 'chosen' : ''}`}
       onClick={onClick}
+      {...pointerHandlers}
+      style={pointerHandlers ? { touchAction: 'none', cursor: 'grab' } : undefined}
       title={`${card.name} · ${clean(card.text)} · ${supported(card) ? 'Supported' : 'Effects not implemented'}`}
     >
       <img
         loading="lazy"
         src={image(card)}
         alt={card.name}
+        draggable={false}
         onError={(e) => {
           e.currentTarget.style.opacity = '.12';
         }}
@@ -124,6 +144,9 @@ export default function App() {
     [game, setGame] = useState<Game | null>(null),
     [paused, setPaused] = useState(false),
     [selected, setSelected] = useState<number | undefined>(),
+    [placing, setPlacing] = useState<Placement | null>(null),
+    [dragPreview, setDragPreview] = useState<{ card: Card; x: number; y: number } | null>(null),
+    [hoverPosition, setHoverPosition] = useState<number | null>(null),
     [target, setTarget] = useState<Target>({ p: 1 }),
     [timer, setTimer] = useState(15),
     [remaining, setRemaining] = useState(15),
@@ -136,6 +159,101 @@ export default function App() {
   const record = useRef<Replay | null>(null),
     upload = useRef<HTMLInputElement>(null),
     replayUpload = useRef<HTMLInputElement>(null);
+  const dragSession = useRef<DragSession | null>(null);
+  const suppressCardClick = useRef(false);
+  function cancelPlacement() {
+    dragSession.current = null;
+    setPlacing(null);
+    setDragPreview(null);
+    setHoverPosition(null);
+  }
+  useEffect(() => {
+    if (!placing) return;
+    const cancel = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') cancelPlacement();
+    };
+    window.addEventListener('keydown', cancel);
+    return () => window.removeEventListener('keydown', cancel);
+  }, [placing]);
+  function placementError(source: Placement) {
+    if (!game || game.winner !== null || game.players[0].health <= 0) return 'No active match';
+    if (game.active !== 0 || game.pending) return 'Wait for your turn and finish priority first';
+    const p = game.players[0];
+    if (p.board.length >= 7) return 'Your battlefield is full';
+    if (!supported(source.card)) return 'This card effect is not implemented';
+    if (source.command && p.zone !== 'command') return 'Commander is not in the command zone';
+    const cost = source.command
+      ? commandCost(p)
+      : Math.max(0, source.card.cost - p.reduction - p.handReduction);
+    return p.mana < cost ? 'Not enough regular mana' : '';
+  }
+  function choosePlacement(source: Placement) {
+    if (suppressCardClick.current) return;
+    const error = placementError(source);
+    if (error) {
+      setToast(error);
+      return;
+    }
+    setPlacing(source);
+    setSelected(undefined);
+  }
+  function commitPlacement(source: Placement, position: number) {
+    dispatch({
+      type: 'cast',
+      p: 0,
+      index: source.index,
+      command: source.command,
+      position,
+      target,
+    });
+    cancelPlacement();
+  }
+  function positionAt(x: number, y: number): number | null {
+    const element = document.elementFromPoint(x, y);
+    const zone = element?.closest<HTMLElement>('[data-placement-index]');
+    if (zone) return Number(zone.dataset.placementIndex);
+    const board = element?.closest<HTMLElement>('[data-local-board]');
+    if (!board) return null;
+    const units = [...board.querySelectorAll<HTMLElement>('.unit')];
+    const index = units.findIndex((unit) => {
+      const bounds = unit.getBoundingClientRect();
+      return x < bounds.left + bounds.width / 2;
+    });
+    return index < 0 ? units.length : index;
+  }
+  function placementHandlers(source: Placement): PointerHandlers {
+    return {
+      onPointerDown(event: ReactPointerEvent<HTMLButtonElement>) {
+        if (event.button !== 0 || placementError(source)) return;
+        dragSession.current = { source, x: event.clientX, y: event.clientY, moved: false };
+        event.currentTarget.setPointerCapture(event.pointerId);
+      },
+      onPointerMove(event: ReactPointerEvent<HTMLButtonElement>) {
+        const session = dragSession.current;
+        if (!session) return;
+        if (!session.moved && Math.hypot(event.clientX - session.x, event.clientY - session.y) < 6)
+          return;
+        session.moved = true;
+        event.preventDefault();
+        setPlacing(session.source);
+        setDragPreview({ card: session.source.card, x: event.clientX, y: event.clientY });
+        setHoverPosition(positionAt(event.clientX, event.clientY));
+      },
+      onPointerUp(event: ReactPointerEvent<HTMLButtonElement>) {
+        const session = dragSession.current;
+        dragSession.current = null;
+        if (!session?.moved) return;
+        suppressCardClick.current = true;
+        window.setTimeout(() => {
+          suppressCardClick.current = false;
+        }, 0);
+        const position = positionAt(event.clientX, event.clientY);
+        if (position !== null) commitPlacement(session.source, position);
+        else cancelPlacement();
+      },
+      onPointerCancel: cancelPlacement,
+    };
+  }
   useEffect(() => {
     loadCollection()
       .then(setCards)
@@ -270,6 +388,7 @@ export default function App() {
       record.current = { version: 1, initial: structuredClone(s), actions: [] };
       setTab('table');
       setSelected(undefined);
+      cancelPlacement();
     } catch (e) {
       setToast(String(e));
     }
@@ -283,6 +402,7 @@ export default function App() {
       record.current?.actions.push(a);
       setGame(n);
       setSelected(undefined);
+      cancelPlacement();
     } catch (e) {
       setToast((e as Error).message);
     }
@@ -852,10 +972,14 @@ export default function App() {
                             </div>
                             <button
                               className="zone"
+                              {...(i === 0
+                                ? placementHandlers({ card: p.commander, command: true })
+                                : {})}
+                              style={i === 0 ? { touchAction: 'none' } : undefined}
                               title={`${p.commander.name} · ${p.zone} · ${p.casts} successful command casts`}
                               onClick={() =>
                                 i === 0
-                                  ? dispatch({ type: 'cast', p: 0, command: true, target })
+                                  ? choosePlacement({ card: p.commander, command: true })
                                   : setInspect(p.commander)
                               }
                             >
@@ -870,31 +994,64 @@ export default function App() {
                               </span>
                             </button>
                           </div>
-                          <div className="board-slots">
+                          <div
+                            data-local-board={i === 0 ? '' : undefined}
+                            className={`board-slots ${p.board.length ? 'occupied' : ''} ${i === 0 && placing && !game.pending ? 'choosing-placement' : ''}`}
+                          >
                             {Array.from({ length: 7 }, (_, j) => {
                               const u = p.board[j];
-                              return u ? (
-                                <button
-                                  key={u.uid}
-                                  className={`unit ${selected === u.uid ? 'selected' : ''} ${u.ready ? 'ready' : ''} ${target.uid === u.uid ? 'targeted' : ''}`}
-                                  title={`${u.card.name} · ${clean(u.card.text)}`}
-                                  onClick={() =>
-                                    i === 0 ? setSelected(u.uid) : setTarget({ p: i, uid: u.uid })
-                                  }
-                                  onContextMenu={(e) => {
-                                    e.preventDefault();
-                                    setTarget({ p: i, uid: u.uid });
-                                  }}
-                                >
-                                  <img src={image(u.card)} alt={u.card.name} />
-                                  <span>
-                                    {u.attack} ⚔ {u.health} ♥{u.shield ? ' ◇' : ''}
-                                  </span>
-                                </button>
-                              ) : (
-                                <div className="slot" key={j}>
-                                  {j + 1}
-                                </div>
+                              return (
+                                <Fragment key={u?.uid ?? `empty-${j}`}>
+                                  {i === 0 &&
+                                  placing &&
+                                  game.active === 0 &&
+                                  !game.pending &&
+                                  p.board.length < 7 &&
+                                  j <= p.board.length ? (
+                                    <button
+                                      className={`placement-gap ${hoverPosition === j ? 'hovered' : ''}`}
+                                      data-placement-index={j}
+                                      aria-label={`Place ${placing.card.name} at position ${j + 1}`}
+                                      title={
+                                        j === p.board.length
+                                          ? 'Place at the end'
+                                          : `Place before ${p.board[j].card.name}`
+                                      }
+                                      onClick={() => commitPlacement(placing, j)}
+                                    >
+                                      <Plus size={14} />
+                                    </button>
+                                  ) : null}
+                                  {u ? (
+                                    <button
+                                      key={u.uid}
+                                      className={`unit ${selected === u.uid ? 'selected' : ''} ${u.ready ? 'ready' : ''} ${target.uid === u.uid ? 'targeted' : ''}`}
+                                      title={`${u.card.name} · ${clean(u.card.text)}`}
+                                      onClick={() =>
+                                        i === 0
+                                          ? setSelected(u.uid)
+                                          : setTarget({ p: i, uid: u.uid })
+                                      }
+                                      onContextMenu={(e) => {
+                                        e.preventDefault();
+                                        setTarget({ p: i, uid: u.uid });
+                                      }}
+                                    >
+                                      <img
+                                        src={image(u.card)}
+                                        alt={u.card.name}
+                                        draggable={false}
+                                      />
+                                      <span>
+                                        {u.attack} ⚔ {u.health} ♥{u.shield ? ' ◇' : ''}
+                                      </span>
+                                    </button>
+                                  ) : (
+                                    <div className="slot" key={j}>
+                                      {j + 1}
+                                    </div>
+                                  )}
+                                </Fragment>
                               );
                             })}
                           </div>
@@ -910,6 +1067,16 @@ export default function App() {
                       </small>
                     </div>
                   </div>
+                  {placing && !game.pending ? (
+                    <div className="placement-instructions" role="status">
+                      <span>
+                        Place <b>{placing.card.name}</b>: release or click a + between minions.
+                      </span>
+                      <button onClick={cancelPlacement}>
+                        Cancel <small>Esc</small>
+                      </button>
+                    </div>
+                  ) : null}
                   <div className="battle-controls">
                     <span>
                       Target:{' '}
@@ -976,14 +1143,28 @@ export default function App() {
                   ) : null}
                   <div className="hand">
                     <div className="hand-title">
-                      YOUR HAND <span>Click a supported card to cast on the selected target.</span>
+                      YOUR HAND{' '}
+                      <span>
+                        Drag minions onto your board, or click one then a + position. Spells use
+                        your selected target.
+                      </span>
                     </div>
                     <div>
                       {game.players[0].hand.map((c, i) => (
                         <CardArt
                           key={`${c.id}-${i}`}
                           card={c}
-                          onClick={() => dispatch({ type: 'cast', p: 0, index: i, target })}
+                          selected={!!placing && !placing.command && placing.index === i}
+                          pointerHandlers={
+                            c.type === 'MINION'
+                              ? placementHandlers({ card: c, index: i })
+                              : undefined
+                          }
+                          onClick={() =>
+                            c.type === 'MINION'
+                              ? choosePlacement({ card: c, index: i })
+                              : dispatch({ type: 'cast', p: 0, index: i, target })
+                          }
                         />
                       ))}
                     </div>
@@ -1323,6 +1504,16 @@ export default function App() {
           e.target.value = '';
         }}
       />
+      {dragPreview ? (
+        <div
+          className="dragged-card"
+          aria-hidden="true"
+          style={{ left: dragPreview.x + 12, top: dragPreview.y - 100 }}
+        >
+          <img src={image(dragPreview.card)} alt="" draggable={false} />
+          <span>{dragPreview.card.name}</span>
+        </div>
+      ) : null}
       {toast ? (
         <div className="toast" role="status">
           <Gem size={18} />

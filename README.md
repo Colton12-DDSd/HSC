@@ -11,7 +11,7 @@ npm ci
 npm run dev
 ```
 
-Open the Local URL printed by Vite (normally http://127.0.0.1:5173). Open **Play table → Start a match**. Three scripted opponents act automatically. Select an opponent hero/minion as the target, click a hand card to cast, or select your minion and click **Attack selected**. Right-click a friendly minion to target it with a heal. End turn banks unused mana in reserve. Use **Testing lab** to pause bots and arrange scenarios.
+Open the Local URL printed by Vite (normally http://127.0.0.1:5173). Open **Play table → Start a match**. Three scripted opponents act automatically. Drag a minion from your hand or command zone onto your battlefield to place it before, between, or after existing minions. You can also click the card, then a **+** insertion point. Minions stay centered as a group. Dropping outside your board or pressing Escape cancels placement. Choose an opponent hero/minion as the target for spells and battlecries. To attack, select your minion and click **Attack selected**. Right-click a friendly minion to target it with a heal. End turn banks unused mana in reserve. Use **Testing lab** to pause bots and arrange scenarios.
 
 ```powershell
 npm test

@@ -12,10 +12,11 @@ Verified on 2026-10-15 against organization HC, project HSC (`voxjyzgkvhkxxomdsm
 - Performance advisors flagged newly created indexes as unused (informational on a fresh database). Keep useful search/ownership/FK indexes while real usage develops. [Advisor explanation](https://supabase.com/docs/guides/database/database-linter?lint=0005_unused_index).
 - Local .env.local contains only HSC URL and publishable frontend key. It is ignored by Git. No backend key was downloaded or stored.
 - Browser loaded the HSC collection and returned Fireball search results. Collection requests are shared across React development mounts to avoid duplicate downloads.
-- 24 automated tests pass, including both migrations in embedded PostgreSQL, a full simulated match to victory and server seat/revision enforcement. Production build passes.
+- 38 automated tests pass, including positional minion casts, placement after clockwise passes, canceled placement on interruption, commander insertion, invalid positions, replay, both migrations in embedded PostgreSQL, a full simulated match to victory and server seat/revision enforcement. Production build passes.
+- Browser placement verification: clicked Chillwind Yeti into the middle of two Bloodfen Raptors; dragged Upgradeable Framebot between the first Raptor and Yeti; dragged Argent Horserider to the end. Dropping outside the board left mana, hand and minion order unchanged. Measured minion-group center equals battlefield center. All four boards use the same centered layout.
 
 Pending: actual user email sign-in and UI cloud deck save/load; authoritative Wild format/temporary-ban verification; broader effects and online hosting/multiplayer. No sign-in email was sent during verification.
 
 Repeatable public smoke test: `node scripts/verify-cloud.mjs`. Backend ownership test: `scripts/verify-owner-access.sql` (transactional and rolled back). Detailed recorded cloud report: `data/cloud-verification.json`.
 
-All source is saved in C:\Users\colto\Desktop\Hearthstone Commander. GitHub/Vercel connection and hosting were discussed as next steps; no repository was pushed and no deployment was created.
+All source is saved in C:\Users\colto\Desktop\Hearthstone Commander and connected to https://github.com/Colton12-DDSd/HSC. SSH authentication is scoped to this repository; the private key and .env.local are outside version control. No Vercel deployment has been created.

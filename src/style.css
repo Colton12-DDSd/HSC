@@ -1010,8 +1010,83 @@ header {
 }
 .board-slots {
   display: flex;
+  justify-content: center;
   gap: 4px;
   margin-top: 13px;
+}
+.board-slots.occupied .slot {
+  display: none;
+}
+.board-slots.choosing-placement {
+  min-height: 72px;
+  align-items: center;
+  gap: 2px;
+  background: #a6904110;
+  border-radius: 7px;
+}
+.board-slots.choosing-placement .slot {
+  display: none;
+}
+.board-slots.choosing-placement .unit {
+  flex-shrink: 1;
+}
+.placement-gap {
+  align-self: stretch;
+  flex: 0 0 16px;
+  max-width: 30px;
+  min-height: 65px;
+  padding: 0;
+  border: 1px dashed #9e8e54;
+  background: #82733b22;
+  color: #cfba77;
+  transition:
+    background 0.12s,
+    box-shadow 0.12s;
+}
+.placement-gap:hover,
+.placement-gap:focus-visible,
+.placement-gap.hovered {
+  border-style: solid;
+  background: #bda55e55;
+  box-shadow: 0 0 12px #d4bb7066;
+}
+.placement-instructions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 12px;
+  background: #353920;
+  color: #dfce94;
+  font-size: 11px;
+}
+.placement-instructions button {
+  padding: 5px 8px;
+  font-size: 10px;
+}
+.placement-instructions small {
+  color: #899479;
+}
+.dragged-card {
+  position: fixed;
+  z-index: 90;
+  width: 100px;
+  pointer-events: none;
+  filter: drop-shadow(0 8px 15px #000a);
+}
+.dragged-card img {
+  width: 100%;
+}
+.dragged-card span {
+  display: block;
+  margin-top: -10px;
+  padding: 5px;
+  border: 1px solid #bfa76d;
+  border-radius: 4px;
+  background: #202b1b;
+  font-size: 10px;
+  text-align: center;
+  color: #dfcf9e;
 }
 .slot,
 .unit {
