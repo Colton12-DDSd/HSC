@@ -1127,8 +1127,36 @@ header {
   padding: 3px 0;
   text-align: center;
 }
-.unit.ready {
-  box-shadow: 0 0 6px #79b26a77;
+.unit.can-attack {
+  border-color: #9ce58b;
+  box-shadow:
+    0 0 0 2px #72c960,
+    0 0 12px #79b26a99;
+}
+.unit.cannot-attack img {
+  filter: saturate(0.55) brightness(0.8);
+}
+.attack-status {
+  position: absolute;
+  top: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  white-space: nowrap;
+  border-radius: 4px;
+  padding: 2px 3px;
+  background: #26332ef2;
+  color: #e0e3db;
+  font-size: 7px;
+  line-height: 1.1;
+  pointer-events: none;
+}
+.can-attack .attack-status {
+  background: #234d20f5;
+  color: #d7ffbf;
+}
+.unit:has(.attack-status) .taunt-label {
+  top: 19px;
 }
 .unit.damaged .minion-health {
   color: #ff9f91;

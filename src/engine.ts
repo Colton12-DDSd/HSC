@@ -121,12 +121,11 @@ function getTarget(s: Game, t: Target) {
   }
   return s.players[t.p];
 }
-/** Shared by the authoritative transition and target highlighting in the UI. */
-export function attackError(
+/** Target-independent readiness, shared by combat and the board's status indicators. */
+export function attackReadinessError(
   s: Game,
   player: number,
   uid: number | undefined,
-  target: Target,
 ): string | null {
   if (s.winner !== null) return 'Match is over';
   const p = s.players[player];
@@ -136,7 +135,21 @@ export function attackError(
   const unit = uid === undefined ? null : p.board.find((u) => u.uid === uid);
   if (uid !== undefined && !unit) return 'Attacker is no longer on the board';
   if ((unit?.attack ?? p.heroAttack) <= 0) return 'This character has no attack';
-  if (unit ? !unit.ready : !p.heroReady) return 'Attacker is exhausted or has summoning sickness';
+  if (unit ? !unit.ready : !p.heroReady)
+    return unit && unit.attacksRemaining > 0 ? 'Summoning sickness' : 'No attacks left this turn';
+  return null;
+}
+/** Shared by the authoritative transition and target highlighting in the UI. */
+export function attackError(
+  s: Game,
+  player: number,
+  uid: number | undefined,
+  target: Target,
+): string | null {
+  const readiness = attackReadinessError(s, player, uid);
+  if (readiness) return readiness;
+  const p = s.players[player];
+  const unit = uid === undefined ? null : p.board.find((u) => u.uid === uid);
   if (target.p === player) return 'Cannot attack a friendly character';
   let defender;
   try {

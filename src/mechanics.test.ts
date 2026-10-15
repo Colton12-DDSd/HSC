@@ -14,7 +14,7 @@ it('Windfury allows exactly two attacks per turn', () => {
   expect(s.players[0].board[0].ready).toBe(true);
   s = applyAction(s, { type: 'attack', p: 0, uid: u.uid, target: { p: 1 } });
   expect(() => applyAction(s, { type: 'attack', p: 0, uid: u.uid, target: { p: 1 } })).toThrow(
-    /exhausted/,
+    /No attacks left/,
   );
 });
 it('Poisonous does not kill through Divine Shield', () => {

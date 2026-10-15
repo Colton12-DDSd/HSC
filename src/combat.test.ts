@@ -1,6 +1,13 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { createGame, debugAction, applyAction, attackError, type Game } from './engine';
+import {
+  createGame,
+  debugAction,
+  applyAction,
+  attackError,
+  attackReadinessError,
+  type Game,
+} from './engine';
 import type { Card } from './cards';
 const cards = JSON.parse(readFileSync('public/data/cards.json', 'utf8')) as Card[];
 const card = (id: string) => cards.find((c) => c.id === id)!;
@@ -102,6 +109,24 @@ describe('Chosen attack targets and persistent damage', () => {
     s.players[0].board[0].rushOnly = true;
     expect(attackError(s, 0, uid, { p: 1 })).toMatch(/Rush/);
     s.players[0].board[0].ready = false;
-    expect(attackError(s, 0, uid, { p: 1 })).toMatch(/exhausted/);
+    expect(attackError(s, 0, uid, { p: 1 })).toMatch(/Summoning sickness/);
+  });
+});
+
+describe('Attack readiness indicators', () => {
+  it('distinguishes sickness, ready, spent, another turn, and zero attack', () => {
+    let s = summon(createGame(cards), 0, 'CS2_182');
+    const uid = s.players[0].board[0].uid;
+    expect(attackReadinessError(s, 0, uid)).toBe('Summoning sickness');
+    s.players[0].board[0].ready = true;
+    expect(attackReadinessError(s, 0, uid)).toBeNull();
+    s = applyAction(s, { type: 'attack', p: 0, uid, target: { p: 1 } });
+    expect(attackReadinessError(s, 0, uid)).toBe('No attacks left this turn');
+    for (let i = 0; i < 4; i++) s = applyAction(s, { type: 'end', p: s.active });
+    expect(attackReadinessError(s, 0, uid)).toBeNull();
+    s.players[0].board[0].attack = 0;
+    expect(attackReadinessError(s, 0, uid)).toBe('This character has no attack');
+    s = applyAction(s, { type: 'end', p: 0 });
+    expect(attackReadinessError(s, 0, uid)).toBe('Not your turn');
   });
 });

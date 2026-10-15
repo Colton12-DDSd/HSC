@@ -152,7 +152,7 @@ describe('Turns and combat', () => {
     s = debugAction(s, { type: 'summon', p: 1, card: card('CS2_179') });
     const uid = s.players[0].board[0].uid;
     expect(() => applyAction(s, { type: 'attack', p: 0, uid, target: { p: 2 } })).toThrow(
-      /exhausted/,
+      /Summoning sickness/,
     );
     s.players[0].board[0].ready = true;
     expect(() => applyAction(s, { type: 'attack', p: 0, uid, target: { p: 1 } })).toThrow(/Taunt/);

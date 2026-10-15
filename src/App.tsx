@@ -56,6 +56,7 @@ import {
   replay,
   effectFor,
   attackError,
+  attackReadinessError,
 } from './engine';
 import { db, saveCloud, loadCloud, download } from './storage';
 const empty: Deck = {
@@ -323,14 +324,9 @@ export default function App() {
   function chooseAttacker(uid: number) {
     if (!game) return;
     const unit = game.players[0].board.find((u) => u.uid === uid);
-    if (game.active !== 0 || game.pending || game.winner !== null) {
-      setToast('Wait for your turn and finish priority first');
-      return;
-    }
-    if (!unit?.ready || unit.attack <= 0) {
-      setToast(
-        `${unit?.card.name ?? 'This minion'} cannot attack yet: exhausted, summoning sickness, or no attack`,
-      );
+    const reason = attackReadinessError(game, 0, uid);
+    if (reason) {
+      setToast(`${unit?.card.name ?? 'This minion'} cannot attack: ${reason}`);
       return;
     }
     cancelPlacement();
@@ -1066,6 +1062,46 @@ export default function App() {
                           >
                             {Array.from({ length: 7 }, (_, j) => {
                               const u = p.board[j];
+                              const readiness =
+                                u && i === 0 ? attackReadinessError(game, i, u.uid) : null;
+                              const canAttack =
+                                !!u &&
+                                i === 0 &&
+                                !readiness &&
+                                game.players.some(
+                                  (enemy, opponent) =>
+                                    opponent !== i &&
+                                    enemy.health > 0 &&
+                                    [
+                                      { p: opponent },
+                                      ...enemy.board.map((unit) => ({
+                                        p: opponent,
+                                        uid: unit.uid,
+                                      })),
+                                    ].some((candidate) => !attackError(game, i, u.uid, candidate)),
+                                );
+                              const attackStatus =
+                                readiness ??
+                                (canAttack
+                                  ? `${u?.rushOnly ? 'Rush: minions only' : 'Ready to attack'} · ${u?.attacksRemaining} attack${u?.attacksRemaining === 1 ? '' : 's'} left`
+                                  : 'No legal attack targets');
+                              const attackLabel = canAttack
+                                ? u?.rushOnly
+                                  ? 'Rush'
+                                  : 'Ready'
+                                : readiness === 'Summoning sickness'
+                                  ? 'Sleep'
+                                  : readiness === 'No attacks left this turn'
+                                    ? 'Spent'
+                                    : readiness === 'This character has no attack'
+                                      ? '0 ATK'
+                                      : readiness === 'Not your turn'
+                                        ? 'Wait'
+                                        : game.pending
+                                          ? 'Priority'
+                                          : game.winner !== null
+                                            ? 'Over'
+                                            : 'No target';
                               return (
                                 <Fragment key={u?.uid ?? `empty-${j}`}>
                                   {i === 0 &&
@@ -1091,9 +1127,9 @@ export default function App() {
                                   {u ? (
                                     <button
                                       key={u.uid}
-                                      className={`unit ${selected === u.uid ? 'selected' : ''} ${u.ready ? 'ready' : ''} ${target.uid === u.uid ? 'targeted' : ''} ${u.health < u.maxHealth ? 'damaged' : ''} ${u.card.mechanics?.includes('TAUNT') ? 'taunt' : ''} ${selected !== undefined && i !== 0 ? (attackError(game, 0, selected, { p: i, uid: u.uid }) ? 'attack-blocked' : 'attackable') : ''}`}
-                                      aria-label={`${p.name}'s ${u.card.name}, minion ${j + 1}, ${u.attack} attack, ${u.health} of ${u.maxHealth} health${u.card.mechanics?.includes('TAUNT') ? ', Taunt' : ''}`}
-                                      title={`${u.card.name} · ${u.health}/${u.maxHealth} health · ${Math.max(0, u.maxHealth - u.health)} damage taken · ${clean(u.card.text)}${selected !== undefined && i !== 0 ? ` · ${attackError(game, 0, selected, { p: i, uid: u.uid }) ?? 'Click to attack this minion'}` : ''}`}
+                                      className={`unit ${selected === u.uid ? 'selected' : ''} ${i === 0 ? (canAttack ? 'can-attack' : 'cannot-attack') : ''} ${target.uid === u.uid ? 'targeted' : ''} ${u.health < u.maxHealth ? 'damaged' : ''} ${u.card.mechanics?.includes('TAUNT') ? 'taunt' : ''} ${selected !== undefined && i !== 0 ? (attackError(game, 0, selected, { p: i, uid: u.uid }) ? 'attack-blocked' : 'attackable') : ''}`}
+                                      aria-label={`${p.name}'s ${u.card.name}, minion ${j + 1}, ${u.attack} attack, ${u.health} of ${u.maxHealth} health${u.card.mechanics?.includes('TAUNT') ? ', Taunt' : ''}${i === 0 ? `, ${attackStatus}` : ''}`}
+                                      title={`${u.card.name} · ${i === 0 ? `${attackStatus} · ` : ''}${u.health}/${u.maxHealth} health · ${Math.max(0, u.maxHealth - u.health)} damage taken · ${clean(u.card.text)}${selected !== undefined && i !== 0 ? ` · ${attackError(game, 0, selected, { p: i, uid: u.uid }) ?? 'Click to attack this minion'}` : ''}`}
                                       onClick={() =>
                                         i === 0
                                           ? chooseAttacker(u.uid)
@@ -1109,6 +1145,12 @@ export default function App() {
                                         alt={u.card.name}
                                         draggable={false}
                                       />
+                                      {i === 0 ? (
+                                        <small className="attack-status" title={attackStatus}>
+                                          {canAttack ? '⚔ ' : ''}
+                                          {attackLabel}
+                                        </small>
+                                      ) : null}
                                       <span>
                                         <span>{u.attack} ⚔</span>{' '}
                                         <span className="minion-health">
