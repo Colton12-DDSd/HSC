@@ -157,13 +157,15 @@ export default function App() {
   }, [toast]);
   const query = useDeferredValue(search);
   const map = useMemo(() => new Map(cards.map((c) => [c.id, c])), [cards]);
+  // An absent override follows the deck; an empty string explicitly shows all classes.
+  const classFilter = filters.class ?? deck.class;
   const filtered = useMemo(
     () =>
       cards.filter(
         (c) =>
           (!query || `${c.name} ${clean(c.text)}`.toLowerCase().includes(query.toLowerCase())) &&
           (!onlySupported || supported(c)) &&
-          Object.entries(filters).every(
+          Object.entries({ ...filters, class: classFilter }).every(
             ([k, v]) =>
               !v ||
               (k === 'class'
@@ -179,14 +181,21 @@ export default function App() {
                       : String(c[k as keyof Card]) === v),
           ),
       ),
-    [cards, query, filters, onlySupported],
+    [cards, query, filters, classFilter, onlySupported],
   );
   const errors = useMemo(() => validateDeck(deck, cards), [deck, cards]);
   const deckCards = deck.cards.map((id) => map.get(id)).filter((c): c is Card => !!c);
   const commander = map.get(deck.commander ?? '');
+  const selectedNames = new Set(
+    [...deckCards, ...(commander ? [commander] : [])].map((card) => card.name),
+  );
   const unique = (k: 'set' | 'rarity' | 'type') => [...new Set(cards.map((c) => c[k]))].sort();
   const filter = (k: string, v: string) => {
-    setFilters((f) => ({ ...f, [k]: v }));
+    setFilters((f) => {
+      const next = { ...f, [k]: v };
+      if (k === 'class' && v === deck.class) delete next.class;
+      return next;
+    });
     setPage(0);
   };
   function add(c: Card, command = false) {
@@ -444,7 +453,7 @@ export default function App() {
                     <select
                       key={k as string}
                       aria-label={label as string}
-                      value={filters[k as string] ?? ''}
+                      value={k === 'class' ? classFilter : (filters[k as string] ?? '')}
                       onChange={(e) => filter(k as string, e.target.value)}
                     >
                       <option value="">{label as string}</option>
@@ -455,6 +464,19 @@ export default function App() {
                       ))}
                     </select>
                   ))}
+                </div>
+                <div className="class-filter-hint">
+                  <span>
+                    {classFilter ? `${pretty(classFilter)} + Neutral cards` : 'Showing all classes'}
+                  </span>
+                  {classFilter ? (
+                    <button onClick={() => filter('class', '')} aria-label="Clear class filter">
+                      <X size={12} /> Clear class filter
+                    </button>
+                  ) : null}
+                  {filters.class !== undefined ? (
+                    <button onClick={() => filter('class', deck.class)}>Follow deck class</button>
+                  ) : null}
                 </div>
                 <div className="cost-row">
                   <span>MANA COST</span>
@@ -487,7 +509,8 @@ export default function App() {
                 </div>
                 <div className="results-bar">
                   <span>
-                    {filtered.length.toLocaleString()} cards <i>· Click to inspect and add</i>
+                    {filtered.length.toLocaleString()} cards{' '}
+                    <i>· Click artwork to inspect · + to add</i>
                   </span>
                   <span>
                     Sorted by <b>Mana cost ↑</b>
@@ -506,14 +529,37 @@ export default function App() {
                     {[...filtered]
                       .sort((a, b) => a.cost - b.cost || a.name.localeCompare(b.name))
                       .slice(page * 18, page * 18 + 18)
-                      .map((c) => (
-                        <CardArt
-                          key={c.id}
-                          card={c}
-                          selected={deck.cards.includes(c.id) || deck.commander === c.id}
-                          onClick={() => setInspect(c)}
-                        />
-                      ))}
+                      .map((c) => {
+                        const added = selectedNames.has(c.name);
+                        const unavailable = !eligibleClass(c, deck.class)
+                          ? 'Other class'
+                          : c.wildLegal === false
+                            ? 'Not Wild legal'
+                            : deck.cards.length >= 100
+                              ? 'Deck full'
+                              : '';
+                        return (
+                          <div className="collection-card" key={c.id}>
+                            <CardArt card={c} selected={added} onClick={() => setInspect(c)} />
+                            <button
+                              className={`quick-add ${added ? 'added' : ''}`}
+                              aria-label={
+                                added ? `${c.name} already in deck` : `Add ${c.name} to deck`
+                              }
+                              disabled={added || !!unavailable}
+                              title={
+                                added
+                                  ? 'Singleton: already in deck or command zone'
+                                  : unavailable || `Add ${c.name} without inspecting`
+                              }
+                              onClick={() => add(c)}
+                            >
+                              {added ? <Check size={13} /> : <Plus size={13} />}
+                              {added ? 'Added' : unavailable || 'Add to deck'}
+                            </button>
+                          </div>
+                        );
+                      })}
                   </div>
                 )}
                 {!filtered.length && cards.length > 0 ? (
@@ -561,7 +607,10 @@ export default function App() {
                     <select
                       aria-label="Deck class"
                       value={deck.class}
-                      onChange={(e) => setDeck((d) => ({ ...d, class: e.target.value }))}
+                      onChange={(e) => {
+                        setDeck((d) => ({ ...d, class: e.target.value }));
+                        setPage(0);
+                      }}
                     >
                       {classes.map((c) => (
                         <option key={c} value={c}>
@@ -597,7 +646,7 @@ export default function App() {
                     className="commander-find"
                     title="Find legendary minions"
                     onClick={() => {
-                      setFilters({ rarity: 'LEGENDARY', type: 'MINION', class: deck.class });
+                      setFilters({ rarity: 'LEGENDARY', type: 'MINION' });
                       setPage(0);
                     }}
                   >
