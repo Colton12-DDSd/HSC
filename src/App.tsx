@@ -30,6 +30,7 @@ import {
   RotateCcw,
   ArrowRight,
   Layers,
+  ZoomIn,
 } from 'lucide-react';
 import {
   type Card,
@@ -83,11 +84,13 @@ type PointerHandlers = Pick<
 function CardArt({
   card,
   onClick,
+  onInspect,
   selected = false,
   pointerHandlers,
 }: {
   card: Card;
   onClick?: () => void;
+  onInspect?: () => void;
   selected?: boolean;
   pointerHandlers?: PointerHandlers;
 }) {
@@ -95,6 +98,14 @@ function CardArt({
     <button
       className={`card-art ${selected ? 'chosen' : ''}`}
       onClick={onClick}
+      onContextMenu={
+        onInspect
+          ? (event) => {
+              event.preventDefault();
+              onInspect();
+            }
+          : undefined
+      }
       {...pointerHandlers}
       style={pointerHandlers ? { touchAction: 'none', cursor: 'grab' } : undefined}
       title={`${card.name} · ${clean(card.text)} · ${supported(card) ? 'Supported' : 'Effects not implemented'}`}
@@ -124,6 +135,8 @@ export default function App() {
     [tab, setTab] = useState('collection'),
     [toast, setToast] = useState(''),
     [inspect, setInspect] = useState<Card | null>(null),
+    [inspectInGame, setInspectInGame] = useState(false),
+    [inspectTarget, setInspectTarget] = useState<Target | undefined>(),
     [search, setSearch] = useState(''),
     [filters, setFilters] = useState<Record<string, string>>({}),
     [page, setPage] = useState(0),
@@ -150,6 +163,9 @@ export default function App() {
     [paused, setPaused] = useState(false),
     [selected, setSelected] = useState<number | undefined>(),
     [placing, setPlacing] = useState<Placement | null>(null),
+    [targetingPlay, setTargetingPlay] = useState<{ source: Placement; position: number } | null>(
+      null,
+    ),
     [dragPreview, setDragPreview] = useState<{ card: Card; x: number; y: number } | null>(null),
     [hoverPosition, setHoverPosition] = useState<number | null>(null),
     [target, setTarget] = useState<Target>({ p: 1 }),
@@ -164,16 +180,58 @@ export default function App() {
   const record = useRef<Replay | null>(null),
     upload = useRef<HTMLInputElement>(null),
     replayUpload = useRef<HTMLInputElement>(null);
+  const inspectModal = useRef<HTMLElement>(null);
+  function openInspect(card: Card, inGame = false, nextTarget?: Target) {
+    setInspect(card);
+    setInspectInGame(inGame);
+    setInspectTarget(nextTarget);
+  }
+  function closeInspect() {
+    setInspect(null);
+    setInspectTarget(undefined);
+    setInspectInGame(false);
+  }
+  useEffect(() => {
+    if (!inspect) return;
+    const previous = document.activeElement as HTMLElement | null;
+    const modal = inspectModal.current;
+    modal?.querySelector<HTMLButtonElement>('.close')?.focus();
+    const keydown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeInspect();
+      }
+      if (event.key === 'Tab' && modal) {
+        const buttons = [...modal.querySelectorAll<HTMLButtonElement>('button:not(:disabled)')];
+        const first = buttons[0],
+          last = buttons[buttons.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last?.focus();
+        }
+        if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first?.focus();
+        }
+      }
+    };
+    document.addEventListener('keydown', keydown);
+    return () => {
+      document.removeEventListener('keydown', keydown);
+      if (previous?.isConnected) previous.focus();
+    };
+  }, [inspect]);
   const dragSession = useRef<DragSession | null>(null);
   const suppressCardClick = useRef(false);
   function cancelPlacement() {
     dragSession.current = null;
     setPlacing(null);
+    setTargetingPlay(null);
     setDragPreview(null);
     setHoverPosition(null);
   }
   useEffect(() => {
-    if (!placing && selected === undefined) return;
+    if (inspect || (!placing && !targetingPlay && selected === undefined)) return;
     const cancel = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         cancelPlacement();
@@ -182,7 +240,7 @@ export default function App() {
     };
     window.addEventListener('keydown', cancel);
     return () => window.removeEventListener('keydown', cancel);
-  }, [placing, selected]);
+  }, [placing, targetingPlay, selected, inspect]);
   function placementError(source: Placement) {
     if (!game || game.winner !== null || game.players[0].health <= 0) return 'No active match';
     if (game.active !== 0 || game.pending) return 'Wait for your turn and finish priority first';
@@ -202,18 +260,50 @@ export default function App() {
       setToast(error);
       return;
     }
+    setTargetingPlay(null);
     setPlacing(source);
     setSelected(undefined);
   }
   function commitPlacement(source: Placement, position: number) {
+    if (game && targetFor(effectFor(source.card)) && effectTargets(game, 0, source.card).length) {
+      setTargetingPlay({ source, position });
+      setPlacing(null);
+      setSelected(undefined);
+      setDragPreview(null);
+      setHoverPosition(null);
+      return;
+    }
     dispatch({
       type: 'cast',
       p: 0,
       index: source.index,
       command: source.command,
       position,
-      target,
     });
+  }
+  function chooseBattlecryTarget(next: Target) {
+    if (!game || !targetingPlay) return;
+    const { source, position } = targetingPlay;
+    const error = effectTargetError(game, 0, source.card, next);
+    if (error) {
+      setToast(error);
+      return;
+    }
+    const result = dispatch({
+      type: 'cast',
+      p: 0,
+      index: source.index,
+      command: source.command,
+      position,
+      target: next,
+    });
+    if (result) {
+      setTarget(
+        next.uid !== undefined && !result.players[next.p].board.some((u) => u.uid === next.uid)
+          ? { p: next.p }
+          : next,
+      );
+    }
   }
   function positionAt(x: number, y: number): number | null {
     const element = document.elementFromPoint(x, y);
@@ -316,11 +406,14 @@ export default function App() {
     target.uid === undefined
       ? undefined
       : game?.players[target.p].board.find((unit) => unit.uid === target.uid);
-  const placingTargets = game && placing ? effectTargets(game, 0, placing.card) : [];
+  const placingTargets =
+    game && targetingPlay ? effectTargets(game, 0, targetingPlay.source.card) : [];
   const isEffectTarget = (candidate: Target) =>
     placingTargets.some((t) => t.p === candidate.p && t.uid === candidate.uid);
-  const placingTargetError =
-    game && placing ? effectTargetError(game, 0, placing.card, target) : null;
+  const inspectedUnit =
+    inspectTarget?.uid !== undefined
+      ? game?.players[inspectTarget.p].board.find((u) => u.uid === inspectTarget.uid)
+      : undefined;
   const targetLabel = targetUnit
     ? `${game?.players[target.p].name}'s ${targetUnit.card.name} (${targetUnit.health}/${targetUnit.maxHealth} HP)`
     : `${game?.players[target.p].name ?? 'Opponent'}'s hero`;
@@ -340,6 +433,10 @@ export default function App() {
     setSelected((current) => (current === uid ? undefined : uid));
   }
   function chooseTargetOrAttack(next: Target) {
+    if (targetingPlay) {
+      chooseBattlecryTarget(next);
+      return;
+    }
     if (!game || selected === undefined || next.p === 0) {
       setTarget(next);
       return;
@@ -403,7 +500,7 @@ export default function App() {
       }
       setDeck((d) => ({ ...d, cards: [...d.cards, c.id] }));
     }
-    setInspect(null);
+    closeInspect();
   }
   async function save() {
     try {
@@ -467,7 +564,7 @@ export default function App() {
     }
   }
   useEffect(() => {
-    if (!game || game.winner !== null || paused) return;
+    if (!game || game.winner !== null || paused || inspect) return;
     const actor = game.pending?.queue[0] ?? game.active;
     if (actor === 0) return;
     const t = setTimeout(() => {
@@ -487,14 +584,14 @@ export default function App() {
       }
     }, 850);
     return () => clearTimeout(t);
-  }, [game, paused]);
+  }, [game, paused, inspect]);
   useEffect(() => {
     if (!game?.pending) {
       setRemaining(timer);
       return;
     }
     setRemaining(timer);
-    if (paused) return;
+    if (paused || inspect) return;
     const t = setInterval(() => setRemaining((v) => Math.max(0, v - 1)), 1000);
     const end = setTimeout(
       () => dispatch({ type: 'pass', p: game.pending!.queue[0] }),
@@ -504,7 +601,7 @@ export default function App() {
       clearInterval(t);
       clearTimeout(end);
     };
-  }, [game?.pending, timer, paused]);
+  }, [game?.pending, timer, paused, inspect]);
   const menu = [
     { id: 'collection', icon: BookOpen, label: 'Collection' },
     { id: 'table', icon: Swords, label: 'Play table' },
@@ -719,7 +816,7 @@ export default function App() {
                               : '';
                         return (
                           <div className="collection-card" key={c.id}>
-                            <CardArt card={c} selected={added} onClick={() => setInspect(c)} />
+                            <CardArt card={c} selected={added} onClick={() => openInspect(c)} />
                             <button
                               className={`quick-add ${added ? 'added' : ''}`}
                               aria-label={
@@ -803,7 +900,7 @@ export default function App() {
                   <Crown size={20} />
                   {commander ? (
                     <>
-                      <button onClick={() => setInspect(commander)}>
+                      <button onClick={() => openInspect(commander)}>
                         <strong>{commander.name}</strong>
                         <small>Your commander · {commander.cost} mana</small>
                       </button>
@@ -849,7 +946,7 @@ export default function App() {
                       .map((c) => (
                         <div className="deck-row" key={c.id}>
                           <b>{c.cost}</b>
-                          <button onClick={() => setInspect(c)}>{c.name}</button>
+                          <button onClick={() => openInspect(c)}>{c.name}</button>
                           <button
                             title={`Remove ${c.name}`}
                             onClick={() =>
@@ -1041,6 +1138,10 @@ export default function App() {
                             </div>
                             <button
                               className="zone"
+                              onContextMenu={(event) => {
+                                event.preventDefault();
+                                openInspect(p.commander, true);
+                              }}
                               {...(i === 0
                                 ? placementHandlers({ card: p.commander, command: true })
                                 : {})}
@@ -1049,7 +1150,7 @@ export default function App() {
                               onClick={() =>
                                 i === 0
                                   ? choosePlacement({ card: p.commander, command: true })
-                                  : setInspect(p.commander)
+                                  : openInspect(p.commander, true)
                               }
                             >
                               <Crown size={15} />
@@ -1138,15 +1239,15 @@ export default function App() {
                                       aria-label={`${p.name}'s ${u.card.name}, minion ${j + 1}, ${u.attack} attack, ${u.health} of ${u.maxHealth} health${u.card.mechanics?.includes('TAUNT') ? ', Taunt' : ''}${i === 0 ? `, ${attackStatus}` : ''}`}
                                       title={`${u.card.name} · ${i === 0 ? `${attackStatus} · ` : ''}${u.health}/${u.maxHealth} health · ${Math.max(0, u.maxHealth - u.health)} damage taken · ${clean(u.card.text)}${selected !== undefined && i !== 0 ? ` · ${attackError(game, 0, selected, { p: i, uid: u.uid }) ?? 'Click to attack this minion'}` : ''}`}
                                       onClick={() =>
-                                        placing && targetFor(effectFor(placing.card))
-                                          ? setTarget({ p: i, uid: u.uid })
+                                        targetingPlay
+                                          ? chooseBattlecryTarget({ p: i, uid: u.uid })
                                           : i === 0
                                             ? chooseAttacker(u.uid)
                                             : chooseTargetOrAttack({ p: i, uid: u.uid })
                                       }
                                       onContextMenu={(e) => {
                                         e.preventDefault();
-                                        setTarget({ p: i, uid: u.uid });
+                                        openInspect(u.card, true, { p: i, uid: u.uid });
                                       }}
                                     >
                                       <img
@@ -1213,19 +1314,22 @@ export default function App() {
                     <div className="placement-instructions" role="status">
                       <span>
                         Place <b>{placing.card.name}</b>: release or click a + between minions.
-                        {targetFor(effectFor(placing.card)) ? (
-                          <>
-                            <br />
-                            {placingTargets.length ? (
-                              <>
-                                Battlecry: click a blue-highlighted target before placing.{' '}
-                                {placingTargetError ?? `Target: ${targetLabel}`}
-                              </>
-                            ) : (
-                              'No valid Battlecry targets: the minion will enter without its effect.'
-                            )}
-                          </>
-                        ) : null}
+                        {targetFor(effectFor(placing.card))
+                          ? ' Then choose a highlighted Battlecry target.'
+                          : ''}
+                      </span>
+                      <button onClick={cancelPlacement}>
+                        Cancel <small>Esc</small>
+                      </button>
+                    </div>
+                  ) : null}
+                  {targetingPlay ? (
+                    <div className="placement-instructions battlecry-instructions" role="status">
+                      <span>
+                        <b>Choose a target for {targetingPlay.source.card.name}'s Battlecry.</b>
+                        <br />
+                        Click a blue-highlighted character. The card will enter at position{' '}
+                        {targetingPlay.position + 1} after you choose; mana is not spent until then.
                       </span>
                       <button onClick={cancelPlacement}>
                         Cancel <small>Esc</small>
@@ -1243,6 +1347,10 @@ export default function App() {
                       </button>
                     </div>
                   ) : null}
+                  <p className="inspection-hint">
+                    Right-click a minion or commander to inspect it. Use the Inspect button below a
+                    hand card.
+                  </p>
                   <div className="battle-controls">
                     <span>
                       Target: <b>{targetLabel}</b>
@@ -1255,14 +1363,19 @@ export default function App() {
                       Attack selected target
                     </button>
                     <button
-                      disabled={game.active !== 0 || !!game.pending}
+                      disabled={game.active !== 0 || !!game.pending || !!targetingPlay}
                       onClick={() => dispatch({ type: 'power', p: 0, target })}
                     >
                       Hero power · 2 ◆
                     </button>
                     <button
                       className="gold-button"
-                      disabled={game.active !== 0 || !!game.pending || game.winner !== null}
+                      disabled={
+                        game.active !== 0 ||
+                        !!game.pending ||
+                        game.winner !== null ||
+                        !!targetingPlay
+                      }
                       onClick={() => dispatch({ type: 'end', p: 0 })}
                     >
                       End turn <ArrowRight size={15} />
@@ -1309,26 +1422,36 @@ export default function App() {
                       YOUR HAND{' '}
                       <span>
                         Drag minions onto your board, or click one then a + position. Spells use
-                        your selected target. Targeted Battlecries use that target too.
+                        your selected target. Targeted Battlecries ask you to choose after
+                        placement.
                       </span>
                     </div>
                     <div>
                       {game.players[0].hand.map((c, i) => (
-                        <CardArt
-                          key={`${c.id}-${i}`}
-                          card={c}
-                          selected={!!placing && !placing.command && placing.index === i}
-                          pointerHandlers={
-                            c.type === 'MINION'
-                              ? placementHandlers({ card: c, index: i })
-                              : undefined
-                          }
-                          onClick={() =>
-                            c.type === 'MINION'
-                              ? choosePlacement({ card: c, index: i })
-                              : dispatch({ type: 'cast', p: 0, index: i, target })
-                          }
-                        />
+                        <div className="hand-card" key={`${c.id}-${i}`}>
+                          <CardArt
+                            card={c}
+                            onInspect={() => openInspect(c, true)}
+                            selected={!!placing && !placing.command && placing.index === i}
+                            pointerHandlers={
+                              c.type === 'MINION'
+                                ? placementHandlers({ card: c, index: i })
+                                : undefined
+                            }
+                            onClick={() =>
+                              c.type === 'MINION'
+                                ? choosePlacement({ card: c, index: i })
+                                : dispatch({ type: 'cast', p: 0, index: i, target })
+                            }
+                          />
+                          <button
+                            className="inspect-hand"
+                            aria-label={`Inspect ${c.name}`}
+                            onClick={() => openInspect(c, true)}
+                          >
+                            <ZoomIn size={13} /> Inspect
+                          </button>
+                        </div>
                       ))}
                     </div>
                   </div>
@@ -1362,7 +1485,7 @@ export default function App() {
                 </h2>
                 <p>
                   Debug actions are local only and are included in scenario replays. Right-click any
-                  minion to target it.
+                  minion to inspect it; its preview includes a target button.
                 </p>
                 <div className="lab-controls">
                   <select
@@ -1492,9 +1615,16 @@ export default function App() {
         </footer>
       </div>
       {inspect ? (
-        <div className="overlay" onClick={() => setInspect(null)}>
-          <section className="inspect-modal" onClick={(e) => e.stopPropagation()}>
-            <button className="close" title="Close card preview" onClick={() => setInspect(null)}>
+        <div className="overlay" onClick={closeInspect}>
+          <section
+            ref={inspectModal}
+            className="inspect-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="inspect-card-title"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button className="close" title="Close card preview" onClick={closeInspect}>
               <X />
             </button>
             <img src={image(inspect)} alt={inspect.name} />
@@ -1502,8 +1632,28 @@ export default function App() {
               <div className="eyebrow">
                 {pretty(inspect.set)} · {pretty(inspect.rarity)}
               </div>
-              <h2>{inspect.name}</h2>
-              <p>{clean(inspect.text) || 'A minion with no additional abilities.'}</p>
+              <h2 id="inspect-card-title">{inspect.name}</h2>
+              <p>
+                {clean(inspect.text) ||
+                  inspect.mechanics?.map(pretty).join(' · ') ||
+                  'A minion with no additional abilities.'}
+              </p>
+              {inspectInGame ? (
+                <p className="inspection-pause">Match paused while you inspect.</p>
+              ) : null}
+              {inspectedUnit ? (
+                <div className="live-card-stats">
+                  <b>On the battlefield</b>
+                  <br />
+                  {inspectedUnit.attack} attack · {inspectedUnit.health}/{inspectedUnit.maxHealth}{' '}
+                  health · {inspectedUnit.maxHealth - inspectedUnit.health} damage taken
+                  {inspectedUnit.card.mechanics?.includes('DIVINE_SHIELD')
+                    ? inspectedUnit.shield
+                      ? ' · Divine Shield active'
+                      : ' · Divine Shield consumed'
+                    : ''}
+                </div>
+              ) : null}
               <div className="stat-pills">
                 <span>{inspect.cost} mana</span>
                 {inspect.attack !== undefined ? (
@@ -1532,14 +1682,39 @@ export default function App() {
                   </small>
                 </span>
               </div>
-              <button className="gold-button" onClick={() => add(inspect)}>
-                <Plus size={16} /> Add to deck
-              </button>
-              {inspect.type === 'MINION' && inspect.rarity === 'LEGENDARY' ? (
-                <button onClick={() => add(inspect, true)}>
-                  <Crown size={16} /> Choose as commander
-                </button>
-              ) : null}
+              {inspectInGame ? (
+                <>
+                  {inspectTarget && inspectedUnit ? (
+                    <button
+                      className="gold-button"
+                      onClick={() => {
+                        const next = inspectTarget;
+                        closeInspect();
+                        if (targetingPlay) chooseBattlecryTarget(next);
+                        else {
+                          setSelected(undefined);
+                          setTarget(next);
+                        }
+                      }}
+                    >
+                      {' '}
+                      {targetingPlay ? 'Choose Battlecry target' : 'Use as spell / ability target'}
+                    </button>
+                  ) : null}
+                  <button onClick={closeInspect}>Back to game</button>
+                </>
+              ) : (
+                <>
+                  <button className="gold-button" onClick={() => add(inspect)}>
+                    <Plus size={16} /> Add to deck
+                  </button>
+                  {inspect.type === 'MINION' && inspect.rarity === 'LEGENDARY' ? (
+                    <button onClick={() => add(inspect, true)}>
+                      <Crown size={16} /> Choose as commander
+                    </button>
+                  ) : null}
+                </>
+              )}
             </div>
           </section>
         </div>
@@ -1657,6 +1832,8 @@ export default function App() {
               if (f.size > 10000000) throw Error('Replay too large');
               const r = JSON.parse(await f.text()) as Replay;
               setGame(replay(r));
+              cancelPlacement();
+              setSelected(undefined);
               record.current = r;
               setPaused(true);
               setToast('Replay restored. Bots are paused.');

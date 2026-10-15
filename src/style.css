@@ -1753,7 +1753,7 @@ footer > span:last-child {
     padding: 15px;
   }
   .inspect-modal > img {
-    width: 170px;
+    width: min(240px, 65vw);
     justify-self: center;
   }
   .inspect-modal > div {
@@ -1894,4 +1894,56 @@ footer > span:last-child {
   border-radius: 50%;
   padding: 1px 3px;
   font-size: 11px;
+}
+
+.hand-card {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+}
+.hand .hand-card .card-art {
+  flex: none;
+}
+.inspect-hand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 11px;
+  padding: 5px;
+}
+.inspection-hint {
+  margin: 10px 0;
+  color: #b9c7aa;
+  font-size: 11px;
+}
+.inspect-modal {
+  max-height: calc(100dvh - 40px);
+  overflow-y: auto;
+}
+.inspect-modal > div > p:not(.muted):not(.inspection-pause) {
+  font-size: 17px;
+  line-height: 1.6;
+  color: #e4e9d8;
+}
+.inspect-modal .inspection-pause {
+  color: #a9cba1;
+  font-size: 11px;
+  margin: 8px 0;
+}
+.live-card-stats {
+  padding: 10px;
+  background: #2b3928;
+  border: 1px solid #718063;
+  border-radius: 5px;
+  line-height: 1.6;
+  font-size: 13px;
+  color: #dce7ce;
+}
+.battlecry-instructions {
+  border-color: #78c8e8;
+  background: #1d3640;
+  color: #d1f1fb;
 }

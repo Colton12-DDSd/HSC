@@ -6,7 +6,7 @@ The local engine supports 177 of the 6,470 collection records. This batch adds 2
 
 A resolved minion play inserts the minion, then performs its registered Battlecry once. Direct summons, debug summons, and Deathrattle tokens do not activate Battlecries. An interrupted play creates no minion and activates no Battlecry. Commander plays activate Battlecries on each successful play, with the existing commander tax.
 
-Select a targeted minion in hand, click a blue-highlighted character, then choose its board position. A friendly target click selects the Battlecry target rather than an attacker. Right-click targeting also works. Drag placement uses the selected target. Invalid targets reject the play before spending mana; placement remains available for correction. Spells retain their selected-target flow.
+Select or drag a targeted minion in hand, choose its board position, then click a blue-highlighted character when the Battlecry prompt appears. A previous spell/attack target is never silently reused. Mana and the card are committed only when a legal target is chosen. Cancel or Escape abandons the draft without costs. A friendly target click chooses the Battlecry target rather than an attacker. Spells retain their selected-target flow.
 
 Shattered Sun Cleric requires an existing friendly minion. When none exists, it can enter play without buffing itself. A targeted Battlecry with no legal pre-play target is skipped. A target that disappears before delayed resolution causes only the effect to be skipped; the minion still resolves.
 
@@ -55,3 +55,7 @@ Card text and stats are taken from the repository's imported metadata snapshot; 
 ## Starter test decks
 
 New starter games include all 12 supported Battlecry minions and all 9 supported Deathrattle minions by name before filling the remaining slots. All four players receive 100 singleton cards, excluding their commander, then their decks are shuffled normally. Opening hands are not fixed. Custom decks use only the supplied cards. Existing matches retain their current decks; use **New starter game** to get the updated mix.
+
+## In-game inspection
+
+Hand cards have a separate Inspect button and a right-click preview. Right-click any battlefield minion or commander to open its larger artwork and readable card text. Battlefield previews include current attack, current/max health, damage taken, and active Divine Shield. Use the preview's target button to select a minion for a spell/ability, or to confirm a waiting Battlecry target. Inspection does not play, attack, or spend mana. Local bots and the interruption timer pause until the preview closes. Escape, Back to game, the close button, or the backdrop close it. Keyboard focus stays inside the dialog and returns to its previous control afterward. Collection previews retain deckbuilding actions; in-game previews show game actions.

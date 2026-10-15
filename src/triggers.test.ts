@@ -336,3 +336,25 @@ it('a Deathrattle draw burns a card at the hand limit without changing hand size
   expect(n.players[1].deck).toHaveLength(19);
   expect(n.log.some((l) => l.includes('burns Chillwind Yeti'))).toBe(true);
 });
+
+it.each(['CS2_189', 'CORE_CS2_189'])(
+  '%s waits for a valid explicit target and deals one damage after priority',
+  (id) => {
+    const s = summon(setup(), 1, 'CS2_182');
+    s.players[0].hand = [card(id)];
+    s.players[1].reserve = 3;
+    expect(() => applyAction(s, { type: 'cast', p: 0, index: 0, position: 0 })).toThrow(/target/);
+    expect(s.players[0].mana).toBe(10);
+    expect(s.players[0].hand).toHaveLength(1);
+    const target = { p: 1, uid: s.players[1].board[0].uid };
+    let n = applyAction(s, { type: 'cast', p: 0, index: 0, position: 0, target });
+    expect(n.players[0].mana).toBe(9);
+    expect(n.players[1].board[0].health).toBe(5);
+    expect(n.pending?.target).toEqual(target);
+    n = applyAction(n, { type: 'pass', p: 1 });
+    expect(n.players[1].board[0].health).toBe(4);
+    expect(n.players[1].health).toBe(40);
+    expect(n.players[0].board[0].card.id).toBe(id);
+    expect(n.log.some((l) => l.includes('Chillwind Yeti takes 1 damage'))).toBe(true);
+  },
+);
