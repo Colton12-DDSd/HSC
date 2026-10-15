@@ -17,7 +17,7 @@ Shattered Sun Cleric requires an existing friendly minion. When none exists, it 
 | Voodoo Doctor, Earthen Ring Farseer | Restore 2 or 3 Health to a chosen character                 |
 | Novice Engineer, Gnomish Inventor   | Draw one card                                               |
 | Shattered Sun Cleric                | Give an existing friendly minion +1/+1                      |
-| Nightblade                          | Deal 3 damage to one chosen enemy hero                      |
+| Nightblade                          | Deal 3 damage to every living enemy hero                    |
 | Darkscale Healer                    | Restore up to 2 Health to all friendly characters           |
 | Razorfen Hunter                     | Summon a 1/1 Boar immediately to its right                  |
 | Dragonling Mechanic                 | Summon a 2/1 Mechanical Dragonling immediately to its right |
@@ -31,7 +31,7 @@ Tokens occupy the dead minion's position, preserve adjacent death slots across a
 | Deathrattle cards | Effect                                                        |
 | ----------------- | ------------------------------------------------------------- |
 | Loot Hoarder      | Draw one card, including hand-limit burn and fatigue handling |
-| Leper Gnome       | Deal 2 damage to one seeded random living enemy hero          |
+| Leper Gnome       | Deal 2 damage to every living enemy hero                      |
 | Harvest Golem     | Summon a 2/1 Damaged Golem                                    |
 | Haunted Creeper   | Summon two 1/1 Spectral Spiders, space permitting             |
 | Nerubian Egg      | Summon a 4/4 Nerubian                                         |
@@ -40,7 +40,7 @@ Tokens occupy the dead minion's position, preserve adjacent death slots across a
 | Explosive Sheep   | Deal 2 damage to all minions                                  |
 | Abomination       | Deal 2 damage to ALL characters, including its owner's hero   |
 
-“Enemy hero” has explicit multiplayer handling: Nightblade uses a selected opponent; Leper Gnome chooses exactly one living opponent through the game's seeded random generator. Replay reproduces the choice. These are variant decisions.
+Untargeted enemy effects apply to all eligible opponents in Commander. Nightblade's Battlecry and Leper Gnome's Deathrattle each damage every living enemy hero; Hunter's hero power similarly deals 2 damage to every living enemy hero for one 2-mana activation. None asks for a selected target, and an old selection cannot restrict the effect. Enemy area effects such as Flamestrike already affect every opponent's minions. Explicitly targeted damage, such as Archer and Fireball, still hits only the chosen character. Friendly, self-only, minion-only, and ALL-character scopes retain their stated scope. This is the project's multiplayer rule.
 
 A commander dying returns to the command zone by default and still triggers its registered Deathrattle; the existing destination choice remains available afterward. Eliminating a hero clears their board without activating its Deathrattles. Queued effects belonging to an eliminated player are skipped. The match ends when at most one hero survives. If the active player dies while multiple opponents survive, the turn advances automatically.
 

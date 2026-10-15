@@ -1366,7 +1366,9 @@ export default function App() {
                       disabled={game.active !== 0 || !!game.pending || !!targetingPlay}
                       onClick={() => dispatch({ type: 'power', p: 0, target })}
                     >
-                      Hero power · 2 ◆
+                      {game.players[0].class === 'HUNTER'
+                        ? 'Hunter power · all enemy heroes · 2 ◆'
+                        : 'Hero power · 2 ◆'}
                     </button>
                     <button
                       className="gold-button"
@@ -1638,6 +1640,12 @@ export default function App() {
                   inspect.mechanics?.map(pretty).join(' · ') ||
                   'A minion with no additional abilities.'}
               </p>
+              {effectFor(inspect)?.type === 'enemy-heroes' ||
+              deathrattleFor(inspect)?.type === 'enemy-heroes' ? (
+                <p className="commander-rule">
+                  Commander rule: this effect hits every living enemy hero; no target is chosen.
+                </p>
+              ) : null}
               {inspectInGame ? (
                 <p className="inspection-pause">Match paused while you inspect.</p>
               ) : null}

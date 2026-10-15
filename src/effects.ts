@@ -9,7 +9,7 @@ export type Effect =
   | { type: 'summon'; token: Card; amount: number }
   | { type: 'heal-friendly'; amount: number }
   | { type: 'damage-all'; amount: number; heroes?: boolean }
-  | { type: 'random-enemy-hero'; amount: number };
+  | { type: 'enemy-heroes'; amount: number };
 // Explicit registry: display text is never interpreted as executable behavior.
 export const effects: Record<string, Effect> = {
   CS2_029: { type: 'damage', amount: 6 },
@@ -51,7 +51,7 @@ export const battlecries: Record<string, Effect> = {
   EX1_015: { type: 'draw', amount: 1 },
   EX1_011: { type: 'heal', amount: 2 },
   EX1_019: { type: 'buff', attack: 1, health: 1, target: 'friendly-minion' },
-  EX1_593: { type: 'damage', amount: 3, target: 'enemy-hero' },
+  EX1_593: { type: 'enemy-heroes', amount: 3 },
   DS1_055: { type: 'heal-friendly', amount: 2 },
   CS2_196: { type: 'summon', token: token('CS2_boar', 'Boar', 1, 1, [], 'BEAST'), amount: 1 },
   EX1_025: {
@@ -62,7 +62,7 @@ export const battlecries: Record<string, Effect> = {
 };
 export const deathrattles: Record<string, Effect> = {
   EX1_096: { type: 'draw', amount: 1 },
-  EX1_029: { type: 'random-enemy-hero', amount: 2 },
+  EX1_029: { type: 'enemy-heroes', amount: 2 },
   EX1_097: { type: 'damage-all', amount: 2, heroes: true },
   FP1_024: { type: 'damage-all', amount: 1 },
   GVG_076: { type: 'damage-all', amount: 2 },

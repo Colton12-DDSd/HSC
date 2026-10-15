@@ -339,17 +339,17 @@ function runEffect(
       t.health = Math.min('maxHealth' in t ? t.maxHealth : 40, t.health + e.amount);
     note(s, `${p.name} restores up to ${e.amount} health to all friendly characters`);
   }
-  if (e.type === 'random-enemy-hero') {
+  if (e.type === 'enemy-heroes') {
+    // Untargeted "enemy hero" effects apply to every living opponent in Commander.
+    // Apply the full group before settling deaths so the damage is simultaneous.
     const enemies = s.players
       .map((x, i) => (i !== player && x.health > 0 ? i : -1))
       .filter((i) => i >= 0);
-    if (enemies.length) {
-      const enemy = enemies[random(s, enemies.length)];
+    for (const enemy of enemies)
       note(
         s,
-        `${s.players[enemy].name}'s hero takes ${damage(s, { p: enemy }, e.amount)} Deathrattle damage`,
+        `${s.players[enemy].name}'s hero takes ${damage(s, { p: enemy }, e.amount)} damage (all enemy heroes)`,
       );
-    }
   }
   if (e.type === 'wipe' || e.type === 'damage-all') {
     // Snapshot before damage so every member receives the effect before deaths resolve.
@@ -612,7 +612,7 @@ export function applyAction(state: Game, a: Action): Game {
     if (!['MAGE', 'PRIEST', 'HUNTER', 'WARLOCK', 'WARRIOR'].includes(p.class))
       throw Error('This class power is not implemented yet');
     if (['MAGE', 'PRIEST'].includes(p.class) && !a.target) throw Error('Choose a target');
-    if (a.target) getTarget(s, a.target);
+    if (a.target && ['MAGE', 'PRIEST'].includes(p.class)) getTarget(s, a.target);
     p.mana -= 2;
     p.powerUsed = true;
     if (p.class === 'MAGE') damage(s, a.target!, 1);
@@ -620,10 +620,7 @@ export function applyAction(state: Game, a: Action): Game {
       const t = getTarget(s, a.target!);
       t.health = Math.min('maxHealth' in t ? t.maxHealth : 40, t.health + 2);
     }
-    if (p.class === 'HUNTER') {
-      if (!a.target || a.target.p === a.p || a.target.uid) throw Error('Choose an enemy hero');
-      damage(s, a.target, 2);
-    }
+    if (p.class === 'HUNTER') runEffect(s, a.p, { type: 'enemy-heroes', amount: 2 });
     if (p.class === 'WARLOCK') {
       damage(s, { p: a.p }, 2);
       draw(s, a.p);

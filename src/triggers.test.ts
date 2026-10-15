@@ -88,14 +88,14 @@ describe('Battlecry effects', () => {
     });
     expect(n.players[0].board[0]).toMatchObject({ attack: 5, health: 6, maxHealth: 6 });
   });
-  it('Nightblade requires one enemy hero and does not damage all opponents', () => {
+  it('Nightblade needs no target and damages every living enemy hero', () => {
     const s = setup();
     s.players[0].hand = [card('EX1_593')];
-    expect(() => applyAction(s, { type: 'cast', p: 0, index: 0, target: { p: 0 } })).toThrow(
-      /enemy hero/,
-    );
-    const n = applyAction(s, { type: 'cast', p: 0, index: 0, target: { p: 3 } });
-    expect(n.players.map((p) => p.health)).toEqual([40, 40, 40, 37]);
+    expect(effectTargets(s, 0, card('EX1_593'))).toEqual([]);
+    const n = applyAction(s, { type: 'cast', p: 0, index: 0 });
+    expect(n.players.map((p) => p.health)).toEqual([40, 37, 37, 37]);
+    // An old selected target cannot narrow this untargeted effect.
+    expect(applyAction(s, { type: 'cast', p: 0, index: 0, target: { p: 0 } })).toEqual(n);
   });
   it('Darkscale Healer heals only friendly characters and caps their health', () => {
     let s = summon(setup(), 0, 'CS2_182');
@@ -256,7 +256,7 @@ describe('Deathrattle queue', () => {
     expect(n.players[0].board[0].card.name).toBe('Damaged Golem');
     expect(n.players[0].casts).toBe(1);
   });
-  it('seeded enemy-hero damage and the entire trigger history replay identically', () => {
+  it('all-enemy-hero Deathrattle damage and the entire trigger history replay identically', () => {
     const initial = summon(setup(), 1, 'EX1_029');
     initial.players[0].hand = [card('CS2_029')];
     const action = {
@@ -267,7 +267,8 @@ describe('Deathrattle queue', () => {
     };
     const n = applyAction(initial, action);
     expect(n.players[1].health).toBe(40);
-    expect(n.players.filter((p) => p.health === 38)).toHaveLength(1);
+    expect(n.players.filter((p) => p.health === 38)).toHaveLength(3);
+    expect(n.seed).toBe(initial.seed);
     expect(replay({ version: 1, initial, actions: [action] })).toEqual(n);
     expect(applyAction(initial, action)).toEqual(n);
   });
@@ -358,3 +359,34 @@ it.each(['CS2_189', 'CORE_CS2_189'])(
     expect(n.log.some((l) => l.includes('Chillwind Yeti takes 1 damage'))).toBe(true);
   },
 );
+
+describe('Untargeted multiplayer enemy effects', () => {
+  it('Hunter power hits every living enemy hero once for one activation cost', () => {
+    const s = setup();
+    s.players[0].mana = 2;
+    const n = applyAction(s, { type: 'power', p: 0 });
+    expect(n.players.map((p) => p.health)).toEqual([40, 38, 38, 38]);
+    expect(n.players[0].mana).toBe(0);
+    expect(n.players[0].powerUsed).toBe(true);
+    expect(() => applyAction(n, { type: 'power', p: 0 })).toThrow(/unavailable/);
+  });
+  it('skips eliminated heroes, absorbs armor independently, and ignores stale selected targets', () => {
+    const s = setup();
+    s.players[1].health = 0;
+    s.players[2].armor = 3;
+    const n = applyAction(s, { type: 'power', p: 0, target: { p: 1, uid: 999 } });
+    expect(n.players.map((p) => p.health)).toEqual([40, 0, 40, 38]);
+    expect(n.players[2].armor).toBe(1);
+  });
+  it('does not turn targeted Archer damage into area damage', () => {
+    const n = cast(setup(), 'CS2_189', { p: 2 });
+    expect(n.players.map((p) => p.health)).toEqual([40, 40, 39, 40]);
+  });
+  it('Nightblade can eliminate all opponents in the same effect without hitting its owner', () => {
+    const s = setup();
+    s.players.slice(1).forEach((p) => (p.health = 3));
+    const n = cast(s, 'EX1_593');
+    expect(n.players.map((p) => p.health)).toEqual([40, 0, 0, 0]);
+    expect(n.winner).toBe(0);
+  });
+});
