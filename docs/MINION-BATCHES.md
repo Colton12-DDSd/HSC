@@ -40,3 +40,7 @@ The battlefield badge includes an hourglass for temporary effects; the inspector
 Checkpoint: **215 tests** and production build pass, including **16 dedicated temporary-effect tests** and per-printing audit cases. Browser verification: Ruststeed Raider entered at 5 Attack/8 Health (printed 1/8 plus +4), displayed the hourglass and end-of-turn duration, then returned to 1 Attack/8 Health with Taunt intact on End turn. History recorded the expiry; no browser console errors were observed.
 
 Current totals: **191 supported collection records**, including **39 Battlecry/Deathrattle printings across 31 minion names**. This batch supports temporary Attack changes; temporary Health changes, hero-Attack Battlecries, ongoing auras, and other unimplemented scripts remain blocked.
+
+## Starter test coverage
+
+The mixed-class starter sandbox now includes all 31 supported Battlecry/Deathrattle minion names plus examples of all seven supported combat keywords in each 100-card singleton deck. Class-specific implementations are available in regular starter testing rather than only through debug card insertion. Remaining filler is Hunter/neutral; custom user decks remain unchanged. Automated coverage checks every enabled trigger name and every keyword, and simulates the mixed-class match to completion. Start a new starter game to use this deck composition.

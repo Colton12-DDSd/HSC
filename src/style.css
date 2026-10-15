@@ -2037,3 +2037,9 @@ footer > span:last-child {
   color: #e1f1ff;
   background: #294052ef;
 }
+
+.play-intro .sandbox-deck-note {
+  color: #c8d4ae;
+  margin-top: 6px;
+  font-size: 11px;
+}

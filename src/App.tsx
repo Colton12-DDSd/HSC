@@ -1064,6 +1064,11 @@ export default function App() {
                 </div>
                 <h1>{tab === 'lab' ? 'The testing lab.' : 'The command table.'}</h1>
                 <p>Clockwise turns · start at 40 health · unlimited hero healing · 3 reserve</p>
+                {game?.starterSandbox ? (
+                  <p className="sandbox-deck-note">
+                    Mixed-class starter sandbox · samples every supported minion effect family
+                  </p>
+                ) : null}
               </div>
               <div className="play-controls">
                 <button onClick={() => setPaused((p) => !p)}>
@@ -1081,7 +1086,8 @@ export default function App() {
                 <p>
                   Start a local test match against three scripted opponents.
                   <br />
-                  The starter pool uses cards with supported effects.
+                  Mixed-class starter test decks include supported Battlecries, Deathrattles,
+                  lasting effects, temporary effects, and combat keywords.
                 </p>
                 <button className="gold-button" disabled={!cards.length} onClick={() => start()}>
                   Start a match <ArrowRight size={16} />

@@ -59,6 +59,7 @@ export interface Pending {
   position?: number;
 }
 export interface Game {
+  starterSandbox?: boolean;
   version: 1;
   seed: number;
   active: number;
@@ -560,7 +561,18 @@ export function createGame(
   if (!pool.length) throw Error('No supported cards');
   const leaders = cards.filter((c) => c.type === 'MINION' && c.rarity === 'LEGENDARY');
   const fallback = leaders.find((c) => c.id === 'EX1_543') ?? leaders[0] ?? pool[0];
+  const keywordSamples = new Set(
+    ['TAUNT', 'DIVINE_SHIELD', 'CHARGE', 'RUSH', 'WINDFURY', 'POISONOUS', 'LIFESTEAL'].flatMap(
+      (keyword) => {
+        const sample = pool.find(
+          (c) => c.type === 'MINION' && c.name !== fallback.name && c.mechanics?.includes(keyword),
+        );
+        return sample ? [sample.name] : [];
+      },
+    ),
+  );
   const s: Game = {
+    starterSandbox: !localDeck,
     version: 1,
     seed,
     active: 0,
@@ -580,7 +592,11 @@ export function createGame(
               pool
                 .filter(
                   (c) =>
-                    (c.cardClass === 'NEUTRAL' || c.cardClass === 'HUNTER') &&
+                    (c.cardClass === 'NEUTRAL' ||
+                      c.cardClass === 'HUNTER' ||
+                      !!battlecryFor(c) ||
+                      !!deathrattleFor(c) ||
+                      keywordSamples.has(c.name)) &&
                     c.name !== fallback.name,
                 )
                 .map((c) => [c.name, c]),
@@ -590,8 +606,8 @@ export function createGame(
             // remaining slots; source-file ordering used to exclude later expansions.
             .sort(
               (a, b) =>
-                Number(!battlecryFor(a) && !deathrattleFor(a)) -
-                Number(!battlecryFor(b) && !deathrattleFor(b)),
+                (battlecryFor(a) || deathrattleFor(a) ? 0 : keywordSamples.has(a.name) ? 1 : 2) -
+                (battlecryFor(b) || deathrattleFor(b) ? 0 : keywordSamples.has(b.name) ? 1 : 2),
             )
             .slice(0, 100)),
     ]);

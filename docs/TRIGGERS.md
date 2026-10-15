@@ -54,7 +54,7 @@ Card text and stats are taken from the repository's imported metadata snapshot; 
 
 ## Starter test decks
 
-New Hunter starter games prioritize every eligible supported Battlecry and Deathrattle minion by name before filling the remaining slots. All four players receive 100 singleton cards, excluding their commander, then their decks are shuffled normally. Opening hands are not fixed. Custom decks use only the supplied cards. Existing matches retain their current decks; use **New starter game** to get the updated mix.
+New starter sandbox games deliberately mix classes: every supported Battlecry/Deathrattle minion name is included before filling the remaining slots, along with representatives of Taunt, Divine Shield, Charge, Rush, Windfury, Poisonous, and Lifesteal. Currently that includes all 31 trigger minion names, such as Cleansing Cleric, Mistcaller, Outfitter, Shrinkmeister, and Militia Commander. All four players receive 100 singleton cards excluding their commander, then decks are shuffled normally; opening hands are not fixed. The table labels this as a mixed-class starter sandbox. Custom decks keep their supplied contents and normal deckbuilder class restrictions. Existing matches keep their current decks; use **New starter game** for the updated mix.
 
 ## In-game inspection
 

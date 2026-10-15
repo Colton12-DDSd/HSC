@@ -21,8 +21,40 @@ it('starter decks have 100 singleton cards excluding their commander and a full 
       'Loot Hoarder',
       'Harvest Golem',
       'Sludge Belcher',
+      'Cleansing Cleric',
+      'The Mistcaller',
+      'Grimestreet Outfitter',
+      "Don Han'Cho",
+      'Shrinkmeister',
+      'Ruststeed Raider',
+      'Militia Commander',
     ])
       expect(deck.some((c) => c.name === name)).toBe(true);
+  }
+  expect(s.starterSandbox).toBe(true);
+  const expectedNames = new Set(
+    cards.filter((c) => battlecryFor(c) || deathrattleFor(c)).map((c) => c.name),
+  );
+  for (const p of s.players) {
+    const pool = [...p.hand, ...p.deck];
+    for (const name of expectedNames)
+      expect(
+        pool.some((c) => c.name === name),
+        name,
+      ).toBe(true);
+    for (const keyword of [
+      'TAUNT',
+      'DIVINE_SHIELD',
+      'CHARGE',
+      'RUSH',
+      'WINDFURY',
+      'POISONOUS',
+      'LIFESTEAL',
+    ])
+      expect(
+        pool.some((c) => c.mechanics?.includes(keyword)),
+        keyword,
+      ).toBe(true);
   }
   let steps = 0;
   while (s.winner === null && steps < 4000) {
@@ -36,6 +68,7 @@ it('starter decks have 100 singleton cards excluding their commander and a full 
 it('keeps a user-supplied deck intact instead of inserting starter test cards', () => {
   const custom = cards.filter((c) => ['CS2_182', 'CS2_172'].includes(c.id));
   const s = createGame(cards, 42, custom);
+  expect(s.starterSandbox).toBe(false);
   expect([...s.players[0].hand, ...s.players[0].deck].map((c) => c.id).sort()).toEqual(
     custom.map((c) => c.id).sort(),
   );
