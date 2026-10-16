@@ -2068,6 +2068,454 @@ footer > span:last-child {
   margin-top: 5px;
 }
 
+/* A four-seat table keeps play, responses, and the hand in the same viewport. */
+.match-mode .workspace {
+  height: 100dvh;
+  overflow: auto;
+}
+.match-mode header {
+  height: 40px;
+  padding: 0 18px;
+}
+.match-mode .topline,
+.match-mode footer {
+  display: none;
+}
+.match-mode .play-intro {
+  height: 60px;
+  padding: 7px 18px;
+  gap: 12px;
+  flex-wrap: nowrap;
+}
+.match-mode .play-intro .eyebrow,
+.match-mode .play-intro > div > p:first-of-type {
+  display: none;
+}
+.match-mode .play-intro h1 {
+  font-size: 25px;
+  letter-spacing: -0.5px;
+}
+.match-mode .play-intro p {
+  margin-top: 2px;
+  font-size: 9px;
+}
+.match-mode .game-layout {
+  position: relative;
+  height: calc(100dvh - 100px);
+  padding: 0 16px 8px;
+  display: block;
+}
+.match-mode .table {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.match-mode .turn-strip {
+  flex-shrink: 0;
+  min-height: 28px;
+  padding: 6px 170px 6px 12px;
+  border-radius: 6px;
+}
+.match-mode .battlefield {
+  flex: 1;
+  min-height: 0;
+  grid-template-areas: 'seat1 seat2' 'seat0 seat3';
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 10px;
+  border-top: 1px solid #4b5036;
+  border-radius: 12px;
+}
+.match-mode .player {
+  width: 100%;
+  justify-self: stretch;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.match-mode .player-0 {
+  grid-area: seat0;
+}
+.match-mode .player-1 {
+  grid-area: seat1;
+}
+.match-mode .player-2 {
+  grid-area: seat2;
+}
+.match-mode .player-3 {
+  grid-area: seat3;
+}
+.match-mode .player-heading {
+  flex-wrap: nowrap;
+  gap: 9px;
+  flex-shrink: 0;
+}
+.match-mode .hero {
+  width: 33px;
+  height: 39px;
+}
+.match-mode .hero > span {
+  font-size: 21px;
+}
+.match-mode .hero > b {
+  height: 20px;
+  font-size: 11px;
+}
+.match-mode .zone {
+  width: auto;
+  max-width: 140px;
+  margin: 0 0 0 auto;
+  padding: 5px 7px;
+  font-size: 9px;
+}
+.match-mode .zone small {
+  display: block;
+  margin: 2px 0 0;
+}
+.match-mode .board-slots {
+  flex: 1;
+  min-height: 0;
+  max-height: none;
+  margin-top: 8px;
+  padding: 4px 0 6px;
+  align-items: center;
+}
+.match-mode .slot,
+.match-mode .unit {
+  width: min(12.5%, 66px);
+  height: min(9.5dvh, 88px);
+  max-width: none;
+  flex-shrink: 1;
+}
+.match-mode .placement-gap {
+  min-height: 35px;
+  flex-basis: 12px;
+}
+.match-mode .table-center {
+  display: none;
+}
+.match-mode .action-dock {
+  flex-shrink: 0;
+  min-height: 76px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+.match-mode .inspection-hint {
+  margin: 0;
+  font-size: 9px;
+}
+.match-mode .battle-controls {
+  padding: 0;
+  flex-wrap: nowrap;
+}
+.match-mode .battle-controls > span {
+  width: auto;
+  flex: 1;
+}
+.match-mode .battle-controls button {
+  padding: 6px 9px;
+}
+.match-mode .priority {
+  margin: 0;
+  padding: 7px 10px;
+  gap: 9px;
+  flex-wrap: nowrap;
+  box-shadow: 0 0 18px #d1ad3b22;
+}
+.match-mode .priority p {
+  line-height: 1.3;
+}
+.match-mode .priority button {
+  padding: 7px 10px;
+}
+.match-mode .placement-instructions {
+  margin: 0;
+  padding: 6px 10px;
+  font-size: 10px;
+}
+.match-mode .hand {
+  flex-shrink: 0;
+  padding: 6px 10px;
+}
+.match-mode .hand-title {
+  font-size: 9px;
+}
+.match-mode .hand-title span {
+  display: inline;
+  margin: 0 0 0 10px;
+  font-size: 8px;
+}
+.match-mode .hand > div:last-child {
+  min-height: 0;
+  padding: 6px 0 2px;
+  gap: 5px;
+}
+.match-mode .hand-card {
+  min-width: 0;
+  flex: 0 1 clamp(54px, 10dvh, 95px);
+  gap: 2px;
+}
+.match-mode .hand .hand-card .card-art {
+  width: 100%;
+  min-width: 0;
+  max-height: none;
+}
+.match-mode .hand .card-fallback {
+  font-size: 9px;
+  overflow: hidden;
+}
+.match-mode .inspect-hand {
+  padding: 3px;
+  font-size: 9px;
+}
+.match-mode .history {
+  position: absolute;
+  right: 16px;
+  top: 0;
+  width: 155px;
+  max-height: calc(100% - 16px);
+  padding: 6px 10px;
+  display: block;
+  z-index: 8;
+  box-shadow: 0 8px 30px #0008;
+}
+.match-mode .history[open] {
+  width: 265px;
+  overflow: auto;
+}
+.match-mode .history summary {
+  cursor: pointer;
+  font-size: 11px;
+  color: #d5c78f;
+}
+.match-mode .history summary svg {
+  vertical-align: middle;
+  margin-right: 4px;
+}
+.match-mode .history > div {
+  max-height: 45dvh;
+  overflow: auto;
+}
+.match-mode .history button {
+  width: 100%;
+}
+.match-mode .player-effects {
+  position: absolute;
+  top: 5px;
+  right: 155px;
+  margin: 0;
+  padding: 3px 6px;
+  font-size: 9px;
+  z-index: 6;
+}
+.match-mode .player-effects[open] {
+  top: 45px;
+  right: 8px;
+  max-width: 95%;
+  box-shadow: 0 4px 15px #000b;
+}
+@media (max-width: 950px) {
+  .match-mode .play-intro .sandbox-deck-note,
+  .match-mode .inspection-hint {
+    display: none;
+  }
+  .match-mode .player {
+    padding: 7px;
+  }
+  .match-mode .player p {
+    font-size: 7px;
+  }
+  .match-mode .player h3 {
+    font-size: 10px;
+  }
+  .match-mode .zone {
+    max-width: 105px;
+    font-size: 8px;
+  }
+  .match-mode .player-effects {
+    top: 50px;
+    right: 7px;
+  }
+  .match-mode .action-dock {
+    min-height: 68px;
+  }
+  .match-mode .minion-stat {
+    min-width: 18px;
+    padding: 2px 1px;
+  }
+  .match-mode .minion-stat .stat-icon {
+    width: 8px;
+  }
+  .match-mode .minion-stat b {
+    font-size: 11px;
+  }
+}
+@media (max-height: 700px) and (min-width: 601px) {
+  .match-mode header {
+    height: 32px;
+  }
+  .match-mode .play-intro {
+    height: 44px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  .match-mode .play-intro h1 {
+    font-size: 21px;
+  }
+  .match-mode .play-intro .sandbox-deck-note,
+  .match-mode .inspection-hint {
+    display: none;
+  }
+  .match-mode .game-layout {
+    height: calc(100dvh - 76px);
+  }
+  .match-mode .action-dock {
+    min-height: 62px;
+  }
+  .match-mode .priority {
+    padding: 5px 8px;
+  }
+  .match-mode .priority button {
+    padding: 5px 8px;
+  }
+  .match-mode .hand-card {
+    flex-basis: 52px;
+  }
+  .match-mode .hand-title span {
+    display: none;
+  }
+  .match-mode .hand {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  .match-mode .player {
+    padding: 6px 9px;
+  }
+  .match-mode .player p {
+    font-size: 7px;
+    line-height: 1.3;
+  }
+  .match-mode .player h3 {
+    font-size: 10px;
+  }
+  .match-mode .board-slots {
+    margin-top: 5px;
+  }
+}
+@media (max-width: 600px) {
+  .match-mode .play-intro {
+    padding: 6px 8px;
+    height: 52px;
+  }
+  .match-mode .play-intro h1 {
+    font-size: 19px;
+  }
+  .match-mode .play-controls {
+    gap: 4px;
+  }
+  .match-mode .play-controls button {
+    padding: 6px;
+    font-size: 8px;
+  }
+  .match-mode .game-layout {
+    height: calc(100dvh - 92px);
+    padding: 0 5px 5px;
+  }
+  .match-mode .battlefield {
+    gap: 5px;
+    padding: 5px;
+  }
+  .match-mode .player-heading {
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .match-mode .zone {
+    width: 100%;
+    max-width: none;
+    padding: 3px;
+  }
+  .match-mode .zone small {
+    display: inline;
+    margin-left: 4px;
+  }
+  .match-mode .hero {
+    width: 26px;
+    height: 30px;
+  }
+  .match-mode .slot,
+  .match-mode .unit {
+    height: min(8dvh, 60px);
+  }
+  .match-mode .turn-strip {
+    padding-right: 32px;
+    gap: 7px;
+  }
+  .match-mode .turn-strip > span {
+    font-size: 7px;
+    gap: 1px;
+  }
+  .match-mode .turn-strip svg {
+    display: none;
+  }
+  .match-mode .history {
+    right: 6px;
+    width: 27px;
+    padding: 5px;
+  }
+  .match-mode .history:not([open]) summary {
+    font-size: 0;
+  }
+  .match-mode .battle-controls {
+    gap: 3px;
+    flex-wrap: wrap;
+  }
+  .match-mode .battle-controls > span {
+    flex-basis: 100%;
+    font-size: 8px;
+  }
+  .match-mode .battle-controls button {
+    padding: 5px;
+    font-size: 8px;
+  }
+  .match-mode .hand-title span {
+    display: none;
+  }
+  .match-mode .hand-card {
+    flex: 0 0 54px;
+  }
+  .match-mode .hand .hand-card .card-art {
+    max-height: none;
+  }
+  .match-mode .priority {
+    gap: 5px;
+    padding: 6px;
+  }
+  .match-mode .priority > svg {
+    display: none;
+  }
+  .match-mode .priority b {
+    font-size: 9px;
+  }
+  .match-mode .priority button {
+    padding: 5px;
+    font-size: 9px;
+  }
+  .match-mode .minion-stat {
+    min-width: 15px;
+    padding: 2px 1px;
+  }
+  .match-mode .minion-stat .stat-icon {
+    width: 7px;
+  }
+  .match-mode .minion-stat b {
+    font-size: 10px;
+  }
+}
+
 .card-modifier-badge {
   position: absolute;
   bottom: 17px;

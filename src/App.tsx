@@ -621,7 +621,7 @@ export default function App() {
     { id: 'lab', icon: FlaskConical, label: 'Testing lab' },
   ];
   return (
-    <div className="app">
+    <div className={`app ${game && (tab === 'table' || tab === 'lab') ? 'match-mode' : ''}`}>
       <aside className="rail">
         <a
           className="brand-mark"
@@ -1110,7 +1110,7 @@ export default function App() {
                     <b>TURN {game.turn}</b>
                   </div>
                   <div className="battlefield">
-                    {[2, 1, 3, 0].map((i) => {
+                    {[1, 2, 0, 3].map((i) => {
                       const p = game.players[i];
                       return (
                         <section
@@ -1385,115 +1385,118 @@ export default function App() {
                       </small>
                     </div>
                   </div>
-                  {placing && !game.pending ? (
-                    <div className="placement-instructions" role="status">
-                      <span>
-                        Place <b>{placing.card.name}</b>: release or click a + between minions.
-                        {targetFor(effectFor(placing.card))
-                          ? ' Then choose a highlighted Battlecry target.'
-                          : ''}
-                      </span>
-                      <button onClick={cancelPlacement}>
-                        Cancel <small>Esc</small>
-                      </button>
-                    </div>
-                  ) : null}
-                  {targetingPlay ? (
-                    <div className="placement-instructions battlecry-instructions" role="status">
-                      <span>
-                        <b>Choose a target for {targetingPlay.source.card.name}'s Battlecry.</b>
-                        <br />
-                        Click a blue-highlighted character. The card will enter at position{' '}
-                        {targetingPlay.position + 1} after you choose; mana is not spent until then.
-                      </span>
-                      <button onClick={cancelPlacement}>
-                        Cancel <small>Esc</small>
-                      </button>
-                    </div>
-                  ) : null}
-                  {attackingUnit ? (
-                    <div className="placement-instructions combat-instructions" role="status">
-                      <span>
-                        <b>{attackingUnit.card.name}</b> selected. Click a highlighted enemy minion
-                        or hero to attack. Taunt protects only its owner's board.
-                      </span>
-                      <button onClick={() => setSelected(undefined)}>
-                        Cancel <small>Esc</small>
-                      </button>
-                    </div>
-                  ) : null}
-                  <p className="inspection-hint">
-                    Right-click a minion or commander to inspect it. Stat colors compare printed
-                    base: white = normal, red = lower, green = higher.
-                  </p>
-                  <div className="battle-controls">
-                    <span>
-                      Target: <b>{targetLabel}</b>
-                    </span>
-                    <button
-                      disabled={!!selectedAttackError}
-                      title={selectedAttackError ?? `Attack ${targetLabel}`}
-                      onClick={() => dispatch({ type: 'attack', p: 0, uid: selected, target })}
-                    >
-                      Attack selected target
-                    </button>
-                    <button
-                      disabled={game.active !== 0 || !!game.pending || !!targetingPlay}
-                      onClick={() => dispatch({ type: 'power', p: 0, target })}
-                    >
-                      {game.players[0].class === 'HUNTER'
-                        ? 'Hunter power · all enemy heroes · 2 ◆'
-                        : 'Hero power · 2 ◆'}
-                    </button>
-                    <button
-                      className="gold-button"
-                      disabled={
-                        game.active !== 0 ||
-                        !!game.pending ||
-                        game.winner !== null ||
-                        !!targetingPlay
-                      }
-                      onClick={() => dispatch({ type: 'end', p: 0 })}
-                    >
-                      End turn <ArrowRight size={15} />
-                    </button>
-                  </div>
-                  {game.pending ? (
-                    <div className="priority">
-                      <Shield size={22} />
-                      <div>
-                        <b>
-                          {game.players[game.pending.caster].name} is casting{' '}
-                          {game.pending.card.name}
-                        </b>
-                        <p>
-                          Clockwise priority → {game.players[game.pending.queue[0]].name} ·{' '}
-                          {remaining}s
-                        </p>
+                  <div className="action-dock" aria-label="Match actions and interrupt priority">
+                    {placing && !game.pending ? (
+                      <div className="placement-instructions" role="status">
+                        <span>
+                          Place <b>{placing.card.name}</b>: release or click a + between minions.
+                          {targetFor(effectFor(placing.card))
+                            ? ' Then choose a highlighted Battlecry target.'
+                            : ''}
+                        </span>
+                        <button onClick={cancelPlacement}>
+                          Cancel <small>Esc</small>
+                        </button>
                       </div>
+                    ) : null}
+                    {targetingPlay ? (
+                      <div className="placement-instructions battlecry-instructions" role="status">
+                        <span>
+                          <b>Choose a target for {targetingPlay.source.card.name}'s Battlecry.</b>
+                          <br />
+                          Click a blue-highlighted character. The card will enter at position{' '}
+                          {targetingPlay.position + 1} after you choose; mana is not spent until
+                          then.
+                        </span>
+                        <button onClick={cancelPlacement}>
+                          Cancel <small>Esc</small>
+                        </button>
+                      </div>
+                    ) : null}
+                    {attackingUnit ? (
+                      <div className="placement-instructions combat-instructions" role="status">
+                        <span>
+                          <b>{attackingUnit.card.name}</b> selected. Click a highlighted enemy
+                          minion or hero to attack. Taunt protects only its owner's board.
+                        </span>
+                        <button onClick={() => setSelected(undefined)}>
+                          Cancel <small>Esc</small>
+                        </button>
+                      </div>
+                    ) : null}
+                    <p className="inspection-hint">
+                      Right-click a minion or commander to inspect it. Stat colors compare printed
+                      base: white = normal, red = lower, green = higher.
+                    </p>
+                    <div className="battle-controls">
+                      <span>
+                        Target: <b>{targetLabel}</b>
+                      </span>
+                      <button
+                        disabled={!!selectedAttackError}
+                        title={selectedAttackError ?? `Attack ${targetLabel}`}
+                        onClick={() => dispatch({ type: 'attack', p: 0, uid: selected, target })}
+                      >
+                        Attack selected target
+                      </button>
+                      <button
+                        disabled={game.active !== 0 || !!game.pending || !!targetingPlay}
+                        onClick={() => dispatch({ type: 'power', p: 0, target })}
+                      >
+                        {game.players[0].class === 'HUNTER'
+                          ? 'Hunter power · all enemy heroes · 2 ◆'
+                          : 'Hero power · 2 ◆'}
+                      </button>
                       <button
                         className="gold-button"
-                        disabled={game.pending.queue[0] !== 0 && tab !== 'lab'}
-                        onClick={() => dispatch({ type: 'interrupt', p: game.pending!.queue[0] })}
+                        disabled={
+                          game.active !== 0 ||
+                          !!game.pending ||
+                          game.winner !== null ||
+                          !!targetingPlay
+                        }
+                        onClick={() => dispatch({ type: 'end', p: 0 })}
                       >
-                        Interrupt · 3 ◈
-                      </button>
-                      <button
-                        disabled={game.pending.queue[0] !== 0 && tab !== 'lab'}
-                        onClick={() => dispatch({ type: 'pass', p: game.pending!.queue[0] })}
-                      >
-                        Pass
+                        End turn <ArrowRight size={15} />
                       </button>
                     </div>
-                  ) : null}
-                  {game.winner !== null ? (
-                    <div className="priority">
-                      <Crown />
-                      {game.winner === -1
-                        ? 'Draw'
-                        : `${game.players[game.winner].name} wins the match!`}
-                    </div>
-                  ) : null}
+                    {game.pending ? (
+                      <div className="priority">
+                        <Shield size={22} />
+                        <div>
+                          <b>
+                            {game.players[game.pending.caster].name} is casting{' '}
+                            {game.pending.card.name}
+                          </b>
+                          <p>
+                            Clockwise priority → {game.players[game.pending.queue[0]].name} ·{' '}
+                            {remaining}s
+                          </p>
+                        </div>
+                        <button
+                          className="gold-button"
+                          disabled={game.pending.queue[0] !== 0 && tab !== 'lab'}
+                          onClick={() => dispatch({ type: 'interrupt', p: game.pending!.queue[0] })}
+                        >
+                          Interrupt · 3 ◈
+                        </button>
+                        <button
+                          disabled={game.pending.queue[0] !== 0 && tab !== 'lab'}
+                          onClick={() => dispatch({ type: 'pass', p: game.pending!.queue[0] })}
+                        >
+                          Pass
+                        </button>
+                      </div>
+                    ) : null}
+                    {game.winner !== null ? (
+                      <div className="priority">
+                        <Crown />
+                        {game.winner === -1
+                          ? 'Draw'
+                          : `${game.players[game.winner].name} wins the match!`}
+                      </div>
+                    ) : null}
+                  </div>
                   <div className="hand">
                     <div className="hand-title">
                       YOUR HAND{' '}
@@ -1533,10 +1536,10 @@ export default function App() {
                     </div>
                   </div>
                 </section>
-                <aside className="history">
-                  <h3>
+                <details className="history">
+                  <summary>
                     <ScrollText size={17} /> Action history
-                  </h3>
+                  </summary>
                   <p>Deterministic local session · seed 42</p>
                   <div>
                     {game.log
@@ -1552,7 +1555,7 @@ export default function App() {
                   <button onClick={() => replayUpload.current?.click()}>
                     Load deterministic replay
                   </button>
-                </aside>
+                </details>
               </div>
             )}
             {tab === 'lab' && game ? (
