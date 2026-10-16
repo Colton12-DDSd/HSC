@@ -19,9 +19,16 @@ export class AuthoritativeMatch {
     if (command.revision !== this.revision) throw Error('Stale revision; resynchronize');
     // Debug commands are deliberately absent from the server action interface.
     if (
-      !['cast', 'pass', 'interrupt', 'end', 'attack', 'power', 'commander-destination'].includes(
-        command.action.type,
-      )
+      ![
+        'cast',
+        'choose',
+        'pass',
+        'interrupt',
+        'end',
+        'attack',
+        'power',
+        'commander-destination',
+      ].includes(command.action.type)
     )
       throw Error('Unknown match action');
     this.state = applyAction(this.state, command.action);
@@ -36,6 +43,7 @@ export class AuthoritativeMatch {
       state: {
         ...structuredClone(this.state),
         seed: undefined,
+        choice: this.state.choice?.player === seat ? structuredClone(this.state.choice) : undefined,
         players: this.state.players.map((p, i) => ({
           ...structuredClone(p),
           deckCount: p.deck.length,

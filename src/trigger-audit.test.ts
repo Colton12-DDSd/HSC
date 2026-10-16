@@ -1,11 +1,20 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { createGame, debugAction, applyAction, replay, type Game, type Action } from './engine';
-import { battlecryFor, deathrattleFor, supported, unsupportedReason } from './effects';
+import {
+  battlecryFor,
+  deathrattleFor,
+  battlecries,
+  deathrattles,
+  supported,
+  unsupportedReason,
+} from './effects';
 import type { Card } from './cards';
 const cards = JSON.parse(readFileSync('public/data/cards.json', 'utf8')) as Card[];
 const card = (id: string) => cards.find((c) => c.id === id)!;
-const allAudited = cards.filter((c) => battlecryFor(c) || deathrattleFor(c));
+const allAudited = cards.filter(
+  (c) => battlecries[c.id.replace(/^CORE_/, '')] || deathrattles[c.id.replace(/^CORE_/, '')],
+);
 // This batch has independent per-printing, dual-trigger, and sequence tests in armor-effects.test.ts.
 const armorBatch = new Set([
   'BAR_745',
@@ -108,7 +117,7 @@ describe('Every enabled Battlecry and Deathrattle printing', () => {
     expect(new Set(allAudited.map((c) => c.name)).size).toBe(45);
     for (const c of audited) expect(expected[cleanId(c.id)], c.id).toBeDefined();
     const enabledByMechanic = cards.filter(
-      (c) => supported(c) && c.mechanics?.some((m) => ['BATTLECRY', 'DEATHRATTLE'].includes(m)),
+      (c) => allAudited.some((x) => x.id === c.id) && supported(c),
     );
     expect(enabledByMechanic.map((c) => c.id).sort()).toEqual(allAudited.map((c) => c.id).sort());
   });

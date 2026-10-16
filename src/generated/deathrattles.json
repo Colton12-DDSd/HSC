@@ -1,0 +1,85 @@
+{
+  "BE_151": {
+    "text": "<b>Battlecry and Deathrattle:</b>& Give adjacent minions +2/+2.",
+    "steps": [
+      {
+        "op": "buff",
+        "attack": 2,
+        "health": 2,
+        "scope": "adjacent"
+      }
+    ]
+  },
+  "BE_572": {
+    "text": "<b>Taunt</b>\n<b>Battlecry and Deathrattle:</b>&\n Gain 3 Armor.",
+    "steps": [
+      {
+        "op": "armor",
+        "amount": 3
+      }
+    ]
+  },
+  "CORE_RLK_657": {
+    "text": "[x]<b>Rush</b>\n<b>Battlecry and Deathrattle:</b>&\nGain 6 Armor.",
+    "steps": [
+      {
+        "op": "armor",
+        "amount": 6
+      }
+    ]
+  },
+  "DEEP_030": {
+    "text": "<b>Battlecry and Deathrattle:</b>\nDraw a card. Deal 2 damage to your hero.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1
+      },
+      {
+        "op": "damage",
+        "amount": 2,
+        "scope": "hero"
+      }
+    ]
+  },
+  "RLK_223": {
+    "text": "<b>Reborn</b>\n<b>Battlecry and Deathrattle:</b>& Deal 2 damage to a random enemy.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 2,
+        "scope": "enemies",
+        "random": 1
+      }
+    ]
+  },
+  "RLK_657": {
+    "text": "[x]<b>Rush</b>\n<b>Battlecry and Deathrattle:</b>&\nGain 6 Armor.",
+    "steps": [
+      {
+        "op": "armor",
+        "amount": 6
+      }
+    ]
+  },
+  "RLK_708": {
+    "text": "<b>Battlecry and Deathrattle:</b>& Draw a card.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1
+      }
+    ]
+  },
+  "YOG_403": {
+    "text": "<b>Battlecry and Deathrattle:</b> Summon a 2/2 Treant.",
+    "steps": [
+      {
+        "op": "summon-token",
+        "token": "TTN_950t2",
+        "amount": 1,
+        "enemy": false
+      }
+    ]
+  }
+}

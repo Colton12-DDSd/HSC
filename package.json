@@ -8,7 +8,9 @@
     "build": "tsc -b && vite build",
     "test": "vitest run",
     "import:cards": "node scripts/import-cards.mjs",
-    "audit:minions": "node scripts/audit-minion-coverage.mjs"
+    "audit:minions": "node scripts/audit-minion-coverage.mjs",
+    "compile:battlecries": "python scripts/compile-battlecries.py",
+    "test:compiler": "python scripts/test_compile_battlecries.py"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.57.4",

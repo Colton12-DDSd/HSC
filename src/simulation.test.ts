@@ -1,7 +1,7 @@
 import { it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { createGame, applyAction, botAction } from './engine';
-import { battlecryFor, deathrattleFor, supported } from './effects';
+import { battlecryFor, deathrattleFor, battlecries, deathrattles, supported } from './effects';
 import type { Card } from './cards';
 const cards = JSON.parse(readFileSync('public/data/cards.json', 'utf8')) as Card[];
 it('starter decks have 100 singleton cards excluding their commander and a full simulation reaches victory', () => {
@@ -33,7 +33,11 @@ it('starter decks have 100 singleton cards excluding their commander and a full 
   }
   expect(s.starterSandbox).toBe(true);
   const expectedNames = new Set(
-    cards.filter((c) => battlecryFor(c) || deathrattleFor(c)).map((c) => c.name),
+    cards
+      .filter(
+        (c) => battlecries[c.id.replace(/^CORE_/, '')] || deathrattles[c.id.replace(/^CORE_/, '')],
+      )
+      .map((c) => c.name),
   );
   for (const p of s.players) {
     const pool = [...p.hand, ...p.deck];

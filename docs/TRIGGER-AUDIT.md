@@ -1,8 +1,10 @@
 # Enabled minion trigger audit
 
-Audited 2026-10-15 against the repository's imported card snapshot and explicit Commander rules. Scope: **45 distinct enabled minions, 55 card records**. This is not an implementation audit of every unimplemented minion in the collection.
+Audited 2026-10-16 against the pinned imported snapshot and Commander rules. Current coverage: **551 enabled trigger minion names / 606 printings**, including **542 Battlecry names / 595 printings**. The new expansion adds **506 Battlecry names**, measured against the frozen pre-expansion baseline.
 
-Every enabled record has its own execution test against independent expected outcomes. The audit also checks that every minion labeled Supported with Battlecry or Deathrattle is covered, so another supported trigger cannot silently bypass this list.
+The bulk suite checks every generated Battlecry printing for play execution, direct-summon timing, and positive conditional branches, plus independent expected outcomes for shared mechanics and deterministic replay. Whole-text compiler regression tests reject unmatched trailing clauses. These checks do not claim exhaustive correctness for every interaction or generated card's separate abilities. See [implementation and limits](BULK-BATTLECRIES.md) and [added-card inventory](BULK-BATTLECRY-MANIFEST.md).
+
+The table below is the independently specified **legacy 45-name / 55-printing** audit retained alongside the bulk suite.
 
 | Minion                | Audited printings     | Execution check                                                     |
 | --------------------- | --------------------- | ------------------------------------------------------------------- |

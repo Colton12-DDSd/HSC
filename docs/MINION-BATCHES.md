@@ -47,25 +47,31 @@ The mixed-class starter sandbox now includes all 45 supported Battlecry/Deathrat
 
 ## Batch 4: Armor, self-damage, and ordered effects
 
-| Minion | Supported printings | Complete effect |
-| --- | --- | --- |
-| Flame Imp | EX1_319, CORE_EX1_319 | Deal 3 damage to your hero |
-| Vulgar Homunculus | CORE_LOOT_013 | Taunt; deal 2 damage to your hero |
-| Hecklefang Hyena | BAR_745 | Deal 3 damage to your hero |
-| Pit Lord | EX1_313 | Deal 5 damage to your hero |
-| Ornery Tortoise | TRL_546 | Deal 5 damage to your hero |
-| Sanguine Soldier | RLK_921 | Divine Shield; deal 2 damage to your hero |
-| Trogg Exile | TTN_832 | Rush; deal 4 damage to your hero |
-| Crystallizer | BOT_447 | Deal 5 damage to your hero, then gain 5 Armor |
-| Shieldmaiden | GVG_053 | Gain 5 Armor |
-| Armor Vendor | YOP_032 | Give every living hero 4 Armor |
-| Underking | RLK_657, CORE_RLK_657 | Rush; Battlecry and Deathrattle each gain 6 Armor |
-| Tol'vir Vanguard | BE_572 | Taunt; Battlecry and Deathrattle each gain 3 Armor |
-| Elementium Geode | DEEP_030 | Battlecry and Deathrattle each draw one card, then deal 2 damage to your hero |
-| Tidal Revenant | TID_716 | Deal 5 damage to a chosen character, then gain 8 Armor |
+| Minion            | Supported printings   | Complete effect                                                               |
+| ----------------- | --------------------- | ----------------------------------------------------------------------------- |
+| Flame Imp         | EX1_319, CORE_EX1_319 | Deal 3 damage to your hero                                                    |
+| Vulgar Homunculus | CORE_LOOT_013         | Taunt; deal 2 damage to your hero                                             |
+| Hecklefang Hyena  | BAR_745               | Deal 3 damage to your hero                                                    |
+| Pit Lord          | EX1_313               | Deal 5 damage to your hero                                                    |
+| Ornery Tortoise   | TRL_546               | Deal 5 damage to your hero                                                    |
+| Sanguine Soldier  | RLK_921               | Divine Shield; deal 2 damage to your hero                                     |
+| Trogg Exile       | TTN_832               | Rush; deal 4 damage to your hero                                              |
+| Crystallizer      | BOT_447               | Deal 5 damage to your hero, then gain 5 Armor                                 |
+| Shieldmaiden      | GVG_053               | Gain 5 Armor                                                                  |
+| Armor Vendor      | YOP_032               | Give every living hero 4 Armor                                                |
+| Underking         | RLK_657, CORE_RLK_657 | Rush; Battlecry and Deathrattle each gain 6 Armor                             |
+| Tol'vir Vanguard  | BE_572                | Taunt; Battlecry and Deathrattle each gain 3 Armor                            |
+| Elementium Geode  | DEEP_030              | Battlecry and Deathrattle each draw one card, then deal 2 damage to your hero |
+| Tidal Revenant    | TID_716               | Deal 5 damage to a chosen character, then gain 8 Armor                        |
 
 An explicit ordered-effect list handles compound scripts without interpreting card text. Armor stacks and absorbs damage before Health. Dead heroes are excluded from Armor Vendor. Self-damage cannot be redirected by a stale target. Geode handles full hands, fatigue, and lethal self-damage; eliminated players cannot gain Armor to undo death. Both-trigger cards activate once on play and once on death, never on direct summoning. Tidal Revenant uses the explicit placement-then-target flow and completes its Armor gain even if Divine Shield absorbs the damage. Interrupting a cast prevents all its Battlecry steps.
 
 Checkpoint: **266 tests** and production build pass. The new suite has **50 cases**, including every printing, direct summons, each dual trigger, ordering, shields, full-hand burns, fatigue, lethal effects, incomplete-script exclusion, and interruption/replay. Browser play verified Crystallizer changed 40 Health/0 Armor to 35 Health/5 Armor. Tidal Revenant then targeted only Ember (40 → 35 Health), spent 8 mana, and raised friendly Armor from 5 to 13. History recorded damage then Armor; no console errors were observed.
 
 Current totals: **207 supported collection records**, including **55 Battlecry/Deathrattle printings across 45 minion names**. Starter decks automatically include all newly enabled names. No database rows or image files were added. Remaining armor cards with extra unsupported scripts (such as Setesh, EVIL Quartermaster, Anub'Rekhan, and General Vezax) stay blocked. Use `npm run audit:minions` for the full per-card inventory before selecting the next batch.
+
+## Batch 5: bulk Battlecry families
+
+Added **506 unique Battlecry minion names** beyond the frozen batch-4 baseline, bringing Battlecry coverage to **542 names / 595 printings**. Total supported collection records: **1,022**. See [implementation, validation and limitations](BULK-BATTLECRIES.md) and the [506-name manifest](BULK-BATTLECRY-MANIFEST.md).
+
+The 100-card starter decks retain the original 45 trigger names and sample the newly enabled effect families, with seeded rotation for other cards. Earlier statements that every supported name fits in a starter deck describe historical checkpoints.

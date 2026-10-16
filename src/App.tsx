@@ -55,6 +55,7 @@ import {
   applyAction,
   debugAction,
   botAction,
+  unitMechanics,
   supported,
   commandCost,
   replay,
@@ -233,6 +234,36 @@ export default function App() {
       if (previous?.isConnected) previous.focus();
     };
   }, [inspect]);
+  const choiceModal = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (!game?.choice) return;
+    const previous = document.activeElement as HTMLElement | null;
+    const modal = choiceModal.current;
+    (modal?.querySelector<HTMLButtonElement>('button:not(:disabled)') ?? modal)?.focus();
+    const trap = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab' || !modal) return;
+      const buttons = [...modal.querySelectorAll<HTMLButtonElement>('button:not(:disabled)')];
+      const first = buttons[0],
+        last = buttons.at(-1);
+      if (!first) {
+        e.preventDefault();
+        modal.focus();
+        return;
+      }
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last?.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', trap);
+    return () => {
+      document.removeEventListener('keydown', trap);
+      if (previous?.isConnected) previous.focus();
+    };
+  }, [game?.choice]);
   const dragSession = useRef<DragSession | null>(null);
   const suppressCardClick = useRef(false);
   function cancelPlacement() {
@@ -255,7 +286,8 @@ export default function App() {
   }, [placing, targetingPlay, selected, inspect]);
   function placementError(source: Placement) {
     if (!game || game.winner !== null || game.players[0].health <= 0) return 'No active match';
-    if (game.active !== 0 || game.pending) return 'Wait for your turn and finish priority first';
+    if (game.active !== 0 || game.pending || game.choice)
+      return 'Finish the current turn, priority, or card choice first';
     const p = game.players[0];
     if (p.board.length >= 7) return 'Your battlefield is full';
     if (!supported(source.card)) return 'This card effect is not implemented';
@@ -578,7 +610,7 @@ export default function App() {
   }
   useEffect(() => {
     if (!game || game.winner !== null || paused || inspect) return;
-    const actor = game.pending?.queue[0] ?? game.active;
+    const actor = game.choice?.player ?? game.pending?.queue[0] ?? game.active;
     if (actor === 0) return;
     const t = setTimeout(() => {
       const action = botAction(game);
@@ -1153,6 +1185,13 @@ export default function App() {
                                 </span>
                                 <span className="reserve">◈ {p.reserve}/3</span>
                                 {p.armor > 0 ? <span>🛡 {p.armor}</span> : null}
+                                {p.weapon ? (
+                                  <span
+                                    title={`${p.weapon.card.name} · ${p.weapon.attack} Attack · ${p.weapon.durability} Durability`}
+                                  >
+                                    ⚔ {p.weapon.attack}/{p.weapon.durability}
+                                  </span>
+                                ) : null}
                               </div>
                             </div>
                             <button
@@ -1241,23 +1280,27 @@ export default function App() {
                                 (canAttack
                                   ? `${u?.rushOnly ? 'Rush: minions only' : 'Ready to attack'} · ${u?.attacksRemaining} attack${u?.attacksRemaining === 1 ? '' : 's'} left`
                                   : 'No legal attack targets');
-                              const attackLabel = canAttack
-                                ? u?.rushOnly
-                                  ? 'Rush'
-                                  : 'Ready'
-                                : readiness === 'Summoning sickness'
-                                  ? 'Sleep'
-                                  : readiness === 'No attacks left this turn'
-                                    ? 'Spent'
-                                    : readiness === 'This character has no attack'
-                                      ? '0 ATK'
-                                      : readiness === 'Not your turn'
-                                        ? 'Wait'
-                                        : game.pending
-                                          ? 'Priority'
-                                          : game.winner !== null
-                                            ? 'Over'
-                                            : 'No target';
+                              const attackLabel = game.choice
+                                ? 'Choose'
+                                : u?.frozen
+                                  ? 'Frozen'
+                                  : canAttack
+                                    ? u?.rushOnly
+                                      ? 'Rush'
+                                      : 'Ready'
+                                    : readiness === 'Summoning sickness'
+                                      ? 'Sleep'
+                                      : readiness === 'No attacks left this turn'
+                                        ? 'Spent'
+                                        : readiness === 'This character has no attack'
+                                          ? '0 ATK'
+                                          : readiness === 'Not your turn'
+                                            ? 'Wait'
+                                            : game.pending
+                                              ? 'Priority'
+                                              : game.winner !== null
+                                                ? 'Over'
+                                                : 'No target';
                               return (
                                 <Fragment key={u?.uid ?? `empty-${j}`}>
                                   {i === 0 &&
@@ -1283,8 +1326,8 @@ export default function App() {
                                   {u ? (
                                     <button
                                       key={u.uid}
-                                      className={`unit ${isEffectTarget({ p: i, uid: u.uid }) ? 'effect-target' : ''} ${selected === u.uid ? 'selected' : ''} ${i === 0 ? (canAttack ? 'can-attack' : 'cannot-attack') : ''} ${target.uid === u.uid ? 'targeted' : ''} ${u.health < u.maxHealth ? 'damaged' : ''} ${u.card.mechanics?.includes('TAUNT') ? 'taunt' : ''} ${selected !== undefined && i !== 0 ? (attackError(game, 0, selected, { p: i, uid: u.uid }) ? 'attack-blocked' : 'attackable') : ''}`}
-                                      aria-label={`${p.name}'s ${u.card.name}, minion ${j + 1}, ${u.attack} attack, ${u.health} of ${u.maxHealth} health${u.card.mechanics?.includes('TAUNT') ? ', Taunt' : ''}${i === 0 ? `, ${attackStatus}` : ''}${lastingLabel ? `, ${lastingLabel}` : ''}`}
+                                      className={`unit ${isEffectTarget({ p: i, uid: u.uid }) ? 'effect-target' : ''} ${selected === u.uid ? 'selected' : ''} ${i === 0 ? (canAttack ? 'can-attack' : 'cannot-attack') : ''} ${target.uid === u.uid ? 'targeted' : ''} ${u.health < u.maxHealth ? 'damaged' : ''} ${unitMechanics(u).includes('TAUNT') ? 'taunt' : ''} ${selected !== undefined && i !== 0 ? (attackError(game, 0, selected, { p: i, uid: u.uid }) ? 'attack-blocked' : 'attackable') : ''}`}
+                                      aria-label={`${p.name}'s ${u.card.name}, minion ${j + 1}, ${u.attack} attack, ${u.health} of ${u.maxHealth} health${unitMechanics(u).includes('TAUNT') ? ', Taunt' : ''}${i === 0 ? `, ${attackStatus}` : ''}${lastingLabel ? `, ${lastingLabel}` : ''}`}
                                       title={`${u.card.name} · ${lastingLabel ? `${lastingLabel} · ` : ''}${i === 0 ? `${attackStatus} · ` : ''}${u.health}/${u.maxHealth} health · ${Math.max(0, u.maxHealth - u.health)} damage taken · ${clean(u.card.text)}${selected !== undefined && i !== 0 ? ` · ${attackError(game, 0, selected, { p: i, uid: u.uid }) ?? 'Click to attack this minion'}` : ''}`}
                                       onClick={() =>
                                         targetingPlay
@@ -1327,6 +1370,28 @@ export default function App() {
                                           <b>{u.health}</b>
                                         </span>
                                       </span>
+                                      {u.frozen || u.silenced || !supported(u.card) ? (
+                                        <small
+                                          className="unit-state"
+                                          title={[
+                                            u.frozen ? 'Frozen' : null,
+                                            u.silenced ? 'Silenced' : null,
+                                            !supported(u.card)
+                                              ? 'This generated minion has separate effects that are not implemented yet'
+                                              : null,
+                                          ]
+                                            .filter(Boolean)
+                                            .join(' · ')}
+                                        >
+                                          {[
+                                            u.frozen ? 'Frozen' : null,
+                                            u.silenced ? 'Silenced' : null,
+                                            !supported(u.card) ? 'Effects pending' : null,
+                                          ]
+                                            .filter(Boolean)
+                                            .join(' · ')}
+                                        </small>
+                                      ) : null}
                                       {u.shield ? (
                                         <Shield
                                           className="divine-shield-mark"
@@ -1334,7 +1399,7 @@ export default function App() {
                                           aria-label="Divine Shield active"
                                         />
                                       ) : null}
-                                      {u.card.mechanics?.includes('TAUNT') ? (
+                                      {unitMechanics(u).includes('TAUNT') ? (
                                         <small className="taunt-label">Taunt</small>
                                       ) : null}
                                       {changedStats || hasTimedEffect ? (
@@ -1346,7 +1411,7 @@ export default function App() {
                                           {hasTimedEffect ? ' ⏳' : ''}
                                         </small>
                                       ) : null}
-                                      {deathrattleFor(u.card) ? (
+                                      {!u.silenced && deathrattleFor(u.card) ? (
                                         <small
                                           className="deathrattle-symbol"
                                           title="Deathrattle: triggers when this minion dies"
@@ -1437,7 +1502,10 @@ export default function App() {
                         title={selectedAttackError ?? `Attack ${targetLabel}`}
                         onClick={() => dispatch({ type: 'attack', p: 0, uid: selected, target })}
                       >
-                        Attack selected target
+                        {selected === undefined &&
+                        (game.players[0].weapon || game.players[0].heroAttack)
+                          ? `Hero attack · ${game.players[0].heroAttack + (game.players[0].weapon?.attack ?? 0)}`
+                          : 'Attack selected target'}
                       </button>
                       <button
                         disabled={game.active !== 0 || !!game.pending || !!targetingPlay}
@@ -1497,6 +1565,44 @@ export default function App() {
                       </div>
                     ) : null}
                   </div>
+                  {game.choice ? (
+                    <div className="choice-backdrop">
+                      <section
+                        className="choice-panel"
+                        ref={choiceModal}
+                        tabIndex={-1}
+                        role="dialog"
+                        aria-modal="true"
+                        aria-label="Discover a card"
+                      >
+                        <h2>{game.players[game.choice.player].name}: choose a card</h2>
+                        <p>
+                          {game.choice.source.name} · Choose one. Other actions wait until this
+                          choice is complete.
+                        </p>
+                        <div className="choice-options">
+                          {game.choice.options.map((c, i) => (
+                            <button
+                              key={c.id}
+                              disabled={game.choice!.player !== 0 && tab !== 'lab'}
+                              onClick={() =>
+                                dispatch({ type: 'choose', p: game.choice!.player, index: i })
+                              }
+                            >
+                              <img src={image(c)} alt="" />
+                              <b>{c.name}</b>
+                              <span>{clean(c.text)}</span>
+                              {!supported(c) ? (
+                                <small>
+                                  Generated card · its own effects are not implemented yet
+                                </small>
+                              ) : null}
+                            </button>
+                          ))}
+                        </div>
+                      </section>
+                    </div>
+                  ) : null}
                   <div className="hand">
                     <div className="hand-title">
                       YOUR HAND{' '}
@@ -1736,6 +1842,33 @@ export default function App() {
               {inspectedUnit ? (
                 <div className="live-card-stats">
                   <b>On the battlefield</b>
+                  <p className="live-keywords">
+                    Current effects:{' '}
+                    {[
+                      ...unitMechanics(inspectedUnit),
+                      ...(inspectedUnit.frozen ? ['FROZEN'] : []),
+                      ...(inspectedUnit.silenced ? ['SILENCED'] : []),
+                      ...(inspectedUnit.immuneUntilTurn !== undefined &&
+                      game &&
+                      inspectedUnit.immuneUntilTurn >= game.turn
+                        ? ['IMMUNE THIS TURN']
+                        : []),
+                    ]
+                      .map((k) => k.replaceAll('_', ' ').toLowerCase())
+                      .join(', ') || 'none'}
+                  </p>
+                  {inspectedUnit.keywordSources?.length ? (
+                    <ul>
+                      {inspectedUnit.keywordSources.map((effect, index) => (
+                        <li key={index}>
+                          {effect.sourceName}: {effect.keyword.replaceAll('_', ' ').toLowerCase()} ·{' '}
+                          {effect.keyword === 'DIVINE_SHIELD' && !inspectedUnit.shield
+                            ? 'shield consumed'
+                            : 'until this minion leaves play'}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
                   <br />
                   {inspectedUnit.attack} attack · {inspectedUnit.health}/{inspectedUnit.maxHealth}{' '}
                   health · {inspectedUnit.maxHealth - inspectedUnit.health} damage taken
@@ -1787,6 +1920,12 @@ export default function App() {
               ) : null}
               <div className="stat-pills">
                 <span>{inspect.cost} mana</span>
+                {inspect.printedCost !== undefined ? (
+                  <span>
+                    Printed cost: {inspect.printedCost} · current cost persists until played or
+                    reset
+                  </span>
+                ) : null}
                 {inspect.attack !== undefined ? (
                   <span>
                     {inspect.attack} attack / {inspect.health} health

@@ -6,3 +6,9 @@ supabase/.temp/
 *.log
 *.tsbuildinfo
 data/import-batches/
+
+data/cards.all.reference.json
+data/battlecry-candidates.json
+data/battlecry-by-verb.json
+data/battlecry-unmatched.json
+__pycache__/

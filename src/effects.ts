@@ -1,6 +1,36 @@
 import type { Card } from './cards';
-export type EffectTarget = 'character' | 'minion' | 'friendly-minion' | 'enemy-hero';
+import compiledBattlecries from './generated/battlecries.json';
+import compiledDeathrattles from './generated/deathrattles.json';
+import compiledSpells from './generated/spells.json';
+import type { ScriptStep } from './script-types';
+export type EffectTarget =
+  | 'character'
+  | 'minion'
+  | 'friendly-minion'
+  | 'enemy-hero'
+  | 'enemy-character'
+  | 'enemy-minion';
+export const expandedBattlecries = compiledBattlecries as unknown as Record<
+  string,
+  { text: string; steps: ScriptStep[] }
+>;
+export const expandedDeathrattles = compiledDeathrattles as unknown as Record<
+  string,
+  { text: string; steps: ScriptStep[] }
+>;
+export const expandedSpells = compiledSpells as unknown as Record<
+  string,
+  { text: string; steps: ScriptStep[] }
+>;
+export function scriptTarget(steps: ScriptStep[]): ScriptStep | undefined {
+  for (const step of steps) {
+    if (step.target) return step;
+    const nested = step.steps && scriptTarget(step.steps);
+    if (nested) return nested;
+  }
+}
 export type Effect =
+  | { type: 'script'; steps: ScriptStep[] }
   | { type: 'sequence'; effects: Effect[] }
   | { type: 'armor'; amount: number; allHeroes?: boolean }
   | { type: 'self-damage'; amount: number }
@@ -150,16 +180,30 @@ export const deathrattles: Record<string, Effect> = {
   WON_128: { type: 'summon', token: token('FP1_012t', 'Slime', 1, 2, ['TAUNT']), amount: 1 },
 };
 const key = (c: Card) => c.id.replace(/^CORE_/, '');
-export const battlecryFor = (c: Card) => battlecries[key(c)];
-export const deathrattleFor = (c: Card) => deathrattles[key(c)];
-export const effectFor = (c: Card) => (c.type === 'MINION' ? battlecryFor(c) : effects[key(c)]);
+export const battlecryFor = (c: Card): Effect | undefined =>
+  battlecries[key(c)] ??
+  (expandedBattlecries[c.id]
+    ? { type: 'script', steps: expandedBattlecries[c.id].steps }
+    : undefined);
+export const deathrattleFor = (c: Card): Effect | undefined =>
+  deathrattles[key(c)] ??
+  (expandedDeathrattles[c.id]
+    ? { type: 'script', steps: expandedDeathrattles[c.id].steps }
+    : undefined);
+export const effectFor = (c: Card): Effect | undefined =>
+  c.type === 'MINION'
+    ? battlecryFor(c)
+    : (effects[key(c)] ??
+      (expandedSpells[c.id] ? { type: 'script', steps: expandedSpells[c.id].steps } : undefined));
 export const targetFor = (e: Effect | undefined): EffectTarget | undefined =>
-  e?.type === 'sequence'
-    ? e.effects.map(targetFor).find(Boolean)
-    : e && ['damage', 'heal', 'buff'].includes(e.type)
-      ? (('target' in e ? e.target : undefined) ??
-        (e.type === 'buff' ? 'friendly-minion' : 'character'))
-      : undefined;
+  e?.type === 'script'
+    ? (scriptTarget(e.steps)?.target as EffectTarget | undefined)
+    : e?.type === 'sequence'
+      ? e.effects.map(targetFor).find(Boolean)
+      : e && ['damage', 'heal', 'buff'].includes(e.type)
+        ? (('target' in e ? e.target : undefined) ??
+          (e.type === 'buff' ? 'friendly-minion' : 'character'))
+        : undefined;
 const basic = new Set([
   'TAUNT',
   'DIVINE_SHIELD',
@@ -168,15 +212,18 @@ const basic = new Set([
   'LIFESTEAL',
   'WINDFURY',
   'POISONOUS',
+  'STEALTH',
+  'REBORN',
 ]);
 export function supported(c: Card) {
   return (
+    (c.type === 'WEAPON' && !c.text) ||
     !!effectFor(c) ||
     !!deathrattleFor(c) ||
     (c.type === 'MINION' &&
       !(c.mechanics ?? []).some((m) => !basic.has(m)) &&
       !c.text?.replace(
-        /<[^>]+>|\[x\]|\.|\s|Taunt|Divine Shield|Charge|Rush|Lifesteal|Windfury|Poisonous/gi,
+        /<[^>]+>|\[x\]|\.|\s|Taunt|Divine Shield|Charge|Rush|Lifesteal|Windfury|Poisonous|Stealth|Reborn/gi,
         '',
       ))
   );

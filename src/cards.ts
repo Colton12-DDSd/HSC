@@ -6,6 +6,9 @@ export interface StatModifier {
   health: number;
 }
 export interface Card {
+  spellSchool?: string;
+  heldSince?: number;
+  printedCost?: number;
   modifiers?: StatModifier[];
   id: string;
   dbfId: number;

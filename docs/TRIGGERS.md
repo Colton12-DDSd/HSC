@@ -1,6 +1,6 @@
 # Battlecry and Deathrattle: first batch
 
-The local engine supports 207 of the 6,470 collection records. The original trigger batch added 22 records to the previous 155; the healing, hand/deck, temporary-Attack, and Armor/self-damage batches add 30 more. See [additional batches](MINION-BATCHES.md). It implements the cards listed here; it does not make every Battlecry or Deathrattle card playable.
+The local engine supports **1,022 of 6,470 collection records**, including **542 unique Battlecry minion names** and **551 Battlecry/Deathrattle minion names**. The bulk expansion adds 506 unique Battlecry names. See [bulk coverage and limits](BULK-BATTLECRIES.md) and the [complete added-card manifest](BULK-BATTLECRY-MANIFEST.md). The historical table below describes the original hand-written trigger batches; generated scripts extend that registry. Unsupported extra clauses remain blocked.
 
 ## Play and targeting
 

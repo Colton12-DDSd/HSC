@@ -1,0 +1,62 @@
+export interface CardFilter {
+  type?: string;
+  tribe?: string;
+  keyword?: string;
+  cost?: number;
+  minCost?: number;
+  maxCost?: number;
+  attack?: number;
+  minAttack?: number;
+  maxAttack?: number;
+  rarity?: string;
+  school?: string;
+  classes?: string[];
+  ownClass?: boolean;
+  otherClass?: boolean;
+  anyClass?: boolean;
+  damaged?: boolean;
+  undamaged?: boolean;
+  name?: string;
+}
+export type ScriptValue = number | { count?: string; stat?: string; filter?: CardFilter };
+export interface ScriptCondition {
+  zone?: string;
+  filter?: CardFilter;
+  min?: number;
+  max?: number;
+  stat?: string;
+  special?: string;
+}
+export interface ScriptStep {
+  op: string;
+  scope?: string;
+  target?: string;
+  filter?: CardFilter;
+  other?: boolean;
+  amount?: ScriptValue;
+  attack?: number;
+  health?: number;
+  scale?: ScriptValue;
+  keyword?: string;
+  random?: number;
+  zone?: string;
+  order?: string;
+  until?: number;
+  reduction?: number;
+  copy?: boolean;
+  token?: string;
+  enemy?: boolean;
+  condition?: ScriptCondition;
+  steps?: ScriptStep[];
+  mode?: string;
+  expires?: 'turn';
+  stat?: string;
+  from?: string;
+  costDelta?: number;
+  setCost?: number | null;
+  distinct?: boolean;
+  allPlayers?: boolean;
+  after?: string;
+  filterHeroes?: boolean;
+  full?: boolean;
+}
