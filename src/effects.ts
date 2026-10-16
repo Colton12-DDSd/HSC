@@ -1,6 +1,9 @@
 import type { Card } from './cards';
 export type EffectTarget = 'character' | 'minion' | 'friendly-minion' | 'enemy-hero';
 export type Effect =
+  | { type: 'sequence'; effects: Effect[] }
+  | { type: 'armor'; amount: number; allHeroes?: boolean }
+  | { type: 'self-damage'; amount: number }
   | { type: 'damage'; amount: number; target?: EffectTarget }
   | { type: 'heal'; amount: number; target?: EffectTarget }
   | { type: 'draw'; amount: number }
@@ -52,6 +55,38 @@ function token(
   };
 }
 export const battlecries: Record<string, Effect> = {
+  BAR_745: { type: 'self-damage', amount: 3 },
+  EX1_319: { type: 'self-damage', amount: 3 },
+  LOOT_013: { type: 'self-damage', amount: 2 },
+  EX1_313: { type: 'self-damage', amount: 5 },
+  TRL_546: { type: 'self-damage', amount: 5 },
+  RLK_921: { type: 'self-damage', amount: 2 },
+  TTN_832: { type: 'self-damage', amount: 4 },
+  BOT_447: {
+    type: 'sequence',
+    effects: [
+      { type: 'self-damage', amount: 5 },
+      { type: 'armor', amount: 5 },
+    ],
+  },
+  GVG_053: { type: 'armor', amount: 5 },
+  YOP_032: { type: 'armor', amount: 4, allHeroes: true },
+  RLK_657: { type: 'armor', amount: 6 },
+  BE_572: { type: 'armor', amount: 3 },
+  DEEP_030: {
+    type: 'sequence',
+    effects: [
+      { type: 'draw', amount: 1 },
+      { type: 'self-damage', amount: 2 },
+    ],
+  },
+  TID_716: {
+    type: 'sequence',
+    effects: [
+      { type: 'damage', amount: 5 },
+      { type: 'armor', amount: 8 },
+    ],
+  },
   CS2_188: { type: 'buff', attack: 2, health: 0, target: 'minion', expires: 'turn' },
   EX1_046: { type: 'buff', attack: 2, health: 0, target: 'minion', expires: 'turn' },
   GVG_011: { type: 'buff', attack: -3, health: 0, target: 'minion', expires: 'turn' },
@@ -82,6 +117,15 @@ export const battlecries: Record<string, Effect> = {
   },
 };
 export const deathrattles: Record<string, Effect> = {
+  RLK_657: { type: 'armor', amount: 6 },
+  BE_572: { type: 'armor', amount: 3 },
+  DEEP_030: {
+    type: 'sequence',
+    effects: [
+      { type: 'draw', amount: 1 },
+      { type: 'self-damage', amount: 2 },
+    ],
+  },
   EX1_096: { type: 'draw', amount: 1 },
   EX1_029: { type: 'enemy-heroes', amount: 2 },
   EX1_097: { type: 'damage-all', amount: 2, heroes: true },
@@ -110,10 +154,12 @@ export const battlecryFor = (c: Card) => battlecries[key(c)];
 export const deathrattleFor = (c: Card) => deathrattles[key(c)];
 export const effectFor = (c: Card) => (c.type === 'MINION' ? battlecryFor(c) : effects[key(c)]);
 export const targetFor = (e: Effect | undefined): EffectTarget | undefined =>
-  e && ['damage', 'heal', 'buff'].includes(e.type)
-    ? (('target' in e ? e.target : undefined) ??
-      (e.type === 'buff' ? 'friendly-minion' : 'character'))
-    : undefined;
+  e?.type === 'sequence'
+    ? e.effects.map(targetFor).find(Boolean)
+    : e && ['damage', 'heal', 'buff'].includes(e.type)
+      ? (('target' in e ? e.target : undefined) ??
+        (e.type === 'buff' ? 'friendly-minion' : 'character'))
+      : undefined;
 const basic = new Set([
   'TAUNT',
   'DIVINE_SHIELD',

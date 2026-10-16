@@ -390,6 +390,26 @@ function runEffect(
   sourceUid?: number,
 ) {
   const p = s.players[player];
+  if (e.type === 'sequence') {
+    for (const step of e.effects) runEffect(s, player, step, target, position, source, sourceUid);
+    return;
+  }
+  if (e.type === 'armor') {
+    for (const owner of e.allHeroes ? s.players : [p]) {
+      if (owner.health <= 0) continue;
+      owner.armor += e.amount;
+      note(s, `${owner.name} gains ${e.amount} Armor (${owner.armor} total)`);
+    }
+  }
+  if (e.type === 'self-damage' && p.health > 0) {
+    const before = p.health,
+      armor = p.armor;
+    damage(s, { p: player }, e.amount);
+    note(
+      s,
+      `${p.name}'s hero takes ${e.amount} self-damage (${before} → ${p.health} health; ${armor} → ${p.armor} Armor)`,
+    );
+  }
   if (e.type === 'draw') {
     note(s, `${p.name} draws ${e.amount} card${e.amount === 1 ? '' : 's'}`);
     for (let i = 0; i < e.amount && p.health > 0; i++) draw(s, player);

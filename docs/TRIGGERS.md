@@ -1,6 +1,6 @@
 # Battlecry and Deathrattle: first batch
 
-The local engine supports 191 of the 6,470 collection records. The original trigger batch added 22 records to the previous 155; the tested healing, hand/deck, and temporary-Attack batches add 14 more. See [additional batches](MINION-BATCHES.md). It implements the cards listed here; it does not make every Battlecry or Deathrattle card playable.
+The local engine supports 207 of the 6,470 collection records. The original trigger batch added 22 records to the previous 155; the healing, hand/deck, temporary-Attack, and Armor/self-damage batches add 30 more. See [additional batches](MINION-BATCHES.md). It implements the cards listed here; it does not make every Battlecry or Deathrattle card playable.
 
 ## Play and targeting
 
@@ -54,7 +54,7 @@ Card text and stats are taken from the repository's imported metadata snapshot; 
 
 ## Starter test decks
 
-New starter sandbox games deliberately mix classes: every supported Battlecry/Deathrattle minion name is included before filling the remaining slots, along with representatives of Taunt, Divine Shield, Charge, Rush, Windfury, Poisonous, and Lifesteal. Currently that includes all 31 trigger minion names, such as Cleansing Cleric, Mistcaller, Outfitter, Shrinkmeister, and Militia Commander. All four players receive 100 singleton cards excluding their commander, then decks are shuffled normally; opening hands are not fixed. The table labels this as a mixed-class starter sandbox. Custom decks keep their supplied contents and normal deckbuilder class restrictions. Existing matches keep their current decks; use **New starter game** for the updated mix.
+New starter sandbox games deliberately mix classes: every supported Battlecry/Deathrattle minion name is included before filling the remaining slots, along with representatives of Taunt, Divine Shield, Charge, Rush, Windfury, Poisonous, and Lifesteal. Currently that includes all 45 trigger minion names, such as Cleansing Cleric, Mistcaller, Outfitter, Shrinkmeister, and Militia Commander. All four players receive 100 singleton cards excluding their commander, then decks are shuffled normally; opening hands are not fixed. The table labels this as a mixed-class starter sandbox. Custom decks keep their supplied contents and normal deckbuilder class restrictions. Existing matches keep their current decks; use **New starter game** for the updated mix.
 
 ## In-game inspection
 
@@ -71,3 +71,7 @@ The [enabled-card audit](TRIGGER-AUDIT.md) covers every enabled Battlecry/Deathr
 ## Temporary Attack effects
 
 Abusive Sergeant, Dark Iron Dwarf, Shrinkmeister, Ruststeed Raider, and Militia Commander are enabled with explicit end-of-casting-turn expiry. Active effects list their source and duration; temporary stat badges include an hourglass. End turn removes these effects from every player's board, preserving permanent bonuses and damage. A signed modifier history with a nonnegative effective Attack prevents stacked reductions from producing negative combat damage or incorrect expiry recovery. See [batch 3](MINION-BATCHES.md#batch-3-temporary-attack-buffs-and-reductions) for the exact printings and tests.
+
+## Armor and ordered effects
+
+Batch 4 adds Armor, self-damage, and ordered multi-part effects. Existing Armor absorbs self-damage before Health; Crystallizer deals its damage before gaining new Armor. Armor Vendor gives Armor to all living heroes. Underking, Tol'vir Vanguard, and Elementium Geode activate both printed triggers exactly once at their respective times. Geode draws before self-damage, including hand-limit burns and fatigue; a lethal draw does not try to damage an eliminated hero again. Tidal Revenant requires an explicit chosen character and deals 5 damage before granting 8 Armor. Divine Shield prevents its damage but does not cancel Armor gain. Interruption prevents the entire Battlecry sequence. See [batch 4](MINION-BATCHES.md#batch-4-armor-self-damage-and-ordered-effects).

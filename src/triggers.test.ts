@@ -274,8 +274,10 @@ describe('Deathrattle queue', () => {
   });
   it('only explicit complete effects become supported, including Core aliases', () => {
     for (const id of [...Object.keys(battlecries), ...Object.keys(deathrattles)]) {
-      expect(supported(card(id))).toBe(true);
       const core = cards.find((c) => c.id === `CORE_${id}`);
+      const printing = cards.find((c) => c.id === id) ?? core;
+      expect(printing, `Missing registry fixture ${id}`).toBeDefined();
+      expect(supported(printing!)).toBe(true);
       if (core) expect(supported(core)).toBe(true);
     }
     expect(supported(card('EX1_012'))).toBe(false); // Bloodmage also needs Spell Damage.

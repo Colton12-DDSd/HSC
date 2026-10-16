@@ -1,6 +1,6 @@
 # Enabled minion trigger audit
 
-Audited 2026-10-15 against the repository's imported card snapshot and explicit Commander rules. Scope: **31 distinct enabled minions, 39 card records**. This is not an implementation audit of every unimplemented minion in the collection.
+Audited 2026-10-15 against the repository's imported card snapshot and explicit Commander rules. Scope: **45 distinct enabled minions, 55 card records**. This is not an implementation audit of every unimplemented minion in the collection.
 
 Every enabled record has its own execution test against independent expected outcomes. The audit also checks that every minion labeled Supported with Battlecry or Deathrattle is covered, so another supported trigger cannot silently bypass this list.
 
@@ -58,6 +58,12 @@ Cleansing Cleric now creates a supported game-wide healing bonus, listed in the 
 
 Other ongoing rules still require their own implementation. For example, Aldor Attendant and Aldor Truthseeker need game-wide Libram cost tracking; they remain unplayable and show a persistent-tracking explanation in the inspector. Unimplemented auras also have a specific explanation. This classification is display-only; card text is never executed as a script.
 
-Verification: **215 automated tests pass**, including **84 card-audit/persistence cases, plus 19 dedicated persistent-effect cases and 16 temporary-effect cases**. Production build passes. No cloud database or image-storage writes are needed.
+Verification: **266 automated tests pass**, including the original audit, persistent/temporary-effect coverage, and 50 new Armor/self-damage cases. Production build passes. No cloud database or image-storage writes are needed.
 
 Temporary effects have their own duration records and hourglass indicators. See [batch 3](MINION-BATCHES.md#batch-3-temporary-attack-buffs-and-reductions) for expiry, stacking, target restrictions, and browser verification. General temporary Health changes and auras are not claimed as supported.
+
+## Armor / self-damage audit extension
+
+The 14 names (16 printings) in [batch 4](MINION-BATCHES.md#batch-4-armor-self-damage-and-ordered-effects) have independent per-printing expectations in `src/armor-effects.test.ts`. All have play-versus-summon checks. Both-trigger minions also have isolated Deathrattle and same-instance play-then-death checks, plus sequence order, shields, fatigue, burns, elimination, interruption, and replay coverage. The aggregate audit guard now requires all 55 enabled printings and 45 names.
+
+Run `npm run audit:minions` to regenerate [the full minion coverage inventory](../data/minion-coverage.json) from the collection snapshot and actual runtime registry. It includes every Battlecry/Deathrattle minion printing with printed text and separate trigger/support flags. Current inventory: 2,521 trigger records across 2,381 names; 55 records supported and 2,466 remaining. This inventory is local and adds no cloud rows or images.

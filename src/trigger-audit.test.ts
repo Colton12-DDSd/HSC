@@ -5,7 +5,25 @@ import { battlecryFor, deathrattleFor, supported, unsupportedReason } from './ef
 import type { Card } from './cards';
 const cards = JSON.parse(readFileSync('public/data/cards.json', 'utf8')) as Card[];
 const card = (id: string) => cards.find((c) => c.id === id)!;
-const audited = cards.filter((c) => battlecryFor(c) || deathrattleFor(c));
+const allAudited = cards.filter((c) => battlecryFor(c) || deathrattleFor(c));
+// This batch has independent per-printing, dual-trigger, and sequence tests in armor-effects.test.ts.
+const armorBatch = new Set([
+  'BAR_745',
+  'EX1_319',
+  'LOOT_013',
+  'EX1_313',
+  'TRL_546',
+  'RLK_921',
+  'TTN_832',
+  'BOT_447',
+  'GVG_053',
+  'YOP_032',
+  'RLK_657',
+  'BE_572',
+  'DEEP_030',
+  'TID_716',
+]);
+const audited = allAudited.filter((c) => !armorBatch.has(c.id.replace(/^CORE_/, '')));
 const cleanId = (id: string) => id.replace(/^CORE_/, '');
 interface Expected {
   trigger: 'Battlecry' | 'Deathrattle';
@@ -86,11 +104,13 @@ describe('Every enabled Battlecry and Deathrattle printing', () => {
   it('has an independent audit expectation for every enabled trigger card', () => {
     expect(audited).toHaveLength(39);
     expect(new Set(audited.map((c) => c.name)).size).toBe(31);
+    expect(allAudited).toHaveLength(55);
+    expect(new Set(allAudited.map((c) => c.name)).size).toBe(45);
     for (const c of audited) expect(expected[cleanId(c.id)], c.id).toBeDefined();
     const enabledByMechanic = cards.filter(
       (c) => supported(c) && c.mechanics?.some((m) => ['BATTLECRY', 'DEATHRATTLE'].includes(m)),
     );
-    expect(enabledByMechanic.map((c) => c.id).sort()).toEqual(audited.map((c) => c.id).sort());
+    expect(enabledByMechanic.map((c) => c.id).sort()).toEqual(allAudited.map((c) => c.id).sort());
   });
   it.each(audited.map((c) => [c.id, c] as const))('%s matches its audited behavior', (id, c) => {
     const e = expected[cleanId(id)];
