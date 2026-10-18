@@ -52,4 +52,20 @@ class CompleteTextTests(unittest.TestCase):
         self.assertEqual(compiler.condition('you have 15 or less Health'),{'stat':'health','max':15})
         self.assertEqual(compiler.condition('your deck has no duplicates'),{'special':'no-duplicates'})
 
+    def test_new_families_keep_restrictions_and_riders(self):
+        step=compiler.compile('Take control of an enemy minion that has 2 or less Attack.')[0]
+        self.assertEqual(step['op'],'steal')
+        self.assertEqual(step['filter']['maxAttack'],2)
+        self.assertEqual(compiler.compile('Gain 1-4 Attack. Overload: (1).')[-1],{'op':'overload','amount':1})
+        step=compiler.compile('Choose a Fel spell in your hand. Get a copy of it.')[0]
+        self.assertEqual(step['filter']['school'],'FEL')
+        self.assertTrue(step['copy'])
+
+    def test_extra_unknown_clauses_after_new_patterns_stay_blocked(self):
+        for text in ['Take control of an enemy minion. Turn it into an unknown thing.', 'Dredge. Upgrade an unknown resource.', 'Trigger a friendly minion\'s Deathrattle. Cast it twice.']:
+            with self.subTest(text=text):self.assertIsNone(compiler.compile(text))
+
+    def test_ui_variant_cleanup_preserves_the_first_complete_rules_clause(self):
+        self.assertEqual(compiler.clean('Battlecry: Draw 2 cards.@ (Ready!)'),'Battlecry: Draw 2 cards.')
+
 if __name__=='__main__':unittest.main()

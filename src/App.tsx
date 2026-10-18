@@ -1,4 +1,6 @@
 import { loadCollection } from './collection';
+import { DeckPresets } from './DeckPresets';
+import { createPremadeGame } from './premades';
 import {
   Fragment,
   useDeferredValue,
@@ -58,6 +60,7 @@ import {
   unitMechanics,
   supported,
   commandCost,
+  handCost,
   replay,
   effectFor,
   effectTargets,
@@ -190,6 +193,8 @@ export default function App() {
     [devField, setDevField] = useState<
       'mana' | 'reserve' | 'health' | 'casts' | 'reduction' | 'handReduction'
     >('reserve');
+  const [testDeckId, setTestDeckId] = useState('starter');
+  const [guidedOpening, setGuidedOpening] = useState(true);
   const record = useRef<Replay | null>(null),
     upload = useRef<HTMLInputElement>(null),
     replayUpload = useRef<HTMLInputElement>(null);
@@ -292,9 +297,7 @@ export default function App() {
     if (p.board.length >= 7) return 'Your battlefield is full';
     if (!supported(source.card)) return 'This card effect is not implemented';
     if (source.command && p.zone !== 'command') return 'Commander is not in the command zone';
-    const cost = source.command
-      ? commandCost(p)
-      : Math.max(0, source.card.cost - p.reduction - p.handReduction);
+    const cost = source.command ? commandCost(p) : handCost(p, source.card);
     return p.mana < cost ? 'Not enough regular mana' : '';
   }
   function choosePlacement(source: Placement) {
@@ -572,13 +575,16 @@ export default function App() {
         throw Error(
           'A verified 100-card deck with supported effects is required. Use the starter sandbox while building.',
         );
-      const s = createGame(
-        cards,
-        42,
-        useDeck ? deckCards : undefined,
-        useDeck ? commander : undefined,
-        useDeck ? deck.class : 'HUNTER',
-      );
+      const s =
+        !useDeck && testDeckId !== 'starter'
+          ? createPremadeGame(cards, testDeckId, guidedOpening)
+          : createGame(
+              cards,
+              42,
+              useDeck ? deckCards : undefined,
+              useDeck ? commander : undefined,
+              useDeck ? deck.class : 'HUNTER',
+            );
       setGame(s);
       record.current = { version: 1, initial: structuredClone(s), actions: [] };
       setTab('table');
@@ -1102,16 +1108,25 @@ export default function App() {
                 <p>Clockwise turns · start at 40 health · unlimited hero healing · 3 reserve</p>
                 {game?.starterSandbox ? (
                   <p className="sandbox-deck-note">
-                    Mixed-class starter sandbox · samples every supported minion effect family
+                    {game.testPreset
+                      ? `${game.testPreset.name} · ${game.testPreset.guided ? 'guided opening' : 'shuffled'} · mixed-class test deck`
+                      : 'Mixed-class starter sandbox · samples supported minion effect families'}
                   </p>
                 ) : null}
               </div>
               <div className="play-controls">
+                <DeckPresets
+                  cards={cards}
+                  selected={testDeckId}
+                  onSelect={setTestDeckId}
+                  guided={guidedOpening}
+                  onGuided={setGuidedOpening}
+                />
                 <button onClick={() => setPaused((p) => !p)}>
                   {paused ? 'Resume bots' : 'Pause bots'}
                 </button>
                 <button className="gold-button" onClick={() => start()}>
-                  <RotateCcw size={15} /> New starter game
+                  <RotateCcw size={15} /> New game
                 </button>
               </div>
             </section>
@@ -1123,7 +1138,8 @@ export default function App() {
                   Start a local test match against three scripted opponents.
                   <br />
                   Mixed-class starter test decks include supported Battlecries, Deathrattles,
-                  lasting effects, temporary effects, and combat keywords.
+                  lasting effects, temporary effects, and combat keywords. Select a themed test deck
+                  above for repeatable combinations and test goals.
                 </p>
                 <button className="gold-button" disabled={!cards.length} onClick={() => start()}>
                   Start a match <ArrowRight size={16} />
@@ -1222,17 +1238,53 @@ export default function App() {
                               </span>
                             </button>
                           </div>
-                          {p.effects?.length ? (
+                          {p.effects?.length ||
+                          p.nextDiscounts?.length ||
+                          p.endEffects?.length ||
+                          p.summonEffects?.length ||
+                          p.overload ||
+                          p.lockedMana ? (
                             <details className="player-effects">
-                              <summary>Healing +{healingBonus(p)} · rest of game</summary>
+                              <summary>
+                                {p.effects?.length ? `Healing +${healingBonus(p)} · ` : ''}Active
+                                effects
+                              </summary>
                               <ul>
-                                {p.effects.map((effect, index) => (
+                                {p.effects?.map((effect, index) => (
                                   <li key={index}>
                                     {effect.sourceName}: +{effect.amount} to your healing effects
                                   </li>
                                 ))}
+                                {p.nextDiscounts?.map((e, i) => (
+                                  <li key={`discount-${i}`}>
+                                    {e.source}: next matching card costs ({e.amount}) less
+                                  </li>
+                                ))}
+                                {p.endEffects?.map((e, i) => (
+                                  <li key={`end-${i}`}>
+                                    {e.source.name}:{' '}
+                                    {e.once
+                                      ? 'at the end of this turn'
+                                      : 'at the end of each of your turns'}{' '}
+                                    · {clean(e.source.text)}
+                                  </li>
+                                ))}
+                                {p.summonEffects?.map((e, i) => (
+                                  <li key={`summon-${i}`}>
+                                    {e.source.name}: {clean(e.source.text)} · rest of game
+                                  </li>
+                                ))}
+                                {p.overload ? (
+                                  <li>Overload: {p.overload} Mana Crystals locked next turn</li>
+                                ) : null}
+                                {p.lockedMana ? (
+                                  <li>{p.lockedMana} Mana Crystals locked this turn</li>
+                                ) : null}
                               </ul>
-                              <small>Stacks and remains active after the source leaves play.</small>
+                              <small>
+                                Lasting effects remain after their source leaves play. Next-card
+                                effects are consumed by a matching cast.
+                              </small>
                             </details>
                           ) : null}
                           <div
@@ -1411,7 +1463,8 @@ export default function App() {
                                           {hasTimedEffect ? ' ⏳' : ''}
                                         </small>
                                       ) : null}
-                                      {!u.silenced && deathrattleFor(u.card) ? (
+                                      {!u.silenced &&
+                                      (deathrattleFor(u.card) || u.grantedDeathrattles?.length) ? (
                                         <small
                                           className="deathrattle-symbol"
                                           title="Deathrattle: triggers when this minion dies"
@@ -1865,6 +1918,15 @@ export default function App() {
                           {effect.keyword === 'DIVINE_SHIELD' && !inspectedUnit.shield
                             ? 'shield consumed'
                             : 'until this minion leaves play'}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                  {inspectedUnit.grantedDeathrattles?.length ? (
+                    <ul>
+                      {inspectedUnit.grantedDeathrattles.map((grant, i) => (
+                        <li key={i}>
+                          Deathrattle from {grant.source.name} · until this minion leaves play
                         </li>
                       ))}
                     </ul>

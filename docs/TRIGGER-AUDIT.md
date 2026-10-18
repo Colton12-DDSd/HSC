@@ -1,6 +1,6 @@
 # Enabled minion trigger audit
 
-Audited 2026-10-16 against the pinned imported snapshot and Commander rules. Current coverage: **551 enabled trigger minion names / 606 printings**, including **542 Battlecry names / 595 printings**. The new expansion adds **506 Battlecry names**, measured against the frozen pre-expansion baseline.
+Audited 2026-10-16 against the pinned imported snapshot and Commander rules. Current coverage: **791 enabled trigger minion names / 858 printings**, including **648 Battlecry names / 705 printings**. The new expansion adds **506 Battlecry names**, measured against the frozen pre-expansion baseline.
 
 The bulk suite checks every generated Battlecry printing for play execution, direct-summon timing, and positive conditional branches, plus independent expected outcomes for shared mechanics and deterministic replay. Whole-text compiler regression tests reject unmatched trailing clauses. These checks do not claim exhaustive correctness for every interaction or generated card's separate abilities. See [implementation and limits](BULK-BATTLECRIES.md) and [added-card inventory](BULK-BATTLECRY-MANIFEST.md).
 
@@ -69,3 +69,5 @@ Temporary effects have their own duration records and hourglass indicators. See 
 The 14 names (16 printings) in [batch 4](MINION-BATCHES.md#batch-4-armor-self-damage-and-ordered-effects) have independent per-printing expectations in `src/armor-effects.test.ts`. All have play-versus-summon checks. Both-trigger minions also have isolated Deathrattle and same-instance play-then-death checks, plus sequence order, shields, fatigue, burns, elimination, interruption, and replay coverage. The aggregate audit guard now requires all 55 enabled printings and 45 names.
 
 Run `npm run audit:minions` to regenerate [the full minion coverage inventory](../data/minion-coverage.json) from the collection snapshot and actual runtime registry. It includes every Battlecry/Deathrattle minion printing with printed text and separate trigger/support flags. Current inventory: 2,521 trigger records across 2,381 names; 55 records supported and 2,466 remaining. This inventory is local and adds no cloud rows or images.
+
+The 2026-10-18 expansion adds another 106 Battlecry names and six selectable test decks. See the [current deck/rule guide](TEST-DECKS.md), [added-card manifest](BATTLECRY-WAVE2-MANIFEST.md), and [remaining backlog](BATTLECRY-REMAINING.md). Earlier counts below are historical checkpoints.

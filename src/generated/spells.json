@@ -6,7 +6,10 @@
         "op": "damage",
         "amount": 25,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -48,6 +51,19 @@
         "op": "discard",
         "amount": 10,
         "order": ""
+      }
+    ]
+  },
+  "AT_053": {
+    "text": "Draw 2 cards. <b>Overload:</b> (1)",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 2
+      },
+      {
+        "op": "overload",
+        "amount": 1
       }
     ]
   },
@@ -100,13 +116,19 @@
         "attack": 3,
         "health": 0,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "keyword",
         "keyword": "DIVINE_SHIELD",
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -116,7 +138,10 @@
       {
         "op": "freeze",
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "draw",
@@ -202,7 +227,10 @@
       {
         "op": "destroy",
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "damage",
@@ -249,6 +277,23 @@
       }
     ]
   },
+  "BOT_033": {
+    "text": "Deal $2 damage. Summon a 0/2 Goblin Bomb.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 2,
+        "scope": "target",
+        "target": "character"
+      },
+      {
+        "op": "summon-token",
+        "token": "BOT_031",
+        "amount": 1,
+        "enemy": false
+      }
+    ]
+  },
   "BOT_067": {
     "text": "Give a minion <b>Rush</b>. Draw a card.",
     "steps": [
@@ -256,7 +301,10 @@
         "op": "keyword",
         "keyword": "RUSH",
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "draw",
@@ -288,6 +336,21 @@
       }
     ]
   },
+  "BOT_246": {
+    "text": "Deal $1 damage to all minions. <b>Overload:</b> (2)",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 1,
+        "scope": "all",
+        "other": false
+      },
+      {
+        "op": "overload",
+        "amount": 2
+      }
+    ]
+  },
   "BOT_402": {
     "text": "<b>Discover</b> a <b>Secret</b>.",
     "steps": [
@@ -312,6 +375,51 @@
       }
     ]
   },
+  "BOT_438": {
+    "text": "Give your minions \"<b>Deathrattle:</b> Add a random Mech to your hand.\"",
+    "steps": [
+      {
+        "op": "grant-deathrattle",
+        "steps": [
+          {
+            "op": "generate",
+            "filter": {
+              "type": "MINION",
+              "tribe": "MECHANICAL"
+            },
+            "amount": 1
+          }
+        ],
+        "scope": "friendly"
+      }
+    ]
+  },
+  "BOT_451": {
+    "text": "Summon two 1/1 Sparks with <b>Rush</b>. <b>Overload:</b> (1)",
+    "steps": [
+      {
+        "op": "summon-token",
+        "token": "BOT_102t",
+        "amount": 2,
+        "enemy": false
+      },
+      {
+        "op": "overload",
+        "amount": 1
+      }
+    ]
+  },
+  "BOT_508": {
+    "text": "Trigger a friendly minion's <b>Deathrattle</b> twice.",
+    "steps": [
+      {
+        "op": "trigger-deathrattle",
+        "scope": "target",
+        "target": "friendly-minion",
+        "amount": 2
+      }
+    ]
+  },
   "BRM_013": {
     "text": "Deal $3 damage.\nIf your hand is empty, draw a card.",
     "steps": [
@@ -333,6 +441,19 @@
             "amount": 1
           }
         ]
+      }
+    ]
+  },
+  "BRM_017": {
+    "text": "Summon a random friendly minion that died this game.",
+    "steps": [
+      {
+        "op": "resurrect",
+        "amount": 1,
+        "filter": {
+          "type": "MINION"
+        },
+        "keyword": null
       }
     ]
   },
@@ -363,6 +484,46 @@
       }
     ]
   },
+  "BT_100": {
+    "text": "Deal $3 damage.\nSummon a random\n3-Cost minion.\n<b>Overload:</b> (1)",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 3,
+        "scope": "target",
+        "target": "character"
+      },
+      {
+        "op": "summon-pool",
+        "filter": {
+          "type": "MINION",
+          "cost": 3
+        },
+        "amount": 1,
+        "enemy": false
+      },
+      {
+        "op": "overload",
+        "amount": 1
+      }
+    ]
+  },
+  "BT_124": {
+    "text": "Draw a weapon.\nGive it +1/+1.",
+    "steps": [
+      {
+        "op": "draw",
+        "filter": {
+          "type": "WEAPON"
+        },
+        "amount": 1,
+        "attack": 1,
+        "health": 1,
+        "mode": "buff",
+        "setCost": null
+      }
+    ]
+  },
   "BT_205": {
     "text": "Deal $3 damage.\nGive a random Beast in your hand +3/+3.",
     "steps": [
@@ -385,6 +546,23 @@
       }
     ]
   },
+  "BT_213": {
+    "text": "Draw a Beast.\nGive it +3/+3.",
+    "steps": [
+      {
+        "op": "draw",
+        "filter": {
+          "type": "MINION",
+          "tribe": "BEAST"
+        },
+        "amount": 1,
+        "attack": 3,
+        "health": 3,
+        "mode": "buff",
+        "setCost": null
+      }
+    ]
+  },
   "BT_233": {
     "text": "Deal $2 damage to a minion. Gain 2 Armor.",
     "steps": [
@@ -392,7 +570,10 @@
         "op": "damage",
         "amount": 2,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "armor",
@@ -437,13 +618,19 @@
         "attack": 2,
         "health": 3,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "keyword",
         "keyword": "LIFESTEAL",
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -487,7 +674,10 @@
         "attack": 2,
         "health": 1,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "draw",
@@ -513,11 +703,56 @@
         "amount": 0,
         "full": true,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "draw",
         "amount": 1
+      }
+    ]
+  },
+  "CATA_303": {
+    "text": "[x]Deal $5 damage\nto a minion. If it dies,\nrestore #5 Health to\nthe enemy hero.",
+    "steps": [
+      {
+        "op": "damage-then",
+        "amount": 5,
+        "mode": "killed",
+        "steps": [
+          {
+            "op": "heal",
+            "amount": 5,
+            "scope": "enemy-heroes"
+          }
+        ],
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "CATA_471": {
+    "text": "[x]Give your minions\n\"<b>Deathrattle:</b> Summon a\nrandom 4-Cost minion.\"",
+    "steps": [
+      {
+        "op": "grant-deathrattle",
+        "steps": [
+          {
+            "op": "summon-pool",
+            "filter": {
+              "type": "MINION",
+              "cost": 4
+            },
+            "amount": 1,
+            "enemy": false
+          }
+        ],
+        "scope": "friendly"
       }
     ]
   },
@@ -554,6 +789,29 @@
         "op": "hero-attack",
         "amount": 3,
         "expires": "turn"
+      }
+    ]
+  },
+  "CATA_610": {
+    "text": "[x]Give a minion\n\"<b>Deathrattle:</b> Summon\na random minion from\nyour hand.\"",
+    "steps": [
+      {
+        "op": "grant-deathrattle",
+        "steps": [
+          {
+            "op": "recruit",
+            "zone": "hand",
+            "filter": {
+              "type": "MINION"
+            },
+            "amount": 1
+          }
+        ],
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -643,6 +901,23 @@
       }
     ]
   },
+  "CFM_752": {
+    "text": "Draw a <b>Taunt</b> minion.\nGive it +2/+2.",
+    "steps": [
+      {
+        "op": "draw",
+        "filter": {
+          "keyword": "TAUNT",
+          "type": "MINION"
+        },
+        "amount": 1,
+        "attack": 2,
+        "health": 2,
+        "mode": "buff",
+        "setCost": null
+      }
+    ]
+  },
   "CORE_AT_055": {
     "text": "Restore #5 Health.",
     "steps": [
@@ -684,6 +959,21 @@
           "type": "SPELL"
         },
         "reduction": 0
+      }
+    ]
+  },
+  "CORE_BOT_451": {
+    "text": "Summon two 1/1 Sparks with <b>Rush</b>. <b>Overload:</b> (1)",
+    "steps": [
+      {
+        "op": "summon-token",
+        "token": "BOT_102t",
+        "amount": 2,
+        "enemy": false
+      },
+      {
+        "op": "overload",
+        "amount": 1
       }
     ]
   },
@@ -733,7 +1023,10 @@
         "attack": 2,
         "health": 1,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "draw",
@@ -781,7 +1074,10 @@
         "op": "damage",
         "amount": 3,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -793,7 +1089,10 @@
         "attack": 0,
         "health": 2,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "draw",
@@ -848,7 +1147,10 @@
       {
         "op": "destroy",
         "scope": "target",
-        "target": "enemy-minion"
+        "target": "enemy-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -929,6 +1231,35 @@
       }
     ]
   },
+  "CORE_EX1_238": {
+    "text": "Deal $3 damage. <b>Overload:</b> (1)",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 3,
+        "scope": "target",
+        "target": "character"
+      },
+      {
+        "op": "overload",
+        "amount": 1
+      }
+    ]
+  },
+  "CORE_EX1_259": {
+    "text": "Deal $3 damage to all enemy minions. <b>Overload:</b> (1)",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 3,
+        "scope": "enemy"
+      },
+      {
+        "op": "overload",
+        "amount": 1
+      }
+    ]
+  },
   "CORE_EX1_278": {
     "text": "Deal $1 damage.\nDraw a card.",
     "steps": [
@@ -944,18 +1275,63 @@
       }
     ]
   },
+  "CORE_EX1_302": {
+    "text": "Deal $1 damage to a minion. If it dies,\ndraw a card.",
+    "steps": [
+      {
+        "op": "damage-then",
+        "amount": 1,
+        "mode": "killed",
+        "steps": [
+          {
+            "op": "draw",
+            "amount": 1
+          }
+        ],
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
   "CORE_EX1_309": {
     "text": "Destroy a minion. Restore #3 Health to your hero.",
     "steps": [
       {
         "op": "destroy",
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "heal",
         "amount": 3,
         "scope": "hero"
+      }
+    ]
+  },
+  "CORE_EX1_391": {
+    "text": "Deal $2 damage to a minion. If it survives, draw a card.",
+    "steps": [
+      {
+        "op": "damage-then",
+        "amount": 2,
+        "mode": "survives",
+        "steps": [
+          {
+            "op": "draw",
+            "amount": 1
+          }
+        ],
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -993,7 +1369,10 @@
         "attack": 2,
         "health": 2,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "summon-pool",
@@ -1072,6 +1451,19 @@
       }
     ]
   },
+  "CS1_113": {
+    "text": "Take control of an enemy minion.",
+    "steps": [
+      {
+        "op": "steal",
+        "scope": "target",
+        "target": "enemy-minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
   "CS1_130": {
     "text": "Deal $3 damage\nto a minion.",
     "steps": [
@@ -1079,7 +1471,10 @@
         "op": "damage",
         "amount": 3,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -1091,7 +1486,10 @@
         "attack": 0,
         "health": 2,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "draw",
@@ -1201,7 +1599,10 @@
         "op": "keyword",
         "keyword": "WINDFURY",
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -1224,7 +1625,10 @@
         "op": "damage",
         "amount": 4,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -1271,7 +1675,10 @@
       {
         "op": "destroy",
         "scope": "target",
-        "target": "enemy-minion"
+        "target": "enemy-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -1292,7 +1699,10 @@
         "attack": 3,
         "health": 0,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -1339,13 +1749,19 @@
         "attack": 2,
         "health": 0,
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "keyword",
         "keyword": "CHARGE",
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -1396,7 +1812,10 @@
         "op": "double",
         "stat": "health",
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -1408,7 +1827,10 @@
         "from": "pool",
         "costDelta": 1,
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -1419,7 +1841,10 @@
         "op": "damage",
         "amount": 4,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "discover",
@@ -1478,6 +1903,45 @@
       }
     ]
   },
+  "DAL_710": {
+    "text": "Give your minions \"<b>Deathrattle:</b> Summon a 1/1 Murloc.\"",
+    "steps": [
+      {
+        "op": "grant-deathrattle",
+        "steps": [
+          {
+            "op": "summon-token",
+            "token": "PRO_001at",
+            "amount": 1,
+            "enemy": false
+          }
+        ],
+        "scope": "friendly"
+      }
+    ]
+  },
+  "DEEP_011": {
+    "text": "Deal $2 damage to a minion. If it survives, give your hero +3 Attack this turn.",
+    "steps": [
+      {
+        "op": "damage-then",
+        "amount": 2,
+        "mode": "survives",
+        "steps": [
+          {
+            "op": "hero-attack",
+            "amount": 3,
+            "expires": "turn"
+          }
+        ],
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
   "DEEP_026": {
     "text": "[x]<b>Discover</b> a minion\n from your deck. Restore\nHealth to your hero\nequal to its Cost.",
     "steps": [
@@ -1519,6 +1983,22 @@
         "amount": 10,
         "scope": "enemies",
         "other": true
+      }
+    ]
+  },
+  "DMF_119": {
+    "text": "Discard your lowest Cost card. Give your minions +1/+1.",
+    "steps": [
+      {
+        "op": "discard",
+        "amount": 1,
+        "order": "lowest Cost"
+      },
+      {
+        "op": "buff",
+        "attack": 1,
+        "health": 1,
+        "scope": "friendly"
       }
     ]
   },
@@ -1577,7 +2057,10 @@
         "op": "damage",
         "amount": 3,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "hero-attack",
@@ -1625,7 +2108,10 @@
         "op": "damage",
         "amount": 2,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "if",
@@ -1646,6 +2132,21 @@
             "reduction": 0
           }
         ]
+      }
+    ]
+  },
+  "DRG_215": {
+    "text": "Give your minions +1/+1.\n<b>Overload:</b> (1)",
+    "steps": [
+      {
+        "op": "buff",
+        "attack": 1,
+        "health": 1,
+        "scope": "friendly"
+      },
+      {
+        "op": "overload",
+        "amount": 1
       }
     ]
   },
@@ -1683,7 +2184,10 @@
         "op": "damage",
         "amount": 5,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "if",
@@ -1812,6 +2316,29 @@
       }
     ]
   },
+  "ETC_082": {
+    "text": "[x]Deal $3 damage to a\ncharacter. If it dies,\nsummon a Demon\nfrom your deck.",
+    "steps": [
+      {
+        "op": "damage-then",
+        "amount": 3,
+        "mode": "killed",
+        "steps": [
+          {
+            "op": "recruit",
+            "zone": "deck",
+            "filter": {
+              "type": "MINION",
+              "tribe": "DEMON"
+            },
+            "amount": 1
+          }
+        ],
+        "scope": "target",
+        "target": "character"
+      }
+    ]
+  },
   "EX1_129": {
     "text": "Deal $1 damage to all enemy minions. Draw a card.",
     "steps": [
@@ -1823,6 +2350,23 @@
       {
         "op": "draw",
         "amount": 1
+      }
+    ]
+  },
+  "EX1_158": {
+    "text": "Give your minions \"<b>Deathrattle:</b> Summon a 2/2 Treant.\"",
+    "steps": [
+      {
+        "op": "grant-deathrattle",
+        "steps": [
+          {
+            "op": "summon-token",
+            "token": "EX1_tk9",
+            "amount": 1,
+            "enemy": false
+          }
+        ],
+        "scope": "friendly"
       }
     ]
   },
@@ -1925,7 +2469,40 @@
         "attack": 2,
         "health": 6,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "EX1_238": {
+    "text": "Deal $3 damage. <b>Overload:</b> (1)",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 3,
+        "scope": "target",
+        "target": "character"
+      },
+      {
+        "op": "overload",
+        "amount": 1
+      }
+    ]
+  },
+  "EX1_241": {
+    "text": "Deal $5 damage. <b>Overload:</b> (2)",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 5,
+        "scope": "target",
+        "target": "character"
+      },
+      {
+        "op": "overload",
+        "amount": 2
       }
     ]
   },
@@ -1941,6 +2518,20 @@
           "type": "MINION",
           "tribe": "TOTEM"
         }
+      }
+    ]
+  },
+  "EX1_259": {
+    "text": "Deal $3 damage to all enemy minions. <b>Overload:</b> (1)",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 3,
+        "scope": "enemy"
+      },
+      {
+        "op": "overload",
+        "amount": 1
       }
     ]
   },
@@ -1981,6 +2572,27 @@
       }
     ]
   },
+  "EX1_302": {
+    "text": "Deal $1 damage to a minion. If it dies,\ndraw a card.",
+    "steps": [
+      {
+        "op": "damage-then",
+        "amount": 1,
+        "mode": "killed",
+        "steps": [
+          {
+            "op": "draw",
+            "amount": 1
+          }
+        ],
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
   "EX1_308": {
     "text": "[x]Deal $4 damage.\nDiscard a random card.",
     "steps": [
@@ -2003,7 +2615,10 @@
       {
         "op": "destroy",
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "heal",
@@ -2025,13 +2640,39 @@
       }
     ]
   },
+  "EX1_320": {
+    "text": "Deal $3 damage to a character. If it dies, summon a random Demon.",
+    "steps": [
+      {
+        "op": "damage-then",
+        "amount": 3,
+        "mode": "killed",
+        "steps": [
+          {
+            "op": "summon-pool",
+            "filter": {
+              "type": "MINION",
+              "tribe": "DEMON"
+            },
+            "amount": 1,
+            "enemy": false
+          }
+        ],
+        "scope": "target",
+        "target": "character"
+      }
+    ]
+  },
   "EX1_332": {
     "text": "<b>Silence</b> a minion.",
     "steps": [
       {
         "op": "silence",
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -2057,7 +2698,10 @@
         "op": "double",
         "stat": "attack",
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -2068,7 +2712,10 @@
         "op": "set",
         "attack": 1,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -2079,7 +2726,10 @@
         "op": "keyword",
         "keyword": "DIVINE_SHIELD",
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -2091,6 +2741,27 @@
         "amount": 8,
         "scope": "enemies",
         "other": true
+      }
+    ]
+  },
+  "EX1_391": {
+    "text": "Deal $2 damage to a minion. If it survives, draw a card.",
+    "steps": [
+      {
+        "op": "damage-then",
+        "amount": 2,
+        "mode": "survives",
+        "steps": [
+          {
+            "op": "draw",
+            "amount": 1
+          }
+        ],
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -2140,6 +2811,30 @@
       {
         "op": "draw",
         "amount": 1
+      }
+    ]
+  },
+  "EX1_607": {
+    "text": "Deal $1 damage to a minion and give it +2 Attack.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 1,
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      },
+      {
+        "op": "buff",
+        "attack": 2,
+        "health": 0,
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -2224,6 +2919,24 @@
       }
     ]
   },
+  "GDB_864": {
+    "text": "Summon two random 1-Cost minions. <b>Overload:</b> (1)",
+    "steps": [
+      {
+        "op": "summon-pool",
+        "filter": {
+          "cost": 1,
+          "type": "MINION"
+        },
+        "amount": 2,
+        "enemy": false
+      },
+      {
+        "op": "overload",
+        "amount": 1
+      }
+    ]
+  },
   "GIL_147": {
     "text": "Deal $5 damage randomly split among all enemies.",
     "steps": [
@@ -2243,6 +2956,24 @@
         "token": "GIL_191t",
         "amount": 4,
         "enemy": false
+      }
+    ]
+  },
+  "GIL_600": {
+    "text": "Deal $2 damage to a minion. <b>Overload:</b> (1)",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 2,
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      },
+      {
+        "op": "overload",
+        "amount": 1
       }
     ]
   },
@@ -2294,6 +3025,29 @@
       }
     ]
   },
+  "GVG_015": {
+    "text": "Deal $3 damage to a character. If it dies, draw a Shadow spell.",
+    "steps": [
+      {
+        "op": "damage-then",
+        "amount": 3,
+        "mode": "killed",
+        "steps": [
+          {
+            "op": "draw",
+            "amount": 1,
+            "filter": {
+              "school": "SHADOW",
+              "type": "SPELL"
+            },
+            "order": ""
+          }
+        ],
+        "scope": "target",
+        "target": "character"
+      }
+    ]
+  },
   "ICC_039": {
     "text": "Set a minion's Attack and Health to 3.",
     "steps": [
@@ -2302,7 +3056,21 @@
         "attack": 3,
         "health": 3,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "ICC_052": {
+    "text": "Trigger a friendly minion's <b>Deathrattle</b>.",
+    "steps": [
+      {
+        "op": "trigger-deathrattle",
+        "scope": "target",
+        "target": "friendly-minion",
+        "amount": 1
       }
     ]
   },
@@ -2377,13 +3145,65 @@
       }
     ]
   },
+  "JAIL_876": {
+    "text": "[x]Give a friendly\nminion \"<b>Deathrattle:</b>\nSummon two random\n4-Cost minions.\"",
+    "steps": [
+      {
+        "op": "grant-deathrattle",
+        "steps": [
+          {
+            "op": "summon-pool",
+            "filter": {
+              "cost": 4,
+              "type": "MINION"
+            },
+            "amount": 2,
+            "enemy": false
+          }
+        ],
+        "scope": "target",
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "JAM_013": {
+    "text": "[x]Give a friendly minion\n+3/+3. Deal $1 damage\nto all other minions.\n<b>Overload:</b> (1)",
+    "steps": [
+      {
+        "op": "buff",
+        "attack": 3,
+        "health": 3,
+        "scope": "target",
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
+      },
+      {
+        "op": "damage",
+        "amount": 1,
+        "scope": "all",
+        "other": true
+      },
+      {
+        "op": "overload",
+        "amount": 1
+      }
+    ]
+  },
   "KAR_013": {
     "text": "<b>Silence</b> a friendly minion. Draw a card.",
     "steps": [
       {
         "op": "silence",
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "draw",
@@ -2458,7 +3278,10 @@
         "attack": 2,
         "health": 2,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "summon-pool",
@@ -2509,7 +3332,10 @@
       {
         "op": "destroy",
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "damage",
@@ -2524,7 +3350,10 @@
       {
         "op": "destroy",
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "heal",
@@ -2541,10 +3370,31 @@
         "attack": 0,
         "health": 3,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "armor",
+        "amount": 3
+      }
+    ]
+  },
+  "LOOT_060": {
+    "text": "Deal $8 damage to a minion. <b><b>Overload</b>:</b> (3)",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 8,
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      },
+      {
+        "op": "overload",
         "amount": 3
       }
     ]
@@ -2556,7 +3406,10 @@
         "op": "keyword",
         "keyword": "DIVINE_SHIELD",
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "draw",
@@ -2599,7 +3452,10 @@
         "attack": -5,
         "health": -5,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "zone-buff",
@@ -2629,6 +3485,47 @@
         "op": "heal",
         "amount": 5,
         "scope": "hero"
+      }
+    ]
+  },
+  "NX2_019": {
+    "text": "Deal $2 damage to a minion. If it dies,\ndeal $3 damage to the enemy hero.",
+    "steps": [
+      {
+        "op": "damage-then",
+        "amount": 2,
+        "mode": "killed",
+        "steps": [
+          {
+            "op": "damage",
+            "amount": 3,
+            "scope": "enemy-heroes"
+          }
+        ],
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "OG_045": {
+    "text": "Give your minions \"<b>Deathrattle:</b> Add a random Beast to your hand.\"",
+    "steps": [
+      {
+        "op": "grant-deathrattle",
+        "steps": [
+          {
+            "op": "generate",
+            "filter": {
+              "type": "MINION",
+              "tribe": "BEAST"
+            },
+            "amount": 1
+          }
+        ],
+        "scope": "friendly"
       }
     ]
   },
@@ -2667,7 +3564,28 @@
         "attack": 2,
         "health": 6,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "OG_206": {
+    "text": "Deal $4 damage to a minion. <b>Overload:</b> (1)",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 4,
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      },
+      {
+        "op": "overload",
+        "amount": 1
       }
     ]
   },
@@ -2679,7 +3597,48 @@
         "attack": 1,
         "health": 2,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "OG_314": {
+    "text": "Deal $1 damage to a minion. If it survives, summon a 2/2 Slime.",
+    "steps": [
+      {
+        "op": "damage-then",
+        "amount": 1,
+        "mode": "survives",
+        "steps": [
+          {
+            "op": "summon-token",
+            "token": "OG_202c",
+            "amount": 1,
+            "enemy": false
+          }
+        ],
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "ONY_011": {
+    "text": "Deal $10 damage randomly split among all enemy minions. <b>Overload:</b> (1)",
+    "steps": [
+      {
+        "op": "missiles",
+        "amount": 10,
+        "scope": "enemy",
+        "other": true
+      },
+      {
+        "op": "overload",
+        "amount": 1
       }
     ]
   },
@@ -2692,7 +3651,10 @@
           "stat": "attack"
         },
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -2710,6 +3672,21 @@
         "token": "REV_336t2",
         "amount": 1,
         "enemy": false
+      }
+    ]
+  },
+  "REV_505": {
+    "text": "Summon two 2/2 Volatile Skeletons. Gain 4 Armor.",
+    "steps": [
+      {
+        "op": "summon-token",
+        "token": "REV_845",
+        "amount": 2,
+        "enemy": false
+      },
+      {
+        "op": "armor",
+        "amount": 4
       }
     ]
   },
@@ -2734,6 +3711,19 @@
       {
         "op": "draw",
         "amount": 1
+      }
+    ]
+  },
+  "RLK_812": {
+    "text": "Resurrect a friendly minion that costs (3)\nor less.",
+    "steps": [
+      {
+        "op": "resurrect",
+        "amount": 1,
+        "filter": {
+          "maxCost": 3,
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -2772,6 +3762,23 @@
       }
     ]
   },
+  "RLK_910": {
+    "text": "[x]Give your minions\n\"<b>Deathrattle:</b> Deal 3\ndamage to a random\nenemy.\"",
+    "steps": [
+      {
+        "op": "grant-deathrattle",
+        "steps": [
+          {
+            "op": "damage",
+            "amount": 3,
+            "scope": "enemies",
+            "random": 1
+          }
+        ],
+        "scope": "friendly"
+      }
+    ]
+  },
   "RLK_918": {
     "text": "[x]Give a friendly minion\n+3 Attack. Give your hero\n+2 Attack this turn.",
     "steps": [
@@ -2781,6 +3788,9 @@
         "health": 0,
         "scope": "target",
         "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        },
         "expires": "turn"
       },
       {
@@ -2799,6 +3809,20 @@
           "cost": 1,
           "type": "MINION"
         },
+        "amount": 2
+      }
+    ]
+  },
+  "SCH_427": {
+    "text": "Refresh 2 Mana Crystals.\n<b>Overload:</b> (2)",
+    "steps": [
+      {
+        "op": "mana",
+        "amount": 2,
+        "mode": "refresh"
+      },
+      {
+        "op": "overload",
         "amount": 2
       }
     ]
@@ -2842,6 +3866,29 @@
       }
     ]
   },
+  "SW_049": {
+    "text": "<b>Discover</b> a <b>Secret</b>, weapon, or <b>Divine Shield</b> minion.",
+    "steps": [
+      {
+        "op": "discover",
+        "filter": {
+          "any": [
+            {
+              "type": "SPELL",
+              "keyword": "SECRET"
+            },
+            {
+              "type": "WEAPON"
+            },
+            {
+              "keyword": "DIVINE_SHIELD",
+              "type": "MINION"
+            }
+          ]
+        }
+      }
+    ]
+  },
   "SW_088": {
     "text": "[x]Deal $3 damage.\nSummon two 1/3\nVoidwalkers with <b>Taunt</b>.",
     "steps": [
@@ -2859,6 +3906,64 @@
       }
     ]
   },
+  "SW_090": {
+    "text": "[x]Deal $2 damage to a\nminion. If it dies, restore\n#3 Health to your hero.",
+    "steps": [
+      {
+        "op": "damage-then",
+        "amount": 2,
+        "mode": "killed",
+        "steps": [
+          {
+            "op": "heal",
+            "amount": 3,
+            "scope": "hero"
+          }
+        ],
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "SW_437": {
+    "text": "Give your minions\n\"<b>Deathrattle:</b> Draw\n  a card.\"",
+    "steps": [
+      {
+        "op": "grant-deathrattle",
+        "steps": [
+          {
+            "op": "draw",
+            "amount": 1
+          }
+        ],
+        "scope": "friendly"
+      }
+    ]
+  },
+  "TIME_216": {
+    "text": "Deal $5 damage to a minion. If it survives, draw 2 cards.",
+    "steps": [
+      {
+        "op": "damage-then",
+        "amount": 5,
+        "mode": "survives",
+        "steps": [
+          {
+            "op": "draw",
+            "amount": 2
+          }
+        ],
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
   "TIME_218": {
     "text": "Deal $1 damage to a minion. Give your hero +1 Attack this turn.",
     "steps": [
@@ -2866,7 +3971,10 @@
         "op": "damage",
         "amount": 1,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "hero-attack",
@@ -2940,7 +4048,10 @@
           "stat": "armor"
         },
         "scope": "target",
-        "target": "enemy-minion"
+        "target": "enemy-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -2974,6 +4085,53 @@
       }
     ]
   },
+  "TOY_826": {
+    "text": "Give all minions\n\"<b>Deathrattle:</b> Deal 1\ndamage to all minions.\"",
+    "steps": [
+      {
+        "op": "grant-deathrattle",
+        "steps": [
+          {
+            "op": "damage",
+            "amount": 1,
+            "scope": "all",
+            "other": false
+          }
+        ],
+        "scope": "all",
+        "other": false
+      }
+    ]
+  },
+  "TRL_127": {
+    "text": "[x]Deal $3 damage to a\nrandom enemy. Repeat\nfor each of your Pirates.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 3,
+        "scope": "enemies",
+        "random": 1
+      },
+      {
+        "op": "repeat",
+        "amount": {
+          "count": "friendly",
+          "filter": {
+            "type": "MINION",
+            "tribe": "PIRATE"
+          }
+        },
+        "steps": [
+          {
+            "op": "damage",
+            "amount": 3,
+            "scope": "enemies",
+            "random": 1
+          }
+        ]
+      }
+    ]
+  },
   "TRL_128": {
     "text": "Restore #3 Health.",
     "steps": [
@@ -2995,13 +4153,32 @@
       }
     ]
   },
+  "TRL_245": {
+    "text": "Discard your lowest Cost card. Deal $2 damage to all minions.",
+    "steps": [
+      {
+        "op": "discard",
+        "amount": 1,
+        "order": "lowest Cost"
+      },
+      {
+        "op": "damage",
+        "amount": 2,
+        "scope": "all",
+        "other": false
+      }
+    ]
+  },
   "TRL_249": {
     "text": "Destroy a friendly minion. Give your minions +1/+1.",
     "steps": [
       {
         "op": "destroy",
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "buff",
@@ -3045,11 +4222,8 @@
     "text": "Add 2 random Dragons to your hand.",
     "steps": [
       {
-        "op": "generate",
-        "filter": {
-          "type": "MINION",
-          "tribe": "DRAGON"
-        },
+        "op": "generate-token",
+        "token": "TRLA_Paladin_09",
         "amount": 2
       }
     ]
@@ -3074,6 +4248,23 @@
           "tribe": "MECHANICAL"
         },
         "reduction": 1
+      }
+    ]
+  },
+  "TSC_637": {
+    "text": "[x]Deal $2 damage.\n<b>Dredge</b>.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 2,
+        "scope": "target",
+        "target": "character"
+      },
+      {
+        "op": "discover",
+        "zone": "deck",
+        "mode": "dredge",
+        "destination": "top"
       }
     ]
   },
@@ -3155,7 +4346,10 @@
         "attack": 1,
         "health": 1,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -3167,7 +4361,10 @@
         "attack": 7,
         "health": 14,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -3223,6 +4420,31 @@
         "op": "damage",
         "amount": 4,
         "scope": "heroes"
+      }
+    ]
+  },
+  "VAC_952": {
+    "text": "[x]Deal $4 damage to\na minion. If it dies, your\nnext <b>Deathrattle</b> minion\ncosts (3) less.",
+    "steps": [
+      {
+        "op": "damage-then",
+        "amount": 4,
+        "mode": "killed",
+        "steps": [
+          {
+            "op": "next-cost",
+            "filter": {
+              "keyword": "DEATHRATTLE",
+              "type": "MINION"
+            },
+            "reduction": 3
+          }
+        ],
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -3298,6 +4520,46 @@
       }
     ]
   },
+  "WON_095": {
+    "text": "Deal $3 damage to a character. If it dies, draw a Shadow spell.",
+    "steps": [
+      {
+        "op": "damage-then",
+        "amount": 3,
+        "mode": "killed",
+        "steps": [
+          {
+            "op": "draw",
+            "amount": 1,
+            "filter": {
+              "school": "SHADOW",
+              "type": "SPELL"
+            },
+            "order": ""
+          }
+        ],
+        "scope": "target",
+        "target": "character"
+      }
+    ]
+  },
+  "WON_110": {
+    "text": "Draw a <b>Taunt</b> minion.\nGive it +2/+2.",
+    "steps": [
+      {
+        "op": "draw",
+        "filter": {
+          "keyword": "TAUNT",
+          "type": "MINION"
+        },
+        "amount": 1,
+        "attack": 2,
+        "health": 2,
+        "mode": "buff",
+        "setCost": null
+      }
+    ]
+  },
   "WON_309": {
     "text": "Give a minion +2/+2. Summon a random\n2-Cost minion.",
     "steps": [
@@ -3306,7 +4568,10 @@
         "attack": 2,
         "health": 2,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "summon-pool",
@@ -3316,6 +4581,29 @@
         },
         "amount": 1,
         "enemy": false
+      }
+    ]
+  },
+  "WON_323": {
+    "text": "Deal $3 damage to a character. If it dies, summon a random Demon.",
+    "steps": [
+      {
+        "op": "damage-then",
+        "amount": 3,
+        "mode": "killed",
+        "steps": [
+          {
+            "op": "summon-pool",
+            "filter": {
+              "type": "MINION",
+              "tribe": "DEMON"
+            },
+            "amount": 1,
+            "enemy": false
+          }
+        ],
+        "scope": "target",
+        "target": "character"
       }
     ]
   },
@@ -3344,7 +4632,10 @@
         "op": "damage",
         "amount": 25,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -3400,7 +4691,10 @@
         "op": "damage",
         "amount": 7,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "draw",
@@ -3425,6 +4719,44 @@
         },
         "amount": 1,
         "enemy": false
+      }
+    ]
+  },
+  "WW_812": {
+    "text": "Give your minions \"<b>Deathrattle:</b> Summon a random Beast that costs (3) or less.\"",
+    "steps": [
+      {
+        "op": "grant-deathrattle",
+        "steps": [
+          {
+            "op": "summon-pool",
+            "filter": {
+              "maxCost": 3,
+              "type": "MINION",
+              "tribe": "BEAST"
+            },
+            "amount": 1,
+            "enemy": false
+          }
+        ],
+        "scope": "friendly"
+      }
+    ]
+  },
+  "WW_816": {
+    "text": "Draw two Dragons.\nGive them +1/+1.",
+    "steps": [
+      {
+        "op": "draw",
+        "filter": {
+          "type": "MINION",
+          "tribe": "DRAGON"
+        },
+        "amount": 2,
+        "attack": 1,
+        "health": 1,
+        "mode": "buff",
+        "setCost": null
       }
     ]
   },
@@ -3480,7 +4812,10 @@
         "attack": 1,
         "health": 1,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -3492,7 +4827,10 @@
         "attack": 1,
         "health": 1,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -3504,7 +4842,10 @@
         "attack": 1,
         "health": 1,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   }

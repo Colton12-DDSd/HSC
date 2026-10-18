@@ -1,4 +1,27 @@
 {
+  "AT_038": {
+    "text": "<b>Battlecry:</b> Gain an empty Mana Crystal.\n<b>Deathrattle:</b> Lose a Mana Crystal.",
+    "steps": [
+      {
+        "op": "mana",
+        "mode": "lose",
+        "amount": 1
+      }
+    ]
+  },
+  "BAR_915": {
+    "text": "[x]<b>Battlecry and Deathrattle:</b>\nGive another random\n friendly minion +1/+1.",
+    "steps": [
+      {
+        "op": "buff",
+        "attack": 1,
+        "health": 1,
+        "scope": "friendly",
+        "other": true,
+        "random": 1
+      }
+    ]
+  },
   "BE_151": {
     "text": "<b>Battlecry and Deathrattle:</b>& Give adjacent minions +2/+2.",
     "steps": [
@@ -10,12 +33,33 @@
       }
     ]
   },
+  "BE_550": {
+    "text": "<b>Battlecry:</b> Summon two copies of this. <b>Deathrattle:</b>& Deal 3 damage to a random enemy.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 3,
+        "scope": "enemies",
+        "random": 1
+      }
+    ]
+  },
   "BE_572": {
     "text": "<b>Taunt</b>\n<b>Battlecry and Deathrattle:</b>&\n Gain 3 Armor.",
     "steps": [
       {
         "op": "armor",
         "amount": 3
+      }
+    ]
+  },
+  "CFM_667": {
+    "text": "[x]<b>Battlecry:</b> Deal 5 damage\nto an enemy minion.\n<b>Deathrattle:</b> Deal 5 damage\nto your hero.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 5,
+        "scope": "hero"
       }
     ]
   },
@@ -39,6 +83,47 @@
         "op": "damage",
         "amount": 2,
         "scope": "hero"
+      }
+    ]
+  },
+  "DINO_434": {
+    "text": "[x]<b>Battlecry:</b> Get a random\n1-Cost minion.\n<b><b>Deathrattle:</b></b>& Get a random\n1-Cost spell.",
+    "steps": [
+      {
+        "op": "generate",
+        "filter": {
+          "cost": 1,
+          "type": "SPELL"
+        },
+        "amount": 1
+      }
+    ]
+  },
+  "EDR_459": {
+    "text": "[x]<b>Battlecry:</b> Deal 3 damage\nto all other friendly minions.\n<b>Deathrattle:</b> Deal 3 damage\nto all enemy minions.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 3,
+        "scope": "enemy"
+      }
+    ]
+  },
+  "OG_109": {
+    "text": "<b>Battlecry:</b>\nDiscard a random card. <b>Deathrattle:</b>\nDraw a card.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1
+      }
+    ]
+  },
+  "REV_510": {
+    "text": "[x]<b>Battlecry</b>: Discard\nyour hand. <b>Deathrattle:</b>\nDraw 3 cards.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 3
       }
     ]
   },
@@ -71,6 +156,29 @@
       }
     ]
   },
+  "VAC_917": {
+    "text": "[x]<b>Battlecry:</b> Draw your\nlowest Cost card.\n<b>Deathrattle:</b> Draw your\nhighest Cost card.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1,
+        "filter": {},
+        "order": "highest Cost"
+      }
+    ]
+  },
+  "VAC_947": {
+    "text": "<b>Battlecry:</b> Give all\nother minions -1/-1.\n<b>Deathrattle:</b> Give all\nother minions +1/+1.",
+    "steps": [
+      {
+        "op": "buff",
+        "attack": 1,
+        "health": 1,
+        "scope": "all",
+        "other": true
+      }
+    ]
+  },
   "YOG_403": {
     "text": "<b>Battlecry and Deathrattle:</b> Summon a 2/2 Treant.",
     "steps": [
@@ -79,6 +187,1835 @@
         "token": "TTN_950t2",
         "amount": 1,
         "enemy": false
+      }
+    ]
+  },
+  "BOT_031": {
+    "text": "[x]<b>Deathrattle:</b> Deal 2 damage\nto the enemy hero.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 2,
+        "scope": "enemy-heroes"
+      }
+    ]
+  },
+  "FP1_007": {
+    "text": "<b>Deathrattle:</b> Summon a 4/4 Nerubian.",
+    "steps": [
+      {
+        "op": "summon-token",
+        "token": "NAX1h_03",
+        "amount": 1,
+        "enemy": false
+      }
+    ]
+  },
+  "ICC_838t": {
+    "text": "[x]<b>Deathrattle:</b> Add a\nrandom <b>Legendary</b> minion\nto your hand.",
+    "steps": [
+      {
+        "op": "generate",
+        "filter": {
+          "rarity": "LEGENDARY",
+          "type": "MINION"
+        },
+        "amount": 1
+      }
+    ]
+  },
+  "REV_845": {
+    "text": "<b>Deathrattle:</b> Deal 2 damage to a random enemy.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 2,
+        "scope": "enemies",
+        "random": 1
+      }
+    ]
+  },
+  "TLC_249": {
+    "text": "<b>Deathrattle:</b>& Deal 2 damage randomly split among all enemies.",
+    "steps": [
+      {
+        "op": "missiles",
+        "amount": 2,
+        "scope": "enemies",
+        "other": true
+      }
+    ]
+  },
+  "AT_123": {
+    "text": "[x]<b>Taunt</b>\n<b>Deathrattle:</b> If you're holding\na Dragon, deal 3 damage\nto all minions.",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "zone": "hand",
+          "filter": {
+            "type": "MINION",
+            "tribe": "DRAGON"
+          },
+          "min": 1
+        },
+        "steps": [
+          {
+            "op": "damage",
+            "amount": 3,
+            "scope": "all",
+            "other": false
+          }
+        ]
+      }
+    ]
+  },
+  "AV_130": {
+    "text": "<b>Deathrattle:</b> Give all minions in your hand +2/+2.",
+    "steps": [
+      {
+        "op": "zone-buff",
+        "zone": "hand",
+        "filter": {
+          "type": "MINION"
+        },
+        "attack": 2,
+        "health": 2
+      }
+    ]
+  },
+  "AV_325": {
+    "text": "[x]<b>Taunt</b>\n<b>Deathrattle:</b> Deal damage\nequal to this minion's Attack\nto all enemy minions.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": {
+          "stat": "attack"
+        },
+        "scope": "enemy"
+      }
+    ]
+  },
+  "AV_334": {
+    "text": "[x]<b>Rush</b>\n<b>Deathrattle:</b> Your next\nBeast costs (2) less.",
+    "steps": [
+      {
+        "op": "next-cost",
+        "filter": {
+          "type": "MINION",
+          "tribe": "BEAST"
+        },
+        "reduction": 2
+      }
+    ]
+  },
+  "AV_704": {
+    "text": "<b>Deathrattle:</b> Deal 8 damage to a random enemy.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 8,
+        "scope": "enemies",
+        "random": 1
+      }
+    ]
+  },
+  "BAR_026": {
+    "text": "<b>Taunt</b>\n<b>Deathrattle:</b> Restore #4 Health to your hero.",
+    "steps": [
+      {
+        "op": "heal",
+        "amount": 4,
+        "scope": "hero"
+      }
+    ]
+  },
+  "BAR_027": {
+    "text": "<b>Deathrattle:</b> Deal 5 damage to your hero.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 5,
+        "scope": "hero"
+      }
+    ]
+  },
+  "BAR_310": {
+    "text": "[x]<b>Taunt</b>\n<b>Deathrattle:</b>& Restore #8 Health\nto all friendly characters.",
+    "steps": [
+      {
+        "op": "heal",
+        "amount": 8,
+        "scope": "friendly-characters",
+        "other": false
+      }
+    ]
+  },
+  "BAR_325": {
+    "text": "<b>Deathrattle:</b> Summon a <b>Deathrattle</b> minion that costs (3) or less from your hand.",
+    "steps": [
+      {
+        "op": "recruit",
+        "zone": "hand",
+        "filter": {
+          "maxCost": 3,
+          "keyword": "DEATHRATTLE",
+          "type": "MINION"
+        },
+        "amount": 1
+      }
+    ]
+  },
+  "BAR_326": {
+    "text": "<b>Deathrattle:</b> Summon a <b>Deathrattle</b> minion that costs (4) or less from your hand.",
+    "steps": [
+      {
+        "op": "recruit",
+        "zone": "hand",
+        "filter": {
+          "maxCost": 4,
+          "keyword": "DEATHRATTLE",
+          "type": "MINION"
+        },
+        "amount": 1
+      }
+    ]
+  },
+  "BAR_535": {
+    "text": "[x]<b>Taunt</b>\n<b>Deathrattle:</b> Gain 5 Armor.",
+    "steps": [
+      {
+        "op": "armor",
+        "amount": 5
+      }
+    ]
+  },
+  "BE_207": {
+    "text": "[x]<b><b>Reborn</b>\n</b><b>Deathrattle:</b>& Give all\nminions in your\nhand +1/+1.",
+    "steps": [
+      {
+        "op": "zone-buff",
+        "zone": "hand",
+        "filter": {
+          "type": "MINION"
+        },
+        "attack": 1,
+        "health": 1
+      }
+    ]
+  },
+  "BE_861": {
+    "text": "<b>Taunt</b>, <b>Reborn</b>\n<b>Deathrattle:</b>& Restore #3 Health to your hero.",
+    "steps": [
+      {
+        "op": "heal",
+        "amount": 3,
+        "scope": "hero"
+      }
+    ]
+  },
+  "BE_993": {
+    "text": "[x]<b>Deathrattle:</b> Reduce the\nCost of a random Shadow\n  spell in your hand by (2).",
+    "steps": [
+      {
+        "op": "cost",
+        "zone": "hand",
+        "filter": {
+          "school": "SHADOW",
+          "type": "SPELL"
+        },
+        "reduction": 2
+      }
+    ]
+  },
+  "BOT_066": {
+    "text": "<b>Deathrattle:</b> Summon a 7/7 Mechanical Dragon.",
+    "steps": [
+      {
+        "op": "summon-token",
+        "token": "BOT_066t",
+        "amount": 1,
+        "enemy": false
+      }
+    ]
+  },
+  "BOT_102": {
+    "text": "<b>Rush</b>\n<b>Deathrattle:</b> Add two\n1/1 Sparks with <b>Rush</b> to your hand.",
+    "steps": [
+      {
+        "op": "generate-token",
+        "token": "BOT_102t",
+        "amount": 2
+      }
+    ]
+  },
+  "BOT_401": {
+    "text": "<b>Deathrattle:</b> Add a random <b>Legendary</b> minion to your hand.",
+    "steps": [
+      {
+        "op": "generate",
+        "filter": {
+          "rarity": "LEGENDARY",
+          "type": "MINION"
+        },
+        "amount": 1
+      }
+    ]
+  },
+  "BOT_509": {
+    "text": "<b>Deathrattle:</b> Draw a <b>Deathrattle</b> minion from your deck.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1,
+        "filter": {
+          "keyword": "DEATHRATTLE",
+          "type": "MINION"
+        },
+        "order": ""
+      }
+    ]
+  },
+  "BOT_606": {
+    "text": "<b>Deathrattle:</b> Deal 4 damage to a random enemy minion.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 4,
+        "scope": "enemy",
+        "random": 1,
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "BT_014": {
+    "text": "<b>Deathrattle:</b>& Draw a spell.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1,
+        "filter": {
+          "type": "SPELL"
+        },
+        "order": ""
+      }
+    ]
+  },
+  "BT_202": {
+    "text": "<b>Deathrattle:</b> Give a random Beast in your hand +1/+1.",
+    "steps": [
+      {
+        "op": "zone-buff",
+        "zone": "hand",
+        "filter": {
+          "type": "MINION",
+          "tribe": "BEAST"
+        },
+        "random": 1,
+        "attack": 1,
+        "health": 1
+      }
+    ]
+  },
+  "BT_509": {
+    "text": "<b>Deathrattle:</b> Summon a random Demon from your hand.",
+    "steps": [
+      {
+        "op": "recruit",
+        "zone": "hand",
+        "filter": {
+          "type": "MINION",
+          "tribe": "DEMON"
+        },
+        "amount": 1
+      }
+    ]
+  },
+  "CATA_723": {
+    "text": "<b>Deathrattle:</b>& Summon two random 4-Cost minions.",
+    "steps": [
+      {
+        "op": "summon-pool",
+        "filter": {
+          "cost": 4,
+          "type": "MINION"
+        },
+        "amount": 2,
+        "enemy": false
+      }
+    ]
+  },
+  "CFM_120": {
+    "text": "<b>Deathrattle:</b> Restore #4 Health to each hero.",
+    "steps": [
+      {
+        "op": "heal",
+        "amount": 4,
+        "scope": "heroes"
+      }
+    ]
+  },
+  "CFM_336": {
+    "text": "[x]<b>Deathrattle:</b> Give a random\nminion in your hand +2/+2.",
+    "steps": [
+      {
+        "op": "zone-buff",
+        "zone": "hand",
+        "filter": {
+          "type": "MINION"
+        },
+        "random": 1,
+        "attack": 2,
+        "health": 2
+      }
+    ]
+  },
+  "CFM_341": {
+    "text": "<b>Deathrattle:</b> Deal damage equal to this minion's Attack to all enemy minions.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": {
+          "stat": "attack"
+        },
+        "scope": "enemy"
+      }
+    ]
+  },
+  "CFM_646": {
+    "text": "[x]<b>Deathrattle:</b> Deal 2 damage\nto the enemy hero.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 2,
+        "scope": "enemy-heroes"
+      }
+    ]
+  },
+  "CORE_AT_123": {
+    "text": "[x]<b>Taunt</b>\n<b>Deathrattle:</b> If you're holding\na Dragon, deal 3 damage\nto all minions.",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "zone": "hand",
+          "filter": {
+            "type": "MINION",
+            "tribe": "DRAGON"
+          },
+          "min": 1
+        },
+        "steps": [
+          {
+            "op": "damage",
+            "amount": 3,
+            "scope": "all",
+            "other": false
+          }
+        ]
+      }
+    ]
+  },
+  "CORE_BAR_310": {
+    "text": "[x]<b>Taunt</b>\n<b>Deathrattle:</b>& Restore #8 Health\nto all friendly characters.",
+    "steps": [
+      {
+        "op": "heal",
+        "amount": 8,
+        "scope": "friendly-characters",
+        "other": false
+      }
+    ]
+  },
+  "CORE_EX1_096": {
+    "text": "<b>Deathrattle:</b> Draw a card.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1
+      }
+    ]
+  },
+  "CORE_GVG_114": {
+    "text": "<b>Deathrattle:</b>& Summon a random <b>Legendary</b> minion.",
+    "steps": [
+      {
+        "op": "summon-pool",
+        "filter": {
+          "rarity": "LEGENDARY",
+          "type": "MINION"
+        },
+        "amount": 1,
+        "enemy": false
+      }
+    ]
+  },
+  "CORE_ICC_214": {
+    "text": "[x]<b><b>Taunt</b>, Lifesteal</b>\n<b>Deathrattle:</b>& Destroy a\n random enemy minion.",
+    "steps": [
+      {
+        "op": "destroy",
+        "scope": "enemy",
+        "random": 1,
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "CORE_LOOT_413": {
+    "text": "<b>Deathrattle:</b>& Gain 3 Armor.",
+    "steps": [
+      {
+        "op": "armor",
+        "amount": 3
+      }
+    ]
+  },
+  "CORE_SW_068": {
+    "text": "<b>Taunt</b>\n<b>Deathrattle:</b> Gain 8 Armor.",
+    "steps": [
+      {
+        "op": "armor",
+        "amount": 8
+      }
+    ]
+  },
+  "CORE_WC_701": {
+    "text": "[x]<b>Rush</b>\n<b>Deathrattle:</b>& Deal 1 damage\nto all enemy minions.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 1,
+        "scope": "enemy"
+      }
+    ]
+  },
+  "CS3_024": {
+    "text": "[x]<b><b>Taunt</b>, Divine Shield</b>\n<b>Deathrattle:</b>& Draw your\nhighest Cost minion.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1,
+        "filter": {
+          "type": "MINION"
+        },
+        "order": "highest Cost"
+      }
+    ]
+  },
+  "DAL_039": {
+    "text": "[x]<b><b>Taunt</b></b>\n<b>Deathrattle:</b> Destroy a\n random enemy minion.",
+    "steps": [
+      {
+        "op": "destroy",
+        "scope": "enemy",
+        "random": 1,
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "DAL_040": {
+    "text": "<b>Deathrattle:</b> Restore #5 Health to the enemy hero.",
+    "steps": [
+      {
+        "op": "heal",
+        "amount": 5,
+        "scope": "enemy-heroes"
+      }
+    ]
+  },
+  "DAL_354": {
+    "text": "<b>Deathrattle:</b> Add two 1/1 Squirrels to your hand.",
+    "steps": [
+      {
+        "op": "generate-token",
+        "token": "DAL_354t",
+        "amount": 2
+      }
+    ]
+  },
+  "DAL_587": {
+    "text": "<b>Deathrattle:</b> Add a random Hunter spell to your hand.",
+    "steps": [
+      {
+        "op": "generate",
+        "filter": {
+          "classes": [
+            "HUNTER"
+          ],
+          "type": "SPELL"
+        },
+        "amount": 1
+      }
+    ]
+  },
+  "DAL_604": {
+    "text": "<b>Deathrattle:</b> Draw a Mech from your deck.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1,
+        "filter": {
+          "type": "MINION",
+          "tribe": "MECHANICAL"
+        },
+        "order": ""
+      }
+    ]
+  },
+  "DAL_743": {
+    "text": "<b>Rush</b>\n<b>Deathrattle:</b> Summon a 1/1 Murloc.",
+    "steps": [
+      {
+        "op": "summon-token",
+        "token": "PRO_001at",
+        "amount": 1,
+        "enemy": false
+      }
+    ]
+  },
+  "DAL_775": {
+    "text": "[x]<b>Taunt</b>\n<b>Deathrattle:</b> Deal 3 damage\nto all minions.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 3,
+        "scope": "all",
+        "other": false
+      }
+    ]
+  },
+  "DEEP_005": {
+    "text": "[x]<b>Taunt</b>\n<b>Deathrattle</b>: Summon two\nrandom <b>Deathrattle</b> minions\nthat cost (3) or less.",
+    "steps": [
+      {
+        "op": "summon-pool",
+        "filter": {
+          "maxCost": 3,
+          "keyword": "DEATHRATTLE",
+          "type": "MINION"
+        },
+        "amount": 2,
+        "enemy": false
+      }
+    ]
+  },
+  "DEEP_036": {
+    "text": "[x]<b>Taunt</b>\n <b>Deathrattle:</b> Double the\nstats of all Elementals in\nyour hand and deck.",
+    "steps": [
+      {
+        "op": "zone-double",
+        "filter": {
+          "type": "MINION",
+          "tribe": "ELEMENTAL"
+        },
+        "zone": "hand and deck"
+      }
+    ]
+  },
+  "DINO_431": {
+    "text": "<b>Taunt</b>. <b>Deathrattle:</b>& Summon a random <b>Taunt</b> minion that costs (5) or more.",
+    "steps": [
+      {
+        "op": "summon-pool",
+        "filter": {
+          "minCost": 5,
+          "keyword": "TAUNT",
+          "type": "MINION"
+        },
+        "amount": 1,
+        "enemy": false
+      }
+    ]
+  },
+  "DMF_191": {
+    "text": "<b>Deathrattle:</b> <b>Silence</b> all minions.",
+    "steps": [
+      {
+        "op": "silence",
+        "scope": "all",
+        "other": false
+      }
+    ]
+  },
+  "DMF_194": {
+    "text": "<b>Deathrattle:</b> Draw a Dragon.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1,
+        "filter": {
+          "type": "MINION",
+          "tribe": "DRAGON"
+        },
+        "order": ""
+      }
+    ]
+  },
+  "DRG_304": {
+    "text": "[x]<b>Deathrattle:</b> If you're holding\na Dragon, deal 3 damage\nto all enemy minions.",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "zone": "hand",
+          "filter": {
+            "type": "MINION",
+            "tribe": "DRAGON"
+          },
+          "min": 1
+        },
+        "steps": [
+          {
+            "op": "damage",
+            "amount": 3,
+            "scope": "enemy"
+          }
+        ]
+      }
+    ]
+  },
+  "EDR_110": {
+    "text": "<b>Poisonous</b>\n<b>Deathrattle:</b> Deal 1\ndamage to a random\nenemy minion.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 1,
+        "scope": "enemy",
+        "random": 1,
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "EDR_485": {
+    "text": "<b>Deathrattle:</b>& Draw a minion that costs (7) or more.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1,
+        "filter": {
+          "minCost": 7,
+          "type": "MINION"
+        },
+        "order": ""
+      }
+    ]
+  },
+  "EDR_571": {
+    "text": "<b>Deathrattle:</b> Draw a spell that costs (5) or more.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1,
+        "filter": {
+          "minCost": 5,
+          "type": "SPELL"
+        },
+        "order": ""
+      }
+    ]
+  },
+  "ETC_086": {
+    "text": "[x]<b>Taunt</b>\n<b>Deathrattle:</b> Deal 3 damage\nto all enemy minions.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 3,
+        "scope": "enemy"
+      }
+    ]
+  },
+  "EX1_016": {
+    "text": "<b>Deathrattle:</b> Take\ncontrol of a random\nenemy minion.",
+    "steps": [
+      {
+        "op": "steal",
+        "scope": "enemy",
+        "random": 1,
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "EX1_029": {
+    "text": "<b>Deathrattle:</b> Deal 2 damage to the enemy hero.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 2,
+        "scope": "enemy-heroes"
+      }
+    ]
+  },
+  "EX1_096": {
+    "text": "<b>Deathrattle:</b> Draw a card.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1
+      }
+    ]
+  },
+  "EX1_534": {
+    "text": "<b>Deathrattle:</b> Summon two 2/2 Hyenas.",
+    "steps": [
+      {
+        "op": "summon-token",
+        "token": "EX1_534t",
+        "amount": 2,
+        "enemy": false
+      }
+    ]
+  },
+  "FIR_778": {
+    "text": "[x]<b>Taunt</b>\n<b>Deathrattle:</b>& Deal 9 damage\nto all enemy minions.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 9,
+        "scope": "enemy"
+      }
+    ]
+  },
+  "FIR_929": {
+    "text": "<b>Deathrattle:</b> Draw a\nFire spell.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1,
+        "filter": {
+          "school": "FIRE",
+          "type": "SPELL"
+        },
+        "order": ""
+      }
+    ]
+  },
+  "FP1_001": {
+    "text": "<b>Deathrattle:</b> Restore #5 Health to the enemy hero.",
+    "steps": [
+      {
+        "op": "heal",
+        "amount": 5,
+        "scope": "enemy-heroes"
+      }
+    ]
+  },
+  "FP1_011": {
+    "text": "<b>Deathrattle:</b> Get a\nrandom Beast.",
+    "steps": [
+      {
+        "op": "generate",
+        "filter": {
+          "type": "MINION",
+          "tribe": "BEAST"
+        },
+        "amount": 1
+      }
+    ]
+  },
+  "FP1_024": {
+    "text": "<b>Taunt</b>. <b>Deathrattle:</b> Deal 1 damage to all minions.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 1,
+        "scope": "all",
+        "other": false
+      }
+    ]
+  },
+  "GDB_333": {
+    "text": "<b>Deathrattle:</b> Your next weapon costs (1) less.",
+    "steps": [
+      {
+        "op": "next-cost",
+        "filter": {
+          "type": "WEAPON"
+        },
+        "reduction": 1
+      }
+    ]
+  },
+  "GDB_877": {
+    "text": "[x]<b>Rush</b>\n <b>Deathrattle:</b> Give adjacent \nminions +1/+1 and <b>Rush</b>.",
+    "steps": [
+      {
+        "op": "buff",
+        "attack": 1,
+        "health": 1,
+        "scope": "adjacent"
+      },
+      {
+        "op": "keyword",
+        "keyword": "RUSH",
+        "scope": "adjacent"
+      }
+    ]
+  },
+  "GIL_118": {
+    "text": "<b>Deathrattle:</b> Restore #8 Health to your hero.",
+    "steps": [
+      {
+        "op": "heal",
+        "amount": 8,
+        "scope": "hero"
+      }
+    ]
+  },
+  "GIL_513": {
+    "text": "<b>Deathrattle:</b> Give your minions +1 Attack.",
+    "steps": [
+      {
+        "op": "buff",
+        "attack": 1,
+        "health": 0,
+        "scope": "friendly"
+      }
+    ]
+  },
+  "GIL_667": {
+    "text": "<b>Taunt</b>\n<b>Deathrattle:</b> Restore #6 Health to your hero.",
+    "steps": [
+      {
+        "op": "heal",
+        "amount": 6,
+        "scope": "hero"
+      }
+    ]
+  },
+  "GIL_805": {
+    "text": "<b>Deathrattle:</b> Summon a <b>Deathrattle</b> minion from your hand.",
+    "steps": [
+      {
+        "op": "recruit",
+        "zone": "hand",
+        "filter": {
+          "keyword": "DEATHRATTLE",
+          "type": "MINION"
+        },
+        "amount": 1
+      }
+    ]
+  },
+  "GIL_816": {
+    "text": "<b>Deathrattle:</b> Add a random Dragon to your hand.",
+    "steps": [
+      {
+        "op": "generate-token",
+        "token": "DALA_Warrior_07",
+        "amount": 1
+      }
+    ]
+  },
+  "GVG_076": {
+    "text": "<b>Deathrattle:</b> Deal 2 damage to all minions.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 2,
+        "scope": "all",
+        "other": false
+      }
+    ]
+  },
+  "GVG_096": {
+    "text": "<b>Deathrattle:</b> Summon a random 2-Cost minion.",
+    "steps": [
+      {
+        "op": "summon-pool",
+        "filter": {
+          "type": "MINION",
+          "cost": 2
+        },
+        "amount": 1,
+        "enemy": false
+      }
+    ]
+  },
+  "GVG_105": {
+    "text": "<b>Deathrattle:</b> Summon a random 4-Cost minion.",
+    "steps": [
+      {
+        "op": "summon-pool",
+        "filter": {
+          "type": "MINION",
+          "cost": 4
+        },
+        "amount": 1,
+        "enemy": false
+      }
+    ]
+  },
+  "GVG_114": {
+    "text": "<b>Deathrattle:</b>& Summon a random <b>Legendary</b> minion.",
+    "steps": [
+      {
+        "op": "summon-pool",
+        "filter": {
+          "rarity": "LEGENDARY",
+          "type": "MINION"
+        },
+        "amount": 1,
+        "enemy": false
+      }
+    ]
+  },
+  "ICC_021": {
+    "text": "<b>Deathrattle:</b>\nDeal 2 damage to all enemy minions.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 2,
+        "scope": "enemy"
+      }
+    ]
+  },
+  "ICC_027": {
+    "text": "<b>Deathrattle:</b> Add a random Dragon to your hand.",
+    "steps": [
+      {
+        "op": "generate-token",
+        "token": "DALA_Warrior_07",
+        "amount": 1
+      }
+    ]
+  },
+  "ICC_065": {
+    "text": "<b>Deathrattle:</b> Add two 1/1 Skeletons to your hand.",
+    "steps": [
+      {
+        "op": "generate-token",
+        "token": "ICC_026t",
+        "amount": 2
+      }
+    ]
+  },
+  "ICC_099": {
+    "text": "<b>Deathrattle:</b> Deal 5 damage to your minions.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 5,
+        "scope": "friendly"
+      }
+    ]
+  },
+  "ICC_214": {
+    "text": "[x]<b><b>Taunt</b>, Lifesteal</b>\n<b>Deathrattle:</b>& Destroy a\n random enemy minion.",
+    "steps": [
+      {
+        "op": "destroy",
+        "scope": "enemy",
+        "random": 1,
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "ICC_702": {
+    "text": "<b>Deathrattle:</b> Add a random <b>Deathrattle</b> minion to your hand.",
+    "steps": [
+      {
+        "op": "generate",
+        "filter": {
+          "keyword": "DEATHRATTLE",
+          "type": "MINION"
+        },
+        "amount": 1
+      }
+    ]
+  },
+  "JAIL_007": {
+    "text": "[x]<b>Taunt</b>\n<b>Deathrattle:</b>& Deal 2\n damage to all enemies.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 2,
+        "scope": "enemies"
+      }
+    ]
+  },
+  "JAIL_460": {
+    "text": "<b>Deathrattle:</b> Get a\nrandom weapon.",
+    "steps": [
+      {
+        "op": "generate",
+        "filter": {
+          "type": "WEAPON"
+        },
+        "amount": 1
+      }
+    ]
+  },
+  "JAIL_878": {
+    "text": "[x]<b>Deathrattle:</b>& Summon\na random 1-Cost\n <b>Deathrattle</b> minion.",
+    "steps": [
+      {
+        "op": "summon-pool",
+        "filter": {
+          "cost": 1,
+          "keyword": "DEATHRATTLE",
+          "type": "MINION"
+        },
+        "amount": 1,
+        "enemy": false
+      }
+    ]
+  },
+  "KAR_029": {
+    "text": "<b>Deathrattle:</b> Draw a card.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1
+      }
+    ]
+  },
+  "LEG_CS3_013": {
+    "text": "[x]<b>Deathrattle:</b> Deal 3\ndamage to the\nenemy hero.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 3,
+        "scope": "enemy-heroes"
+      }
+    ]
+  },
+  "LOE_046": {
+    "text": "<b>Deathrattle:</b> Deal 1 damage to a random enemy.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 1,
+        "scope": "enemies",
+        "random": 1
+      }
+    ]
+  },
+  "LOE_050": {
+    "text": "<b>Deathrattle:</b> Summon a random 1-Cost minion.",
+    "steps": [
+      {
+        "op": "summon-pool",
+        "filter": {
+          "type": "MINION",
+          "cost": 1
+        },
+        "amount": 1,
+        "enemy": false
+      }
+    ]
+  },
+  "LOOT_351": {
+    "text": "<b>Deathrattle:</b> Gain an empty Mana Crystal.",
+    "steps": [
+      {
+        "op": "mana",
+        "amount": 1,
+        "mode": "empty"
+      }
+    ]
+  },
+  "LOOT_363": {
+    "text": "<b>Deathrattle:</b> Add 3 Silver Hand Recruits to your hand.",
+    "steps": [
+      {
+        "op": "generate-token",
+        "token": "CS2_101t",
+        "amount": 3
+      }
+    ]
+  },
+  "LOOT_413": {
+    "text": "<b>Deathrattle:</b>& Gain 3 Armor.",
+    "steps": [
+      {
+        "op": "armor",
+        "amount": 3
+      }
+    ]
+  },
+  "MIS_314": {
+    "text": "[x]<b>Rush</b>\n<b>Deathrattle:</b> Summon three\nrandom 1-Cost minions.",
+    "steps": [
+      {
+        "op": "summon-pool",
+        "filter": {
+          "cost": 1,
+          "type": "MINION"
+        },
+        "amount": 3,
+        "enemy": false
+      }
+    ]
+  },
+  "NX2_024": {
+    "text": "<b>Rush</b>\n<b>Deathrattle:</b> Deal 4 damage to your hero.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 4,
+        "scope": "hero"
+      }
+    ]
+  },
+  "OG_120": {
+    "text": "<b>Deathrattle:</b> Deal 8 damage to all minions.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 8,
+        "scope": "all",
+        "other": false
+      }
+    ]
+  },
+  "OG_147": {
+    "text": "<b>Deathrattle:</b> Restore #8 Health to the enemy hero.",
+    "steps": [
+      {
+        "op": "heal",
+        "amount": 8,
+        "scope": "enemy-heroes"
+      }
+    ]
+  },
+  "OG_151": {
+    "text": "<b>Deathrattle:</b> Deal 1 damage to all minions.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 1,
+        "scope": "all",
+        "other": false
+      }
+    ]
+  },
+  "OG_179": {
+    "text": "<b>Deathrattle:</b> Deal 1 damage to a random enemy.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 1,
+        "scope": "enemies",
+        "random": 1
+      }
+    ]
+  },
+  "OG_249": {
+    "text": "<b>Taunt</b>\n<b>Deathrattle:</b> Summon a 2/2 Slime.",
+    "steps": [
+      {
+        "op": "summon-token",
+        "token": "OG_202c",
+        "amount": 1,
+        "enemy": false
+      }
+    ]
+  },
+  "OG_256": {
+    "text": "<b>Deathrattle:</b> Give your minions +1/+1.",
+    "steps": [
+      {
+        "op": "buff",
+        "attack": 1,
+        "health": 1,
+        "scope": "friendly"
+      }
+    ]
+  },
+  "OG_267": {
+    "text": "<b>Deathrattle:</b> Give your weapon +2 Attack.",
+    "steps": [
+      {
+        "op": "buff",
+        "attack": 2,
+        "health": 0,
+        "scope": "weapon"
+      }
+    ]
+  },
+  "OG_323": {
+    "text": "<b>Deathrattle:</b> Draw a card.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1
+      }
+    ]
+  },
+  "REV_251": {
+    "text": "<b>Deathrattle:</b> Destroy a random enemy minion.",
+    "steps": [
+      {
+        "op": "destroy",
+        "scope": "enemy",
+        "random": 1,
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "REV_374": {
+    "text": "<b>Deathrattle:</b> Reduce the Cost of the highest Cost Shadow spell in your hand by (3).",
+    "steps": [
+      {
+        "op": "cost",
+        "zone": "hand",
+        "filter": {
+          "school": "SHADOW",
+          "type": "SPELL"
+        },
+        "order": "highest Cost",
+        "reduction": 3
+      }
+    ]
+  },
+  "REV_952": {
+    "text": "<b>Deathrattle:</b> Add 2\nSilver Hand Recruits\nto your hand.",
+    "steps": [
+      {
+        "op": "generate-token",
+        "token": "CS2_101t",
+        "amount": 2
+      }
+    ]
+  },
+  "RLK_029": {
+    "text": "<b>Taunt</b>\n<b>Deathrattle:</b> Deal 4 damage to a random enemy.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 4,
+        "scope": "enemies",
+        "random": 1
+      }
+    ]
+  },
+  "RLK_511": {
+    "text": "<b>Deathrattle:</b>& Draw a\nFrost spell.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1,
+        "filter": {
+          "school": "FROST",
+          "type": "SPELL"
+        },
+        "order": ""
+      }
+    ]
+  },
+  "RLK_542": {
+    "text": "<b>Deathrattle:</b> Add 2 Arcane Bolts to your hand.",
+    "steps": [
+      {
+        "op": "generate-token",
+        "token": "RLK_843",
+        "amount": 2
+      }
+    ]
+  },
+  "RLK_551": {
+    "text": "<b>Taunt</b>, <b>Lifesteal</b>, <b>Reborn</b>\n<b>Deathrattle:</b> Deal 3 damage to a random enemy.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 3,
+        "scope": "enemies",
+        "random": 1
+      }
+    ]
+  },
+  "RLK_713": {
+    "text": "<b>Deathrattle:</b> Copy all\nFrost spells in your hand.",
+    "steps": [
+      {
+        "op": "copy-zone",
+        "filter": {
+          "school": "FROST",
+          "type": "SPELL"
+        },
+        "zone": "hand",
+        "random": null,
+        "order": ""
+      }
+    ]
+  },
+  "RLK_813": {
+    "text": "[x]<b>Taunt</b>\n<b>Deathrattle</b>: Resurrect\na friendly Undead that\ndied this game.",
+    "steps": [
+      {
+        "op": "resurrect",
+        "amount": 1,
+        "filter": {
+          "type": "MINION",
+          "tribe": "UNDEAD"
+        },
+        "keyword": null
+      }
+    ]
+  },
+  "RLK_914": {
+    "text": "[x]<b>Deathrattle:</b> Add a random\nShadow spell to your hand.",
+    "steps": [
+      {
+        "op": "generate",
+        "filter": {
+          "school": "SHADOW",
+          "type": "SPELL"
+        },
+        "amount": 1
+      }
+    ]
+  },
+  "SCH_244": {
+    "text": "[x]<b>Taunt</b>\n<b>Deathrattle:</b> Summon a\nrandom 3-Cost Beast.",
+    "steps": [
+      {
+        "op": "summon-pool",
+        "filter": {
+          "cost": 3,
+          "type": "MINION",
+          "tribe": "BEAST"
+        },
+        "amount": 1,
+        "enemy": false
+      }
+    ]
+  },
+  "SCH_711": {
+    "text": "<b>Deathrattle:</b> Summon a random 7-Cost minion.",
+    "steps": [
+      {
+        "op": "summon-pool",
+        "filter": {
+          "type": "MINION",
+          "cost": 7
+        },
+        "amount": 1,
+        "enemy": false
+      }
+    ]
+  },
+  "SW_006": {
+    "text": "<b>Deathrattle:</b> Summon a random 3-Cost minion.",
+    "steps": [
+      {
+        "op": "summon-pool",
+        "filter": {
+          "type": "MINION",
+          "cost": 3
+        },
+        "amount": 1,
+        "enemy": false
+      }
+    ]
+  },
+  "SW_021": {
+    "text": "<b>Deathrattle:</b> Summon a minion from your deck.",
+    "steps": [
+      {
+        "op": "recruit",
+        "zone": "deck",
+        "filter": {
+          "type": "MINION"
+        },
+        "amount": 1
+      }
+    ]
+  },
+  "SW_068": {
+    "text": "<b>Taunt</b>\n<b>Deathrattle:</b> Gain 8 Armor.",
+    "steps": [
+      {
+        "op": "armor",
+        "amount": 8
+      }
+    ]
+  },
+  "TIME_603": {
+    "text": "<b>Deathrattle:</b>& Destroy a random enemy minion.",
+    "steps": [
+      {
+        "op": "destroy",
+        "scope": "enemy",
+        "random": 1,
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "TLC_225": {
+    "text": "<b>Deathrattle:</b>& Summon a 2/1 Sizzling Cinder.",
+    "steps": [
+      {
+        "op": "summon-token",
+        "token": "TLC_249",
+        "amount": 1,
+        "enemy": false
+      }
+    ]
+  },
+  "TLC_479": {
+    "text": "<b>Taunt</b>\n<b>Deathrattle:</b>& Summon a random Fel Beast.",
+    "steps": [
+      {
+        "op": "summon-pool",
+        "filter": {
+          "school": "FEL",
+          "type": "MINION",
+          "tribe": "BEAST"
+        },
+        "amount": 1,
+        "enemy": false
+      }
+    ]
+  },
+  "TOY_356": {
+    "text": "<b>Rush</b>\n<b>Deathrattle:</b> Deal 7 damage to a random enemy.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 7,
+        "scope": "enemies",
+        "random": 1
+      }
+    ]
+  },
+  "TOY_606": {
+    "text": "<b>Taunt</b>\n<b>Deathrattle:</b> Deal 8 damage randomly split among all enemy minions.",
+    "steps": [
+      {
+        "op": "missiles",
+        "amount": 8,
+        "scope": "enemy",
+        "other": true
+      }
+    ]
+  },
+  "TOY_646": {
+    "text": "<b>Lifesteal</b>, <b>Taunt</b>\n<b>Deathrattle:</b> Deal 1 damage\nto all enemies.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 1,
+        "scope": "enemies"
+      }
+    ]
+  },
+  "TRL_505": {
+    "text": "<b>Deathrattle:</b> Reduce the Cost of a Beast in your hand by (1).",
+    "steps": [
+      {
+        "op": "cost",
+        "zone": "hand",
+        "filter": {
+          "type": "MINION",
+          "tribe": "BEAST"
+        },
+        "reduction": 1
+      }
+    ]
+  },
+  "TRL_520": {
+    "text": "[x]<b>Deathrattle:</b> Draw 2 Murlocs\nfrom your deck.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 2,
+        "filter": {
+          "type": "MINION",
+          "tribe": "MURLOC"
+        }
+      }
+    ]
+  },
+  "TRL_525": {
+    "text": "<b>Deathrattle:</b> Draw 2 cards.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 2
+      }
+    ]
+  },
+  "TSC_001": {
+    "text": "[x]<b>Deathrattle:</b> Deal 4 damage\nto the enemy hero.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 4,
+        "scope": "enemy-heroes"
+      }
+    ]
+  },
+  "TSC_645": {
+    "text": "<b>Rush</b>\n<b>Deathrattle:</b> Summon two random Mechs that cost (3) or less.",
+    "steps": [
+      {
+        "op": "summon-pool",
+        "filter": {
+          "maxCost": 3,
+          "type": "MINION",
+          "tribe": "MECHANICAL"
+        },
+        "amount": 2,
+        "enemy": false
+      }
+    ]
+  },
+  "TSC_938": {
+    "text": "[x]<b>Taunt</b>\n<b>Deathrattle:</b> Draw a card.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1
+      }
+    ]
+  },
+  "ULD_177": {
+    "text": "<b>Deathrattle:</b> Draw 8 cards.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 8
+      }
+    ]
+  },
+  "ULD_183": {
+    "text": "<b>Deathrattle:</b> Give all minions in your hand +3/+3.",
+    "steps": [
+      {
+        "op": "zone-buff",
+        "zone": "hand",
+        "filter": {
+          "type": "MINION"
+        },
+        "attack": 3,
+        "health": 3
+      }
+    ]
+  },
+  "ULD_184": {
+    "text": "<b>Deathrattle:</b> Deal 3 damage to the enemy hero.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 3,
+        "scope": "enemy-heroes"
+      }
+    ]
+  },
+  "ULD_208": {
+    "text": "[x]<b>Taunt</b>, <b>Reborn</b>\n<b>Deathrattle:</b> Restore #3\nHealth to your hero.",
+    "steps": [
+      {
+        "op": "heal",
+        "amount": 3,
+        "scope": "hero"
+      }
+    ]
+  },
+  "ULD_282": {
+    "text": "[x]<b>Deathrattle:</b> Add a random\n1-Cost minion to your hand.",
+    "steps": [
+      {
+        "op": "generate",
+        "filter": {
+          "cost": 1,
+          "type": "MINION"
+        },
+        "amount": 1
+      }
+    ]
+  },
+  "UNG_076": {
+    "text": "<b>Deathrattle:</b> Summon two 1/1 Raptors.",
+    "steps": [
+      {
+        "op": "summon-token",
+        "token": "UNG_076t1",
+        "amount": 2,
+        "enemy": false
+      }
+    ]
+  },
+  "UNG_083": {
+    "text": "<b>Deathrattle:</b> Summon a 5/5 Devilsaur.",
+    "steps": [
+      {
+        "op": "summon-token",
+        "token": "UNG_083t1",
+        "amount": 1,
+        "enemy": false
+      }
+    ]
+  },
+  "UNG_818": {
+    "text": "<b>Deathrattle:</b> Deal 3 damage to a random enemy minion.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 3,
+        "scope": "enemy",
+        "random": 1,
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "WC_004": {
+    "text": "<b>Taunt</b>\n<b>Deathrattle:</b> Reduce the Cost of a Beast in your hand by (2).",
+    "steps": [
+      {
+        "op": "cost",
+        "zone": "hand",
+        "filter": {
+          "type": "MINION",
+          "tribe": "BEAST"
+        },
+        "reduction": 2
+      }
+    ]
+  },
+  "WC_701": {
+    "text": "[x]<b>Rush</b>\n<b>Deathrattle:</b>& Deal 1 damage\nto all enemy minions.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 1,
+        "scope": "enemy"
+      }
+    ]
+  },
+  "WON_307": {
+    "text": "[x]<b>Deathrattle:</b> Give a random\nminion in your hand +2/+2.",
+    "steps": [
+      {
+        "op": "zone-buff",
+        "zone": "hand",
+        "filter": {
+          "type": "MINION"
+        },
+        "random": 1,
+        "attack": 2,
+        "health": 2
+      }
+    ]
+  },
+  "WON_345": {
+    "text": "[x]<b>Deathrattle:</b> Summon\na <b>Taunt</b> minion from\nyour deck.",
+    "steps": [
+      {
+        "op": "recruit",
+        "zone": "deck",
+        "filter": {
+          "keyword": "TAUNT",
+          "type": "MINION"
+        },
+        "amount": 1
+      }
+    ]
+  },
+  "WORK_010": {
+    "text": "<b>Taunt</b>. <b>Deathrattle:</b> Summon a random\n8-Cost minion.",
+    "steps": [
+      {
+        "op": "summon-pool",
+        "filter": {
+          "type": "MINION",
+          "cost": 8
+        },
+        "amount": 1,
+        "enemy": false
+      }
+    ]
+  },
+  "WORK_015": {
+    "text": "[x]<b>Rush</b>\n<b>Deathrattle:</b> Reduce the\nCost of a random minion\nin your hand by (6).",
+    "steps": [
+      {
+        "op": "cost",
+        "zone": "hand",
+        "filter": {
+          "type": "MINION"
+        },
+        "reduction": 6
+      }
+    ]
+  },
+  "WW_344": {
+    "text": "<b>Divine Shield</b>\n<b>Deathrattle:</b> Draw a\nHoly spell.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1,
+        "filter": {
+          "school": "HOLY",
+          "type": "SPELL"
+        },
+        "order": ""
+      }
+    ]
+  },
+  "WW_367": {
+    "text": "<b>Taunt</b>\n<b>Deathrattle:</b> Give <b>Taunt</b> minions in your hand and deck +1/+1.",
+    "steps": [
+      {
+        "op": "zone-buff",
+        "zone": "hand and deck",
+        "filter": {
+          "keyword": "TAUNT",
+          "type": "MINION"
+        },
+        "attack": 1,
+        "health": 1
+      }
+    ]
+  },
+  "WW_807": {
+    "text": "[x]<b>Deathrattle:</b> Draw a Beast.\nGive minions in your\nhand +1/+1.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1,
+        "filter": {
+          "type": "MINION",
+          "tribe": "BEAST"
+        },
+        "order": ""
+      },
+      {
+        "op": "zone-buff",
+        "zone": "hand",
+        "filter": {
+          "type": "MINION"
+        },
+        "attack": 1,
+        "health": 1
+      }
+    ]
+  },
+  "YOD_016": {
+    "text": "<b>Stealth</b>\n<b>Deathrattle:</b> Draw a card.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1
       }
     ]
   }

@@ -1,4 +1,18 @@
 {
+  "AT_007": {
+    "text": "<b>Battlecry:</b> Both players\nget a random spell.\nYours costs (2) less.",
+    "steps": [
+      {
+        "op": "generate",
+        "filter": {
+          "type": "SPELL"
+        },
+        "amount": 1,
+        "allPlayers": true,
+        "reduction": 2
+      }
+    ]
+  },
   "AT_010": {
     "text": "<b>Battlecry:</b> If you have a Beast, summon a\nrandom Beast.",
     "steps": [
@@ -80,6 +94,16 @@
       }
     ]
   },
+  "AT_038": {
+    "text": "<b>Battlecry:</b> Gain an empty Mana Crystal.\n<b>Deathrattle:</b> Lose a Mana Crystal.",
+    "steps": [
+      {
+        "op": "mana",
+        "amount": 1,
+        "mode": "empty"
+      }
+    ]
+  },
   "AT_040": {
     "text": "<b>Battlecry:</b> Give a friendly Beast +3 Health.",
     "steps": [
@@ -143,6 +167,16 @@
       }
     ]
   },
+  "AT_058": {
+    "text": "<b>Battlecry:</b> Reveal a minion in each deck. If yours costs more, draw it.",
+    "steps": [
+      {
+        "op": "joust",
+        "after": "draw",
+        "steps": []
+      }
+    ]
+  },
   "AT_069": {
     "text": "<b>Taunt</b>\n<b>Battlecry:</b> Give a\nminion <b>Taunt</b>.",
     "steps": [
@@ -150,7 +184,10 @@
         "op": "keyword",
         "keyword": "TAUNT",
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -183,6 +220,16 @@
       }
     ]
   },
+  "AT_072": {
+    "text": "<b>Battlecry:</b> Draw 3 cards.\nPut any minions you drew directly into the battlefield.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 3,
+        "summon": true
+      }
+    ]
+  },
   "AT_081": {
     "text": "<b>Battlecry:</b> Change all enemy minions'\nAttack to 1.",
     "steps": [
@@ -201,7 +248,10 @@
         "attack": 2,
         "health": 0,
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -243,6 +293,21 @@
       }
     ]
   },
+  "AT_104": {
+    "text": "<b>Battlecry:</b> Reveal a minion in each deck. If yours costs more, restore #7 Health to your hero.",
+    "steps": [
+      {
+        "op": "joust",
+        "steps": [
+          {
+            "op": "heal",
+            "amount": 7,
+            "scope": "hero"
+          }
+        ]
+      }
+    ]
+  },
   "AT_105": {
     "text": "<b>Battlecry:</b> Deal 3 damage to this minion.",
     "steps": [
@@ -267,6 +332,21 @@
       }
     ]
   },
+  "AT_108": {
+    "text": "<b>Battlecry:</b> Reveal a minion in each deck. If yours costs more, gain <b>Charge</b>.",
+    "steps": [
+      {
+        "op": "joust",
+        "steps": [
+          {
+            "op": "keyword",
+            "scope": "self",
+            "keyword": "CHARGE"
+          }
+        ]
+      }
+    ]
+  },
   "AT_111": {
     "text": "<b>Battlecry:</b> Restore #4 Health to each hero.",
     "steps": [
@@ -274,6 +354,26 @@
         "op": "heal",
         "amount": 4,
         "scope": "heroes"
+      }
+    ]
+  },
+  "AT_112": {
+    "text": "<b>Battlecry:</b> Reveal a minion in each deck. If yours costs more, gain <b>Taunt</b> and <b>Divine Shield</b>.",
+    "steps": [
+      {
+        "op": "joust",
+        "steps": [
+          {
+            "op": "keyword",
+            "scope": "self",
+            "keyword": "TAUNT"
+          },
+          {
+            "op": "keyword",
+            "scope": "self",
+            "keyword": "DIVINE_SHIELD"
+          }
+        ]
       }
     ]
   },
@@ -301,6 +401,31 @@
             "op": "keyword",
             "scope": "self",
             "keyword": "TAUNT"
+          }
+        ]
+      }
+    ]
+  },
+  "AT_117": {
+    "text": "<b>Battlecry:</b> If you have a minion with <b>Spell Damage</b>, gain +2/+2.",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "zone": "friendly",
+          "filter": {
+            "type": "MINION",
+            "keyword": "SPELLPOWER"
+          },
+          "min": 1
+        },
+        "steps": [
+          {
+            "op": "buff",
+            "scope": "self",
+            "attack": 2,
+            "health": 2,
+            "scale": 1
           }
         ]
       }
@@ -340,6 +465,23 @@
       }
     ]
   },
+  "AT_133": {
+    "text": "<b>Battlecry:</b> Reveal a minion in each deck. If yours costs more, gain +1/+1.",
+    "steps": [
+      {
+        "op": "joust",
+        "steps": [
+          {
+            "op": "buff",
+            "scope": "self",
+            "attack": 1,
+            "health": 1,
+            "scale": 1
+          }
+        ]
+      }
+    ]
+  },
   "AV_101": {
     "text": "<b>Battlecry:</b> Draw a\nFrost spell.",
     "steps": [
@@ -373,6 +515,20 @@
             "amount": 5
           }
         ]
+      }
+    ]
+  },
+  "AV_114": {
+    "text": "[x]<b>Battlecry:</b> Reduce the Cost\nof the highest Cost spell\nin your hand by (1).",
+    "steps": [
+      {
+        "op": "cost",
+        "zone": "hand",
+        "filter": {
+          "type": "SPELL"
+        },
+        "order": "highest Cost",
+        "reduction": 1
       }
     ]
   },
@@ -430,6 +586,22 @@
       }
     ]
   },
+  "AV_222": {
+    "text": "[x]<b>Battlecry:</b> Deal 1 damage\nto all other minions.\nIf any die, repeat this.",
+    "steps": [
+      {
+        "op": "repeat-death",
+        "steps": [
+          {
+            "op": "damage",
+            "amount": 1,
+            "scope": "all",
+            "other": true
+          }
+        ]
+      }
+    ]
+  },
   "AV_255": {
     "text": "[x]<b>Battlecry:</b> <b>Freeze</b> all\nother minions.",
     "steps": [
@@ -437,6 +609,19 @@
         "op": "freeze",
         "scope": "all",
         "other": true
+      }
+    ]
+  },
+  "AV_256": {
+    "text": "<b>Battlecry:</b> Swap the Attack and Health of all minions in both players' hands.",
+    "steps": [
+      {
+        "op": "zone-swap",
+        "zone": "hand",
+        "filter": {
+          "type": "MINION"
+        },
+        "allPlayers": true
       }
     ]
   },
@@ -505,6 +690,20 @@
       }
     ]
   },
+  "AV_308": {
+    "text": "[x]<b>Battlecry:</b> Choose a Fel\nspell in your hand.\nGet a copy of it.",
+    "steps": [
+      {
+        "op": "choose-hand",
+        "zone": "hand",
+        "filter": {
+          "school": "FEL",
+          "type": "SPELL"
+        },
+        "copy": true
+      }
+    ]
+  },
   "AV_711": {
     "text": "[x]<b>Battlecry:</b> If you're holding\na card from another class,\n summon a copy of this.",
     "steps": [
@@ -523,6 +722,29 @@
             "amount": 1
           }
         ]
+      }
+    ]
+  },
+  "BAR_030": {
+    "text": "<b>Battlecry:</b> <b>Discover</b> a Beast, <b>Secret</b>, or weapon.",
+    "steps": [
+      {
+        "op": "discover",
+        "filter": {
+          "any": [
+            {
+              "type": "MINION",
+              "tribe": "BEAST"
+            },
+            {
+              "type": "SPELL",
+              "keyword": "SECRET"
+            },
+            {
+              "type": "WEAPON"
+            }
+          ]
+        }
       }
     ]
   },
@@ -643,6 +865,17 @@
         "op": "damage",
         "amount": 6,
         "scope": "self"
+      }
+    ]
+  },
+  "BAR_081": {
+    "text": "<b>Battlecry:</b> <b>Discover</b> a card in your opponent's deck. They draw theirs as well.",
+    "steps": [
+      {
+        "op": "discover",
+        "zone": "enemy-deck",
+        "copy": true,
+        "after": "enemy-draw"
       }
     ]
   },
@@ -817,9 +1050,25 @@
             "from": "token",
             "token": "hexfrog",
             "scope": "target",
-            "target": "enemy-minion"
+            "target": "enemy-minion",
+            "filter": {
+              "type": "MINION"
+            }
           }
         ]
+      }
+    ]
+  },
+  "BAR_854": {
+    "text": "[x]<b>Battlecry:</b> The next\n Elemental you play\ncosts (1) less.",
+    "steps": [
+      {
+        "op": "next-cost",
+        "filter": {
+          "type": "MINION",
+          "tribe": "ELEMENTAL"
+        },
+        "reduction": 1
       }
     ]
   },
@@ -863,6 +1112,19 @@
       }
     ]
   },
+  "BAR_915": {
+    "text": "[x]<b>Battlecry and Deathrattle:</b>\nGive another random\n friendly minion +1/+1.",
+    "steps": [
+      {
+        "op": "buff",
+        "attack": 1,
+        "health": 1,
+        "scope": "friendly",
+        "other": true,
+        "random": 1
+      }
+    ]
+  },
   "BAR_916": {
     "text": "[x]<b>Lifesteal</b>. <b>Battlecry:</b> If your\ndeck contains 10 or fewer\ncards, deal 6 damage\nto a minion.",
     "steps": [
@@ -877,7 +1139,10 @@
             "op": "damage",
             "amount": 6,
             "scope": "target",
-            "target": "minion"
+            "target": "minion",
+            "filter": {
+              "type": "MINION"
+            }
           }
         ]
       }
@@ -890,6 +1155,19 @@
         "op": "transform",
         "scope": "adjacent",
         "from": "self"
+      }
+    ]
+  },
+  "BE_150": {
+    "text": "<b>Battlecry:</b>& <b>Discover</b> a spell to put on top of your deck. It costs (2) less.",
+    "steps": [
+      {
+        "op": "discover",
+        "filter": {
+          "type": "SPELL"
+        },
+        "destination": "top",
+        "reduction": 2
       }
     ]
   },
@@ -929,13 +1207,38 @@
       }
     ]
   },
+  "BE_209": {
+    "text": "<b>Battlecry:</b> For the rest of\nthe game, Elementals you summon have their stats set to 5/5.",
+    "steps": [
+      {
+        "op": "summon-effect",
+        "filter": {
+          "type": "MINION",
+          "tribe": "ELEMENTAL"
+        },
+        "setCost": 5
+      }
+    ]
+  },
   "BE_228": {
     "text": "<b>Battlecry:</b> <b>Silence</b> a minion.",
     "steps": [
       {
         "op": "silence",
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "BE_550": {
+    "text": "<b>Battlecry:</b> Summon two copies of this. <b>Deathrattle:</b>& Deal 3 damage to a random enemy.",
+    "steps": [
+      {
+        "op": "summon-self",
+        "amount": 2
       }
     ]
   },
@@ -960,12 +1263,67 @@
       }
     ]
   },
+  "BE_566": {
+    "text": "<b>Battlecry</b>: Choose a card\nin your hand to shuffle\ninto your deck.\nIt costs (1) less.",
+    "steps": [
+      {
+        "op": "choose-hand",
+        "zone": "hand",
+        "destination": "shuffle",
+        "reduction": 1
+      }
+    ]
+  },
   "BE_572": {
     "text": "<b>Taunt</b>\n<b>Battlecry and Deathrattle:</b>&\n Gain 3 Armor.",
     "steps": [
       {
         "op": "armor",
         "amount": 3
+      }
+    ]
+  },
+  "BE_728": {
+    "text": "[x]<b>Battlecry:</b> Reduce the Cost\nof minions in your hand and\ndeck by (1) and increase the\nCost of spells by (1).",
+    "steps": [
+      {
+        "op": "cost",
+        "zone": "hand and deck",
+        "filter": {
+          "type": "MINION"
+        },
+        "reduction": 1
+      },
+      {
+        "op": "cost",
+        "zone": "hand and deck",
+        "filter": {
+          "type": "SPELL"
+        },
+        "reduction": -1
+      }
+    ]
+  },
+  "BE_731": {
+    "text": "<b>Battlecry</b>:& Gain\nthe <b>Deathrattles</b> of adjacent minions.",
+    "steps": [
+      {
+        "op": "gain-deathrattle",
+        "scope": "adjacent"
+      }
+    ]
+  },
+  "BE_734": {
+    "text": "<b>Battlecry:</b>& Summon a\ncopy of this at the end\nof this turn.",
+    "steps": [
+      {
+        "op": "end-effect",
+        "steps": [
+          {
+            "op": "summon-self",
+            "amount": 1
+          }
+        ]
       }
     ]
   },
@@ -994,6 +1352,17 @@
       }
     ]
   },
+  "BOT_034": {
+    "text": "<b>Battlecry:</b> Summon four 0/2 Goblin Bombs.",
+    "steps": [
+      {
+        "op": "summon-token",
+        "token": "BOT_031",
+        "amount": 4,
+        "enemy": false
+      }
+    ]
+  },
   "BOT_079": {
     "text": "<b>Battlecry:</b> Give a friendly Mech +1/+1.",
     "steps": [
@@ -1018,6 +1387,20 @@
         "attack": 1,
         "health": 0,
         "scope": "weapon"
+      }
+    ]
+  },
+  "BOT_104": {
+    "text": "<b>Battlecry:</b> Deal 5 damage randomly split among all minions except Mechs.",
+    "steps": [
+      {
+        "op": "missiles",
+        "amount": 5,
+        "scope": "all",
+        "other": false,
+        "filter": {
+          "notTribe": "MECHANICAL"
+        }
       }
     ]
   },
@@ -1122,6 +1505,41 @@
       }
     ]
   },
+  "BOT_419": {
+    "text": "<b>Battlecry:</b> If you control a Treant, <b>Discover</b> a spell.",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "zone": "friendly",
+          "filter": {
+            "name": "Treant"
+          },
+          "min": 1
+        },
+        "steps": [
+          {
+            "op": "discover",
+            "filter": {
+              "type": "SPELL"
+            },
+            "reduction": 0
+          }
+        ]
+      }
+    ]
+  },
+  "BOT_431": {
+    "text": "<b>Battlecry:</b> Summon a 0/2 Goblin Bomb.",
+    "steps": [
+      {
+        "op": "summon-token",
+        "token": "BOT_031",
+        "amount": 1,
+        "enemy": false
+      }
+    ]
+  },
   "BOT_447": {
     "text": "[x]<b>Battlecry:</b> Deal 5 damage\nto your hero. Gain 5 Armor.",
     "steps": [
@@ -1143,6 +1561,26 @@
         "op": "damage",
         "amount": 6,
         "scope": "self"
+      }
+    ]
+  },
+  "BOT_507": {
+    "text": "<b>Battlecry:</b> Summon a copy of each adjacent minion.",
+    "steps": [
+      {
+        "op": "summon-copy",
+        "scope": "adjacent"
+      }
+    ]
+  },
+  "BOT_532": {
+    "text": "<b>Battlecry:</b> Summon two 0/2 Goblin Bombs.",
+    "steps": [
+      {
+        "op": "summon-token",
+        "token": "BOT_031",
+        "amount": 2,
+        "enemy": false
       }
     ]
   },
@@ -1225,6 +1663,17 @@
       }
     ]
   },
+  "BOT_544": {
+    "text": "<b>Battlecry:</b> Deal 6 damage randomly split among other friendly minions.",
+    "steps": [
+      {
+        "op": "missiles",
+        "amount": 6,
+        "scope": "friendly",
+        "other": true
+      }
+    ]
+  },
   "BOT_550": {
     "text": "<b>Battlecry:</b> If you're holding a spell that costs (5) or more, gain +1/+1.",
     "steps": [
@@ -1245,6 +1694,29 @@
             "attack": 1,
             "health": 1,
             "scale": 1
+          }
+        ]
+      }
+    ]
+  },
+  "BOT_552": {
+    "text": "[x]<b>Battlecry:</b> If you control 3\nminions with 7 Health, deal\n7 damage to all enemies.",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "zone": "friendly",
+          "filter": {
+            "type": "MINION",
+            "health": 7
+          },
+          "min": 3
+        },
+        "steps": [
+          {
+            "op": "damage",
+            "amount": 7,
+            "scope": "enemies"
           }
         ]
       }
@@ -1349,6 +1821,20 @@
       }
     ]
   },
+  "BRM_012": {
+    "text": "<b>Battlecry:</b> Gain 1-4 Attack. <b>Overload:</b> (1)",
+    "steps": [
+      {
+        "op": "random-attack",
+        "attack": 1,
+        "health": 4
+      },
+      {
+        "op": "overload",
+        "amount": 1
+      }
+    ]
+  },
   "BRM_014": {
     "text": "<b>Battlecry:</b> If your hand is empty, gain +3/+3.",
     "steps": [
@@ -1357,6 +1843,40 @@
         "condition": {
           "zone": "hand",
           "max": 0
+        },
+        "steps": [
+          {
+            "op": "buff",
+            "scope": "self",
+            "attack": 3,
+            "health": 3,
+            "scale": 1
+          }
+        ]
+      }
+    ]
+  },
+  "BRM_018": {
+    "text": "<b>Battlecry:</b> The next Dragon you play costs (2) less.",
+    "steps": [
+      {
+        "op": "next-cost",
+        "filter": {
+          "type": "MINION",
+          "tribe": "DRAGON"
+        },
+        "reduction": 2
+      }
+    ]
+  },
+  "BRM_024": {
+    "text": "<b>Battlecry:</b> If your opponent has 15 or less Health, gain +3/+3.",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "stat": "enemy-health",
+          "max": 15
         },
         "steps": [
           {
@@ -1572,6 +2092,16 @@
       }
     ]
   },
+  "BT_212": {
+    "text": "<b>Rush</b>. <b>Battlecry:</b> Choose a friendly minion. Gain a copy of its <b>Deathrattle</b>.",
+    "steps": [
+      {
+        "op": "gain-deathrattle",
+        "scope": "target",
+        "target": "friendly-minion"
+      }
+    ]
+  },
   "BT_214": {
     "text": "<b>Battlecry:</b> Summon 3 Beasts from your hand.",
     "steps": [
@@ -1583,6 +2113,45 @@
           "tribe": "BEAST"
         },
         "amount": 3
+      }
+    ]
+  },
+  "BT_262": {
+    "text": "<b>Battlecry:</b> If you're holding a Dragon, gain +1 Attack and <b>Lifesteal</b>.",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "zone": "hand",
+          "filter": {
+            "type": "MINION",
+            "tribe": "DRAGON"
+          },
+          "min": 1
+        },
+        "steps": [
+          {
+            "op": "buff",
+            "scope": "self",
+            "attack": 1,
+            "health": 0
+          },
+          {
+            "op": "keyword",
+            "scope": "self",
+            "keyword": "LIFESTEAL"
+          }
+        ]
+      }
+    ]
+  },
+  "BT_301": {
+    "text": "<b>Rush</b>\n<b>Battlecry:</b> Discard your highest Cost card.",
+    "steps": [
+      {
+        "op": "discard",
+        "amount": 1,
+        "order": "highest Cost"
       }
     ]
   },
@@ -1615,6 +2184,29 @@
           "tribe": "DEMON"
         },
         "reduction": 0
+      }
+    ]
+  },
+  "BT_323": {
+    "text": "<b>Battlecry:</b> Look at 3 cards in your deck. Choose one to put on top.",
+    "steps": [
+      {
+        "op": "discover",
+        "zone": "deck",
+        "destination": "top"
+      }
+    ]
+  },
+  "BT_416": {
+    "text": "<b>Battlecry:</b>& The next Demon you play costs (2) less.",
+    "steps": [
+      {
+        "op": "next-cost",
+        "filter": {
+          "type": "MINION",
+          "tribe": "DEMON"
+        },
+        "reduction": 2
       }
     ]
   },
@@ -1663,6 +2255,55 @@
       }
     ]
   },
+  "BT_710": {
+    "text": "[x]<b>Battlecry:</b> If you control\na <b><b>Stealth</b>ed</b> minion,\ndraw 2 cards.",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "zone": "friendly",
+          "filter": {
+            "keyword": "STEALTH",
+            "type": "MINION"
+          },
+          "min": 1
+        },
+        "steps": [
+          {
+            "op": "draw",
+            "amount": 2
+          }
+        ]
+      }
+    ]
+  },
+  "BT_711": {
+    "text": "[x]<b>Battlecry:</b> If you control a\n<b>Secret</b>, return a minion\nto its owner's hand.\nIt costs (2) more.",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "zone": "friendly",
+          "filter": {
+            "type": "SPELL",
+            "keyword": "SECRET"
+          },
+          "min": 1
+        },
+        "steps": [
+          {
+            "op": "bounce",
+            "reduction": -2,
+            "scope": "target",
+            "target": "minion",
+            "filter": {
+              "type": "MINION"
+            }
+          }
+        ]
+      }
+    ]
+  },
   "BT_714": {
     "text": "<b>Battlecry:</b> <b>Freeze</b> an enemy.",
     "steps": [
@@ -1670,6 +2311,25 @@
         "op": "freeze",
         "scope": "target",
         "target": "enemy-character"
+      }
+    ]
+  },
+  "BT_717": {
+    "text": "[x]<b>Battlecry:</b> Deal 2 damage.\nIf that kills the target,\ngain <b>Stealth</b>.",
+    "steps": [
+      {
+        "op": "damage-then",
+        "amount": 2,
+        "mode": "killed",
+        "steps": [
+          {
+            "op": "keyword",
+            "scope": "self",
+            "keyword": "STEALTH"
+          }
+        ],
+        "scope": "target",
+        "target": "character"
       }
     ]
   },
@@ -1683,6 +2343,63 @@
         "health": 0,
         "scale": 1,
         "expires": "turn"
+      }
+    ]
+  },
+  "BT_722": {
+    "text": "<b>Battlecry:</b> Deal 1 damage to a minion and give it <b>Divine Shield</b>.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 1,
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      },
+      {
+        "op": "keyword",
+        "keyword": "DIVINE_SHIELD",
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "BT_723": {
+    "text": "<b>Battlecry:</b> Deal 1 damage to a minion and give it <b>Rush</b>.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 1,
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      },
+      {
+        "op": "keyword",
+        "keyword": "RUSH",
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "BT_732": {
+    "text": "<b>Battlecry:</b> Deal 6 damage randomly split among all other minions.",
+    "steps": [
+      {
+        "op": "missiles",
+        "amount": 6,
+        "scope": "all",
+        "other": true
       }
     ]
   },
@@ -1766,6 +2483,50 @@
       }
     ]
   },
+  "CATA_697": {
+    "text": "[x]<b>Battlecry:</b> Choose a Fel\nspell in your hand.\nGet a copy of it.",
+    "steps": [
+      {
+        "op": "choose-hand",
+        "zone": "hand",
+        "filter": {
+          "school": "FEL",
+          "type": "SPELL"
+        },
+        "copy": true
+      }
+    ]
+  },
+  "CATA_721": {
+    "text": "[x]<b>Battlecry:</b> Choose a\ncard in your hand to\nshuffle into your deck.\nDraw a card.",
+    "steps": [
+      {
+        "op": "choose-hand",
+        "zone": "hand",
+        "destination": "shuffle",
+        "reduction": 0
+      },
+      {
+        "op": "draw",
+        "amount": 1
+      }
+    ]
+  },
+  "CFM_061": {
+    "text": "[x]<b>Battlecry:</b> Restore #6 Health.\n<b>Overload:</b> (1)",
+    "steps": [
+      {
+        "op": "heal",
+        "amount": 6,
+        "scope": "target",
+        "target": "character"
+      },
+      {
+        "op": "overload",
+        "amount": 1
+      }
+    ]
+  },
   "CFM_062": {
     "text": "[x]<b>Taunt</b>\n<b>Battlecry:</b> Give adjacent\n minions <b>Divine Shield</b>.",
     "steps": [
@@ -1782,7 +2543,10 @@
       {
         "op": "swap",
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -1794,7 +2558,10 @@
         "amount": 0,
         "full": true,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -1811,6 +2578,29 @@
         "random": 1,
         "attack": 1,
         "health": 1
+      }
+    ]
+  },
+  "CFM_605": {
+    "text": "[x]<b>Battlecry:</b> If you're holding\na Dragon, <b>Discover</b> a\ncopy of a card in your\nopponent's deck.",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "zone": "hand",
+          "filter": {
+            "type": "MINION",
+            "tribe": "DRAGON"
+          },
+          "min": 1
+        },
+        "steps": [
+          {
+            "op": "discover",
+            "zone": "enemy-deck",
+            "copy": true
+          }
+        ]
       }
     ]
   },
@@ -1847,7 +2637,10 @@
         "attack": 0,
         "health": 3,
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -1918,7 +2711,10 @@
       {
         "op": "silence",
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -1944,12 +2740,86 @@
       }
     ]
   },
+  "CFM_667": {
+    "text": "[x]<b>Battlecry:</b> Deal 5 damage\nto an enemy minion.\n<b>Deathrattle:</b> Deal 5 damage\nto your hero.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 5,
+        "scope": "target",
+        "target": "enemy-minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
   "CFM_668": {
     "text": "<b>Battlecry:</b> Summon 2 copies of this minion.",
     "steps": [
       {
         "op": "summon-self",
         "amount": 2
+      }
+    ]
+  },
+  "CFM_688": {
+    "text": "<b>Battlecry:</b> If an enemy minion has <b>Taunt</b>, gain <b>Charge</b>.",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "zone": "enemy",
+          "filter": {
+            "keyword": "TAUNT"
+          },
+          "min": 1
+        },
+        "steps": [
+          {
+            "op": "keyword",
+            "scope": "self",
+            "keyword": "CHARGE"
+          }
+        ]
+      }
+    ]
+  },
+  "CFM_694": {
+    "text": "<b>Battlecry:</b> Give a <b>Stealthed</b> minion +2/+2.",
+    "steps": [
+      {
+        "op": "buff",
+        "attack": 2,
+        "health": 2,
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "keyword": "STEALTH",
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "CFM_750": {
+    "text": "[x]<b>Battlecry:</b> If your deck has\nno duplicates, summon all\n Demons from your hand. ",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "special": "no-duplicates"
+        },
+        "steps": [
+          {
+            "op": "recruit",
+            "zone": "hand",
+            "filter": {
+              "type": "MINION",
+              "tribe": "DEMON"
+            },
+            "amount": 10
+          }
+        ]
       }
     ]
   },
@@ -1990,6 +2860,44 @@
         "random": 1,
         "attack": 1,
         "health": 1
+      }
+    ]
+  },
+  "CFM_809": {
+    "text": "[x]<b>Battlecry:</b> If your opponent's\nhand is empty, gain <b>Charge</b>.",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "zone": "enemy-hand",
+          "max": 0
+        },
+        "steps": [
+          {
+            "op": "keyword",
+            "scope": "self",
+            "keyword": "CHARGE"
+          }
+        ]
+      }
+    ]
+  },
+  "CFM_810": {
+    "text": "<b>Battlecry:</b> If your opponent has 6 or more cards in hand, gain <b>Charge</b>.",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "zone": "enemy-hand",
+          "min": 6
+        },
+        "steps": [
+          {
+            "op": "keyword",
+            "scope": "self",
+            "keyword": "CHARGE"
+          }
+        ]
       }
     ]
   },
@@ -2041,6 +2949,32 @@
       }
     ]
   },
+  "CORE_BT_416": {
+    "text": "<b>Battlecry:</b>& The next Demon you play costs (2) less.",
+    "steps": [
+      {
+        "op": "next-cost",
+        "filter": {
+          "type": "MINION",
+          "tribe": "DEMON"
+        },
+        "reduction": 2
+      }
+    ]
+  },
+  "CORE_CATA_002": {
+    "text": "<b>Battlecry:</b> Resurrect\nyour highest-Cost minion\nthat died this game.",
+    "steps": [
+      {
+        "op": "resurrect",
+        "amount": 1,
+        "filter": {
+          "type": "MINION"
+        },
+        "order": "highest Cost"
+      }
+    ]
+  },
   "CORE_CFM_753": {
     "text": "<b>Battlecry:</b>& Give all minions in your hand +1/+1.",
     "steps": [
@@ -2075,6 +3009,9 @@
         "health": 0,
         "scope": "target",
         "target": "minion",
+        "filter": {
+          "type": "MINION"
+        },
         "expires": "turn"
       }
     ]
@@ -2170,7 +3107,10 @@
       {
         "op": "swap",
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -2241,7 +3181,10 @@
         "op": "keyword",
         "keyword": "DIVINE_SHIELD",
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -2490,7 +3433,10 @@
         "attack": 0,
         "health": 2,
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -2672,6 +3618,9 @@
         "health": 0,
         "scope": "target",
         "target": "minion",
+        "filter": {
+          "type": "MINION"
+        },
         "expires": "turn"
       }
     ]
@@ -2704,7 +3653,10 @@
       {
         "op": "silence",
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -2722,6 +3674,18 @@
             "type": "MINION"
           }
         }
+      }
+    ]
+  },
+  "CS3_008": {
+    "text": "[x]<b>Battlecry:</b> The next\nweapon you play costs\n(1) less.",
+    "steps": [
+      {
+        "op": "next-cost",
+        "filter": {
+          "type": "WEAPON"
+        },
+        "reduction": 1
       }
     ]
   },
@@ -2999,6 +3963,22 @@
       }
     ]
   },
+  "DAL_752": {
+    "text": "<b>Battlecry:</b> Draw 2 minions from your deck. Set their Attack, Health, and Cost to 1.",
+    "steps": [
+      {
+        "op": "draw",
+        "filter": {
+          "type": "MINION"
+        },
+        "amount": 2,
+        "attack": 1,
+        "health": 1,
+        "mode": "set",
+        "setCost": 1
+      }
+    ]
+  },
   "DAL_770": {
     "text": "[x]<b>Battlecry:</b> If you have 10\nMana Crystals, deal 10\ndamage to a minion.",
     "steps": [
@@ -3013,7 +3993,39 @@
             "op": "damage",
             "amount": 10,
             "scope": "target",
-            "target": "minion"
+            "target": "minion",
+            "filter": {
+              "type": "MINION"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "DED_007": {
+    "text": "[x]<b>Battlecry:</b> Deal 2 damage\nto a random enemy. Repeat\nfor each of your Beasts.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 2,
+        "scope": "enemies",
+        "random": 1
+      },
+      {
+        "op": "repeat",
+        "amount": {
+          "count": "friendly",
+          "filter": {
+            "type": "MINION",
+            "tribe": "BEAST"
+          }
+        },
+        "steps": [
+          {
+            "op": "damage",
+            "amount": 2,
+            "scope": "enemies",
+            "random": 1
           }
         ]
       }
@@ -3126,6 +4138,19 @@
           "type": "MINION",
           "tribe": "BEAST"
         }
+      }
+    ]
+  },
+  "DINO_434": {
+    "text": "[x]<b>Battlecry:</b> Get a random\n1-Cost minion.\n<b><b>Deathrattle:</b></b>& Get a random\n1-Cost spell.",
+    "steps": [
+      {
+        "op": "generate",
+        "filter": {
+          "cost": 1,
+          "type": "MINION"
+        },
+        "amount": 1
       }
     ]
   },
@@ -3426,6 +4451,15 @@
       }
     ]
   },
+  "DRG_069": {
+    "text": "<b>Battlecry:</b> Destroy your opponent's Armor.",
+    "steps": [
+      {
+        "op": "destroy-armor",
+        "after": null
+      }
+    ]
+  },
   "DRG_072": {
     "text": "<b>Battlecry:</b> If you're holding a Dragon, summon 2 random Murlocs.",
     "steps": [
@@ -3663,6 +4697,41 @@
       }
     ]
   },
+  "EDR_459": {
+    "text": "[x]<b>Battlecry:</b> Deal 3 damage\nto all other friendly minions.\n<b>Deathrattle:</b> Deal 3 damage\nto all enemy minions.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 3,
+        "scope": "friendly",
+        "other": true
+      }
+    ]
+  },
+  "EDR_468": {
+    "text": "<b>Battlecry:</b> Deal 1 damage to a minion and give it\n+4 Attack.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 1,
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      },
+      {
+        "op": "buff",
+        "attack": 4,
+        "health": 0,
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
   "EDR_472": {
     "text": "<b>Battlecry:</b> If you're holding a spell that costs (5) or more, deal 3 damage.",
     "steps": [
@@ -3831,6 +4900,19 @@
       }
     ]
   },
+  "ETC_106": {
+    "text": "<b>Battlecry:</b> The next Mech you play costs (1) less.",
+    "steps": [
+      {
+        "op": "next-cost",
+        "filter": {
+          "type": "MINION",
+          "tribe": "MECHANICAL"
+        },
+        "reduction": 1
+      }
+    ]
+  },
   "ETC_110": {
     "text": "<b>Battlecry:</b> Transform into\na 3/3 copy of a minion.",
     "steps": [
@@ -3840,7 +4922,10 @@
         "attack": 3,
         "health": 3,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -3928,7 +5013,10 @@
         "attack": 1,
         "health": 1,
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -3966,6 +5054,9 @@
         "health": 0,
         "scope": "target",
         "target": "minion",
+        "filter": {
+          "type": "MINION"
+        },
         "expires": "turn"
       }
     ]
@@ -3976,7 +5067,10 @@
       {
         "op": "silence",
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -4020,7 +5114,19 @@
       {
         "op": "swap",
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "EX1_066": {
+    "text": "<b>Battlecry:</b> Destroy your opponent's weapon.",
+    "steps": [
+      {
+        "op": "destroy-weapon",
+        "after": null
       }
     ]
   },
@@ -4032,6 +5138,20 @@
         "amount": 3,
         "scope": "characters",
         "other": true
+      }
+    ]
+  },
+  "EX1_091": {
+    "text": "<b>Battlecry:</b> Take control of an enemy minion that has 2 or less Attack.",
+    "steps": [
+      {
+        "op": "steal",
+        "scope": "target",
+        "target": "enemy-minion",
+        "filter": {
+          "maxAttack": 2,
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -4089,6 +5209,19 @@
       }
     ]
   },
+  "EX1_190": {
+    "text": "<b>Battlecry:</b> Summon all friendly minions that died this turn.",
+    "steps": [
+      {
+        "op": "resurrect",
+        "until": 7,
+        "filter": {
+          "type": "MINION"
+        },
+        "mode": "this-turn"
+      }
+    ]
+  },
   "EX1_191": {
     "text": "<b>Battlecry:</b> Give a friendly minion <b>Poisonous</b>.",
     "steps": [
@@ -4096,7 +5229,10 @@
         "op": "keyword",
         "keyword": "POISONOUS",
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -4108,7 +5244,10 @@
         "attack": 0,
         "health": 2,
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -4169,7 +5308,10 @@
         "op": "keyword",
         "keyword": "DIVINE_SHIELD",
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -4180,7 +5322,10 @@
         "op": "set",
         "attack": 1,
         "scope": "target",
-        "target": "enemy-minion"
+        "target": "enemy-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -4213,7 +5358,10 @@
         "op": "keyword",
         "keyword": "WINDFURY",
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -4227,6 +5375,30 @@
       }
     ]
   },
+  "EX1_603": {
+    "text": "<b>Battlecry:</b> Deal 1 damage to a minion and give it +2 Attack.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 1,
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      },
+      {
+        "op": "buff",
+        "attack": 2,
+        "health": 0,
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
   "EX1_623": {
     "text": "<b>Battlecry:</b> Give a friendly minion +3 Health.",
     "steps": [
@@ -4235,7 +5407,10 @@
         "attack": 0,
         "health": 3,
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -4254,13 +5429,19 @@
             "attack": 1,
             "health": 2,
             "scope": "target",
-            "target": "friendly-minion"
+            "target": "friendly-minion",
+            "filter": {
+              "type": "MINION"
+            }
           },
           {
             "op": "keyword",
             "keyword": "RUSH",
             "scope": "target",
-            "target": "friendly-minion"
+            "target": "friendly-minion",
+            "filter": {
+              "type": "MINION"
+            }
           }
         ]
       }
@@ -4341,6 +5522,31 @@
       }
     ]
   },
+  "GDB_132": {
+    "text": "<b>Battlecry:</b> Deal 2 damage to an enemy minion. If it dies, <b>Discover</b> a Demon.",
+    "steps": [
+      {
+        "op": "damage-then",
+        "amount": 2,
+        "mode": "killed",
+        "steps": [
+          {
+            "op": "discover",
+            "filter": {
+              "type": "MINION",
+              "tribe": "DEMON"
+            },
+            "reduction": 0
+          }
+        ],
+        "scope": "target",
+        "target": "enemy-minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
   "GDB_303": {
     "text": "<b>Battlecry:</b> Shuffle 5 random Fire spells into your deck. They cost (2) less.",
     "steps": [
@@ -4367,6 +5573,26 @@
         "zone": "deck",
         "reduction": 5,
         "copy": false
+      }
+    ]
+  },
+  "GDB_878": {
+    "text": "<b>Battlecry:</b> Give your other Murlocs \"<b>Deathrattle:</b> Draw a card.\"",
+    "steps": [
+      {
+        "op": "grant-deathrattle",
+        "steps": [
+          {
+            "op": "draw",
+            "amount": 1
+          }
+        ],
+        "scope": "friendly",
+        "other": true,
+        "filter": {
+          "type": "MINION",
+          "tribe": "MURLOC"
+        }
       }
     ]
   },
@@ -4745,6 +5971,9 @@
         "health": 0,
         "scope": "target",
         "target": "minion",
+        "filter": {
+          "type": "MINION"
+        },
         "expires": "turn"
       }
     ]
@@ -4757,6 +5986,20 @@
         "attack": 1,
         "health": 0,
         "scope": "weapon"
+      }
+    ]
+  },
+  "GVG_042": {
+    "text": "<b>Battlecry:</b> Add 4 random Murlocs to your hand. <b>Overload:</b> (3)",
+    "steps": [
+      {
+        "op": "generate-token",
+        "token": "PRO_001at",
+        "amount": 4
+      },
+      {
+        "op": "overload",
+        "amount": 3
       }
     ]
   },
@@ -4862,7 +6105,19 @@
         "from": "pool",
         "costDelta": 0,
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "GVG_119": {
+    "text": "<b>Battlecry:</b> Equip a random weapon for each player.",
+    "steps": [
+      {
+        "op": "equip",
+        "allPlayers": true
       }
     ]
   },
@@ -4920,7 +6175,10 @@
         "attack": 1,
         "health": 0,
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -4932,7 +6190,10 @@
         "attack": 1,
         "health": 1,
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -4982,7 +6243,10 @@
         "op": "immune",
         "expires": "turn",
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -4994,13 +6258,19 @@
         "attack": 4,
         "health": 4,
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       },
       {
         "op": "keyword",
         "keyword": "TAUNT",
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -5049,6 +6319,17 @@
       }
     ]
   },
+  "ICC_838": {
+    "text": "<b>Battlecry:</b> Summon two 0/1 Frozen Champions.",
+    "steps": [
+      {
+        "op": "summon-token",
+        "token": "ICC_838t",
+        "amount": 2,
+        "enemy": false
+      }
+    ]
+  },
   "ICC_851": {
     "text": "<b>Battlecry:</b> If your deck has no 2-Cost cards, give all minions in your deck +1/+1.",
     "steps": [
@@ -5094,7 +6375,10 @@
             "attack": 3,
             "health": 3,
             "scope": "target",
-            "target": "minion"
+            "target": "minion",
+            "filter": {
+              "type": "MINION"
+            }
           }
         ]
       }
@@ -5148,6 +6432,17 @@
         "scale": {
           "count": "hand"
         }
+      }
+    ]
+  },
+  "JAM_005": {
+    "text": "[x]<b>Battlecry:</b> Trigger a friendly\nminion's <b>Deathrattle</b> twice.",
+    "steps": [
+      {
+        "op": "trigger-deathrattle",
+        "scope": "target",
+        "target": "friendly-minion",
+        "amount": 2
       }
     ]
   },
@@ -5360,6 +6655,19 @@
       }
     ]
   },
+  "KAR_204": {
+    "text": "<b>Battlecry:</b> Summon a random friendly minion\nthat died this game.",
+    "steps": [
+      {
+        "op": "resurrect",
+        "amount": 1,
+        "filter": {
+          "type": "MINION"
+        },
+        "keyword": null
+      }
+    ]
+  },
   "LEG_CS3_015": {
     "text": "<b>Battlecry:</b> <b>Discover</b> a copy of a Beast in your deck.",
     "steps": [
@@ -5407,7 +6715,20 @@
         "attack": 3,
         "health": 3,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "LOE_019": {
+    "text": "<b>Battlecry:</b> Choose a friendly minion. Gain a copy of its <b>Deathrattle</b>.",
+    "steps": [
+      {
+        "op": "gain-deathrattle",
+        "scope": "target",
+        "target": "friendly-minion"
       }
     ]
   },
@@ -5605,6 +6926,15 @@
           "type": "WEAPON"
         },
         "reduction": 2
+      }
+    ]
+  },
+  "LOOT_122": {
+    "text": "<b>Battlecry:</b> Destroy your opponent's weapon.",
+    "steps": [
+      {
+        "op": "destroy-weapon",
+        "after": null
       }
     ]
   },
@@ -5816,7 +7146,10 @@
             "attack": 1,
             "health": 1,
             "scope": "target",
-            "target": "minion"
+            "target": "minion",
+            "filter": {
+              "type": "MINION"
+            }
           }
         ]
       }
@@ -6007,15 +7340,36 @@
       }
     ]
   },
+  "OG_109": {
+    "text": "<b>Battlecry:</b>\nDiscard a random card. <b>Deathrattle:</b>\nDraw a card.",
+    "steps": [
+      {
+        "op": "discard",
+        "amount": 1,
+        "order": ""
+      }
+    ]
+  },
   "OG_122": {
     "text": "<b>Battlecry:</b> Add 2 Bananas to your hand.",
     "steps": [
       {
         "op": "generate-token",
         "token": "DMF_065t",
-        "amount": 2,
-        "allPlayers": false,
-        "enemy": false
+        "amount": 2
+      }
+    ]
+  },
+  "OG_133": {
+    "text": "<b>Battlecry:</b> Summon your <b>Deathrattle</b> minions that died this game.",
+    "steps": [
+      {
+        "op": "resurrect",
+        "until": 7,
+        "filter": {
+          "type": "MINION",
+          "keyword": "DEATHRATTLE"
+        }
       }
     ]
   },
@@ -6113,6 +7467,26 @@
       }
     ]
   },
+  "OG_309": {
+    "text": "<b>Battlecry:</b> Trigger a friendly minion's <b>Deathrattle</b>.",
+    "steps": [
+      {
+        "op": "trigger-deathrattle",
+        "scope": "target",
+        "target": "friendly-minion",
+        "amount": 1
+      }
+    ]
+  },
+  "OG_312": {
+    "text": "<b>Battlecry:</b> Equip a 1/3 Rusty Hook.",
+    "steps": [
+      {
+        "op": "equip",
+        "token": "OG_058"
+      }
+    ]
+  },
   "OG_315": {
     "text": "<b>Battlecry:</b> If you control another Pirate, give your weapon +1/+1.",
     "steps": [
@@ -6159,7 +7533,10 @@
         "from": "pool",
         "costDelta": 1,
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -6202,7 +7579,10 @@
           "stat": "armor"
         },
         "scope": "target",
-        "target": "enemy-minion"
+        "target": "enemy-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -6287,6 +7667,27 @@
       }
     ]
   },
+  "REV_510": {
+    "text": "[x]<b>Battlecry</b>: Discard\nyour hand. <b>Deathrattle:</b>\nDraw 3 cards.",
+    "steps": [
+      {
+        "op": "discard",
+        "amount": 10,
+        "order": ""
+      }
+    ]
+  },
+  "REV_511": {
+    "text": "[x]<b>Battlecry</b>: Choose a card\n in your hand to shuffle\n into your deck.",
+    "steps": [
+      {
+        "op": "choose-hand",
+        "zone": "hand",
+        "destination": "shuffle",
+        "reduction": 0
+      }
+    ]
+  },
   "REV_900": {
     "text": "[x]<b>Taunt</b>\n<b>Battlecry:</b> If you control\na <b>Secret</b>, summon a\ncopy of this.",
     "steps": [
@@ -6355,9 +7756,7 @@
           {
             "op": "generate-token",
             "token": "REV_951t",
-            "amount": 3,
-            "allPlayers": false,
-            "enemy": false
+            "amount": 3
           }
         ]
       }
@@ -6425,6 +7824,20 @@
       }
     ]
   },
+  "RLK_531": {
+    "text": "[x]<b>Battlecry:</b> Resurrect\na friendly Undead.\nGive it <b>Reborn</b>.",
+    "steps": [
+      {
+        "op": "resurrect",
+        "amount": 1,
+        "filter": {
+          "type": "MINION",
+          "tribe": "UNDEAD"
+        },
+        "keyword": "REBORN"
+      }
+    ]
+  },
   "RLK_547": {
     "text": "<b>Battlecry:</b> <b>Discover</b> a\nspell from any class.\nIt costs (1) less.",
     "steps": [
@@ -6445,6 +7858,24 @@
         "op": "generate-token",
         "token": "RLK_843",
         "amount": 1
+      }
+    ]
+  },
+  "RLK_550": {
+    "text": "[x]<b>Battlecry:</b> Give your other\nminions \"<b>Deathrattle:</b> Give\n  your minions +1/+1.\"",
+    "steps": [
+      {
+        "op": "grant-deathrattle",
+        "steps": [
+          {
+            "op": "buff",
+            "attack": 1,
+            "health": 1,
+            "scope": "friendly"
+          }
+        ],
+        "scope": "friendly",
+        "other": true
       }
     ]
   },
@@ -6629,7 +8060,10 @@
           {
             "op": "destroy",
             "scope": "target",
-            "target": "minion"
+            "target": "minion",
+            "filter": {
+              "type": "MINION"
+            }
           }
         ]
       }
@@ -6730,7 +8164,10 @@
         "op": "keyword",
         "keyword": "TAUNT",
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -6824,7 +8261,10 @@
           "stat": "attack"
         },
         "scope": "target",
-        "target": "enemy-minion"
+        "target": "enemy-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -6848,6 +8288,29 @@
             "health": 1,
             "scope": "friendly",
             "other": true
+          }
+        ]
+      }
+    ]
+  },
+  "TID_074": {
+    "text": "[x]<b>Battlecry:</b> If you've cast\nthree spells while holding\nthis, deal 5 damage.@\n<i>({0} left!)</i>@\n<i>(Ready!)</i>",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "zone": "played-while-held",
+          "filter": {
+            "type": "SPELL"
+          },
+          "min": 3
+        },
+        "steps": [
+          {
+            "op": "damage",
+            "amount": 5,
+            "scope": "target",
+            "target": "character"
           }
         ]
       }
@@ -6984,7 +8447,10 @@
           "stat": "health"
         },
         "scope": "target",
-        "target": "enemy-minion"
+        "target": "enemy-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -7024,7 +8490,10 @@
             "op": "damage",
             "amount": 6,
             "scope": "target",
-            "target": "enemy-minion"
+            "target": "enemy-minion",
+            "filter": {
+              "type": "MINION"
+            }
           }
         ]
       }
@@ -7078,6 +8547,27 @@
         "other": true,
         "filter": {
           "maxAttack": 2,
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "TLC_606": {
+    "text": "<b>Battlecry:</b> Deal 2 damage to an enemy minion. If it dies,& gain 5 Armor.",
+    "steps": [
+      {
+        "op": "damage-then",
+        "amount": 2,
+        "mode": "killed",
+        "steps": [
+          {
+            "op": "armor",
+            "amount": 5
+          }
+        ],
+        "scope": "target",
+        "target": "enemy-minion",
+        "filter": {
           "type": "MINION"
         }
       }
@@ -7291,9 +8781,7 @@
       {
         "op": "generate-token",
         "token": "TRL_509t",
-        "amount": 2,
-        "allPlayers": false,
-        "enemy": false
+        "amount": 2
       }
     ]
   },
@@ -7426,6 +8914,16 @@
       }
     ]
   },
+  "TRL_551": {
+    "text": "<b>Taunt</b>\n<b>Battlecry:</b> Discard your lowest Cost card.",
+    "steps": [
+      {
+        "op": "discard",
+        "amount": 1,
+        "order": "lowest Cost"
+      }
+    ]
+  },
   "TRL_564": {
     "text": "<b>Battlecry:</b> Set each player to 5 Mana Crystals.",
     "steps": [
@@ -7455,7 +8953,10 @@
             "op": "damage",
             "amount": 7,
             "scope": "target",
-            "target": "enemy-minion"
+            "target": "enemy-minion",
+            "filter": {
+              "type": "MINION"
+            }
           }
         ]
       }
@@ -7550,6 +9051,70 @@
       }
     ]
   },
+  "TSC_064": {
+    "text": "<b>Battlecry:</b> If you've cast three spells while holding this, deal 3 damage to all enemies.@ <i>({0} left!)</i>@ <i>(Ready!)</i>",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "zone": "played-while-held",
+          "filter": {
+            "type": "SPELL"
+          },
+          "min": 3
+        },
+        "steps": [
+          {
+            "op": "damage",
+            "amount": 3,
+            "scope": "enemies"
+          }
+        ]
+      }
+    ]
+  },
+  "TSC_212": {
+    "text": "[x]<b>Battlecry:</b> If you've cast\nthree spells while holding\nthis, draw 3 cards.@\n<i>({0} left!)</i>@\n<i>(Ready!)</i>",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "zone": "played-while-held",
+          "filter": {
+            "type": "SPELL"
+          },
+          "min": 3
+        },
+        "steps": [
+          {
+            "op": "draw",
+            "amount": 3
+          }
+        ]
+      }
+    ]
+  },
+  "TSC_609": {
+    "text": "[x]<b>Taunt</b>. <b>Battlecry:</b> If you've\ncast three spells while\nholding this, summon two\n  copies of this.@ <i>({0} left!)</i>@ <i>(Ready!)</i>",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "zone": "played-while-held",
+          "filter": {
+            "type": "SPELL"
+          },
+          "min": 3
+        },
+        "steps": [
+          {
+            "op": "summon-self",
+            "amount": 2
+          }
+        ]
+      }
+    ]
+  },
   "TSC_610": {
     "text": "[x]<b>Battlecry:</b> If your hero\nattacked this turn, deal 2\ndamage to all enemies.",
     "steps": [
@@ -7630,6 +9195,18 @@
             "enemy": false
           }
         ]
+      }
+    ]
+  },
+  "TSC_823": {
+    "text": "<b>Battlecry:</b> The next spell you play costs (1) less.",
+    "steps": [
+      {
+        "op": "next-cost",
+        "filter": {
+          "type": "SPELL"
+        },
+        "reduction": 1
       }
     ]
   },
@@ -7714,6 +9291,19 @@
       }
     ]
   },
+  "TTN_095": {
+    "text": "[x]<b>Battlecry:</b> The next\n Elemental you play\ncosts (2) less.",
+    "steps": [
+      {
+        "op": "next-cost",
+        "filter": {
+          "type": "MINION",
+          "tribe": "ELEMENTAL"
+        },
+        "reduction": 2
+      }
+    ]
+  },
   "TTN_456": {
     "text": "[x]<b>Lifesteal</b>\n<b>Battlecry:</b> Deal 2 damage to\na random enemy minion.",
     "steps": [
@@ -7778,6 +9368,28 @@
           "type": "WEAPON"
         },
         "reduction": 0
+      }
+    ]
+  },
+  "TTN_723": {
+    "text": "<b>Battlecry:</b> Draw a Mech. The next Mech you play costs (2) less.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1,
+        "filter": {
+          "type": "MINION",
+          "tribe": "MECHANICAL"
+        },
+        "order": ""
+      },
+      {
+        "op": "next-cost",
+        "filter": {
+          "type": "MINION",
+          "tribe": "MECHANICAL"
+        },
+        "reduction": 2
       }
     ]
   },
@@ -7872,6 +9484,20 @@
       }
     ]
   },
+  "ULD_158": {
+    "text": "<b>Battlecry:</b> Deal 1 damage to all enemy minions. <b>Overload:</b> (1)",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 1,
+        "scope": "enemy"
+      },
+      {
+        "op": "overload",
+        "amount": 1
+      }
+    ]
+  },
   "ULD_186": {
     "text": "<b>Battlecry:</b> Add a random <b>Reborn</b> minion to your hand.",
     "steps": [
@@ -7926,7 +9552,10 @@
         "attack": 0,
         "health": 2,
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -7991,6 +9620,19 @@
       {
         "op": "summon-self",
         "amount": 1
+      }
+    ]
+  },
+  "ULD_268": {
+    "text": "[x]<b>Battlecry:</b> Summon a\nrandom friendly minion\nthat died this game.\nGive it <b>Reborn</b>.",
+    "steps": [
+      {
+        "op": "resurrect",
+        "amount": 1,
+        "filter": {
+          "type": "MINION"
+        },
+        "keyword": "REBORN"
       }
     ]
   },
@@ -8252,6 +9894,17 @@
       }
     ]
   },
+  "UNG_800": {
+    "text": "<b>Battlecry:</b> Trigger a friendly minion's <b>Deathrattle</b>.",
+    "steps": [
+      {
+        "op": "trigger-deathrattle",
+        "scope": "target",
+        "target": "friendly-minion",
+        "amount": 1
+      }
+    ]
+  },
   "UNG_801": {
     "text": "<b>Battlecry:</b> If you control at least 2 other minions, gain <b>Taunt</b>.",
     "steps": [
@@ -8510,6 +10163,17 @@
       }
     ]
   },
+  "VAC_917": {
+    "text": "[x]<b>Battlecry:</b> Draw your\nlowest Cost card.\n<b>Deathrattle:</b> Draw your\nhighest Cost card.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1,
+        "filter": {},
+        "order": "lowest Cost"
+      }
+    ]
+  },
   "VAC_934": {
     "text": "<b>Taunt</b>\n<b>Battlecry:</b> Deal 10 damage to this minion.",
     "steps": [
@@ -8548,6 +10212,18 @@
         "op": "damage",
         "amount": 3,
         "scope": "hero"
+      }
+    ]
+  },
+  "VAC_947": {
+    "text": "<b>Battlecry:</b> Give all\nother minions -1/-1.\n<b>Deathrattle:</b> Give all\nother minions +1/+1.",
+    "steps": [
+      {
+        "op": "buff",
+        "attack": -1,
+        "health": -1,
+        "scope": "all",
+        "other": true
       }
     ]
   },
@@ -8640,6 +10316,19 @@
           "keyword": "DEATHRATTLE"
         },
         "reduction": 1
+      }
+    ]
+  },
+  "WON_057": {
+    "text": "<b>Battlecry:</b> Summon a random friendly minion\nthat died this game.",
+    "steps": [
+      {
+        "op": "resurrect",
+        "amount": 1,
+        "filter": {
+          "type": "MINION"
+        },
+        "keyword": null
       }
     ]
   },
@@ -8752,7 +10441,10 @@
         "attack": 3,
         "health": 3,
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -8765,6 +10457,9 @@
         "health": 0,
         "scope": "target",
         "target": "minion",
+        "filter": {
+          "type": "MINION"
+        },
         "expires": "turn"
       }
     ]
@@ -8777,6 +10472,28 @@
         "amount": 5,
         "scope": "target",
         "target": "character"
+      }
+    ]
+  },
+  "WON_324": {
+    "text": "[x]<b>Battlecry:</b> If your deck has\nno duplicates, summon all\n Demons from your hand. ",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "special": "no-duplicates"
+        },
+        "steps": [
+          {
+            "op": "recruit",
+            "zone": "hand",
+            "filter": {
+              "type": "MINION",
+              "tribe": "DEMON"
+            },
+            "amount": 10
+          }
+        ]
       }
     ]
   },
@@ -8825,6 +10542,20 @@
       }
     ]
   },
+  "WON_344": {
+    "text": "<b>Battlecry:</b> Both players\nget a random spell.\nYours costs (2) less.",
+    "steps": [
+      {
+        "op": "generate",
+        "filter": {
+          "type": "SPELL"
+        },
+        "amount": 1,
+        "allPlayers": true,
+        "reduction": 2
+      }
+    ]
+  },
   "WORK_009": {
     "text": "<b>Battlecry:</b> Give a friendly minion <b>Lifesteal</b>.",
     "steps": [
@@ -8832,7 +10563,10 @@
         "op": "keyword",
         "keyword": "LIFESTEAL",
         "scope": "target",
-        "target": "friendly-minion"
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -8866,6 +10600,19 @@
         },
         "attack": 2,
         "health": 2
+      }
+    ]
+  },
+  "WW_335": {
+    "text": "<b>Battlecry:</b> Your next Holy spell costs (2) less.",
+    "steps": [
+      {
+        "op": "next-cost",
+        "filter": {
+          "school": "HOLY",
+          "type": "SPELL"
+        },
+        "reduction": 2
       }
     ]
   },
@@ -8986,7 +10733,10 @@
             "op": "damage",
             "amount": 5,
             "scope": "target",
-            "target": "enemy-minion"
+            "target": "enemy-minion",
+            "filter": {
+              "type": "MINION"
+            }
           }
         ]
       }
@@ -9087,7 +10837,10 @@
           "stat": "attack"
         },
         "scope": "target",
-        "target": "minion"
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -9178,6 +10931,28 @@
       }
     ]
   },
+  "YOG_411": {
+    "text": "[x]<b>Battlecry:</b> If you've cast 5\nor more spells this game,\ndeal 2 damage to all\nenemies. @ <i>({0} left!)</i>@ <i>(Ready!)</i>",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "zone": "played",
+          "filter": {
+            "type": "SPELL"
+          },
+          "min": 5
+        },
+        "steps": [
+          {
+            "op": "damage",
+            "amount": 2,
+            "scope": "enemies"
+          }
+        ]
+      }
+    ]
+  },
   "YOG_501": {
     "text": "<b>Battlecry:</b> Transform into a\ncopy of a damaged minion.",
     "steps": [
@@ -9192,6 +10967,27 @@
           "damaged": true,
           "type": "MINION"
         }
+      }
+    ]
+  },
+  "YOG_518": {
+    "text": "<b>Battlecry:</b> If you've cast\n5 or more spells this\ngame, draw 2 cards.@\n<i>({0} left!)</i>@ <i>(Ready!)</i>",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "zone": "played",
+          "filter": {
+            "type": "SPELL"
+          },
+          "min": 5
+        },
+        "steps": [
+          {
+            "op": "draw",
+            "amount": 2
+          }
+        ]
       }
     ]
   },
@@ -9213,6 +11009,28 @@
             "amount": 7,
             "scope": "enemies",
             "other": true
+          }
+        ]
+      }
+    ]
+  },
+  "YOG_521": {
+    "text": "[x]<b>Battlecry:</b> If you've cast\n5 or more spells this game,\ngive your hero +4 Attack\nthis turn. @ <i>({0} left!)</i>@ <i>(Ready!)</i>",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "zone": "played",
+          "filter": {
+            "type": "SPELL"
+          },
+          "min": 5
+        },
+        "steps": [
+          {
+            "op": "hero-attack",
+            "amount": 4,
+            "expires": "turn"
           }
         ]
       }
@@ -9242,6 +11060,28 @@
       }
     ]
   },
+  "YOG_528": {
+    "text": "[x]<b>Battlecry:</b> If you've cast 5\nor more spells this game,\n refresh 4 Mana Crystals.@\n<i>({0} left!)</i>@\n<i>(Ready!)</i>",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "zone": "played",
+          "filter": {
+            "type": "SPELL"
+          },
+          "min": 5
+        },
+        "steps": [
+          {
+            "op": "mana",
+            "amount": 4,
+            "mode": "refresh"
+          }
+        ]
+      }
+    ]
+  },
   "YOP_014": {
     "text": "<b>Battlecry:</b> If your hero has Armor, gain +2/+2.",
     "steps": [
@@ -9260,6 +11100,25 @@
             "scale": 1
           }
         ]
+      }
+    ]
+  },
+  "YOP_022": {
+    "text": "<b>Battlecry:</b> Give a friendly minion +3/+3.\n<b>Overload:</b> (1)",
+    "steps": [
+      {
+        "op": "buff",
+        "attack": 3,
+        "health": 3,
+        "scope": "target",
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION"
+        }
+      },
+      {
+        "op": "overload",
+        "amount": 1
       }
     ]
   }

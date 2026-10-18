@@ -1,6 +1,6 @@
 # Battlecry and Deathrattle: first batch
 
-The local engine supports **1,022 of 6,470 collection records**, including **542 unique Battlecry minion names** and **551 Battlecry/Deathrattle minion names**. The bulk expansion adds 506 unique Battlecry names. See [bulk coverage and limits](BULK-BATTLECRIES.md) and the [complete added-card manifest](BULK-BATTLECRY-MANIFEST.md). The historical table below describes the original hand-written trigger batches; generated scripts extend that registry. Unsupported extra clauses remain blocked.
+The local engine supports **1,337 of 6,470 collection records**, including **648 unique Battlecry minion names** and **791 Battlecry/Deathrattle minion names**. The bulk expansion adds 506 unique Battlecry names. See [bulk coverage and limits](BULK-BATTLECRIES.md) and the [complete added-card manifest](BULK-BATTLECRY-MANIFEST.md). The historical table below describes the original hand-written trigger batches; generated scripts extend that registry. Unsupported extra clauses remain blocked.
 
 ## Play and targeting
 
@@ -75,3 +75,5 @@ Abusive Sergeant, Dark Iron Dwarf, Shrinkmeister, Ruststeed Raider, and Militia 
 ## Armor and ordered effects
 
 Batch 4 adds Armor, self-damage, and ordered multi-part effects. Existing Armor absorbs self-damage before Health; Crystallizer deals its damage before gaining new Armor. Armor Vendor gives Armor to all living heroes. Underking, Tol'vir Vanguard, and Elementium Geode activate both printed triggers exactly once at their respective times. Geode draws before self-damage, including hand-limit burns and fatigue; a lethal draw does not try to damage an eliminated hero again. Tidal Revenant requires an explicit chosen character and deals 5 damage before granting 8 Armor. Divine Shield prevents its damage but does not cancel Armor gain. Interruption prevents the entire Battlecry sequence. See [batch 4](MINION-BATCHES.md#batch-4-armor-self-damage-and-ordered-effects).
+
+The 2026-10-18 expansion adds another 106 Battlecry names and six selectable test decks. See the [current deck/rule guide](TEST-DECKS.md), [added-card manifest](BATTLECRY-WAVE2-MANIFEST.md), and [remaining backlog](BATTLECRY-REMAINING.md). Earlier counts below are historical checkpoints.

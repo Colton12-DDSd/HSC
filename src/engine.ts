@@ -18,6 +18,8 @@ import {
 } from './effects';
 export { effectFor, supported } from './effects';
 export interface Unit {
+  commanderOwner?: number;
+  grantedDeathrattles?: { source: Card; steps: ScriptStep[] }[];
   immuneUntilTurn?: number;
   stealth?: boolean;
   rebornUsed?: boolean;
@@ -42,6 +44,17 @@ export interface Unit {
   commander: boolean;
 }
 export interface Player {
+  overload?: number;
+  lockedMana?: number;
+  nextDiscounts?: { filter: CardFilter; amount: number; source: string }[];
+  endEffects?: { source: Card; steps: ScriptStep[]; once: boolean; sourceUid?: number }[];
+  summonEffects?: {
+    source: Card;
+    filter: CardFilter;
+    attack?: number;
+    health?: number;
+    set?: number;
+  }[];
   weapon?: { card: Card; attack: number; durability: number };
   secrets?: Card[];
   immuneUntilTurn?: number;
@@ -81,6 +94,7 @@ export interface Pending {
   position?: number;
 }
 export interface Game {
+  testPreset?: { id: string; name: string; objectives: string[]; guided: boolean };
   catalogVersion?: string;
   events?: { type: string; player: number; turn: number; card?: Card; amount?: number }[];
   choice?: {
@@ -142,15 +156,25 @@ function event(s: Game, player: number, type: string, amount?: number, card?: Ca
   });
 }
 export const unitMechanics = (u: Unit) =>
-  [...new Set([...(u.silenced ? [] : (u.card.mechanics ?? [])), ...(u.keywords ?? [])])]
+  [
+    ...new Set([
+      ...(u.silenced ? [] : (u.card.mechanics ?? [])),
+      ...(u.keywords ?? []),
+      ...(u.grantedDeathrattles?.length ? ['DEATHRATTLE'] : []),
+    ]),
+  ]
     .filter((k) => k !== 'STEALTH' || u.stealth !== false)
     .filter((k) => k !== 'REBORN' || !u.rebornUsed)
     .filter((k) => k !== 'DIVINE_SHIELD' || u.shield);
-function matchesCard(c: Card, f: CardFilter = {}, player?: Player, unit?: Unit) {
+function matchesCard(c: Card, f: CardFilter = {}, player?: Player, unit?: Unit): boolean {
   const keys = unit ? unitMechanics(unit) : (c.mechanics ?? []);
   const attack = unit?.attack ?? c.attack ?? 0;
   return (
     (!f.type || c.type === f.type) &&
+    (!f.any || f.any.some((part) => matchesCard(c, part, player, unit))) &&
+    (!f.notTribe ||
+      !(c.race === f.notTribe || c.races?.includes(f.notTribe) || c.race === 'ALL')) &&
+    (f.health === undefined || (unit?.health ?? c.health) === f.health) &&
     (!f.tribe || c.race === f.tribe || c.races?.includes(f.tribe) || c.race === 'ALL') &&
     (!f.keyword || keys.includes(f.keyword)) &&
     (f.cost === undefined || c.cost === f.cost) &&
@@ -280,13 +304,15 @@ function scriptCondition(s: Game, player: number, c: ScriptCondition, sourceUid?
   if (c.special === 'no-duplicates')
     return new Set(p.deck.map((c) => c.name)).size === p.deck.length;
   const n = c.stat
-    ? c.stat === 'health'
-      ? p.health
-      : c.stat === 'armor'
-        ? p.armor
-        : c.stat === 'weapon'
-          ? Number(!!p.weapon)
-          : p.maxMana
+    ? c.stat === 'enemy-health'
+      ? Math.min(...s.players.filter((x, i) => i !== player && x.health > 0).map((x) => x.health))
+      : c.stat === 'health'
+        ? p.health
+        : c.stat === 'armor'
+          ? p.armor
+          : c.stat === 'weapon'
+            ? Number(!!p.weapon)
+            : p.maxMana
     : scriptCount(s, player, c.zone!, c.filter, sourceUid);
   return (c.min === undefined || n >= c.min) && (c.max === undefined || n <= c.max);
 }
@@ -358,13 +384,22 @@ function addGenerated(s: Game, player: number, c: Card) {
 function scriptPool(s: Game, player: number, step: ScriptStep): Card[] {
   const p = s.players[player],
     f = step.filter ?? {};
+  if (step.zone === 'hand') return p.hand.filter((c) => matchesCard(c, f, p));
   const pool =
-    step.zone === 'deck'
-      ? p.deck
-      : catalog.filter(
-          (c) =>
-            c.collectible && ['MINION', 'SPELL', 'WEAPON', 'LOCATION', 'HERO'].includes(c.type),
-        );
+    step.zone === 'hand'
+      ? p.hand
+      : step.zone === 'deck'
+        ? p.deck
+        : step.zone === 'enemy-deck'
+          ? s.players.flatMap((owner, i) =>
+              i !== player && (step.owner === undefined || step.owner === i) && owner.health > 0
+                ? owner.deck
+                : [],
+            )
+          : catalog.filter(
+              (c) =>
+                c.collectible && ['MINION', 'SPELL', 'WEAPON', 'LOCATION', 'HERO'].includes(c.type),
+            );
   return [
     ...new Map(
       pool
@@ -372,6 +407,8 @@ function scriptPool(s: Game, player: number, step: ScriptStep): Card[] {
           (c) =>
             matchesCard(c, f, p) &&
             (step.zone === 'deck' ||
+              step.zone === 'hand' ||
+              step.zone === 'enemy-deck' ||
               step.op !== 'discover' ||
               f.anyClass ||
               f.otherClass ||
@@ -409,7 +446,19 @@ function draw(s: Game, p: number) {
   }
 }
 export function commandCost(p: Player) {
-  return Math.max(1, p.commander.cost + 2 * p.casts - p.reduction - p.handReduction);
+  return Math.max(
+    0,
+    Math.max(1, p.commander.cost + 2 * p.casts - p.reduction - p.handReduction) -
+      nextDiscount(p, p.commander),
+  );
+}
+function nextDiscount(p: Player, c: Card) {
+  return (p.nextDiscounts ?? [])
+    .filter((d) => matchesCard(c, d.filter, p))
+    .reduce((n, d) => n + d.amount, 0);
+}
+export function handCost(p: Player, c: Card) {
+  return Math.max(0, c.cost - p.reduction - p.handReduction - nextDiscount(p, c));
 }
 function getTarget(s: Game, t: Target) {
   if (!Number.isInteger(t.p) || !s.players[t.p] || s.players[t.p].health <= 0)
@@ -554,14 +603,17 @@ function settle(s: Game) {
         u = entry.unit;
       note(s, `${p.name}'s ${u.card.name} dies`);
       if (u.commander) {
-        p.zone = 'command';
-        p.replacement = true;
+        const owner = s.players[u.commanderOwner ?? entry.player];
+        owner.zone = 'command';
+        owner.replacement = true;
         note(s, `${u.card.name} returns to command zone (default replacement)`);
       } else p.grave.push(u.card);
       event(s, entry.player, 'death', undefined, u.card);
       if (
         !u.silenced &&
-        (deathrattleFor(u.card) || (unitMechanics(u).includes('REBORN') && !u.rebornUsed))
+        (deathrattleFor(u.card) ||
+          u.grantedDeathrattles?.length ||
+          (unitMechanics(u).includes('REBORN') && !u.rebornUsed))
       )
         queue.push(entry);
     }
@@ -580,6 +632,10 @@ function settle(s: Game) {
     const before = s.nextId;
     if (deathrattleFor(unit.card))
       runEffect(s, player, deathrattleFor(unit.card)!, undefined, position, unit.card);
+    for (const grant of unit.grantedDeathrattles ?? []) {
+      note(s, `${unit.card.name} triggers Deathrattle granted by ${grant.source.name}`);
+      runScript(s, player, grant.steps, undefined, position, grant.source);
+    }
     if (
       unitMechanics(unit).includes('REBORN') &&
       !unit.rebornUsed &&
@@ -622,10 +678,21 @@ function summon(
     rushOnly: !!c.mechanics?.includes('RUSH') && !c.mechanics?.includes('CHARGE'),
     shield: !!c.mechanics?.includes('DIVINE_SHIELD'),
     commander,
+    ...(commander ? { commanderOwner: p } : {}),
     attacksRemaining: c.mechanics?.includes('WINDFURY') ? 2 : 1,
     modifiers: structuredClone(c.modifiers ?? []),
   });
   if (commander) x.zone = 'board';
+  const unit = x.board[position];
+  for (const e of x.summonEffects ?? [])
+    if (matchesCard(c, e.filter, x, unit)) {
+      if (e.set !== undefined) {
+        unit.attackBase = unit.attack = e.set;
+        unit.health = unit.maxHealth = e.set;
+        unit.modifiers = [];
+      } else
+        applyStatModifier(s, unit, p, { attack: e.attack ?? 0, health: e.health ?? 0 }, e.source);
+    }
   note(s, `${x.name} summons ${c.name} at position ${position + 1}`);
   return x.board[position].uid;
 }
@@ -757,6 +824,27 @@ function scriptedDamage(
   return dealt;
 }
 const scriptOperations = new Set([
+  'overload',
+  'random-attack',
+  'choose-hand',
+  'legacy-deathrattle',
+  'next-cost',
+  'end-effect',
+  'summon-effect',
+  'destroy-weapon',
+  'destroy-armor',
+  'equip',
+  'resurrect',
+  'joust',
+  'trigger-deathrattle',
+  'gain-deathrattle',
+  'grant-deathrattle',
+  'steal',
+  'damage-then',
+  'repeat-death',
+  'zone-swap',
+  'replace-zone',
+  'summon-copy',
   'if',
   'repeat',
   'damage',
@@ -812,6 +900,236 @@ function runScript(
     const step = steps[n],
       amount = scriptNumber(s, player, step.amount, sourceUid);
     if (!scriptOperations.has(step.op)) throw Error(`Unknown scripted effect: ${step.op}`);
+    if (step.op === 'overload') {
+      p.overload = (p.overload ?? 0) + amount;
+      note(s, `${p.name} overloads ${amount} Mana Crystals next turn`);
+      continue;
+    }
+    if (step.op === 'random-attack') {
+      const u = p.board.find((u) => u.uid === sourceUid);
+      if (u)
+        applyStatModifier(
+          s,
+          u,
+          player,
+          { attack: step.attack! + random(s, step.health! - step.attack! + 1), health: 0 },
+          source,
+        );
+      continue;
+    }
+    if (step.op === 'legacy-deathrattle') {
+      const c = catalog.find((c) => c.id === step.token);
+      if (c && deathrattleFor(c)) runEffect(s, player, deathrattleFor(c)!, undefined, position, c);
+      continue;
+    }
+    if (step.op === 'next-cost') {
+      (p.nextDiscounts ??= []).push({
+        filter: step.filter ?? {},
+        amount: step.reduction ?? 0,
+        source: source.name,
+      });
+      note(s, `${source.name}: next matching card costs ${step.reduction} less`);
+      continue;
+    }
+    if (step.op === 'end-effect') {
+      (p.endEffects ??= []).push({
+        source: structuredClone(source),
+        steps: step.steps!,
+        once: !step.permanent,
+        sourceUid,
+      });
+      note(s, `${source.name} schedules ${step.permanent ? 'a lasting' : 'an end-of-turn'} effect`);
+      continue;
+    }
+    if (step.op === 'summon-effect') {
+      (p.summonEffects ??= []).push({
+        source,
+        filter: step.filter ?? {},
+        attack: step.attack,
+        health: step.health,
+        set: step.setCost ?? undefined,
+      });
+      note(s, `${source.name} changes matching future summons for the rest of the game`);
+      continue;
+    }
+    if (step.op === 'destroy-weapon' || step.op === 'destroy-armor') {
+      for (const [i, owner] of s.players.entries())
+        if (i !== player && owner.health > 0) {
+          if (step.op === 'destroy-weapon' && owner.weapon) {
+            if (step.after === 'draw')
+              for (let j = 0; j < owner.weapon.attack && p.health > 0; j++) draw(s, player);
+            if (step.after === 'armor') {
+              p.armor += owner.weapon.attack;
+              event(s, player, 'armor-change', owner.weapon.attack);
+            }
+            owner.grave.push(owner.weapon.card);
+            delete owner.weapon;
+          }
+          if (step.op === 'destroy-armor') {
+            event(s, i, 'armor-change', -owner.armor);
+            owner.armor = 0;
+          }
+        }
+      note(
+        s,
+        `${source.name} destroys enemy ${step.op === 'destroy-weapon' ? 'weapons' : 'Armor'}`,
+      );
+      continue;
+    }
+    if (step.op === 'equip') {
+      for (const [i, owner] of s.players.entries())
+        if (owner.health > 0 && (step.allPlayers || i === player)) {
+          const pool = step.token
+            ? catalog.filter((c) => c.id === step.token)
+            : scriptPool(s, i, { ...step, filter: { ...step.filter, type: 'WEAPON' } });
+          if (!pool.length) continue;
+          const c = structuredClone(pool[random(s, pool.length)]);
+          if (owner.weapon) owner.grave.push(owner.weapon.card);
+          owner.weapon = {
+            card: c,
+            attack: c.attack ?? 0,
+            durability: c.durability || c.health || 1,
+          };
+          note(s, `${source.name}: ${owner.name} equips ${c.name}`);
+        }
+      continue;
+    }
+    if (step.op === 'resurrect') {
+      let pool = (s.events ?? [])
+        .filter(
+          (e) =>
+            e.type === 'death' &&
+            (step.mode !== 'this-turn' || e.turn === s.turn) &&
+            (step.allPlayers || e.player === player) &&
+            e.card &&
+            matchesCard(e.card, step.filter, p),
+        )
+        .map((e) => e.card!);
+      if (step.order === 'highest Cost' && pool.length) {
+        const max = Math.max(...pool.map((c) => c.cost));
+        pool = pool.filter((c) => c.cost === max);
+      }
+      const count = step.until === 7 ? 7 - p.board.length : amount;
+      for (let i = 0; i < count && pool.length && p.board.length < 7; i++) {
+        const c = pool.splice(random(s, pool.length), 1)[0];
+        const uid = summon(
+          s,
+          player,
+          printedCard(c),
+          false,
+          Math.min(position + i, p.board.length),
+        );
+        const u = p.board.find((u) => u.uid === uid)!;
+        if (step.attack !== undefined && step.health !== undefined) {
+          u.attackBase = u.attack = step.attack;
+          u.maxHealth = u.health = step.health;
+          u.modifiers = [];
+        }
+        if (step.keyword) {
+          u.keywords = [...(u.keywords ?? []), step.keyword];
+          (u.keywordSources ??= []).push({
+            keyword: step.keyword,
+            sourceCardId: source.id,
+            sourceName: source.name,
+          });
+        }
+        note(s, `${source.name} resurrects ${c.name}`);
+      }
+      continue;
+    }
+    if (step.op === 'joust') {
+      const options = p.deck.filter((c) => c.type === 'MINION');
+      const own = options.length ? options[random(s, options.length)] : undefined;
+      let win = !!own;
+      for (const [i, owner] of s.players.entries())
+        if (i !== player && owner.health > 0) {
+          const enemies = owner.deck.filter((c) => c.type === 'MINION');
+          const enemy = enemies.length ? enemies[random(s, enemies.length)] : undefined;
+          if (enemy && (!own || own.cost <= enemy.cost)) win = false;
+          note(
+            s,
+            `${source.name} reveals ${own?.name ?? 'no minion'} versus ${owner.name}'s ${enemy?.name ?? 'no minion'}`,
+          );
+        }
+      if (win && own) {
+        if (step.after === 'draw') {
+          p.deck.splice(p.deck.indexOf(own), 1);
+          addGenerated(s, player, own);
+        }
+        runScript(s, player, step.steps ?? [], target, position, source, sourceUid);
+      }
+      continue;
+    }
+    if (step.op === 'zone-swap' || step.op === 'replace-zone') {
+      const owners = step.allPlayers ? s.players.filter((p) => p.health > 0) : [p];
+      for (const owner of owners)
+        for (const zone of step.zone === 'hand and deck'
+          ? (['hand', 'deck'] as const)
+          : [step.zone as 'hand' | 'deck']) {
+          owner[zone] = owner[zone].map((c) => {
+            if (!matchesCard(c, step.filter, owner)) return c;
+            if (step.op === 'zone-swap') {
+              const stats = cardStats(c);
+              return {
+                ...c,
+                modifiers: [
+                  ...(c.modifiers ?? []),
+                  {
+                    sourceCardId: source.id,
+                    sourceName: source.name,
+                    attack: stats.health - stats.attack,
+                    health: stats.attack - stats.health,
+                  },
+                ],
+              };
+            }
+            const pool = scriptPool(s, player, { ...step, filter: step.filter, op: 'generate' });
+            if (!pool.length) return c;
+            const fresh = structuredClone(pool[random(s, pool.length)]);
+            fresh.heldSince = s.events?.length ?? 0;
+            fresh.printedCost ??= fresh.cost;
+            fresh.cost = Math.max(0, fresh.cost - (step.reduction ?? 0));
+            return fresh;
+          });
+        }
+      note(s, `${source.name} changes ${step.zone} cards`);
+      continue;
+    }
+    if (step.op === 'repeat-death') {
+      // Each repeat requires a death; finite boards plus a safety bound prevent token loops.
+      for (let i = 0; i < 100; i++) {
+        const before = (s.events ?? []).filter((e) => e.type === 'death').length;
+        runScript(s, player, step.steps!, target, position, source, sourceUid);
+        settle(s);
+        if (
+          s.winner !== null ||
+          before === (s.events ?? []).filter((e) => e.type === 'death').length
+        )
+          break;
+      }
+      continue;
+    }
+    if (step.op === 'damage-then') {
+      for (const t of scriptTargets(s, player, step, target, sourceUid, position)) {
+        const u = getTarget(s, t);
+        const before = u.health;
+        const dealt = scriptedDamage(s, player, t, amount, source, sourceUid);
+        note(
+          s,
+          `${source.name} deals ${dealt} damage to ${'card' in u ? u.card.name : s.players[t.p].name}`,
+        );
+        const killed = u.health <= 0;
+        const trigger =
+          step.mode === 'survives'
+            ? !killed
+            : step.mode === 'honorable'
+              ? before === amount && killed
+              : killed;
+        if (trigger) runScript(s, player, step.steps!, target, position, source, sourceUid);
+      }
+      settle(s);
+      continue;
+    }
     if (step.op === 'if') {
       if (scriptCondition(s, player, step.condition!, sourceUid)) {
         runScript(
@@ -859,17 +1177,24 @@ function runScript(
       for (const owner of step.allPlayers ? s.players : [p]) {
         if (owner.health <= 0) continue;
         owner.maxMana =
-          step.mode === 'set'
-            ? Math.min(10, amount)
-            : step.mode === 'refresh'
-              ? owner.maxMana
-              : Math.min(10, owner.maxMana + amount);
+          step.mode === 'lose'
+            ? Math.max(0, owner.maxMana - amount)
+            : step.mode === 'set'
+              ? Math.min(10, amount)
+              : step.mode === 'refresh'
+                ? owner.maxMana
+                : Math.min(10, owner.maxMana + amount);
         owner.mana =
-          step.mode === 'set'
-            ? owner.maxMana
-            : step.mode === 'empty'
-              ? owner.mana
-              : Math.min(owner.maxMana, owner.mana + amount);
+          step.mode === 'lose'
+            ? Math.min(owner.mana, owner.maxMana)
+            : step.mode === 'set'
+              ? owner.maxMana
+              : step.mode === 'empty'
+                ? owner.mana
+                : Math.min(
+                    Math.max(0, owner.maxMana - (owner.lockedMana ?? 0)),
+                    owner.mana + amount,
+                  );
       }
       note(s, `${source.name} changes Mana Crystals`);
       continue;
@@ -877,8 +1202,10 @@ function runScript(
     if (step.op === 'discard') {
       for (let i = 0; i < amount && p.hand.length; i++) {
         let options = p.hand.map((c, index) => ({ c, index }));
-        if (step.order === 'lowest Cost') {
-          const cost = Math.min(...options.map((o) => o.c.cost));
+        if (step.order) {
+          const cost = (step.order === 'lowest Cost' ? Math.min : Math.max)(
+            ...options.map((o) => o.c.cost),
+          );
           options = options.filter((o) => o.c.cost === cost);
         }
         const { c, index } = options[random(s, options.length)];
@@ -896,9 +1223,13 @@ function runScript(
     if (step.op === 'cost' || step.op === 'zone-double') {
       for (const zone of step.zone === 'hand and deck'
         ? (['hand', 'deck'] as const)
-        : [step.zone as 'hand' | 'deck'])
+        : [step.zone as 'hand' | 'deck']) {
+        const costs = p[zone].filter((c) => matchesCard(c, step.filter, p)).map((c) => c.cost);
+        const selectedCost =
+          step.order === 'highest Cost' ? Math.max(...costs) : Math.min(...costs);
         p[zone] = p[zone].map((c) => {
           if (!matchesCard(c, step.filter, p)) return c;
+          if (step.order && c.cost !== selectedCost) return c;
           const copy = structuredClone(c);
           if (step.op === 'cost') {
             copy.printedCost ??= copy.cost;
@@ -914,6 +1245,7 @@ function runScript(
           }
           return copy;
         });
+      }
       note(s, `${source.name} changes matching cards in ${p.name}'s ${step.zone}`);
       continue;
     }
@@ -975,12 +1307,33 @@ function runScript(
           }
         }
       }
+      note(s, `${source.name} finishes summoning matching minions from ${p.name}'s ${zone}`);
       continue;
     }
-    if (step.op === 'discover') {
+    if (step.op === 'discover' || step.op === 'choose-hand') {
+      if (step.zone === 'enemy-deck' && step.owner === undefined) {
+        const stages = s.players.flatMap((owner, i) =>
+          i !== player && owner.health > 0 ? [{ ...step, owner: i }] : [],
+        );
+        runScript(
+          s,
+          player,
+          [...stages, ...steps.slice(n + 1)],
+          target,
+          position,
+          source,
+          sourceUid,
+        );
+        return;
+      }
       const pool = scriptPool(s, player, step),
         options: Card[] = [];
-      while (pool.length && options.length < 3)
+      if (step.mode === 'dredge') options.push(...structuredClone(p.deck.slice(-3)));
+      while (
+        step.mode !== 'dredge' &&
+        pool.length &&
+        options.length < (step.op === 'choose-hand' ? 10 : 3)
+      )
         options.push(structuredClone(pool.splice(random(s, pool.length), 1)[0]));
       if (!options.length) {
         note(s, `${source.name}: no eligible Discover cards`);
@@ -1000,11 +1353,17 @@ function runScript(
       return;
     }
     if (step.op === 'draw') {
+      if (step.allPlayers) {
+        for (let i = 0; i < s.players.length; i++)
+          if (s.players[i].health > 0)
+            runScript(s, i, [{ ...step, allPlayers: false }], undefined, 0, source);
+        continue;
+      }
       let count =
         step.until === undefined ? amount : Math.max(0, Math.min(10, step.until) - p.hand.length);
       const drawnNames = new Set<string>();
       for (let i = 0; i < count && p.health > 0; i++) {
-        if (step.filter) {
+        if (step.filter || step.mode || step.summon) {
           let candidates = p.deck
             .map((c, index) => ({ c, index }))
             .filter(
@@ -1017,7 +1376,7 @@ function runScript(
             candidates = candidates.filter((x) => x.c.cost === cost);
           }
           if (!candidates.length) break;
-          const { c, index } = candidates[random(s, candidates.length)];
+          const { c, index } = candidates[step.filter ? random(s, candidates.length) : 0];
           p.deck.splice(index, 1);
           drawnNames.add(c.name);
           const copy = structuredClone(c);
@@ -1025,7 +1384,22 @@ function runScript(
             copy.printedCost ??= copy.cost;
             copy.cost = Math.max(0, copy.cost - step.reduction);
           }
-          addGenerated(s, player, copy);
+          if (step.mode === 'buff' || step.mode === 'set') {
+            const stats = cardStats(copy);
+            (copy.modifiers ??= []).push({
+              sourceCardId: source.id,
+              sourceName: source.name,
+              attack: step.mode === 'set' ? step.attack! - stats.attack : step.attack!,
+              health: step.mode === 'set' ? step.health! - stats.health : step.health!,
+            });
+          }
+          if (step.setCost !== undefined && step.setCost !== null) {
+            copy.printedCost ??= copy.cost;
+            copy.cost = step.setCost;
+          }
+          if (step.summon && copy.type === 'MINION' && p.board.length < 7)
+            summon(s, player, copy, false, Math.min(position, p.board.length));
+          else addGenerated(s, player, copy);
         } else draw(s, player);
       }
       note(s, `${p.name} resolves ${source.name}'s draw`);
@@ -1037,7 +1411,14 @@ function runScript(
         : [player])
         for (let i = 0; i < amount; i++) {
           const pool = scriptPool(s, owner, step);
-          if (pool.length) addGenerated(s, owner, pool[random(s, pool.length)]);
+          if (pool.length) {
+            const c = structuredClone(pool[random(s, pool.length)]);
+            if (owner === player && step.reduction) {
+              c.printedCost ??= c.cost;
+              c.cost = Math.max(0, c.cost - step.reduction);
+            }
+            addGenerated(s, owner, c);
+          }
         }
       note(s, `${source.name} adds cards to ${p.name}'s hand`);
       continue;
@@ -1154,6 +1535,96 @@ function runScript(
           }
           continue;
         }
+        if (step.op === 'trigger-deathrattle') {
+          for (let i = 0; i < (step.amount === undefined ? 1 : amount); i++) {
+            if (!x.silenced && deathrattleFor(x.card))
+              runEffect(
+                s,
+                t.p,
+                deathrattleFor(x.card)!,
+                undefined,
+                s.players[t.p].board.indexOf(x) + 1,
+                x.card,
+                x.uid,
+              );
+            for (const grant of x.grantedDeathrattles ?? [])
+              runScript(
+                s,
+                t.p,
+                grant.steps,
+                undefined,
+                s.players[t.p].board.indexOf(x) + 1,
+                grant.source,
+                x.uid,
+              );
+          }
+          note(s, `${source.name} triggers ${x.card.name}'s Deathrattle`);
+        }
+        if (step.op === 'gain-deathrattle' || step.op === 'grant-deathrattle') {
+          const recipient =
+            step.op === 'gain-deathrattle' ? p.board.find((u) => u.uid === sourceUid) : x;
+          if (recipient) {
+            if (step.op === 'grant-deathrattle')
+              (recipient.grantedDeathrattles ??= []).push({
+                source,
+                steps: structuredClone(step.steps!),
+              });
+            else if (!x.silenced) {
+              const e = deathrattleFor(x.card);
+              if (e?.type === 'script')
+                (recipient.grantedDeathrattles ??= []).push({
+                  source: x.card,
+                  steps: structuredClone(e.steps),
+                });
+              else if (e)
+                (recipient.grantedDeathrattles ??= []).push({
+                  source: x.card,
+                  steps: [{ op: 'legacy-deathrattle', token: x.card.id }],
+                });
+              recipient.grantedDeathrattles = [
+                ...(recipient.grantedDeathrattles ?? []),
+                ...structuredClone(x.grantedDeathrattles ?? []),
+              ];
+            }
+            note(s, `${recipient.card.name} gains a Deathrattle from ${source.name}`);
+          }
+        }
+        if (step.op === 'summon-copy') {
+          const owner = step.enemy ? t.p : player;
+          if (s.players[owner].board.length < 7) {
+            const uid = summon(
+              s,
+              owner,
+              x.card,
+              false,
+              Math.min(position, s.players[owner].board.length),
+            );
+            const fresh = s.players[owner].board.find((u) => u.uid === uid)!;
+            const ready = fresh.ready,
+              attacksRemaining = fresh.attacksRemaining;
+            Object.assign(fresh, structuredClone(x), {
+              uid,
+              commander: false,
+              ready,
+              attacksRemaining,
+              summonedTurn: s.turn,
+            });
+            if (step.attack !== undefined && step.health !== undefined) {
+              fresh.attackBase = fresh.attack = step.attack;
+              fresh.maxHealth = fresh.health = step.health;
+              fresh.modifiers = [];
+            }
+          }
+        }
+        if (step.op === 'steal' && t.p !== player && p.board.length < 7) {
+          s.players[t.p].board = s.players[t.p].board.filter((u) => u.uid !== x.uid);
+          p.board.splice(Math.min(position, p.board.length), 0, x);
+          x.ready = unitMechanics(x).some((k) => k === 'CHARGE' || k === 'RUSH');
+          x.rushOnly = !unitMechanics(x).includes('CHARGE');
+          x.summonedTurn = s.turn;
+          x.attacksRemaining = unitMechanics(x).includes('WINDFURY') ? 2 : 1;
+          note(s, `${source.name} takes control of ${x.card.name}`);
+        }
         if (step.op === 'destroy') {
           x.health = 0;
           note(s, `${source.name} destroys ${label}`);
@@ -1201,6 +1672,7 @@ function runScript(
           x.silenced = true;
           x.keywords = [];
           x.keywordSources = [];
+          x.grantedDeathrattles = [];
           x.modifiers = [];
           x.attackBase = x.card.attack ?? 0;
           x.attack = x.card.attack ?? 0;
@@ -1292,6 +1764,7 @@ function runScript(
             }
             Object.assign(fresh, {
               uid: dest.uid,
+              commanderOwner: dest.commanderOwner,
               ready,
               attacksRemaining,
               summonedTurn: dest.summonedTurn,
@@ -1345,14 +1818,19 @@ function runScript(
           note(s, `${label} swaps Attack and Health`);
         }
         if (step.op === 'bounce') {
-          const owner = s.players[t.p];
+          const controller = s.players[t.p];
+          const owner = s.players[x.commander ? (x.commanderOwner ?? t.p) : t.p];
           if (owner.hand.length >= 10) {
             x.health = 0;
             note(s, `${label} is destroyed because its owner's hand is full`);
             continue;
           }
-          owner.board = owner.board.filter((u) => u.uid !== x.uid);
+          controller.board = controller.board.filter((u) => u.uid !== x.uid);
           const c = printedCard(x.card);
+          if (step.reduction) {
+            c.printedCost ??= c.cost;
+            c.cost = Math.max(0, c.cost - step.reduction);
+          }
           if (step.setCost != null) {
             c.printedCost ??= c.cost;
             c.cost = step.setCost;
@@ -1565,7 +2043,10 @@ function startTurn(s: Game) {
   s.turn++;
   event(s, s.active, 'turn');
   p.maxMana = Math.min(10, p.maxMana + 1);
-  p.mana = p.maxMana;
+  p.lockedMana = Math.min(p.maxMana, p.overload ?? 0);
+  p.overload = 0;
+  p.mana = p.maxMana - p.lockedMana;
+  if (p.lockedMana) note(s, `${p.name} has ${p.lockedMana} overloaded Mana Crystals`);
   p.powerUsed = false;
   p.heroAttack = 0;
   p.heroReady = true;
@@ -1580,6 +2061,21 @@ function startTurn(s: Game) {
   if (s.winner === null && p.health <= 0) advance(s);
 }
 function advance(s: Game) {
+  const ending = s.players[s.active];
+  const effects = [...(ending.endEffects ?? [])];
+  ending.endEffects = effects.filter((e) => !e.once);
+  for (const e of effects) {
+    if (ending.health <= 0 || s.winner !== null) break;
+    if (
+      e.once &&
+      e.sourceUid !== undefined &&
+      !ending.board.some((u) => u.uid === e.sourceUid && !u.silenced)
+    )
+      continue;
+    runScript(s, s.active, e.steps, undefined, ending.board.length, e.source, e.sourceUid);
+    settle(s);
+  }
+  if (s.winner !== null) return;
   expireTurnModifiers(s);
   const p = s.players[s.active];
   for (const x of [p, ...p.board])
@@ -1601,6 +2097,7 @@ export function createGame(
   localDeck?: Card[],
   commander?: Card,
   localClass = 'HUNTER',
+  seats?: { cards: Card[]; commander: Card; class: string; opening?: string[] }[],
 ): Game {
   const pool = cards.filter((c) => supported(c) && (c.type === 'MINION' || c.type === 'SPELL'));
   if (!pool.length) throw Error('No supported cards');
@@ -1645,52 +2142,59 @@ export function createGame(
     log: ['Local rules sandbox · unsupported effects are blocked.'],
   };
   for (let i = 0; i < 4; i++) {
+    const seat = seats?.[i];
     const deck = shuffle(s, [
-      ...(i === 0 && localDeck
-        ? localDeck
-        : [
-            ...new Map(
-              shuffle(s, [...pool])
-                .filter(
-                  (c) =>
-                    (c.cardClass === 'NEUTRAL' ||
-                      c.cardClass === 'HUNTER' ||
-                      !!battlecryFor(c) ||
-                      !!deathrattleFor(c) ||
-                      keywordSamples.has(c.name)) &&
-                    c.name !== fallback.name,
-                )
-                .map((c) => [c.name, c]),
-            ).values(),
-          ]
-            // Keep every implemented trigger family in the test deck before filling
-            // remaining slots; source-file ordering used to exclude later expansions.
-            .sort(
-              (a, b) =>
-                (legacy(a)
-                  ? 0
-                  : expandedSamples.has(a.name)
-                    ? 1
+      ...(seat
+        ? seat.cards
+        : i === 0 && localDeck
+          ? localDeck
+          : [
+              ...new Map(
+                shuffle(s, [...pool])
+                  .filter(
+                    (c) =>
+                      (c.cardClass === 'NEUTRAL' ||
+                        c.cardClass === 'HUNTER' ||
+                        !!battlecryFor(c) ||
+                        !!deathrattleFor(c) ||
+                        keywordSamples.has(c.name)) &&
+                      c.name !== fallback.name,
+                  )
+                  .map((c) => [c.name, c]),
+              ).values(),
+            ]
+              // Keep every implemented trigger family in the test deck before filling
+              // remaining slots; source-file ordering used to exclude later expansions.
+              .sort(
+                (a, b) =>
+                  (legacy(a)
+                    ? 0
                     : keywordSamples.has(a.name)
-                      ? 2
-                      : battlecryFor(a) || deathrattleFor(a)
-                        ? 3
-                        : 4) -
-                (legacy(b)
-                  ? 0
-                  : expandedSamples.has(b.name)
-                    ? 1
+                      ? 1
+                      : expandedSamples.has(a.name)
+                        ? 2
+                        : battlecryFor(a) || deathrattleFor(a)
+                          ? 3
+                          : 4) -
+                  (legacy(b)
+                    ? 0
                     : keywordSamples.has(b.name)
-                      ? 2
-                      : battlecryFor(b) || deathrattleFor(b)
-                        ? 3
-                        : 4),
-            )
-            .slice(0, 100)),
+                      ? 1
+                      : expandedSamples.has(b.name)
+                        ? 2
+                        : battlecryFor(b) || deathrattleFor(b)
+                          ? 3
+                          : 4),
+              )
+              .slice(0, 100)),
     ]);
+    if (seat?.opening) {
+      const order = new Map(seat.opening.map((name, index) => [name, index]));
+      deck.sort((a, b) => (order.get(a.name) ?? 100) - (order.get(b.name) ?? 100));
+    }
     const p: Player = {
       name: ['You', 'Ember', 'Thorne', 'Lyra'][i],
-      class: i === 0 ? localClass : 'HUNTER',
+      class: seat?.class ?? (i === 0 ? localClass : 'HUNTER'),
       health: 40,
       armor: 0,
       mana: 0,
@@ -1701,7 +2205,7 @@ export function createGame(
       deck,
       board: [],
       grave: [],
-      commander: i === 0 && commander ? commander : fallback,
+      commander: seat?.commander ?? (i === 0 && commander ? commander : fallback),
       zone: 'command',
       casts: 0,
       reduction: 0,
@@ -1734,8 +2238,17 @@ export function applyAction(state: Game, a: Action): Game {
     if (!Number.isInteger(a.index) || a.index < 0 || a.index >= choice.options.length)
       throw Error('Invalid card choice');
     const c = structuredClone(choice.options[a.index]);
+    if (choice.step.zone === 'hand' && !choice.step.copy) {
+      const index = p.hand.findIndex(
+        (x) => JSON.stringify(x) === JSON.stringify(choice.options[a.index]),
+      );
+      if (index < 0) throw Error('Chosen card is no longer in hand');
+      p.hand.splice(index, 1);
+    }
     if (choice.step.zone === 'deck' && !choice.step.copy) {
-      const index = p.deck.findIndex((x) => x.id === c.id);
+      const index = p.deck.findIndex(
+        (x) => JSON.stringify(x) === JSON.stringify(choice.options[a.index]),
+      );
       if (index < 0) throw Error('Chosen card is no longer in deck');
       p.deck.splice(index, 1);
     }
@@ -1749,8 +2262,23 @@ export function applyAction(state: Game, a: Action): Game {
     }
     if (choice.step.after === 'heal') heal(p, c.cost, p, s);
     if (choice.step.after === 'damage') damage(s, { p: a.p }, c.cost);
+    if (choice.step.after === 'enemy-draw') {
+      for (const [i, owner] of s.players.entries())
+        if (i === choice.step.owner && owner.health > 0) {
+          const index = owner.deck.findIndex(
+            (x) => JSON.stringify(x) === JSON.stringify(choice.options[a.index]),
+          );
+          if (index >= 0) addGenerated(s, i, owner.deck.splice(index, 1)[0]);
+        }
+    }
     delete s.choice;
-    addGenerated(s, a.p, c);
+    if (choice.step.destination === 'shuffle') {
+      p.deck.splice(random(s, p.deck.length + 1), 0, c);
+      note(s, `${choice.source.name} shuffles the chosen card into ${p.name}'s deck`);
+    } else if (choice.step.destination === 'top') {
+      p.deck.unshift(c);
+      note(s, `${choice.source.name} arranges ${p.name}'s next draw`);
+    } else addGenerated(s, a.p, c);
     note(s, `${p.name} completes ${choice.source.name}'s card choice`);
     runScript(
       s,
@@ -1819,13 +2347,14 @@ export function applyAction(state: Game, a: Action): Game {
         a.position > p.board.length)
     )
       throw Error('Invalid minion placement');
-    const cost = a.command ? commandCost(p) : Math.max(0, c.cost - p.reduction - p.handReduction);
+    const cost = a.command ? commandCost(p) : handCost(p, c);
     if (p.mana < cost) throw Error('Not enough regular mana');
     const targetError = effectTargetError(s, a.p, c, a.target);
     if (targetError) throw Error(targetError);
     const chosenTarget =
       targetFor(effectFor(c)) && effectTargets(s, a.p, c).length ? a.target : undefined;
     p.mana -= cost;
+    p.nextDiscounts = (p.nextDiscounts ?? []).filter((d) => !matchesCard(c, d.filter, p));
     if (c.id === p.commander.id) p.replacement = false;
     if (!a.command) p.hand.splice(a.index!, 1);
     const queue: number[] = [];

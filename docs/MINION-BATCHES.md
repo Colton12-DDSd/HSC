@@ -75,3 +75,7 @@ Current totals: **207 supported collection records**, including **55 Battlecry/D
 Added **506 unique Battlecry minion names** beyond the frozen batch-4 baseline, bringing Battlecry coverage to **542 names / 595 printings**. Total supported collection records: **1,022**. See [implementation, validation and limitations](BULK-BATTLECRIES.md) and the [506-name manifest](BULK-BATTLECRY-MANIFEST.md).
 
 The 100-card starter decks retain the original 45 trigger names and sample the newly enabled effect families, with seeded rotation for other cards. Earlier statements that every supported name fits in a starter deck describe historical checkpoints.
+
+## Batch 6: trigger families and themed test decks
+
+Added 106 unique Battlecry names, reaching 648 supported names. New whole-clause patterns also enable additional pure Deathrattles and basic spells; overall coverage reaches 1,337 collection records. Six themed premade decks provide repeatable opening combinations and test goals. See [current guide](TEST-DECKS.md) and the [106-name inventory](BATTLECRY-WAVE2-MANIFEST.md). The 1,247 remaining Battlecry names are explicitly tracked as unsupported.

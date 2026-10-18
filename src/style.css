@@ -2624,3 +2624,74 @@ footer > span:last-child {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.deck-presets {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  position: relative;
+  font-size: 0.76rem;
+}
+.deck-presets label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+.deck-presets select {
+  max-width: 190px;
+  padding: 0.45rem;
+  color: var(--text, #ede4cf);
+  background: #18251d;
+  border: 1px solid #635635;
+  border-radius: 5px;
+}
+.guided-opening input {
+  accent-color: #c9a556;
+}
+.preset-preview > summary {
+  cursor: pointer;
+  color: #d8bd7e;
+}
+.preset-preview-panel {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 80;
+  width: min(460px, calc(100vw - 110px));
+  max-height: 65vh;
+  overflow: auto;
+  padding: 1rem;
+  background: #18251d;
+  border: 1px solid #b59b58;
+  border-radius: 10px;
+  box-shadow: 0 12px 40px #000b;
+  color: #eee7d6;
+  line-height: 1.5;
+}
+.preset-preview-panel p {
+  margin: 0.5rem 0 !important;
+}
+.preset-preview-panel ol {
+  padding-left: 1.25rem;
+}
+.preset-card-list {
+  columns: 2;
+  list-style: none;
+  padding: 0;
+}
+.preset-card-list li {
+  break-inside: avoid;
+  margin: 0.3rem 0;
+}
+.preset-card-list span {
+  color: #bfa96d;
+}
+@media (max-width: 1000px) {
+  .deck-presets {
+    flex-wrap: wrap;
+    gap: 0.3rem 0.5rem;
+  }
+  .deck-presets select {
+    max-width: 140px;
+  }
+}

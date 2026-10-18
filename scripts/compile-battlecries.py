@@ -1,5 +1,6 @@
 """Build-time, whole-text compiler. Unmatched text stays unsupported; no runtime text parsing."""
 import json, re, hashlib
+from battlecry_patterns import compile_more
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 cards=json.loads((ROOT/'public/data/cards.json').read_text(encoding='utf8'))
@@ -11,12 +12,16 @@ def choose_token(opts):
  opts=[c for c in opts if c.get('type') in ('MINION','SPELL','WEAPON') and c.get('set') not in ('BATTLEGROUNDS','LETTUCE','MISSIONS','TUTORIAL','VANILLA') and not c['id'].startswith(('BOM_','Story_','TB_','BG_','LETL_','TUTR_','VAN_'))]
  return sorted(opts,key=lambda c:(not c['id'].startswith(current_card['id']+'_'),c.get('set')!=current_card.get('set'),len(c['id']),c['id']))[0] if opts else None
 
-def clean(t):return ' '.join(re.sub(r'<[^>]*>|\[x\]|[$#&]','',t).replace('\xa0',' ').split()).strip()
+def clean(t):return ' '.join(re.sub(r'<[^>]*>|\[x\]|[$#&]','',re.sub(r'\s*\(\{\d+\} left!?\)\s*$','',t.split('@')[0])).replace('\xa0',' ').split()).strip()
 def num(s):return {'a':1,'an':1,'one':1,'two':2,'three':3,'four':4,'five':5,'six':6}.get(s,int(s) if s.isdigit() else None)
 def filt(t):
  t=re.sub(r'^(?:a |an |any |random |the )','',t.strip()).rstrip('.')
  t=re.sub(r'^(?:a |an |random )','',t)
  t=re.sub(r' from (?:your )?deck$','',t)
+ t=t.replace('Stealthed minion','Stealth minion').replace('that has ','with ')
+ if t in ('minion with Spell Damage','Spell Damage minion'):return {'type':'MINION','keyword':'SPELLPOWER'}
+ m=re.fullmatch(r'minions? with (\d+) Health',t)
+ if m:return {'type':'MINION','health':int(m[1])}
  f={}
  if t.endswith(' from any class'):f['anyClass']=True;t=t[:-15]
  if t.endswith(' from another class'):f['otherClass']=True;t=t[:-19]
@@ -80,6 +85,7 @@ def target(t):
  if t in ('the enemy hero',"your opponent"):return {'scope':'enemy-heroes'}
  if t=='a character':return {'scope':'target','target':'character'}
  if t=='an enemy':return {'scope':'target','target':'enemy-character'}
+ if t=='another random friendly minion':return {'scope':'friendly','other':True,'random':1}
  if t=='all damaged minions':return {'scope':'all','filter':{'damaged':True}}
  if t=='all undamaged enemy minions':return {'scope':'enemy','filter':{'undamaged':True}}
  if t.startswith('a random enemy'):
@@ -87,6 +93,10 @@ def target(t):
   if t=='a random enemy':return {'scope':'enemies','random':1}
   if f is not None and f.get('type')=='MINION':return {'scope':'enemy','random':1,'filter':f}
   return None
+ m=re.fullmatch(r'(a friendly|an enemy|a) (.+)',t)
+ if m:
+  f=filt(m[2])
+  if f is not None and f.get('type')=='MINION':return {'scope':'target','target':'friendly-minion' if m[1]=='a friendly' else 'enemy-minion' if m[1]=='an enemy' else 'minion','filter':f}
  if t=='a minion':return {'scope':'target','target':'minion'}
  if t=='all other characters':return {'scope':'characters','other':True}
  if t=='a friendly minion':return {'scope':'target','target':'friendly-minion'}
@@ -120,6 +130,12 @@ def condition(t):
    if m:return {'zone':'friendly','min':int(m[1])}
    f=filt(tail)
    if f is not None:return {'zone':'friendly','filter':f,'min':1}
+ m=re.fullmatch(r'you control (?:a |an )?(Stealthed minion|Secret|Treant)',t)
+ if m:return {'zone':'friendly','filter':{'type':'MINION','keyword':'STEALTH'} if m[1]=='Stealthed minion' else {'keyword':'SECRET'} if m[1]=='Secret' else {'name':'Treant'},'min':1}
+ m=re.fullmatch(r'your opponent has (\d+) or (less|more) Health',t)
+ if m:return {'stat':'enemy-health','max' if m[2]=='less' else 'min':int(m[1])}
+ m=re.fullmatch(r'you control (\d+) minions with (\d+) Health',t)
+ if m:return {'zone':'friendly','filter':{'type':'MINION','health':int(m[2])},'min':int(m[1])}
  if t=='your deck is empty':return {'zone':'deck','max':0}
  if t=='your hand is empty':return {'zone':'hand','max':0}
  if t=='you have no other minions':return {'zone':'friendly','max':0}
@@ -134,6 +150,10 @@ def condition(t):
  m=re.fullmatch(r'you have (\d+) or (more|less) (Health|Armor|Mana)',t)
  if m:return {'stat':m[3].lower(),'min' if m[2]=='more' else 'max':int(m[1])}
  if t=='you control no other minions':return {'zone':'friendly','max':0}
+ if t=="your opponent's hand is empty":return {'zone':'enemy-hand','max':0}
+ m=re.fullmatch(r'your opponent has (\d+) or more cards in hand',t)
+ if m:return {'zone':'enemy-hand','min':int(m[1])}
+ if t=='an enemy minion has Taunt':return {'zone':'enemy','filter':{'keyword':'TAUNT'},'min':1}
  if t=='your deck has no duplicates':return {'special':'no-duplicates'}
  if t=='your deck has no Neutral cards':return {'zone':'deck','filter':{'classes':['NEUTRAL']},'max':0}
  if t=="your hero has Armor":return {'stat':'armor','min':1}
@@ -163,6 +183,8 @@ def condition(t):
 def compile(t):
  t=t.strip().rstrip('.')
  t=t[:1].upper()+t[1:]
+ extra=compile_more(t,compile,target,filt,num,keywords,all_cards,current_card,choose_token)
+ if extra is not None:return extra
 
  m=re.fullmatch(r'(.+) this turn',t)
  if m:
@@ -426,7 +448,7 @@ def compile(t):
    tok=choose_token(token_candidates)
    if not tok:return None
    allowed=set(keywords.values())
-   if set(tok.get('mechanics',[]))<=allowed and not re.sub(r'Taunt|Rush|Charge|Divine Shield|Lifesteal|Windfury|Poisonous|Stealth|Reborn|[., ]','',clean(tok.get('text',''))):
+   if (set(tok.get('mechanics',[]))<=allowed and not re.sub(r'Taunt|Rush|Charge|Divine Shield|Lifesteal|Windfury|Poisonous|Stealth|Reborn|[., ]','',clean(tok.get('text','')))) or (set(tok.get('mechanics',[]))<=(allowed|{'DEATHRATTLE'}) and re.fullmatch(r'Deathrattle: .+',clean(tok.get('text',''))) and compile(clean(tok['text'])[12:]) is not None):
     return [{'op':'summon-token','token':tok['id'],'amount':num(m[1]),'enemy':t.endswith('opponent')}]
  # Strict complete sequential clauses, after all single-clause matching.
  parts=re.split(r'\. (?:Then |then )?',t)
@@ -446,25 +468,37 @@ def main():
  if isinstance(all_cards,dict):all_cards=all_cards.get('cards',[])
  catalog={c['id']:{k:v for k,v in c.items() if k in ['id','name','type','cost','attack','health','cardClass','classes','mechanics','race','races','rarity','set','text','spellSchool','collectible','dbfId','durability']} for c in all_cards}
  registry={};death_registry={};rejected=[]
- allowed=set(keywords.values())|{'BATTLECRY','DISCOVER','SILENCE','FREEZE','DEATHRATTLE'}
+ allowed=set(keywords.values())|{'BATTLECRY','DISCOVER','SILENCE','FREEZE','DEATHRATTLE','OVERLOAD'}
  for c in cards:
   if c['type']!='MINION' or 'BATTLECRY' not in c.get('mechanics',[]):continue
   current_card=c
   t=clean(c.get('text',''));prefix=re.match(r'^(?:(?:Taunt|Rush|Charge|Lifesteal|Windfury|Poisonous|Divine Shield|Stealth|Reborn)[.,]? )*Battlecry(?: and Deathrattle)?: (.+)$',t)
-  e=compile(prefix[1]) if prefix and not(set(c.get('mechanics',[]))-allowed) else None
+  body=prefix[1] if prefix else ''
+  deathpart=None
+  if '. Deathrattle: ' in body:body,deathpart=body.split('. Deathrattle: ',1)
+  e=compile(body) if prefix and not(set(c.get('mechanics',[]))-allowed) else None
   if e is not None:
    registry[c['id']]={'text':c.get('text',''),'steps':e}
    if 'Battlecry and Deathrattle:' in t:death_registry[c['id']]=registry[c['id']]
+   elif deathpart and compile(deathpart) is not None:death_registry[c['id']]={'text':c.get('text',''),'steps':compile(deathpart)}
    elif 'DEATHRATTLE' in c.get('mechanics',[]):
     registry.pop(c['id']);rejected.append({'id':c['id'],'name':c['name'],'text':t})
   else:rejected.append({'id':c['id'],'name':c['name'],'text':t})
+ for c in [*all_cards,*cards]:
+  if c.get('type')!='MINION' or c['id'] in death_registry:continue
+  current_card=c
+  t=clean(c.get('text',''))
+  match=re.fullmatch(r'(?:(?:Taunt|Rush|Charge|Lifesteal|Windfury|Poisonous|Divine Shield|Stealth|Reborn)[.,]? )*Deathrattle: (.+)',t)
+  if match and not(set(c.get('mechanics',[]))-allowed):
+   e=compile(match[1])
+   if e is not None:death_registry[c['id']]={'text':c.get('text',''),'steps':e}
  (ROOT/'src/generated/deathrattles.json').write_text(json.dumps(death_registry,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
  (ROOT/'src/generated/battlecries.json').write_text(json.dumps(registry,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
  def tokens(steps):
   for step in steps:
    if 'token' in step:yield step['token']
    if 'steps' in step:yield from tokens(step['steps'])
- used={tid for e in registry.values() for tid in tokens(e['steps'])}
+ used={tid for e in [*registry.values(),*death_registry.values()] for tid in tokens(e['steps'])}
  compact={c['id']:{k:v for k,v in c.items() if k in ['id','name','type','cost','attack','health','cardClass','classes','mechanics','race','races','rarity','set','text','spellSchool','collectible','dbfId','durability']} for c in cards}
  for tid in sorted(used):compact.setdefault(tid,catalog[tid])
  for c in compact.values():c.setdefault('wildLegal',None)
@@ -483,6 +517,8 @@ def main():
    if tid not in compact:compact[tid]=dict(catalog[tid],wildLegal=None)
  (ROOT/'src/generated/catalog.json').write_text(json.dumps(list(compact.values()),ensure_ascii=False,separators=(',',':'))+'\n',encoding='utf8')
  (ROOT/'data/battlecry-unmatched.json').write_text(json.dumps(rejected,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
+ death_registry={k:v for k,v in death_registry.items() if k in compact}
+ (ROOT/'src/generated/deathrattles.json').write_text(json.dumps(death_registry,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
  hashes={str(p.relative_to(ROOT)).replace('\\','/'):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((ROOT/'src/generated').glob('*.json'))}
  (ROOT/'data/battlecry-generated-hashes.json').write_text(json.dumps(hashes,indent=2)+'\n',encoding='utf8')
  print('compiled',len(registry),'records',len({c['name'] for c in cards if c['id'] in registry}),'names')

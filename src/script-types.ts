@@ -17,6 +17,9 @@ export interface CardFilter {
   damaged?: boolean;
   undamaged?: boolean;
   name?: string;
+  any?: CardFilter[];
+  notTribe?: string;
+  health?: number;
 }
 export type ScriptValue = number | { count?: string; stat?: string; filter?: CardFilter };
 export interface ScriptCondition {
@@ -59,4 +62,10 @@ export interface ScriptStep {
   after?: string;
   filterHeroes?: boolean;
   full?: boolean;
+  summon?: boolean;
+  permanent?: boolean;
+  destination?: string;
+  owner?: number;
+  elseSteps?: ScriptStep[];
+  pool?: string[];
 }

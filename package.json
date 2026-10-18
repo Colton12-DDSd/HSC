@@ -9,6 +9,7 @@
     "test": "vitest run",
     "import:cards": "node scripts/import-cards.mjs",
     "audit:minions": "node scripts/audit-minion-coverage.mjs",
+    "audit:battlecries": "npm run audit:minions && node scripts/report-battlecries.mjs",
     "compile:battlecries": "python scripts/compile-battlecries.py",
     "test:compiler": "python scripts/test_compile_battlecries.py"
   },

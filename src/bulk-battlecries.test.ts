@@ -28,7 +28,7 @@ import type { ScriptStep } from './script-types';
 const cards = JSON.parse(readFileSync('public/data/cards.json', 'utf8')) as Card[];
 const catalog = JSON.parse(readFileSync('src/generated/catalog.json', 'utf8')) as Card[];
 const card = (id: string) => {
-  const c = cards.find((c) => c.id === id);
+  const c = cards.find((c) => c.id === id) ?? catalog.find((c) => c.id === id);
   if (!c) throw Error(id);
   return c;
 };
@@ -139,12 +139,14 @@ describe('500 additional distinct Battlecry names', () => {
     const p = s.players[0];
     p.weapon = { card: card('CS2_106'), attack: 3, durability: 2 };
     const find = () =>
-      cards.find((x) => {
+      [...cards, ...catalog].find((x) => {
         const f = condition.filter ?? {};
         return (
           (!['friendly', 'all', 'enemy'].includes(condition.zone ?? '') ||
             condition.filter?.keyword === 'SECRET' ||
             x.type === 'MINION') &&
+          (!f.name || x.name === f.name) &&
+          (f.health === undefined || x.health === f.health) &&
           (!f.type || x.type === f.type) &&
           (!f.tribe || x.race === f.tribe || x.races?.includes(f.tribe)) &&
           (!f.school || x.spellSchool === f.school) &&
@@ -156,6 +158,8 @@ describe('500 additional distinct Battlecry names', () => {
         );
       }) ?? card('CS2_182');
     const count = condition.min ?? 1;
+    if (condition.zone === 'enemy-hand')
+      s.players[1].hand = Array.from({ length: condition.min ?? 0 }, () => card('CS2_182'));
     if (condition.zone === 'hand')
       p.hand =
         condition.max === 0 ? [] : Array.from({ length: count }, () => structuredClone(find()));
@@ -181,6 +185,8 @@ describe('500 additional distinct Battlecry names', () => {
           }
       }
     }
+    if (condition.stat === 'enemy-health')
+      s.players[1].health = condition.max ?? condition.min ?? 15;
     if (condition.stat === 'health') p.health = condition.min ?? condition.max ?? 30;
     if (condition.stat === 'armor') p.armor = condition.min ?? 1;
     if (condition.stat === 'weapon') p.weapon = { card: card('CS2_106'), attack: 3, durability: 2 };
@@ -241,11 +247,11 @@ describe('500 additional distinct Battlecry names', () => {
     '%s runs its registered Deathrattle after death',
     (id) => {
       let s = fixture();
-      s = play(s, id);
-      s = finish(s);
+      s = debugAction(s, { type: 'summon', p: 0, card: card(id) });
       const u = s.players[0].board.find((u) => u.card.id === id)!;
       expect(u).toBeDefined();
       u.health = 1;
+      u.shield = false;
       s = play(s, 'CS2_189', { p: 0, uid: u.uid });
       s = finish(s);
       expect(s.log.filter((l) => l.includes(`${card(id).name} triggers Deathrattle`))).toHaveLength(
@@ -614,6 +620,27 @@ describe('Independent mechanic and interaction checks', () => {
   });
   it('all generated opcodes are recognized and every nested condition has an implemented shape', () => {
     const valid = new Set([
+      'overload',
+      'random-attack',
+      'choose-hand',
+      'legacy-deathrattle',
+      'next-cost',
+      'end-effect',
+      'summon-effect',
+      'destroy-weapon',
+      'destroy-armor',
+      'equip',
+      'resurrect',
+      'joust',
+      'trigger-deathrattle',
+      'gain-deathrattle',
+      'grant-deathrattle',
+      'steal',
+      'damage-then',
+      'repeat-death',
+      'zone-swap',
+      'replace-zone',
+      'summon-copy',
       'if',
       'repeat',
       'damage',

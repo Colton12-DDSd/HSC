@@ -2,17 +2,17 @@
   "summary": {
     "collectionRecords": 6470,
     "battlecryRecords": 2011,
-    "supportedBattlecryRecords": 595,
+    "supportedBattlecryRecords": 705,
     "battlecryNames": 1895,
-    "supportedBattlecryNames": 542,
-    "additionalBattlecryNames": 506,
-    "remainingBattlecryNames": 1353,
-    "supportedCollectionRecords": 1022,
+    "supportedBattlecryNames": 648,
+    "additionalBattlecryNames": 612,
+    "remainingBattlecryNames": 1247,
+    "supportedCollectionRecords": 1337,
     "triggerRecords": 2521,
-    "supportedTriggerRecords": 606,
+    "supportedTriggerRecords": 858,
     "triggerNames": 2381,
-    "fullySupportedTriggerNames": 551,
-    "remainingTriggerRecords": 1915
+    "fullySupportedTriggerNames": 791,
+    "remainingTriggerRecords": 1663
   },
   "minions": [
     {
@@ -112,8 +112,8 @@
         {
           "id": "EX1_066",
           "text": "<b>Battlecry:</b> Destroy your opponent's weapon.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -136,9 +136,9 @@
         {
           "id": "DAL_354",
           "text": "<b>Deathrattle:</b> Add two 1/1 Squirrels to your hand.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -220,9 +220,9 @@
         {
           "id": "EDR_459",
           "text": "[x]<b>Battlecry:</b> Deal 3 damage\nto all other friendly minions.\n<b>Deathrattle:</b> Deal 3 damage\nto all enemy minions.",
-          "supported": false,
-          "battlecry": false,
-          "deathrattle": false
+          "supported": true,
+          "battlecry": true,
+          "deathrattle": true
         }
       ]
     },
@@ -623,9 +623,9 @@
         {
           "id": "ETC_086",
           "text": "[x]<b>Taunt</b>\n<b>Deathrattle:</b> Deal 3 damage\nto all enemy minions.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -683,8 +683,8 @@
         {
           "id": "TID_074",
           "text": "[x]<b>Battlecry:</b> If you've cast\nthree spells while holding\nthis, deal 5 damage.@\n<i>({0} left!)</i>@\n<i>(Ready!)</i>",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -846,9 +846,9 @@
         {
           "id": "OG_120",
           "text": "<b>Deathrattle:</b> Deal 8 damage to all minions.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -949,9 +949,9 @@
         {
           "id": "ULD_183",
           "text": "<b>Deathrattle:</b> Give all minions in your hand +3/+3.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -997,8 +997,8 @@
         {
           "id": "TTN_095",
           "text": "[x]<b>Battlecry:</b> The next\n Elemental you play\ncosts (2) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -1256,9 +1256,9 @@
         {
           "id": "RLK_542",
           "text": "<b>Deathrattle:</b> Add 2 Arcane Bolts to your hand.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -1280,9 +1280,9 @@
         {
           "id": "TRL_525",
           "text": "<b>Deathrattle:</b> Draw 2 cards.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -1383,8 +1383,8 @@
         {
           "id": "AT_108",
           "text": "<b>Battlecry:</b> Reveal a minion in each deck. If yours costs more, gain <b>Charge</b>.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -1491,8 +1491,8 @@
         {
           "id": "BE_734",
           "text": "<b>Battlecry:</b>& Summon a\ncopy of this at the end\nof this turn.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -1606,9 +1606,9 @@
         {
           "id": "DINO_431",
           "text": "<b>Taunt</b>. <b>Deathrattle:</b>& Summon a random <b>Taunt</b> minion that costs (5) or more.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -1685,9 +1685,9 @@
         {
           "id": "FIR_778",
           "text": "[x]<b>Taunt</b>\n<b>Deathrattle:</b>& Deal 9 damage\nto all enemy minions.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -1951,9 +1951,9 @@
         {
           "id": "CFM_646",
           "text": "[x]<b>Deathrattle:</b> Deal 2 damage\nto the enemy hero.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -2373,8 +2373,8 @@
         {
           "id": "REV_511",
           "text": "[x]<b>Battlecry</b>: Choose a card\n in your hand to shuffle\n into your deck.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -2476,8 +2476,8 @@
         {
           "id": "BT_711",
           "text": "[x]<b>Battlecry:</b> If you control a\n<b>Secret</b>, return a minion\nto its owner's hand.\nIt costs (2) more.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -2670,9 +2670,9 @@
         {
           "id": "RLK_551",
           "text": "<b>Taunt</b>, <b>Lifesteal</b>, <b>Reborn</b>\n<b>Deathrattle:</b> Deal 3 damage to a random enemy.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -2718,8 +2718,8 @@
         {
           "id": "GVG_119",
           "text": "<b>Battlecry:</b> Equip a random weapon for each player.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -2869,8 +2869,8 @@
         {
           "id": "CS3_008",
           "text": "[x]<b>Battlecry:</b> The next\nweapon you play costs\n(1) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -3123,9 +3123,9 @@
         {
           "id": "CFM_667",
           "text": "[x]<b>Battlecry:</b> Deal 5 damage\nto an enemy minion.\n<b>Deathrattle:</b> Deal 5 damage\nto your hero.",
-          "supported": false,
-          "battlecry": false,
-          "deathrattle": false
+          "supported": true,
+          "battlecry": true,
+          "deathrattle": true
         }
       ]
     },
@@ -3135,9 +3135,9 @@
         {
           "id": "ICC_065",
           "text": "<b>Deathrattle:</b> Add two 1/1 Skeletons to your hand.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -3147,9 +3147,9 @@
         {
           "id": "ICC_027",
           "text": "<b>Deathrattle:</b> Add a random Dragon to your hand.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -3171,9 +3171,9 @@
         {
           "id": "RLK_813",
           "text": "[x]<b>Taunt</b>\n<b>Deathrattle</b>: Resurrect\na friendly Undead that\ndied this game.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -3322,8 +3322,8 @@
         {
           "id": "BOT_034",
           "text": "<b>Battlecry:</b> Summon four 0/2 Goblin Bombs.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -3394,8 +3394,8 @@
         {
           "id": "GDB_878",
           "text": "<b>Battlecry:</b> Give your other Murlocs \"<b>Deathrattle:</b> Draw a card.\"",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -3689,9 +3689,9 @@
         {
           "id": "MIS_314",
           "text": "[x]<b>Rush</b>\n<b>Deathrattle:</b> Summon three\nrandom 1-Cost minions.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -3761,8 +3761,8 @@
         {
           "id": "BT_717",
           "text": "[x]<b>Battlecry:</b> Deal 2 damage.\nIf that kills the target,\ngain <b>Stealth</b>.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -3883,8 +3883,8 @@
         {
           "id": "EX1_091",
           "text": "<b>Battlecry:</b> Take control of an enemy minion that has 2 or less Attack.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -3974,8 +3974,8 @@
         {
           "id": "CORE_CATA_002",
           "text": "<b>Battlecry:</b> Resurrect\nyour highest-Cost minion\nthat died this game.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -4466,16 +4466,16 @@
         {
           "id": "AT_123",
           "text": "[x]<b>Taunt</b>\n<b>Deathrattle:</b> If you're holding\na Dragon, deal 3 damage\nto all minions.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         },
         {
           "id": "CORE_AT_123",
           "text": "[x]<b>Taunt</b>\n<b>Deathrattle:</b> If you're holding\na Dragon, deal 3 damage\nto all minions.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -4600,9 +4600,9 @@
         {
           "id": "DRG_304",
           "text": "[x]<b>Deathrattle:</b> If you're holding\na Dragon, deal 3 damage\nto all enemy minions.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -4636,9 +4636,9 @@
         {
           "id": "TLC_225",
           "text": "<b>Deathrattle:</b>& Summon a 2/1 Sizzling Cinder.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -4924,9 +4924,9 @@
         {
           "id": "GIL_805",
           "text": "<b>Deathrattle:</b> Summon a <b>Deathrattle</b> minion from your hand.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -4936,8 +4936,8 @@
         {
           "id": "BE_150",
           "text": "<b>Battlecry:</b>& <b>Discover</b> a spell to put on top of your deck. It costs (2) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -4972,8 +4972,8 @@
         {
           "id": "TSC_609",
           "text": "[x]<b>Taunt</b>. <b>Battlecry:</b> If you've\ncast three spells while\nholding this, summon two\n  copies of this.@ <i>({0} left!)</i>@ <i>(Ready!)</i>",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -5099,9 +5099,9 @@
         {
           "id": "JAIL_460",
           "text": "<b>Deathrattle:</b> Get a\nrandom weapon.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -5226,8 +5226,8 @@
         {
           "id": "YOG_528",
           "text": "[x]<b>Battlecry:</b> If you've cast 5\nor more spells this game,\n refresh 4 Mana Crystals.@\n<i>({0} left!)</i>@\n<i>(Ready!)</i>",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -5238,9 +5238,9 @@
         {
           "id": "DAL_039",
           "text": "[x]<b><b>Taunt</b></b>\n<b>Deathrattle:</b> Destroy a\n random enemy minion.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -5370,8 +5370,8 @@
         {
           "id": "LOOT_122",
           "text": "<b>Battlecry:</b> Destroy your opponent's weapon.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -5406,9 +5406,9 @@
         {
           "id": "OG_147",
           "text": "<b>Deathrattle:</b> Restore #8 Health to the enemy hero.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -5490,9 +5490,9 @@
         {
           "id": "SW_021",
           "text": "<b>Deathrattle:</b> Summon a minion from your deck.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -5677,8 +5677,8 @@
         {
           "id": "EX1_603",
           "text": "<b>Battlecry:</b> Deal 1 damage to a minion and give it +2 Attack.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -5797,9 +5797,9 @@
         {
           "id": "BE_861",
           "text": "<b>Taunt</b>, <b>Reborn</b>\n<b>Deathrattle:</b>& Restore #3 Health to your hero.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -6321,9 +6321,9 @@
         {
           "id": "OG_109",
           "text": "<b>Battlecry:</b>\nDiscard a random card. <b>Deathrattle:</b>\nDraw a card.",
-          "supported": false,
-          "battlecry": false,
-          "deathrattle": false
+          "supported": true,
+          "battlecry": true,
+          "deathrattle": true
         }
       ]
     },
@@ -6345,9 +6345,9 @@
         {
           "id": "BAR_027",
           "text": "<b>Deathrattle:</b> Deal 5 damage to your hero.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -6357,9 +6357,9 @@
         {
           "id": "AT_038",
           "text": "<b>Battlecry:</b> Gain an empty Mana Crystal.\n<b>Deathrattle:</b> Lose a Mana Crystal.",
-          "supported": false,
-          "battlecry": false,
-          "deathrattle": false
+          "supported": true,
+          "battlecry": true,
+          "deathrattle": true
         }
       ]
     },
@@ -6369,9 +6369,9 @@
         {
           "id": "BOT_509",
           "text": "<b>Deathrattle:</b> Draw a <b>Deathrattle</b> minion from your deck.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -6429,9 +6429,9 @@
         {
           "id": "BAR_026",
           "text": "<b>Taunt</b>\n<b>Deathrattle:</b> Restore #4 Health to your hero.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -6477,9 +6477,9 @@
         {
           "id": "TLC_479",
           "text": "<b>Taunt</b>\n<b>Deathrattle:</b>& Summon a random Fel Beast.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -6621,8 +6621,8 @@
         {
           "id": "DED_007",
           "text": "[x]<b>Battlecry:</b> Deal 2 damage\nto a random enemy. Repeat\nfor each of your Beasts.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -6688,8 +6688,8 @@
         {
           "id": "BOT_419",
           "text": "<b>Battlecry:</b> If you control a Treant, <b>Discover</b> a spell.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -6712,9 +6712,9 @@
         {
           "id": "GIL_118",
           "text": "<b>Deathrattle:</b> Restore #8 Health to your hero.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -6803,9 +6803,9 @@
         {
           "id": "UNG_083",
           "text": "<b>Deathrattle:</b> Summon a 5/5 Devilsaur.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -7383,8 +7383,8 @@
         {
           "id": "BRM_018",
           "text": "<b>Battlecry:</b> The next Dragon you play costs (2) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -7503,8 +7503,8 @@
         {
           "id": "BT_262",
           "text": "<b>Battlecry:</b> If you're holding a Dragon, gain +1 Attack and <b>Lifesteal</b>.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -7563,9 +7563,9 @@
         {
           "id": "CATA_723",
           "text": "<b>Deathrattle:</b>& Summon two random 4-Cost minions.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -7599,8 +7599,8 @@
         {
           "id": "BRM_024",
           "text": "<b>Battlecry:</b> If your opponent has 15 or less Health, gain +3/+3.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -7611,8 +7611,8 @@
         {
           "id": "CFM_605",
           "text": "[x]<b>Battlecry:</b> If you're holding\na Dragon, <b>Discover</b> a\ncopy of a card in your\nopponent's deck.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -7851,9 +7851,9 @@
         {
           "id": "LOOT_363",
           "text": "<b>Deathrattle:</b> Add 3 Silver Hand Recruits to your hand.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -7935,8 +7935,8 @@
         {
           "id": "BOT_104",
           "text": "<b>Battlecry:</b> Deal 5 damage randomly split among all minions except Mechs.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -8115,8 +8115,8 @@
         {
           "id": "EDR_468",
           "text": "<b>Battlecry:</b> Deal 1 damage to a minion and give it\n+4 Attack.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -8127,9 +8127,9 @@
         {
           "id": "UNG_076",
           "text": "<b>Deathrattle:</b> Summon two 1/1 Raptors.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -8626,9 +8626,9 @@
         {
           "id": "GDB_877",
           "text": "[x]<b>Rush</b>\n <b>Deathrattle:</b> Give adjacent \nminions +1/+1 and <b>Rush</b>.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -8890,8 +8890,8 @@
         {
           "id": "BOT_532",
           "text": "<b>Battlecry:</b> Summon two 0/2 Goblin Bombs.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -8902,9 +8902,9 @@
         {
           "id": "ICC_021",
           "text": "<b>Deathrattle:</b>\nDeal 2 damage to all enemy minions.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -9106,9 +9106,9 @@
         {
           "id": "EDR_571",
           "text": "<b>Deathrattle:</b> Draw a spell that costs (5) or more.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -9190,9 +9190,9 @@
         {
           "id": "WC_004",
           "text": "<b>Taunt</b>\n<b>Deathrattle:</b> Reduce the Cost of a Beast in your hand by (2).",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -9274,9 +9274,9 @@
         {
           "id": "BT_509",
           "text": "<b>Deathrattle:</b> Summon a random Demon from your hand.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -9334,16 +9334,16 @@
         {
           "id": "CORE_WC_701",
           "text": "[x]<b>Rush</b>\n<b>Deathrattle:</b>& Deal 1 damage\nto all enemy minions.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         },
         {
           "id": "WC_701",
           "text": "[x]<b>Rush</b>\n<b>Deathrattle:</b>& Deal 1 damage\nto all enemy minions.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -9473,9 +9473,9 @@
         {
           "id": "OG_179",
           "text": "<b>Deathrattle:</b> Deal 1 damage to a random enemy.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -9602,8 +9602,8 @@
         {
           "id": "BRM_012",
           "text": "<b>Battlecry:</b> Gain 1-4 Attack. <b>Overload:</b> (1)",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -10048,8 +10048,8 @@
         {
           "id": "ETC_106",
           "text": "<b>Battlecry:</b> The next Mech you play costs (1) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -10312,8 +10312,8 @@
         {
           "id": "AT_133",
           "text": "<b>Battlecry:</b> Reveal a minion in each deck. If yours costs more, gain +1/+1.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -10715,8 +10715,8 @@
         {
           "id": "BOT_507",
           "text": "<b>Battlecry:</b> Summon a copy of each adjacent minion.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -10849,9 +10849,9 @@
         {
           "id": "BOT_031",
           "text": "[x]<b>Deathrattle:</b> Deal 2 damage\nto the enemy hero.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -11108,8 +11108,8 @@
         {
           "id": "AV_308",
           "text": "[x]<b>Battlecry:</b> Choose a Fel\nspell in your hand.\nGet a copy of it.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -11144,9 +11144,9 @@
         {
           "id": "LOOT_351",
           "text": "<b>Deathrattle:</b> Gain an empty Mana Crystal.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -11192,8 +11192,8 @@
         {
           "id": "BT_710",
           "text": "[x]<b>Battlecry:</b> If you control\na <b><b>Stealth</b>ed</b> minion,\ndraw 2 cards.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -11228,9 +11228,9 @@
         {
           "id": "VAC_917",
           "text": "[x]<b>Battlecry:</b> Draw your\nlowest Cost card.\n<b>Deathrattle:</b> Draw your\nhighest Cost card.",
-          "supported": false,
-          "battlecry": false,
-          "deathrattle": false
+          "supported": true,
+          "battlecry": true,
+          "deathrattle": true
         }
       ]
     },
@@ -11446,9 +11446,9 @@
         {
           "id": "JAIL_878",
           "text": "[x]<b>Deathrattle:</b>& Summon\na random 1-Cost\n <b>Deathrattle</b> minion.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -11458,8 +11458,8 @@
         {
           "id": "BT_722",
           "text": "<b>Battlecry:</b> Deal 1 damage to a minion and give it <b>Divine Shield</b>.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -11645,8 +11645,8 @@
         {
           "id": "TSC_212",
           "text": "[x]<b>Battlecry:</b> If you've cast\nthree spells while holding\nthis, draw 3 cards.@\n<i>({0} left!)</i>@\n<i>(Ready!)</i>",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -11657,9 +11657,9 @@
         {
           "id": "RLK_511",
           "text": "<b>Deathrattle:</b>& Draw a\nFrost spell.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -11885,9 +11885,9 @@
         {
           "id": "BT_202",
           "text": "<b>Deathrattle:</b> Give a random Beast in your hand +1/+1.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -11909,9 +11909,9 @@
         {
           "id": "TRL_505",
           "text": "<b>Deathrattle:</b> Reduce the Cost of a Beast in your hand by (1).",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -12000,9 +12000,9 @@
         {
           "id": "DAL_743",
           "text": "<b>Rush</b>\n<b>Deathrattle:</b> Summon a 1/1 Murloc.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -12012,9 +12012,9 @@
         {
           "id": "DAL_040",
           "text": "<b>Deathrattle:</b> Restore #5 Health to the enemy hero.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -12144,9 +12144,9 @@
         {
           "id": "WW_344",
           "text": "<b>Divine Shield</b>\n<b>Deathrattle:</b> Draw a\nHoly spell.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -12204,8 +12204,8 @@
         {
           "id": "EX1_190",
           "text": "<b>Battlecry:</b> Summon all friendly minions that died this turn.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -12391,8 +12391,8 @@
         {
           "id": "WW_335",
           "text": "<b>Battlecry:</b> Your next Holy spell costs (2) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -12535,9 +12535,9 @@
         {
           "id": "LOE_046",
           "text": "<b>Deathrattle:</b> Deal 1 damage to a random enemy.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -12559,9 +12559,9 @@
         {
           "id": "AV_704",
           "text": "<b>Deathrattle:</b> Deal 8 damage to a random enemy.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -12907,8 +12907,8 @@
         {
           "id": "RLK_531",
           "text": "[x]<b>Battlecry:</b> Resurrect\na friendly Undead.\nGive it <b>Reborn</b>.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -12967,9 +12967,9 @@
         {
           "id": "OG_249",
           "text": "<b>Taunt</b>\n<b>Deathrattle:</b> Summon a 2/2 Slime.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -13539,9 +13539,9 @@
         {
           "id": "ULD_282",
           "text": "[x]<b>Deathrattle:</b> Add a random\n1-Cost minion to your hand.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -13551,8 +13551,8 @@
         {
           "id": "DAL_752",
           "text": "<b>Battlecry:</b> Draw 2 minions from your deck. Set their Attack, Health, and Cost to 1.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -13606,8 +13606,8 @@
         {
           "id": "CFM_061",
           "text": "[x]<b>Battlecry:</b> Restore #6 Health.\n<b>Overload:</b> (1)",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -13757,9 +13757,9 @@
         {
           "id": "BAR_915",
           "text": "[x]<b>Battlecry and Deathrattle:</b>\nGive another random\n friendly minion +1/+1.",
-          "supported": false,
-          "battlecry": false,
-          "deathrattle": false
+          "supported": true,
+          "battlecry": true,
+          "deathrattle": true
         }
       ]
     },
@@ -13793,9 +13793,9 @@
         {
           "id": "BOT_606",
           "text": "<b>Deathrattle:</b> Deal 4 damage to a random enemy minion.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -14064,9 +14064,9 @@
         {
           "id": "ULD_208",
           "text": "[x]<b>Taunt</b>, <b>Reborn</b>\n<b>Deathrattle:</b> Restore #3\nHealth to your hero.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -14088,8 +14088,8 @@
         {
           "id": "BAR_854",
           "text": "[x]<b>Battlecry:</b> The next\n Elemental you play\ncosts (1) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -14215,8 +14215,8 @@
         {
           "id": "AT_058",
           "text": "<b>Battlecry:</b> Reveal a minion in each deck. If yours costs more, draw it.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -14402,9 +14402,9 @@
         {
           "id": "ULD_184",
           "text": "<b>Deathrattle:</b> Deal 3 damage to the enemy hero.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -14541,15 +14541,15 @@
         {
           "id": "CFM_750",
           "text": "[x]<b>Battlecry:</b> If your deck has\nno duplicates, summon all\n Demons from your hand. ",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         },
         {
           "id": "WON_324",
           "text": "[x]<b>Battlecry:</b> If your deck has\nno duplicates, summon all\n Demons from your hand. ",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -14560,9 +14560,9 @@
         {
           "id": "REV_510",
           "text": "[x]<b>Battlecry</b>: Discard\nyour hand. <b>Deathrattle:</b>\nDraw 3 cards.",
-          "supported": false,
-          "battlecry": false,
-          "deathrattle": false
+          "supported": true,
+          "battlecry": true,
+          "deathrattle": true
         }
       ]
     },
@@ -14632,9 +14632,9 @@
         {
           "id": "RLK_713",
           "text": "<b>Deathrattle:</b> Copy all\nFrost spells in your hand.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -14728,8 +14728,8 @@
         {
           "id": "TLC_606",
           "text": "<b>Battlecry:</b> Deal 2 damage to an enemy minion. If it dies,& gain 5 Armor.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -14764,8 +14764,8 @@
         {
           "id": "CFM_810",
           "text": "<b>Battlecry:</b> If your opponent has 6 or more cards in hand, gain <b>Charge</b>.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -14788,9 +14788,9 @@
         {
           "id": "AV_130",
           "text": "<b>Deathrattle:</b> Give all minions in your hand +2/+2.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -14951,16 +14951,16 @@
         {
           "id": "BAR_310",
           "text": "[x]<b>Taunt</b>\n<b>Deathrattle:</b>& Restore #8 Health\nto all friendly characters.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         },
         {
           "id": "CORE_BAR_310",
           "text": "[x]<b>Taunt</b>\n<b>Deathrattle:</b>& Restore #8 Health\nto all friendly characters.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -15054,9 +15054,9 @@
         {
           "id": "FIR_929",
           "text": "<b>Deathrattle:</b> Draw a\nFire spell.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -15186,8 +15186,8 @@
         {
           "id": "BOT_544",
           "text": "<b>Battlecry:</b> Deal 6 damage randomly split among other friendly minions.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -15289,9 +15289,9 @@
         {
           "id": "GIL_513",
           "text": "<b>Deathrattle:</b> Give your minions +1 Attack.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -15639,8 +15639,8 @@
         {
           "id": "CATA_697",
           "text": "[x]<b>Battlecry:</b> Choose a Fel\nspell in your hand.\nGet a copy of it.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -15929,8 +15929,8 @@
         {
           "id": "AT_112",
           "text": "<b>Battlecry:</b> Reveal a minion in each deck. If yours costs more, gain <b>Taunt</b> and <b>Divine Shield</b>.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -15953,8 +15953,8 @@
         {
           "id": "AT_117",
           "text": "<b>Battlecry:</b> If you have a minion with <b>Spell Damage</b>, gain +2/+2.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -16152,9 +16152,9 @@
         {
           "id": "BOT_066",
           "text": "<b>Deathrattle:</b> Summon a 7/7 Mechanical Dragon.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -16176,8 +16176,8 @@
         {
           "id": "YOG_518",
           "text": "<b>Battlecry:</b> If you've cast\n5 or more spells this\ngame, draw 2 cards.@\n<i>({0} left!)</i>@ <i>(Ready!)</i>",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -16334,9 +16334,9 @@
         {
           "id": "WW_807",
           "text": "[x]<b>Deathrattle:</b> Draw a Beast.\nGive minions in your\nhand +1/+1.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -16358,9 +16358,9 @@
         {
           "id": "TOY_646",
           "text": "<b>Lifesteal</b>, <b>Taunt</b>\n<b>Deathrattle:</b> Deal 1 damage\nto all enemies.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -16694,9 +16694,9 @@
         {
           "id": "CFM_120",
           "text": "<b>Deathrattle:</b> Restore #4 Health to each hero.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -16706,8 +16706,8 @@
         {
           "id": "YOP_022",
           "text": "<b>Battlecry:</b> Give a friendly minion +3/+3.\n<b>Overload:</b> (1)",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -16742,16 +16742,16 @@
         {
           "id": "CORE_SW_068",
           "text": "<b>Taunt</b>\n<b>Deathrattle:</b> Gain 8 Armor.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         },
         {
           "id": "SW_068",
           "text": "<b>Taunt</b>\n<b>Deathrattle:</b> Gain 8 Armor.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -16797,8 +16797,8 @@
         {
           "id": "BT_212",
           "text": "<b>Rush</b>. <b>Battlecry:</b> Choose a friendly minion. Gain a copy of its <b>Deathrattle</b>.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -16960,9 +16960,9 @@
         {
           "id": "LOE_050",
           "text": "<b>Deathrattle:</b> Summon a random 1-Cost minion.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -17068,8 +17068,8 @@
         {
           "id": "TSC_823",
           "text": "<b>Battlecry:</b> The next spell you play costs (1) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -17104,9 +17104,9 @@
         {
           "id": "TRL_520",
           "text": "[x]<b>Deathrattle:</b> Draw 2 Murlocs\nfrom your deck.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -17334,8 +17334,8 @@
         {
           "id": "OG_133",
           "text": "<b>Battlecry:</b> Summon your <b>Deathrattle</b> minions that died this game.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -17346,8 +17346,8 @@
         {
           "id": "OG_312",
           "text": "<b>Battlecry:</b> Equip a 1/3 Rusty Hook.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -17437,9 +17437,9 @@
         {
           "id": "TSC_001",
           "text": "[x]<b>Deathrattle:</b> Deal 4 damage\nto the enemy hero.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -17540,8 +17540,8 @@
         {
           "id": "GVG_042",
           "text": "<b>Battlecry:</b> Add 4 random Murlocs to your hand. <b>Overload:</b> (3)",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -17552,8 +17552,8 @@
         {
           "id": "BE_209",
           "text": "<b>Battlecry:</b> For the rest of\nthe game, Elementals you summon have their stats set to 5/5.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -17777,8 +17777,8 @@
         {
           "id": "BT_301",
           "text": "<b>Rush</b>\n<b>Battlecry:</b> Discard your highest Cost card.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -17993,9 +17993,9 @@
         {
           "id": "DEEP_005",
           "text": "[x]<b>Taunt</b>\n<b>Deathrattle</b>: Summon two\nrandom <b>Deathrattle</b> minions\nthat cost (3) or less.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -18005,16 +18005,16 @@
         {
           "id": "CORE_ICC_214",
           "text": "[x]<b><b>Taunt</b>, Lifesteal</b>\n<b>Deathrattle:</b>& Destroy a\n random enemy minion.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         },
         {
           "id": "ICC_214",
           "text": "[x]<b><b>Taunt</b>, Lifesteal</b>\n<b>Deathrattle:</b>& Destroy a\n random enemy minion.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -18048,9 +18048,9 @@
         {
           "id": "ULD_177",
           "text": "<b>Deathrattle:</b> Draw 8 cards.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -18180,15 +18180,15 @@
         {
           "id": "KAR_204",
           "text": "<b>Battlecry:</b> Summon a random friendly minion\nthat died this game.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         },
         {
           "id": "WON_057",
           "text": "<b>Battlecry:</b> Summon a random friendly minion\nthat died this game.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -18439,8 +18439,8 @@
         {
           "id": "BAR_030",
           "text": "<b>Battlecry:</b> <b>Discover</b> a Beast, <b>Secret</b>, or weapon.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -18775,9 +18775,9 @@
         {
           "id": "GVG_096",
           "text": "<b>Deathrattle:</b> Summon a random 2-Cost minion.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -18787,9 +18787,9 @@
         {
           "id": "GVG_105",
           "text": "<b>Deathrattle:</b> Summon a random 4-Cost minion.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -18895,9 +18895,9 @@
         {
           "id": "SCH_711",
           "text": "<b>Deathrattle:</b> Summon a random 7-Cost minion.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -18931,8 +18931,8 @@
         {
           "id": "DRG_069",
           "text": "<b>Battlecry:</b> Destroy your opponent's Armor.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -18943,16 +18943,16 @@
         {
           "id": "CORE_LOOT_413",
           "text": "<b>Deathrattle:</b>& Gain 3 Armor.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         },
         {
           "id": "LOOT_413",
           "text": "<b>Deathrattle:</b>& Gain 3 Armor.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -19010,9 +19010,9 @@
         {
           "id": "OG_323",
           "text": "<b>Deathrattle:</b> Draw a card.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -19257,8 +19257,8 @@
         {
           "id": "BE_731",
           "text": "<b>Battlecry</b>:& Gain\nthe <b>Deathrattles</b> of adjacent minions.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -19444,8 +19444,8 @@
         {
           "id": "OG_309",
           "text": "<b>Battlecry:</b> Trigger a friendly minion's <b>Deathrattle</b>.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -19480,8 +19480,8 @@
         {
           "id": "YOG_411",
           "text": "[x]<b>Battlecry:</b> If you've cast 5\nor more spells this game,\ndeal 2 damage to all\nenemies. @ <i>({0} left!)</i>@ <i>(Ready!)</i>",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -19578,8 +19578,8 @@
         {
           "id": "ULD_268",
           "text": "[x]<b>Battlecry:</b> Summon a\nrandom friendly minion\nthat died this game.\nGive it <b>Reborn</b>.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -19746,15 +19746,15 @@
         {
           "id": "BT_416",
           "text": "<b>Battlecry:</b>& The next Demon you play costs (2) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         },
         {
           "id": "CORE_BT_416",
           "text": "<b>Battlecry:</b>& The next Demon you play costs (2) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -19940,9 +19940,9 @@
         {
           "id": "DINO_434",
           "text": "[x]<b>Battlecry:</b> Get a random\n1-Cost minion.\n<b><b>Deathrattle:</b></b>& Get a random\n1-Cost spell.",
-          "supported": false,
-          "battlecry": false,
-          "deathrattle": false
+          "supported": true,
+          "battlecry": true,
+          "deathrattle": true
         }
       ]
     },
@@ -20163,9 +20163,9 @@
         {
           "id": "BAR_325",
           "text": "<b>Deathrattle:</b> Summon a <b>Deathrattle</b> minion that costs (3) or less from your hand.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -20175,9 +20175,9 @@
         {
           "id": "BAR_326",
           "text": "<b>Deathrattle:</b> Summon a <b>Deathrattle</b> minion that costs (4) or less from your hand.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -20247,8 +20247,8 @@
         {
           "id": "TRL_551",
           "text": "<b>Taunt</b>\n<b>Battlecry:</b> Discard your lowest Cost card.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -20283,9 +20283,9 @@
         {
           "id": "DMF_194",
           "text": "<b>Deathrattle:</b> Draw a Dragon.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -20307,8 +20307,8 @@
         {
           "id": "AV_256",
           "text": "<b>Battlecry:</b> Swap the Attack and Health of all minions in both players' hands.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -20331,8 +20331,8 @@
         {
           "id": "GDB_132",
           "text": "<b>Battlecry:</b> Deal 2 damage to an enemy minion. If it dies, <b>Discover</b> a Demon.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -20698,8 +20698,8 @@
         {
           "id": "BT_723",
           "text": "<b>Battlecry:</b> Deal 1 damage to a minion and give it <b>Rush</b>.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -20770,8 +20770,8 @@
         {
           "id": "RLK_550",
           "text": "[x]<b>Battlecry:</b> Give your other\nminions \"<b>Deathrattle:</b> Give\n  your minions +1/+1.\"",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -20782,9 +20782,9 @@
         {
           "id": "EDR_485",
           "text": "<b>Deathrattle:</b>& Draw a minion that costs (7) or more.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -20806,9 +20806,9 @@
         {
           "id": "GIL_667",
           "text": "<b>Taunt</b>\n<b>Deathrattle:</b> Restore #6 Health to your hero.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -20969,9 +20969,9 @@
         {
           "id": "KAR_029",
           "text": "<b>Deathrattle:</b> Draw a card.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -21211,8 +21211,8 @@
         {
           "id": "ULD_158",
           "text": "<b>Battlecry:</b> Deal 1 damage to all enemy minions. <b>Overload:</b> (1)",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -21283,8 +21283,8 @@
         {
           "id": "YOG_521",
           "text": "[x]<b>Battlecry:</b> If you've cast\n5 or more spells this game,\ngive your hero +4 Attack\nthis turn. @ <i>({0} left!)</i>@ <i>(Ready!)</i>",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -21374,9 +21374,9 @@
         {
           "id": "EX1_534",
           "text": "<b>Deathrattle:</b> Summon two 2/2 Hyenas.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -21554,8 +21554,8 @@
         {
           "id": "BT_732",
           "text": "<b>Battlecry:</b> Deal 6 damage randomly split among all other minions.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -21950,9 +21950,9 @@
         {
           "id": "CFM_341",
           "text": "<b>Deathrattle:</b> Deal damage equal to this minion's Attack to all enemy minions.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -22041,9 +22041,9 @@
         {
           "id": "JAIL_007",
           "text": "[x]<b>Taunt</b>\n<b>Deathrattle:</b>& Deal 2\n damage to all enemies.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -22077,9 +22077,9 @@
         {
           "id": "BE_993",
           "text": "[x]<b>Deathrattle:</b> Reduce the\nCost of a random Shadow\n  spell in your hand by (2).",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -22101,8 +22101,8 @@
         {
           "id": "CFM_694",
           "text": "<b>Battlecry:</b> Give a <b>Stealthed</b> minion +2/+2.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -22144,9 +22144,9 @@
         {
           "id": "REV_374",
           "text": "<b>Deathrattle:</b> Reduce the Cost of the highest Cost Shadow spell in your hand by (3).",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -22192,9 +22192,9 @@
         {
           "id": "LEG_CS3_013",
           "text": "[x]<b>Deathrattle:</b> Deal 3\ndamage to the\nenemy hero.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -22300,16 +22300,16 @@
         {
           "id": "CFM_336",
           "text": "[x]<b>Deathrattle:</b> Give a random\nminion in your hand +2/+2.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         },
         {
           "id": "WON_307",
           "text": "[x]<b>Deathrattle:</b> Give a random\nminion in your hand +2/+2.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -22331,9 +22331,9 @@
         {
           "id": "ICC_702",
           "text": "<b>Deathrattle:</b> Add a random <b>Deathrattle</b> minion to your hand.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -22343,9 +22343,9 @@
         {
           "id": "NX2_024",
           "text": "<b>Rush</b>\n<b>Deathrattle:</b> Deal 4 damage to your hero.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -22463,9 +22463,9 @@
         {
           "id": "RLK_029",
           "text": "<b>Taunt</b>\n<b>Deathrattle:</b> Deal 4 damage to a random enemy.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -22487,8 +22487,8 @@
         {
           "id": "CATA_721",
           "text": "[x]<b>Battlecry:</b> Choose a\ncard in your hand to\nshuffle into your deck.\nDraw a card.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -22571,9 +22571,9 @@
         {
           "id": "DAL_587",
           "text": "<b>Deathrattle:</b> Add a random Hunter spell to your hand.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -22619,8 +22619,8 @@
         {
           "id": "AV_114",
           "text": "[x]<b>Battlecry:</b> Reduce the Cost\nof the highest Cost spell\nin your hand by (1).",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -22655,9 +22655,9 @@
         {
           "id": "DMF_191",
           "text": "<b>Deathrattle:</b> <b>Silence</b> all minions.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -22837,8 +22837,8 @@
         {
           "id": "BT_323",
           "text": "<b>Battlecry:</b> Look at 3 cards in your deck. Choose one to put on top.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -22909,8 +22909,8 @@
         {
           "id": "ICC_838",
           "text": "<b>Battlecry:</b> Summon two 0/1 Frozen Champions.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -22921,9 +22921,9 @@
         {
           "id": "REV_952",
           "text": "<b>Deathrattle:</b> Add 2\nSilver Hand Recruits\nto your hand.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -22933,9 +22933,9 @@
         {
           "id": "REV_251",
           "text": "<b>Deathrattle:</b> Destroy a random enemy minion.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -23029,9 +23029,9 @@
         {
           "id": "TLC_249",
           "text": "<b>Deathrattle:</b>& Deal 2 damage randomly split among all enemies.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -23240,9 +23240,9 @@
         {
           "id": "YOD_016",
           "text": "<b>Stealth</b>\n<b>Deathrattle:</b> Draw a card.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -23312,8 +23312,8 @@
         {
           "id": "TSC_064",
           "text": "<b>Battlecry:</b> If you've cast three spells while holding this, deal 3 damage to all enemies.@ <i>({0} left!)</i>@ <i>(Ready!)</i>",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -23463,16 +23463,16 @@
         {
           "id": "CORE_GVG_114",
           "text": "<b>Deathrattle:</b>& Summon a random <b>Legendary</b> minion.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         },
         {
           "id": "GVG_114",
           "text": "<b>Deathrattle:</b>& Summon a random <b>Legendary</b> minion.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -23681,8 +23681,8 @@
         {
           "id": "BAR_081",
           "text": "<b>Battlecry:</b> <b>Discover</b> a card in your opponent's deck. They draw theirs as well.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -23693,9 +23693,9 @@
         {
           "id": "OG_267",
           "text": "<b>Deathrattle:</b> Give your weapon +2 Attack.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -23705,9 +23705,9 @@
         {
           "id": "GDB_333",
           "text": "<b>Deathrattle:</b> Your next weapon costs (1) less.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -23729,8 +23729,8 @@
         {
           "id": "AV_222",
           "text": "[x]<b>Battlecry:</b> Deal 1 damage\nto all other minions.\nIf any die, repeat this.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -23741,9 +23741,9 @@
         {
           "id": "BOT_102",
           "text": "<b>Rush</b>\n<b>Deathrattle:</b> Add two\n1/1 Sparks with <b>Rush</b> to your hand.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -23813,9 +23813,9 @@
         {
           "id": "OG_256",
           "text": "<b>Deathrattle:</b> Give your minions +1/+1.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -23916,15 +23916,15 @@
         {
           "id": "AT_007",
           "text": "<b>Battlecry:</b> Both players\nget a random spell.\nYours costs (2) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         },
         {
           "id": "WON_344",
           "text": "<b>Battlecry:</b> Both players\nget a random spell.\nYours costs (2) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -23983,8 +23983,8 @@
         {
           "id": "CFM_688",
           "text": "<b>Battlecry:</b> If an enemy minion has <b>Taunt</b>, gain <b>Charge</b>.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -24079,9 +24079,9 @@
         {
           "id": "WORK_015",
           "text": "[x]<b>Rush</b>\n<b>Deathrattle:</b> Reduce the\nCost of a random minion\nin your hand by (6).",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -24199,9 +24199,9 @@
         {
           "id": "EDR_110",
           "text": "<b>Poisonous</b>\n<b>Deathrattle:</b> Deal 1\ndamage to a random\nenemy minion.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -24319,8 +24319,8 @@
         {
           "id": "BOT_552",
           "text": "[x]<b>Battlecry:</b> If you control 3\nminions with 7 Health, deal\n7 damage to all enemies.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -24367,9 +24367,9 @@
         {
           "id": "BT_014",
           "text": "<b>Deathrattle:</b>& Draw a spell.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -24645,9 +24645,9 @@
         {
           "id": "TSC_645",
           "text": "<b>Rush</b>\n<b>Deathrattle:</b> Summon two random Mechs that cost (3) or less.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -24657,9 +24657,9 @@
         {
           "id": "AV_334",
           "text": "[x]<b>Rush</b>\n<b>Deathrattle:</b> Your next\nBeast costs (2) less.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -24777,9 +24777,9 @@
         {
           "id": "SW_006",
           "text": "<b>Deathrattle:</b> Summon a random 3-Cost minion.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -25000,9 +25000,9 @@
         {
           "id": "GIL_816",
           "text": "<b>Deathrattle:</b> Add a random Dragon to your hand.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -25091,9 +25091,9 @@
         {
           "id": "EX1_016",
           "text": "<b>Deathrattle:</b> Take\ncontrol of a random\nenemy minion.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -25127,9 +25127,9 @@
         {
           "id": "CS3_024",
           "text": "[x]<b><b>Taunt</b>, Divine Shield</b>\n<b>Deathrattle:</b>& Draw your\nhighest Cost minion.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -25187,8 +25187,8 @@
         {
           "id": "CFM_809",
           "text": "[x]<b>Battlecry:</b> If your opponent's\nhand is empty, gain <b>Charge</b>.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -25211,9 +25211,9 @@
         {
           "id": "BE_550",
           "text": "<b>Battlecry:</b> Summon two copies of this. <b>Deathrattle:</b>& Deal 3 damage to a random enemy.",
-          "supported": false,
-          "battlecry": false,
-          "deathrattle": false
+          "supported": true,
+          "battlecry": true,
+          "deathrattle": true
         }
       ]
     },
@@ -25247,9 +25247,9 @@
         {
           "id": "SCH_244",
           "text": "[x]<b>Taunt</b>\n<b>Deathrattle:</b> Summon a\nrandom 3-Cost Beast.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -25319,9 +25319,9 @@
         {
           "id": "OG_151",
           "text": "<b>Deathrattle:</b> Deal 1 damage to all minions.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -25403,8 +25403,8 @@
         {
           "id": "UNG_800",
           "text": "<b>Battlecry:</b> Trigger a friendly minion's <b>Deathrattle</b>.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -25439,9 +25439,9 @@
         {
           "id": "TOY_606",
           "text": "<b>Taunt</b>\n<b>Deathrattle:</b> Deal 8 damage randomly split among all enemy minions.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -25753,9 +25753,9 @@
         {
           "id": "DEEP_036",
           "text": "[x]<b>Taunt</b>\n <b>Deathrattle:</b> Double the\nstats of all Elementals in\nyour hand and deck.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -25777,9 +25777,9 @@
         {
           "id": "BAR_535",
           "text": "[x]<b>Taunt</b>\n<b>Deathrattle:</b> Gain 5 Armor.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -25916,9 +25916,9 @@
         {
           "id": "ICC_099",
           "text": "<b>Deathrattle:</b> Deal 5 damage to your minions.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -25928,9 +25928,9 @@
         {
           "id": "TIME_603",
           "text": "<b>Deathrattle:</b>& Destroy a random enemy minion.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -26554,9 +26554,9 @@
         {
           "id": "TOY_356",
           "text": "<b>Rush</b>\n<b>Deathrattle:</b> Deal 7 damage to a random enemy.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -26614,8 +26614,8 @@
         {
           "id": "TTN_723",
           "text": "<b>Battlecry:</b> Draw a Mech. The next Mech you play costs (2) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -26662,9 +26662,9 @@
         {
           "id": "WORK_010",
           "text": "<b>Taunt</b>. <b>Deathrattle:</b> Summon a random\n8-Cost minion.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -26734,9 +26734,9 @@
         {
           "id": "TSC_938",
           "text": "[x]<b>Taunt</b>\n<b>Deathrattle:</b> Draw a card.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -26902,9 +26902,9 @@
         {
           "id": "DAL_775",
           "text": "[x]<b>Taunt</b>\n<b>Deathrattle:</b> Deal 3 damage\nto all minions.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -26950,8 +26950,8 @@
         {
           "id": "AT_104",
           "text": "<b>Battlecry:</b> Reveal a minion in each deck. If yours costs more, restore #7 Health to your hero.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -27350,9 +27350,9 @@
         {
           "id": "RLK_914",
           "text": "[x]<b>Deathrattle:</b> Add a random\nShadow spell to your hand.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -27460,9 +27460,9 @@
         {
           "id": "AV_325",
           "text": "[x]<b>Taunt</b>\n<b>Deathrattle:</b> Deal damage\nequal to this minion's Attack\nto all enemy minions.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -27472,8 +27472,8 @@
         {
           "id": "LOE_019",
           "text": "<b>Battlecry:</b> Choose a friendly minion. Gain a copy of its <b>Deathrattle</b>.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -27496,9 +27496,9 @@
         {
           "id": "WW_367",
           "text": "<b>Taunt</b>\n<b>Deathrattle:</b> Give <b>Taunt</b> minions in your hand and deck +1/+1.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -27544,9 +27544,9 @@
         {
           "id": "BE_207",
           "text": "[x]<b><b>Reborn</b>\n</b><b>Deathrattle:</b>& Give all\nminions in your\nhand +1/+1.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -27604,9 +27604,9 @@
         {
           "id": "DAL_604",
           "text": "<b>Deathrattle:</b> Draw a Mech from your deck.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -27676,9 +27676,9 @@
         {
           "id": "WON_345",
           "text": "[x]<b>Deathrattle:</b> Summon\na <b>Taunt</b> minion from\nyour deck.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -27712,8 +27712,8 @@
         {
           "id": "AT_072",
           "text": "<b>Battlecry:</b> Draw 3 cards.\nPut any minions you drew directly into the battlefield.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -28141,9 +28141,9 @@
         {
           "id": "UNG_818",
           "text": "<b>Deathrattle:</b> Deal 3 damage to a random enemy minion.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -28153,9 +28153,9 @@
         {
           "id": "REV_845",
           "text": "<b>Deathrattle:</b> Deal 2 damage to a random enemy.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -28503,9 +28503,9 @@
         {
           "id": "VAC_947",
           "text": "<b>Battlecry:</b> Give all\nother minions -1/-1.\n<b>Deathrattle:</b> Give all\nother minions +1/+1.",
-          "supported": false,
-          "battlecry": false,
-          "deathrattle": false
+          "supported": true,
+          "battlecry": true,
+          "deathrattle": true
         }
       ]
     },
@@ -28539,9 +28539,9 @@
         {
           "id": "BOT_401",
           "text": "<b>Deathrattle:</b> Add a random <b>Legendary</b> minion to your hand.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -28611,9 +28611,9 @@
         {
           "id": "FP1_011",
           "text": "<b>Deathrattle:</b> Get a\nrandom Beast.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -28623,8 +28623,8 @@
         {
           "id": "BOT_431",
           "text": "<b>Battlecry:</b> Summon a 0/2 Goblin Bomb.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -29033,8 +29033,8 @@
         {
           "id": "BE_566",
           "text": "<b>Battlecry</b>: Choose a card\nin your hand to shuffle\ninto your deck.\nIt costs (1) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -29249,8 +29249,8 @@
         {
           "id": "JAM_005",
           "text": "[x]<b>Battlecry:</b> Trigger a friendly\nminion's <b>Deathrattle</b> twice.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -29417,8 +29417,8 @@
         {
           "id": "BE_728",
           "text": "[x]<b>Battlecry:</b> Reduce the Cost\nof minions in your hand and\ndeck by (1) and increase the\nCost of spells by (1).",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -29549,9 +29549,9 @@
         {
           "id": "FP1_001",
           "text": "<b>Deathrattle:</b> Restore #5 Health to the enemy hero.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
