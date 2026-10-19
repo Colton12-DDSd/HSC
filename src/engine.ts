@@ -1,4 +1,5 @@
-import { cardStats, type Card, type StatModifier } from './cards';
+import { cardCost, cardStats, freezesOnDamage, type Card, type StatModifier } from './cards';
+import { foundationOperations, resolveFoundation } from './foundation-effects';
 import catalogData from './generated/catalog.json';
 import generatedHashes from '../data/battlecry-generated-hashes.json';
 export const catalogVersion = generatedHashes['src/generated/catalog.json'];
@@ -18,6 +19,7 @@ import {
 } from './effects';
 export { effectFor, supported } from './effects';
 export interface Unit {
+  immune?: boolean;
   commanderOwner?: number;
   grantedDeathrattles?: { source: Card; steps: ScriptStep[] }[];
   immuneUntilTurn?: number;
@@ -25,10 +27,17 @@ export interface Unit {
   rebornUsed?: boolean;
   silenced?: boolean;
   keywords?: string[];
-  keywordSources?: { keyword: string; sourceCardId: string; sourceName: string }[];
+  keywordSources?: {
+    keyword: string;
+    sourceCardId: string;
+    sourceName: string;
+    expiresAtTurn?: number;
+  }[];
+  temporaryKeywords?: { keyword: string; turn: number }[];
   frozen?: boolean;
   freezeSkipEnd?: boolean;
   summonedTurn?: number;
+  playedCost?: number;
   attackBase?: number;
   // Optional so older exported scenarios remain readable. These buffs end on leaving play.
   modifiers?: StatModifier[];
@@ -44,6 +53,9 @@ export interface Unit {
   commander: boolean;
 }
 export interface Player {
+  shield?: boolean;
+  maxHandSize?: number;
+  playEffects?: { source: Card; filter: CardFilter; remaining: number; steps: ScriptStep[] }[];
   overload?: number;
   lockedMana?: number;
   nextDiscounts?: { filter: CardFilter; amount: number; source: string }[];
@@ -85,6 +97,7 @@ export interface Player {
   replacement: boolean;
 }
 export interface Pending {
+  cost?: number;
   caster: number;
   card: Card;
   command: boolean;
@@ -160,6 +173,7 @@ export const unitMechanics = (u: Unit) =>
     ...new Set([
       ...(u.silenced ? [] : (u.card.mechanics ?? [])),
       ...(u.keywords ?? []),
+      ...(u.temporaryKeywords ?? []).map((k) => k.keyword),
       ...(u.grantedDeathrattles?.length ? ['DEATHRATTLE'] : []),
     ]),
   ]
@@ -168,13 +182,19 @@ export const unitMechanics = (u: Unit) =>
     .filter((k) => k !== 'DIVINE_SHIELD' || u.shield);
 function matchesCard(c: Card, f: CardFilter = {}, player?: Player, unit?: Unit): boolean {
   const keys = unit ? unitMechanics(unit) : (c.mechanics ?? []);
-  const attack = unit?.attack ?? c.attack ?? 0;
+  const attack = unit?.attack ?? cardStats(c).attack;
   return (
     (!f.type || c.type === f.type) &&
+    (!f.hasTribe || !!c.race || !!c.races?.length) &&
+    (!f.notName || c.name !== f.notName) &&
+    (!f.nameSuffix || c.name.endsWith(f.nameSuffix)) &&
+    (!f.notClass || !(c.classes ?? [c.cardClass]).includes(f.notClass)) &&
     (!f.any || f.any.some((part) => matchesCard(c, part, player, unit))) &&
     (!f.notTribe ||
       !(c.race === f.notTribe || c.races?.includes(f.notTribe) || c.race === 'ALL')) &&
     (f.health === undefined || (unit?.health ?? c.health) === f.health) &&
+    (f.minHealth === undefined || (unit?.health ?? cardStats(c).health) >= f.minHealth) &&
+    (!f.frozen || !!unit?.frozen) &&
     (!f.tribe || c.race === f.tribe || c.races?.includes(f.tribe) || c.race === 'ALL') &&
     (!f.keyword || keys.includes(f.keyword)) &&
     (f.cost === undefined || c.cost === f.cost) &&
@@ -203,6 +223,17 @@ function scriptCount(
   sourceUid?: number,
 ): number {
   const p = s.players[player];
+  if (zone === 'enemy-frozen')
+    return s.players.reduce(
+      (n, owner, i) =>
+        n +
+        (i !== player && owner.health > 0
+          ? Number(!!owner.frozen) + owner.board.filter((u) => u.frozen).length
+          : 0),
+      0,
+    );
+  if (zone === 'friendly-including-self')
+    return p.board.filter((u) => u.health > 0 && matchesCard(u.card, filter, p, u)).length;
   if (zone === 'friendly' && filter?.keyword === 'SECRET')
     return (p.secrets ?? []).filter((c) => matchesCard(c, filter, p)).length;
   if (zone.startsWith('played') || zone.endsWith('this-turn')) {
@@ -297,12 +328,38 @@ function scriptNumber(
       ? (u?.health ?? 0)
       : value.stat === 'armor'
         ? p.armor
-        : 0;
+        : value.stat === 'hero-attack'
+          ? p.heroAttack + (p.weapon?.attack ?? 0)
+          : 0;
 }
 function scriptCondition(s: Game, player: number, c: ScriptCondition, sourceUid?: number) {
   const p = s.players[player];
   if (c.special === 'no-duplicates')
     return new Set(p.deck.map((c) => c.name)).size === p.deck.length;
+  if (c.special === 'odd-deck' || c.special === 'even-deck')
+    return p.deck.every((x) => x.cost % 2 === (c.special === 'odd-deck' ? 1 : 0));
+  if (c.special === 'last-cost-one')
+    return (
+      (s.events ?? [])
+        .filter((e) => e.player === player && e.type === 'play')
+        .slice(0, -1)
+        .at(-1)?.card?.cost === 1
+    );
+  if (c.special === 'any-hero-damage')
+    return (s.events ?? []).some((e) => e.turn === s.turn && e.type === 'hero-damage');
+  if (c.special === 'combined-health-42')
+    return s.players.filter((p) => p.health > 0).reduce((n, p) => n + p.health, 0) === 42;
+  if (c.special === 'source-more-expensive')
+    return p.deck
+      .filter((c) => c.type === 'MINION')
+      .every((c) => c.cost < (p.board.find((u) => u.uid === sourceUid)?.playedCost ?? 0));
+  if (c.stat === 'source-attack')
+    return (p.board.find((u) => u.uid === sourceUid)?.attack ?? 0) >= (c.min ?? 0);
+  if (c.stat === 'source-cost')
+    return (p.board.find((u) => u.uid === sourceUid)?.playedCost ?? Infinity) <= (c.max ?? 0);
+  if (c.stat === 'overload') return (p.overload ?? 0) + (p.lockedMana ?? 0) >= (c.min ?? 0);
+  if (c.stat === 'remaining-mana')
+    return (c.max === undefined || p.mana <= c.max) && (c.min === undefined || p.mana >= c.min);
   const n = c.stat
     ? c.stat === 'enemy-health'
       ? Math.min(...s.players.filter((x, i) => i !== player && x.health > 0).map((x) => x.health))
@@ -326,6 +383,7 @@ function scriptTargets(
 ): Target[] {
   let ts: Target[] = [];
   const scope = step.scope;
+  if ((scope === 'target' && !target) || (scope === 'self' && sourceUid === undefined)) return [];
   if (scope === 'target' && target) ts = [target];
   else if (scope === 'self' && sourceUid !== undefined) ts = [{ p: player, uid: sourceUid }];
   else if (scope === 'hero') ts = [{ p: player }];
@@ -374,8 +432,8 @@ function scriptTargets(
 }
 function addGenerated(s: Game, player: number, c: Card) {
   const p = s.players[player],
-    copy = { ...structuredClone(c), heldSince: s.events?.length ?? 0 };
-  if (p.hand.length < 10) p.hand.push(copy);
+    copy = { ...structuredClone(c), heldSince: s.events?.length ?? 0, heldTurn: s.turn };
+  if (p.hand.length < (p.maxHandSize ?? 10)) p.hand.push(copy);
   else {
     p.grave.push(printedCard(copy));
     note(s, `${p.name} burns ${c.name}`);
@@ -385,8 +443,9 @@ function scriptPool(s: Game, player: number, step: ScriptStep): Card[] {
   const p = s.players[player],
     f = step.filter ?? {};
   if (step.zone === 'hand') return p.hand.filter((c) => matchesCard(c, f, p));
-  const pool =
-    step.zone === 'hand'
+  const pool = step.pool
+    ? catalog.filter((c) => step.pool!.includes(c.id))
+    : step.zone === 'hand'
       ? p.hand
       : step.zone === 'deck'
         ? p.deck
@@ -435,7 +494,8 @@ function draw(s: Game, p: number) {
   const x = s.players[p],
     c = x.deck.shift();
   if (c) {
-    if (x.hand.length < 10) x.hand.push({ ...c, heldSince: s.events?.length ?? 0 });
+    if (x.hand.length < (x.maxHandSize ?? 10))
+      x.hand.push({ ...c, heldSince: s.events?.length ?? 0, heldTurn: s.turn });
     else {
       x.grave.push(printedCard(c));
       note(s, `${x.name} burns ${c.name}`);
@@ -458,7 +518,7 @@ function nextDiscount(p: Player, c: Card) {
     .reduce((n, d) => n + d.amount, 0);
 }
 export function handCost(p: Player, c: Card) {
-  return Math.max(0, c.cost - p.reduction - p.handReduction - nextDiscount(p, c));
+  return Math.max(0, cardCost(c) - p.reduction - p.handReduction - nextDiscount(p, c));
 }
 function getTarget(s: Game, t: Target) {
   if (!Number.isInteger(t.p) || !s.players[t.p] || s.players[t.p].health <= 0)
@@ -515,7 +575,10 @@ export function attackError(
     defender.stealth !== false
   )
     return 'Target has Stealth';
-  if (defender.immuneUntilTurn !== undefined && defender.immuneUntilTurn >= s.turn)
+  if (
+    ('immune' in defender && defender.immune) ||
+    (defender.immuneUntilTurn !== undefined && defender.immuneUntilTurn >= s.turn)
+  )
     return 'Target is Immune';
   if (unit?.rushOnly && target.uid === undefined) return 'Rush can only attack minions this turn';
   if (
@@ -523,6 +586,7 @@ export function attackError(
       (u) =>
         unitMechanics(u).includes('TAUNT') &&
         !unitMechanics(u).includes('STEALTH') &&
+        !u.immune &&
         !(u.immuneUntilTurn !== undefined && u.immuneUntilTurn >= s.turn),
     ) &&
     (!('card' in defender) || !unitMechanics(defender).includes('TAUNT'))
@@ -556,7 +620,11 @@ function heal(target: Player | Unit, amount: number, controller?: Player, state?
 function damage(s: Game, t: Target, n: number) {
   const x = getTarget(s, t);
   const dealt = n;
-  if (x.immuneUntilTurn !== undefined && x.immuneUntilTurn >= s.turn) return 0;
+  if (
+    ('immune' in x && x.immune) ||
+    (x.immuneUntilTurn !== undefined && x.immuneUntilTurn >= s.turn)
+  )
+    return 0;
   if ('shield' in x && x.shield && n > 0) {
     x.shield = false;
     return 0;
@@ -653,7 +721,13 @@ function settle(s: Game) {
   }
 }
 function printedCard(c: Card): Card {
-  const { modifiers: _modifiers, printedCost, ...printed } = c;
+  const {
+    modifiers: _modifiers,
+    printedCost,
+    temporaryCosts: _temporaryCosts,
+    temporaryUntilTurn: _temporaryUntilTurn,
+    ...printed
+  } = c;
   return { ...printed, cost: printedCost ?? c.cost };
 }
 function summon(
@@ -697,9 +771,10 @@ function summon(
   return x.board[position].uid;
 }
 export function effectTargets(s: Game, player: number, card: Card): Target[] {
-  const rule = targetFor(effectFor(card));
+  const activeEffect = targetingEffect(s, player, card);
+  const rule = targetFor(activeEffect);
   if (!rule) return [];
-  const effect = effectFor(card),
+  const effect = activeEffect,
     selector = effect?.type === 'script' ? scriptTarget(effect.steps) : undefined;
   return s.players
     .flatMap((p, index) =>
@@ -724,7 +799,8 @@ export function effectTargets(s: Game, player: number, card: Card): Target[] {
       if (
         t.p !== player &&
         'card' in chosen &&
-        (unitMechanics(chosen).includes('STEALTH') ||
+        (chosen.immune ||
+          unitMechanics(chosen).includes('STEALTH') ||
           (chosen.immuneUntilTurn !== undefined && chosen.immuneUntilTurn >= s.turn))
       )
         return false;
@@ -741,7 +817,7 @@ export function effectTargetError(
   card: Card,
   target?: Target,
 ): string | null {
-  const rule = targetFor(effectFor(card));
+  const rule = targetFor(targetingEffect(s, player, card));
   if (!rule) return null;
   const legal = effectTargets(s, player, card);
   // A targeted Battlecry may be played without its effect if no target exists.
@@ -754,6 +830,22 @@ export function effectTargetError(
       : rule === 'minion'
         ? 'Choose a minion for the Battlecry'
         : 'Choose a character target';
+}
+function targetingEffect(s: Game, player: number, card: Card): Effect | undefined {
+  const e = effectFor(card);
+  if (e?.type !== 'script') return e;
+  const remaining = s.players[player].mana - handCost(s.players[player], card);
+  return {
+    type: 'script',
+    steps: e.steps.flatMap((step) =>
+      step.op === 'if' && step.condition?.stat === 'remaining-mana'
+        ? remaining <= (step.condition.max ?? Infinity) &&
+          remaining >= (step.condition.min ?? -Infinity)
+          ? (step.steps ?? [])
+          : (step.elseSteps ?? [])
+        : [step],
+    ),
+  };
 }
 function applyStatModifier(
   s: Game,
@@ -815,6 +907,7 @@ function scriptedDamage(
   const dealt = damage(s, target, amount),
     u = s.players[player].board.find((u) => u.uid === sourceUid),
     keys = u ? unitMechanics(u) : (source.mechanics ?? []);
+  if (dealt > 0 && freezesOnDamage(source) && !u?.silenced) freezeCharacter(s, target);
   if (dealt > 0 && keys.includes('POISONOUS') && target.uid !== undefined)
     getTarget(s, target).health = 0;
   if (dealt > 0 && keys.includes('LIFESTEAL')) {
@@ -823,7 +916,25 @@ function scriptedDamage(
   }
   return dealt;
 }
+function freezeCharacter(s: Game, t: Target) {
+  if (s.players[t.p].health <= 0) return;
+  const x = getTarget(s, t);
+  x.frozen = true;
+  x.freezeSkipEnd =
+    s.active === t.p && ('attacksRemaining' in x ? !x.ready || !x.attacksRemaining : !x.heroReady);
+}
 const scriptOperations = new Set([
+  'missiles-then',
+  'summon-until',
+  'random-damage',
+  'future-play',
+  ...foundationOperations,
+  'deck-token',
+  'consume',
+  'set-minion-health',
+  'edge-damage',
+  'remove-keyword',
+  'deck-order',
   'overload',
   'random-attack',
   'choose-hand',
@@ -900,6 +1011,147 @@ function runScript(
     const step = steps[n],
       amount = scriptNumber(s, player, step.amount, sourceUid);
     if (!scriptOperations.has(step.op)) throw Error(`Unknown scripted effect: ${step.op}`);
+    if (step.op === 'summon-until') {
+      do {
+        if (p.board.length >= 7) break;
+        runScript(
+          s,
+          player,
+          [{ op: 'summon-token', token: step.token, amount: 1 }],
+          undefined,
+          position,
+          source,
+          sourceUid,
+        );
+      } while (
+        s.players.some(
+          (owner, i) => i !== player && owner.health > 0 && owner.board.length > p.board.length,
+        )
+      );
+      continue;
+    }
+    if (step.op === 'missiles-then') {
+      const before = (s.events ?? []).filter((e) => e.type === 'death').length;
+      runScript(s, player, [{ ...step, op: 'missiles' }], undefined, position, source, sourceUid);
+      settle(s);
+      if ((s.events ?? []).filter((e) => e.type === 'death').length > before)
+        runScript(s, player, step.steps ?? [], undefined, position, source, sourceUid);
+      continue;
+    }
+    if (step.op === 'random-damage') {
+      runScript(
+        s,
+        player,
+        [
+          {
+            ...step,
+            op: 'damage',
+            amount: amount + random(s, (step.until ?? amount) - amount + 1),
+          },
+        ],
+        target,
+        position,
+        source,
+        sourceUid,
+      );
+      continue;
+    }
+    if (step.op === 'future-play') {
+      (p.playEffects ??= []).push({
+        source,
+        filter: step.filter ?? { type: 'MINION' },
+        remaining: amount,
+        steps: step.steps ?? [],
+      });
+      note(s, `${source.name} enhances the next ${amount} matching minions played`);
+      continue;
+    }
+    if (
+      resolveFoundation(s, player, step, source, sourceUid, amount, target, {
+        random: (n) => (n > 0 ? random(s, n) : 0),
+        shuffle: (cs) => shuffle(s, cs),
+        matches: (c, f, u) => matchesCard(c, f, p, u),
+        add: (i, c) => addGenerated(s, i, c),
+        draw: () => draw(s, player),
+        note: (t) => note(s, t),
+        event: (t, n) => event(s, player, t, n),
+        damage: (t, n, u) =>
+          scriptedDamage(s, player, t, n, u?.card ?? source, u?.uid ?? sourceUid),
+        heal: (u, n) => heal(u, n, p, s),
+        healingBonus: healingBonus(p),
+        buff: (u, a, h) => applyStatModifier(s, u, player, { attack: a, health: h }, source),
+        keys: unitMechanics,
+        targets: (e) => scriptTargets(s, player, e, target, sourceUid, position),
+        get: (t) => getTarget(s, t),
+        run: (e, t) => runScript(s, player, e, t, position, source, sourceUid),
+        catalog,
+      })
+    )
+      continue;
+    if (step.op === 'deck-token') {
+      const c = catalog.find((c) => c.id === step.token);
+      if (c) p.deck.push(structuredClone(c));
+      note(s, `${source.name} places a card on the bottom of the deck`);
+      continue;
+    }
+    if (step.op === 'deck-order') {
+      if (step.mode === 'reverse') p.deck.reverse();
+      else {
+        shuffle(s, p.deck);
+        p.deck.sort((a, b) => b.cost - a.cost);
+      }
+      note(s, `${source.name} reorders the deck`);
+      continue;
+    }
+    if (step.op === 'edge-damage') {
+      for (const [i, owner] of s.players.entries()) {
+        if (i === player || owner.health <= 0) continue;
+        const edges = [...new Set([owner.board[0], owner.board.at(-1)])].filter(Boolean) as Unit[];
+        for (const u of edges)
+          scriptedDamage(s, player, { p: i, uid: u.uid }, amount, source, sourceUid);
+      }
+      note(s, `${source.name} damages the outermost enemy minions`);
+      continue;
+    }
+    if (step.op === 'consume') {
+      const victims = scriptTargets(s, player, step, target, sourceUid, position);
+      for (const t of victims) {
+        const victim = getTarget(s, t);
+        if (!('card' in victim)) continue;
+        const stats = { attack: victim.attack, health: victim.health };
+        victim.health = 0;
+        const self = p.board.find((u) => u.uid === sourceUid);
+        if (self && !['hero-damage', 'discard', 'board-attack'].includes(step.mode ?? ''))
+          applyStatModifier(
+            s,
+            self,
+            player,
+            {
+              attack: step.mode === 'stats' ? stats.attack : (step.attack ?? 0),
+              health: ['stats', 'health'].includes(step.mode ?? '')
+                ? stats.health
+                : (step.health ?? 0),
+            },
+            source,
+          );
+        if (step.mode === 'hero-damage') damage(s, { p: player }, stats.health);
+        if (step.mode === 'board-attack')
+          for (const u of p.board.filter((u) => u.health > 0))
+            applyStatModifier(s, u, player, { attack: stats.attack, health: 0 }, source);
+        if (step.mode === 'discard')
+          runScript(
+            s,
+            player,
+            [{ op: 'discard', amount: 1 }],
+            undefined,
+            position,
+            source,
+            sourceUid,
+          );
+        note(s, `${source.name} destroys ${victim.card.name} and gains stats`);
+      }
+      continue;
+    }
     if (step.op === 'overload') {
       p.overload = (p.overload ?? 0) + amount;
       note(s, `${p.name} overloads ${amount} Mana Crystals next turn`);
@@ -1038,12 +1290,14 @@ function runScript(
       continue;
     }
     if (step.op === 'joust') {
-      const options = p.deck.filter((c) => c.type === 'MINION');
+      const options = p.deck.filter((c) => matchesCard(c, step.filter ?? { type: 'MINION' }, p));
       const own = options.length ? options[random(s, options.length)] : undefined;
       let win = !!own;
       for (const [i, owner] of s.players.entries())
         if (i !== player && owner.health > 0) {
-          const enemies = owner.deck.filter((c) => c.type === 'MINION');
+          const enemies = owner.deck.filter((c) =>
+            matchesCard(c, step.filter ?? { type: 'MINION' }, owner),
+          );
           const enemy = enemies.length ? enemies[random(s, enemies.length)] : undefined;
           if (enemy && (!own || own.cost <= enemy.cost)) win = false;
           note(
@@ -1119,6 +1373,9 @@ function runScript(
           `${source.name} deals ${dealt} damage to ${'card' in u ? u.card.name : s.players[t.p].name}`,
         );
         const killed = u.health <= 0;
+        if (step.mode === 'excess-draw')
+          for (let i = 0; i < (killed ? Math.max(0, dealt - before) : 0) && p.health > 0; i++)
+            draw(s, player);
         const trigger =
           step.mode === 'survives'
             ? !killed
@@ -1131,11 +1388,12 @@ function runScript(
       continue;
     }
     if (step.op === 'if') {
-      if (scriptCondition(s, player, step.condition!, sourceUid)) {
+      const passed = scriptCondition(s, player, step.condition!, sourceUid);
+      if (passed || step.elseSteps) {
         runScript(
           s,
           player,
-          [...step.steps!, ...steps.slice(n + 1)],
+          [...(passed ? step.steps! : step.elseSteps!), ...steps.slice(n + 1)],
           target,
           position,
           source,
@@ -1216,7 +1474,26 @@ function runScript(
       continue;
     }
     if (step.op === 'destroy-zone') {
-      p.deck = p.deck.filter((c) => !matchesCard(c, step.filter, p));
+      const owners = step.allPlayers
+        ? s.players
+        : step.enemy
+          ? s.players.filter((x) => x !== p)
+          : [p];
+      for (const owner of owners)
+        if (owner.health > 0)
+          for (const zone of step.zone === 'hand and deck'
+            ? (['hand', 'deck'] as const)
+            : ([step.zone === 'hand' ? 'hand' : 'deck'] as const)) {
+            let victims = owner[zone].filter((c) => matchesCard(c, step.filter, owner));
+            if (step.mode === 'top') victims = victims.slice(0, amount);
+            if (step.mode === 'keep-highest')
+              victims = shuffle(s, [...victims])
+                .sort((a, b) => b.cost - a.cost)
+                .slice(step.until ?? 0);
+            if (step.random) victims = victims.length ? [victims[random(s, victims.length)]] : [];
+            owner[zone] = owner[zone].filter((c) => !victims.includes(c));
+            owner.grave.push(...victims.map(printedCard));
+          }
       note(s, `${source.name} removes matching cards from ${p.name}'s deck`);
       continue;
     }
@@ -1258,6 +1535,7 @@ function runScript(
       }
       if (step.random && options.length) options = [options[random(s, options.length)]];
       for (const c of options) addGenerated(s, player, c);
+      note(s, `${source.name} copies ${options.length} matching hand cards`);
       continue;
     }
     if (step.op === 'copy-enemy-decks') {
@@ -1284,20 +1562,53 @@ function runScript(
           : step.enemy
             ? s.players.flatMap((p, i) => (p.health > 0 && i !== player ? [i] : []))
             : [player];
-      if (c) for (const owner of owners) for (let i = 0; i < amount; i++) addGenerated(s, owner, c);
+      if (c)
+        for (const owner of owners) {
+          const count = step.until
+            ? Math.max(0, (s.players[owner].maxHandSize ?? 10) - s.players[owner].hand.length)
+            : amount;
+          for (let i = 0; i < count; i++) addGenerated(s, owner, c);
+        }
       note(s, `${source.name} adds ${amount} generated cards to hand`);
       continue;
     }
     if (step.op === 'recruit') {
+      if (step.enemy || step.allPlayers) {
+        for (const [i, owner] of s.players.entries())
+          if (owner.health > 0 && (step.allPlayers || i !== player))
+            runScript(
+              s,
+              i,
+              [{ ...step, enemy: false, allPlayers: false }],
+              undefined,
+              owner.board.length,
+              source,
+            );
+        continue;
+      }
       const zone = step.zone as 'hand' | 'deck';
+      const recruitedSets = new Set<string>();
       for (let i = 0; i < amount && p.board.length < 7; i++) {
         const options = p[zone]
           .map((c, index) => ({ c, index }))
-          .filter((o) => o.c.type === 'MINION' && matchesCard(o.c, step.filter, p));
+          .filter(
+            (o) =>
+              o.c.type === 'MINION' &&
+              matchesCard(o.c, step.filter, p) &&
+              (!step.distinct || !recruitedSets.has(o.c.set)) &&
+              (step.mode !== 'affordable' || handCost(p, o.c) <= p.mana),
+          );
         if (!options.length) break;
         const { c, index } = options[random(s, options.length)];
+        recruitedSets.add(c.set);
         if (!step.copy) p[zone].splice(index, 1);
         const uid = summon(s, player, c, false, Math.min(position + i, p.board.length));
+        if (step.attack !== undefined && step.health !== undefined) {
+          const u = p.board.find((u) => u.uid === uid)!;
+          u.attackBase = u.attack = step.attack;
+          u.maxHealth = u.health = step.health;
+          u.modifiers = [];
+        }
         if (step.keyword) {
           const u = p.board.find((u) => u.uid === uid)!;
           u.keywords = [step.keyword];
@@ -1328,11 +1639,16 @@ function runScript(
       }
       const pool = scriptPool(s, player, step),
         options: Card[] = [];
-      if (step.mode === 'dredge') options.push(...structuredClone(p.deck.slice(-3)));
+      if (step.mode === 'dredge')
+        options.push(
+          ...structuredClone(
+            (step.zone === 'enemy-deck' ? s.players[step.owner!].deck : p.deck).slice(-3),
+          ),
+        );
       while (
         step.mode !== 'dredge' &&
         pool.length &&
-        options.length < (step.op === 'choose-hand' ? 10 : 3)
+        options.length < (step.op === 'choose-hand' ? (p.maxHandSize ?? 10) : 3)
       )
         options.push(structuredClone(pool.splice(random(s, pool.length), 1)[0]));
       if (!options.length) {
@@ -1360,7 +1676,14 @@ function runScript(
         continue;
       }
       let count =
-        step.until === undefined ? amount : Math.max(0, Math.min(10, step.until) - p.hand.length);
+        step.until === undefined
+          ? amount
+          : Math.max(
+              0,
+              (step.mode === 'fill-hand'
+                ? (p.maxHandSize ?? 10)
+                : Math.min(p.maxHandSize ?? 10, step.until)) - p.hand.length,
+            );
       const drawnNames = new Set<string>();
       for (let i = 0; i < count && p.health > 0; i++) {
         if (step.filter || step.mode || step.summon) {
@@ -1397,6 +1720,15 @@ function runScript(
             copy.printedCost ??= copy.cost;
             copy.cost = step.setCost;
           }
+          if (step.expires === 'turn') {
+            copy.cost = c.cost;
+            (copy.temporaryCosts ??= []).push({
+              turn: s.turn,
+              reduction: step.reduction,
+              set: step.setCost ?? undefined,
+              source: source.name,
+            });
+          }
           if (step.summon && copy.type === 'MINION' && p.board.length < 7)
             summon(s, player, copy, false, Math.min(position, p.board.length));
           else addGenerated(s, player, copy);
@@ -1408,16 +1740,34 @@ function runScript(
     if (step.op === 'generate') {
       for (const owner of step.allPlayers
         ? s.players.flatMap((p, i) => (p.health > 0 ? [i] : []))
-        : [player])
+        : step.enemy
+          ? s.players.flatMap((x, i) => (i !== player && x.health > 0 ? [i] : []))
+          : [player])
         for (let i = 0; i < amount; i++) {
-          const pool = scriptPool(s, owner, step);
+          const pool = scriptPool(s, owner, step).filter(
+            (c) =>
+              (step.mode !== 'affordable' || c.cost <= p.mana) &&
+              (step.mode !== 'opponent-class' ||
+                s.players.some(
+                  (x, i) =>
+                    i !== player && x.health > 0 && (c.classes ?? [c.cardClass]).includes(x.class),
+                )),
+          );
           if (pool.length) {
             const c = structuredClone(pool[random(s, pool.length)]);
+            if (step.expires === 'turn') c.temporaryUntilTurn = s.turn;
+            if (step.setCost !== undefined && step.setCost !== null) {
+              c.printedCost ??= c.cost;
+              c.cost = step.setCost;
+            }
             if (owner === player && step.reduction) {
               c.printedCost ??= c.cost;
               c.cost = Math.max(0, c.cost - step.reduction);
             }
+            const before = s.players[owner].hand.length;
             addGenerated(s, owner, c);
+            if (step.destination === 'left' && s.players[owner].hand.length > before)
+              s.players[owner].hand.unshift(s.players[owner].hand.pop()!);
           }
         }
       note(s, `${source.name} adds cards to ${p.name}'s hand`);
@@ -1429,6 +1779,7 @@ function runScript(
       for (const zone of zones) {
         let indices = p[zone].flatMap((c, i) => (matchesCard(c, step.filter, p) ? [i] : []));
         if (step.random && indices.length) indices = [indices[random(s, indices.length)]];
+        if (step.until !== undefined) indices = indices.slice(0, step.until);
         p[zone] = p[zone].map((c, i) =>
           indices.includes(i)
             ? {
@@ -1460,7 +1811,9 @@ function runScript(
     if (['summon-pool', 'summon-token', 'summon-self'].includes(step.op)) {
       const owners = step.enemy
         ? s.players.flatMap((p, i) => (i !== player && p.health > 0 ? [i] : []))
-        : [player];
+        : step.allPlayers
+          ? s.players.flatMap((p, i) => (p.health > 0 ? [i] : []))
+          : [player];
       for (const owner of owners)
         for (let i = 0; i < amount && s.players[owner].board.length < 7; i++) {
           const pool =
@@ -1524,16 +1877,31 @@ function runScript(
           note(s, `${label}'s Health is set to ${amount}`);
         }
         if (step.op === 'immune') {
-          x.immuneUntilTurn = s.turn;
-          note(s, `${label} is Immune this turn`);
+          if (step.permanent && 'card' in x) x.immune = true;
+          else x.immuneUntilTurn = s.turn;
+          note(s, `${label} is Immune${step.permanent ? '' : ' this turn'}`);
         }
         if (!('card' in x)) {
+          if (step.op === 'keyword' && step.keyword === 'DIVINE_SHIELD') {
+            x.shield = true;
+            note(s, `${label} gains Divine Shield`);
+          }
           if (step.op === 'buff' && step.attack) {
             const scale = scriptNumber(s, player, step.scale ?? 1, sourceUid);
             x.heroAttack += step.attack * scale;
             note(s, `${label} gains ${step.attack * scale} hero Attack this turn`);
           }
           continue;
+        }
+        if (step.op === 'set-minion-health') {
+          x.maxHealth = x.health = amount;
+          // Keep Attack enchantments; Health is a new absolute value.
+          for (const m of x.modifiers ?? []) m.health = 0;
+          note(s, `${label}'s Health is set to ${amount}`);
+        }
+        if (step.op === 'remove-keyword' && step.keyword === 'STEALTH') {
+          x.stealth = false;
+          note(s, `${label} loses Stealth`);
         }
         if (step.op === 'trigger-deathrattle') {
           for (let i = 0; i < (step.amount === undefined ? 1 : amount); i++) {
@@ -1614,6 +1982,16 @@ function runScript(
               fresh.maxHealth = fresh.health = step.health;
               fresh.modifiers = [];
             }
+            if (step.keyword)
+              runScript(
+                s,
+                owner,
+                [{ op: 'keyword', scope: 'target', target: 'minion', keyword: step.keyword }],
+                { p: owner, uid },
+                position,
+                source,
+                sourceUid,
+              );
           }
         }
         if (step.op === 'steal' && t.p !== player && p.board.length < 7) {
@@ -1645,11 +2023,14 @@ function runScript(
         }
         if (step.op === 'keyword') {
           const before = unitMechanics(x);
-          x.keywords = [...new Set([...(x.keywords ?? []), step.keyword!])];
+          if (step.expires === 'turn')
+            (x.temporaryKeywords ??= []).push({ keyword: step.keyword!, turn: s.turn });
+          else x.keywords = [...new Set([...(x.keywords ?? []), step.keyword!])];
           (x.keywordSources ??= []).push({
             keyword: step.keyword!,
             sourceCardId: source.id,
             sourceName: source.name,
+            ...(step.expires === 'turn' ? { expiresAtTurn: s.turn } : {}),
           });
           if (step.keyword === 'STEALTH') x.stealth = true;
           if (step.keyword === 'DIVINE_SHIELD') x.shield = true;
@@ -1672,6 +2053,7 @@ function runScript(
           x.silenced = true;
           x.keywords = [];
           x.keywordSources = [];
+          x.temporaryKeywords = [];
           x.grantedDeathrattles = [];
           x.modifiers = [];
           x.attackBase = x.card.attack ?? 0;
@@ -1681,6 +2063,7 @@ function runScript(
           x.shield = false;
           x.frozen = false;
           delete x.immuneUntilTurn;
+          delete x.immune;
           x.attacksRemaining = Math.max(0, 1 - usedAttacks);
           if (x.summonedTurn === s.turn) x.ready = false;
           note(s, `${label} is Silenced`);
@@ -1820,7 +2203,7 @@ function runScript(
         if (step.op === 'bounce') {
           const controller = s.players[t.p];
           const owner = s.players[x.commander ? (x.commanderOwner ?? t.p) : t.p];
-          if (owner.hand.length >= 10) {
+          if (owner.hand.length >= (owner.maxHandSize ?? 10)) {
             x.health = 0;
             note(s, `${label} is destroyed because its owner's hand is full`);
             continue;
@@ -1835,6 +2218,15 @@ function runScript(
             c.printedCost ??= c.cost;
             c.cost = step.setCost;
           }
+          if (step.expires === 'turn') {
+            c.cost = c.printedCost ?? c.cost;
+            (c.temporaryCosts ??= []).push({
+              turn: s.turn,
+              set: step.setCost ?? undefined,
+              reduction: step.reduction,
+              source: source.name,
+            });
+          }
           if (step.attack || step.health)
             c.modifiers = [
               {
@@ -1844,7 +2236,7 @@ function runScript(
                 health: step.health ?? 0,
               },
             ];
-          if (owner.hand.length < 10) {
+          if (owner.hand.length < (owner.maxHandSize ?? 10)) {
             owner.hand.push({ ...c, heldSince: s.events?.length ?? 0 });
             if (x.commander) owner.zone = 'hand';
           } else {
@@ -2027,9 +2419,27 @@ function resolve(s: Game) {
   }
   if (w.card.type === 'MINION') {
     sourceUid = summon(s, w.caster, w.card, w.commander, w.position);
+    p.board.find((u) => u.uid === sourceUid)!.playedCost = w.cost ?? handCost(p, w.card);
     if (w.command) p.casts++;
   }
   event(s, w.caster, 'play', undefined, w.card);
+  if (sourceUid !== undefined) {
+    const queued = [...(p.playEffects ?? [])];
+    for (const q of queued)
+      if (q.remaining > 0 && matchesCard(w.card, q.filter, p)) {
+        q.remaining--;
+        runScript(
+          s,
+          w.caster,
+          q.steps,
+          { p: w.caster, uid: sourceUid },
+          w.position ?? 0,
+          q.source,
+          sourceUid,
+        );
+      }
+    p.playEffects = queued.filter((q) => q.remaining > 0);
+  }
   if (e && validTarget) {
     if (battlecryFor(w.card)) note(s, `${p.name}'s ${w.card.name} triggers Battlecry`);
     runEffect(s, w.caster, e, w.target, (w.position ?? p.board.length - 1) + 1, w.card, sourceUid);
@@ -2077,6 +2487,28 @@ function advance(s: Game) {
   }
   if (s.winner !== null) return;
   expireTurnModifiers(s);
+  for (const owner of s.players) {
+    for (const zone of ['hand', 'deck'] as const) {
+      for (const c of owner[zone])
+        c.temporaryCosts = (c.temporaryCosts ?? []).filter((e) => e.turn > s.turn);
+      const expired = owner[zone].filter(
+        (c) =>
+          zone === 'hand' && c.temporaryUntilTurn !== undefined && c.temporaryUntilTurn <= s.turn,
+      );
+      for (const c of expired) {
+        owner.grave.push(printedCard(c));
+        note(s, `${owner.name} discards Temporary ${c.name}`);
+      }
+      owner[zone] = owner[zone].filter((c) => !expired.includes(c));
+    }
+  }
+  for (const owner of s.players)
+    for (const u of owner.board) {
+      u.temporaryKeywords = (u.temporaryKeywords ?? []).filter((k) => k.turn > s.turn);
+      u.keywordSources = (u.keywordSources ?? []).filter(
+        (k) => k.expiresAtTurn === undefined || k.expiresAtTurn > s.turn,
+      );
+    }
   const p = s.players[s.active];
   for (const x of [p, ...p.board])
     if (x.frozen) {
@@ -2252,6 +2684,20 @@ export function applyAction(state: Game, a: Action): Game {
       if (index < 0) throw Error('Chosen card is no longer in deck');
       p.deck.splice(index, 1);
     }
+    const destinationOwner =
+      choice.step.zone === 'enemy-deck' && choice.step.mode === 'dredge' ? choice.step.owner! : a.p;
+    if (destinationOwner !== a.p) {
+      const deck = s.players[destinationOwner].deck;
+      const index = deck.findIndex(
+        (x) => JSON.stringify(x) === JSON.stringify(choice.options[a.index]),
+      );
+      if (index < 0) throw Error('Chosen card is no longer in deck');
+      deck.splice(index, 1);
+    }
+    if (choice.step.setCost !== undefined && choice.step.setCost !== null) {
+      c.printedCost ??= c.cost;
+      c.cost = choice.step.setCost;
+    }
     if (choice.step.reduction) {
       c.printedCost ??= c.cost;
       c.cost = Math.max(0, c.cost - choice.step.reduction);
@@ -2262,6 +2708,48 @@ export function applyAction(state: Game, a: Action): Game {
     }
     if (choice.step.after === 'heal') heal(p, c.cost, p, s);
     if (choice.step.after === 'damage') damage(s, { p: a.p }, c.cost);
+    if (choice.step.after === 'source-attack') {
+      const self = p.board.find((u) => u.uid === choice.sourceUid);
+      if (self)
+        (c.modifiers ??= []).push({
+          sourceCardId: choice.source.id,
+          sourceName: choice.source.name,
+          attack: self.attack,
+          health: 0,
+        });
+    }
+    const matching = matchesCard(c, choice.step.filter, p);
+    const self = p.board.find((u) => u.uid === choice.sourceUid);
+    if (matching && choice.step.after === 'buff-matching' && self)
+      (c.modifiers ??= []).push({
+        sourceCardId: choice.source.id,
+        sourceName: choice.source.name,
+        attack: self.attack,
+        health: self.health,
+      });
+    if (matching && choice.step.after === 'damage-matching')
+      runScript(
+        s,
+        a.p,
+        [{ op: 'damage', scope: 'enemy-heroes', amount: choice.step.amount }],
+        undefined,
+        choice.position,
+        choice.source,
+        choice.sourceUid,
+      );
+    const summonChosen =
+      matching &&
+      ['summon-matching', 'copy-matching'].includes(choice.step.after ?? '') &&
+      p.board.length < 7;
+    if (summonChosen) {
+      const uid = summon(s, a.p, c, false, Math.min(choice.position, p.board.length));
+      const u = p.board.find((u) => u.uid === uid)!;
+      if (choice.step.attack !== undefined) {
+        u.attackBase = u.attack = choice.step.attack;
+        u.health = u.maxHealth = choice.step.health!;
+        u.modifiers = [];
+      }
+    }
     if (choice.step.after === 'enemy-draw') {
       for (const [i, owner] of s.players.entries())
         if (i === choice.step.owner && owner.health > 0) {
@@ -2275,8 +2763,11 @@ export function applyAction(state: Game, a: Action): Game {
     if (choice.step.destination === 'shuffle') {
       p.deck.splice(random(s, p.deck.length + 1), 0, c);
       note(s, `${choice.source.name} shuffles the chosen card into ${p.name}'s deck`);
+    } else if (matching && choice.step.after === 'draw-matching') addGenerated(s, a.p, c);
+    else if (summonChosen && choice.step.after === 'summon-matching') {
+      /* Card moved from deck to board. */
     } else if (choice.step.destination === 'top') {
-      p.deck.unshift(c);
+      s.players[destinationOwner].deck.unshift(c);
       note(s, `${choice.source.name} arranges ${p.name}'s next draw`);
     } else addGenerated(s, a.p, c);
     note(s, `${p.name} completes ${choice.source.name}'s card choice`);
@@ -2304,7 +2795,7 @@ export function applyAction(state: Game, a: Action): Game {
       const w = s.pending,
         caster = s.players[w.caster];
       if (w.command) caster.zone = 'command';
-      else if (caster.hand.length < 10) caster.hand.push(w.card);
+      else if (caster.hand.length < (caster.maxHandSize ?? 10)) caster.hand.push(w.card);
       else caster.grave.push(printedCard(w.card));
       note(s, `${p.name} interrupts ${w.card.name}`);
       s.pending = null;
@@ -2324,7 +2815,7 @@ export function applyAction(state: Game, a: Action): Game {
     p.zone = a.destination;
     p.replacement = false;
     if (a.destination === 'hand') {
-      if (p.hand.length >= 10) throw Error('Hand full');
+      if (p.hand.length >= (p.maxHandSize ?? 10)) throw Error('Hand full');
       p.hand.push({ ...p.commander, heldSince: s.events?.length ?? 0 });
     }
     if (a.destination === 'grave') p.grave.push(p.commander);
@@ -2363,6 +2854,7 @@ export function applyAction(state: Game, a: Action): Game {
       if (s.players[n].health > 0 && s.players[n].reserve >= 3) queue.push(n);
     }
     s.pending = {
+      cost,
       caster: a.p,
       card: c,
       command: !!a.command,
@@ -2393,8 +2885,9 @@ export function applyAction(state: Game, a: Action): Game {
         );
     };
     if (dealt > 0 && u && unitMechanics(u).includes('POISONOUS') && 'attack' in t) t.health = 0;
+    let retaliation = 0;
     if ('attack' in t) {
-      const retaliation = damage(s, { p: a.p, uid: u?.uid }, t.attack);
+      retaliation = damage(s, { p: a.p, uid: u?.uid }, t.attack);
       if (retaliation > 0 && unitMechanics(t).includes('POISONOUS') && u) u.health = 0;
       if (unitMechanics(t).includes('LIFESTEAL')) restoreLifesteal(enemy, t, retaliation);
     }
@@ -2409,6 +2902,10 @@ export function applyAction(state: Game, a: Action): Game {
         delete p.weapon;
       }
     }
+    if (dealt > 0 && u && !u.silenced && freezesOnDamage(u.card)) freezeCharacter(s, a.target);
+    // A freezing defender must have dealt damage through any Shield/Immunity.
+    if (retaliation > 0 && 'card' in t && !t.silenced && freezesOnDamage(t.card))
+      freezeCharacter(s, { p: a.p, uid: u?.uid });
     note(
       s,
       `${u?.card.name ?? p.name} attacks ${'card' in t ? `${enemy.name}'s ${t.card.name}` : `${enemy.name}'s hero`} for ${dealt}${'card' in t ? `; defender ${Math.max(0, t.health)}/${t.maxHealth} health` : ''}${u ? `; attacker ${Math.max(0, u.health)}/${u.maxHealth} health` : ''}`,
@@ -2469,7 +2966,7 @@ export function debugAction(state: Game, a: DebugAction): Game {
       );
       if (a.field === 'mana') p.maxMana = Math.max(p.maxMana, p.mana);
     } else if (a.type === 'add') {
-      if (p.hand.length >= 10) throw Error('Hand full');
+      if (p.hand.length >= (p.maxHandSize ?? 10)) throw Error('Hand full');
       p.hand.push({ ...structuredClone(a.card), heldSince: s.events?.length ?? 0 });
     } else {
       if (a.card.type !== 'MINION') throw Error('Only minions can be summoned');

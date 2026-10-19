@@ -17,8 +17,18 @@ for (const [name, file] of [
 const compiled = ts.transpileModule(source, {
   compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
 }).outputText;
+const cardHelpers = ts.transpileModule(
+  await readFile(new URL('../src/cards.ts', import.meta.url), 'utf8'),
+  {
+    compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
+  },
+).outputText;
+const runnable = compiled.replace(
+  /from ['"]\.\/cards['"]/,
+  `from 'data:text/javascript;base64,${Buffer.from(cardHelpers).toString('base64')}'`,
+);
 const { supported, battlecryFor, deathrattleFor, battlecries } = await import(
-  `data:text/javascript;base64,${Buffer.from(compiled).toString('base64')}`
+  `data:text/javascript;base64,${Buffer.from(runnable).toString('base64')}`
 );
 const cards = JSON.parse(
   await readFile(new URL('../public/data/cards.json', import.meta.url), 'utf8'),

@@ -1,36 +1,33 @@
 # Themed test decks — 2026-10-18
 
-Open **Play** or **Testing**, choose **Test deck**, then press **New game**. The existing Starter remains available. Changing the selector does not replace an active match until New game is pressed. Collection drafts and saved decks are unchanged.
+Open **Play** or **Testing**, choose **Test deck**, then press **New game**. Starter remains available. Each list contains 100 supported cards, singleton by name, with a separate King Krush commander. These are mixed-class local tests, not verified Wild decks. Each has at least 50 cards costing four or less.
 
-Each premade has 100 supported cards, singleton by name, with King Krush as a separate test commander. These are explicitly mixed-class local sandbox decks, not claims of legal Wild decks. Each hero uses an implemented class power. The other three seats receive themed opponents rather than copies of the selected deck. All lists have a curve that includes at least 50 cards costing four or less.
+| Deck | Theme | Repeatable test |
+| --- | --- | --- |
+| **Token Workshop — new** | Token placement, board cap, Shields | Alleycat/Desert Hare, Giggling Inventor → Blood Knight, Argent Braggart |
+| **Hungry Board — new** | Sacrifices, current stats, Deathrattle ordering | Alleycat → Sanguine Reveler/Ratcatcher; place Void Terror between neighbors |
+| **Deck Laboratory — new** | Dredge, temporary Costs, linked draws | Excavation Specialist → Novice Engineer; Sharp-Eyed Lookout; Deepwater Evoker |
+| Ember & Ice | Damage, Freeze, Silence | Targeted Archer, Freeze/cleanse, one target versus every opponent; now includes Varden |
+| Last Rites | Deathrattles, tokens, resurrection | Copy Loot Hoarder with Mok'Nathal Lion, trigger or kill the Lion |
+| Iron Reserve | Armor, self-damage, weapons | Crystallizer ordering, durability, enemy weapon removal |
+| Life Garden | Healing, Lifesteal, buffs | Cleansing Cleric, Health above 40, current versus maximum Health |
+| Dragon School | Dragon prerequisites, placement | Hold Twilight Whelp, conditional Battlecries, adjacent effects |
+| Curiosity Cabinet | Discover, hand choices, deck order | Copy Chaos Strike with Grave Defiler; arrange the next draw with Sightless Watcher |
 
-| Deck              | Theme                              | Repeatable test                                                              |
-| ----------------- | ---------------------------------- | ---------------------------------------------------------------------------- |
-| Ember & Ice       | Damage, Freeze, Silence            | Choose an Archer target, Freeze a defender, remove Freeze with Silence       |
-| Last Rites        | Deathrattles, tokens, resurrection | Copy Loot Hoarder with Mok'Nathal Lion, then trigger or kill the Lion        |
-| Iron Reserve      | Armor, self-damage, weapons        | Crystallizer's ordered damage/Armor, weapon durability, enemy weapon removal |
-| Life Garden       | Healing, Lifesteal, buffs          | Cleansing Cleric bonuses, Health above 40, damage versus current/max Health  |
-| Dragon School     | Dragon prerequisites, placement    | Hold Twilight Whelp, compare conditional Battlecries and adjacent effects    |
-| Curiosity Cabinet | Discover, hand choices, deck order | Grave Defiler copies Chaos Strike; Sightless Watcher arranges the next draw  |
+**Guided opening** gives you five named opening cards, with matching four-card openings for opponents; the rest is shuffled. Normal mana costs still apply. For quick tests, open Testing, pause bots, and use Scenario controls → mana → 10 → Apply value. **Deck & test goals** shows all 100 cards and three specific goals. Disable Guided opening for shuffled games. Opponents use different themes rather than mirroring the selected list.
 
-**Guided opening** puts the five listed cards first for you and the appropriate four opening cards in each opponent's hand. The remaining cards are shuffled. Turn one still starts at one mana; normal costs and rules apply. Turn this off to shuffle the whole deck. In Testing, Pause bots and Scenario controls can speed up a particular combination. **Deck & test goals** displays the three goals, exact opening and full 100-card list.
+Cards shown in hand have their **current payable mana cost** over the artwork. Temporary discounts expire at the end of the turn without removing earlier permanent discounts. **Active effects** shows future-play buffs and remaining counts, expanded hand limits, Overload and lasting effects. Inspectors distinguish temporary keyword grants from grants lasting until the minion leaves play. Hero Divine Shield and permanent minion Immunity have visible labels.
 
-Lists use authored core cards, theme affinity and fixed mana-curve quotas. Alternate printings are deduplicated by name. Opening prerequisites are mandatory and fail validation if unavailable; unsupported optional examples are excluded. Every card actually selected is checked with the live support registry. Changing implementation coverage may change filler cards; exported scenarios retain their actual deck contents.
+## Coverage and rules
 
-## Battlecry progress and rules
+Current support: **898 Battlecry names / 968 collection printings** and **1,633 supported collection records**. The latest pass implements **246 of the original 315 foundation candidates** and four additional names. **69 of that batch remain blocked**; the [complete report](FOUNDATION-BATTLECRIES.md) lists each one and its next dependency. Across the whole collection, **997 Battlecry names remain unsupported**. No approximate effect substitutes for unrecognized rules.
 
-This expansion adds **106 more unique Battlecry minion names**, raising coverage from 542 to **648 names / 705 printings**. Total supported collection records: **1,337**. Combined Battlecry/Deathrattle coverage: **791 names / 858 printings**. See the [106-name manifest](BATTLECRY-WAVE2-MANIFEST.md).
+New shared families include consuming live stats, linked draws, Dredge rewards, temporary costs, Menagerie selection, future-play buffs, deck ordering, burn/draw replacement, expanded hand limits, hero Divine Shield and permanent Immunity. Boom Bot Deathrattles and Ice Shard/Water Elemental freezing are implemented. Generated cards can have separately unsupported abilities, labeled effects pending; those cards cannot be played. Named pools and special summoned passives require exact definitions.
 
-Added families include Joust, Overload, next-card discounts, weapon/Armor removal, copied/granted/triggered Deathrattles, resurrection, stat/cost replacement on draws, hand choices, deck ordering, filtered control changes and selected lasting effects. Inspectors display copied Deathrattle sources; each seat's **Active effects** panel shows discounts, lasting summon/turn effects and locked mana. Printed and current stats continue to use the existing sword/drop display.
-
-Resurrection uses death events, excluding discarded or burned cards. It summons without Battlecries, respects the seven-minion cap and restores printed stats unless the effect specifies otherwise. Copied Deathrattles do not trigger immediately, survive the donor's death, and disappear when the recipient is Silenced or leaves play. A stolen commander's death returns it to the original owner's command zone. Overload locks crystals on the next own turn; discounts are consumed only by matching casts. End-of-turn self-copy effects require their source still in play and unsilenced; game-wide summon changes survive the source leaving play.
-
-Commander variants: Joust reveals one minion in each living player's deck and requires a strict win over every opponent, including ties as losses. Untargeted enemy weapon/Armor effects affect all living opponents. Enemy-deck Discover resolves a separate choice for each living opponent, and any draw rider moves that opponent's chosen original card. Generated card abilities remain independently labeled and may still be unsupported.
-
-**The full Battlecry list is not finished.** The [remaining backlog](BATTLECRY-REMAINING.md) contains **1,247 unique names**. Additional whole-clause patterns can cover some; many require new systems such as auras, Secrets, spell repetition, custom cards, expansion resources and delayed triggers. Unknown clauses remain blocked. Full text, including separate Deathrattles and Overload, must compile before a source is enabled. UI-only variants after `@` are normalized without dropping unrecognized gameplay clauses.
+Commander adaptations: untargeted effects involving the enemy or both/each players apply to all living opponents/players as appropriate. Twin Tyrant selects two distinct minions across all enemy boards. Joust must beat every opponent, with ties losing. Combined-hero Health means the total across living heroes. Taunt protects only its controller. Hero healing can exceed 40. Revival and direct summons do not trigger Battlecries, and consumed minions settle Deathrattles after the consuming transaction.
 
 ## Verification
 
-The production build passes with the existing large-bundle warning (approximately 2.65 MB JavaScript / 485 KB gzip). No database, image-storage or cloud schema changes were made. Ten compiler regressions pass, including new restriction/rider checks and rejection of unknown suffixes. Engine suites cover each generated printing plus independent family outcomes. All six premades complete full bot matches and replay identically.
+All nine decks are checked for supported cards, singleton names, distinct themes, curve quotas, reproducible openings and full bot matches with identical replays. Independent outcome tests cover draws, cost expiry, Dredge movement, consumption, Shields, Freeze, queued buffs, hand limits and special tokens. The compiler rejects unknown riders and misleading token descriptions. The 315-card progress report is checked against every original printing in the live registry.
 
-Browser checks verified the 100-card preview, selected-deck hand, copied Deathrattle inspector and a filtered Fel-spell hand choice that added exactly one copy. The complete board and hand fit at 1280×720, and no console errors were recorded. Run `npm test`, `npm run test:compiler`, `npm run build` and `npm run audit:battlecries` to reproduce the checks and inventories. Generated JSON reproduces byte for byte from the pinned metadata.
+Browser verification traced Deck Laboratory → guided hand → Scenario mana → Excavation Specialist → bottom-three choice → Novice Engineer → selected card at its discounted cost. The board, hand and action history agreed, with no browser errors. The database and image storage were not changed. Run `npm test`, `npm run test:compiler`, `npm run test:battlecry-groups`, `npm run build`, `npm run audit:foundation` and `npm run group:battlecries` to reproduce the checks and reports.

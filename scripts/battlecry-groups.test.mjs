@@ -136,8 +136,11 @@ test('reviewed exceptions use the pinned text and existing engine foundations', 
     'Enhance-o Mechano': 'damage-stats',
     'Primalfin Challenger': 'keyword-packages',
   };
-  for (const [name, primary] of Object.entries(expected))
-    assert.equal(report.entries.find((e) => e.name === name)?.primary, primary, name);
+  for (const [name, primary] of Object.entries(expected)) {
+    // Classification regressions remain useful after a card leaves the pending inventory.
+    const printings = cards.filter((c) => c.name === name && c.mechanics?.includes('BATTLECRY'));
+    assert.equal(classify(name, printings).primary, primary, name);
+  }
 });
 
 test('normalization handles formatting but the report never invents card rules', () => {

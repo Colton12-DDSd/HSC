@@ -1,6 +1,7 @@
 """Build-time, whole-text compiler. Unmatched text stays unsupported; no runtime text parsing."""
 import json, re, hashlib
 from battlecry_patterns import compile_more
+from foundation_patterns import compile_foundation
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 cards=json.loads((ROOT/'public/data/cards.json').read_text(encoding='utf8'))
@@ -19,6 +20,8 @@ def filt(t):
  t=re.sub(r'^(?:a |an |random )','',t)
  t=re.sub(r' from (?:your )?deck$','',t)
  t=t.replace('Stealthed minion','Stealth minion').replace('that has ','with ')
+ if t in ('Lackey','Lackeys'):return {'type':'MINION','nameSuffix':'Lackey'}
+ if t in ('Silver Hand Recruits','Silver Hand Recruit','Treant','Treants'):return {'type':'MINION','name':t.removesuffix('s')}
  if t in ('minion with Spell Damage','Spell Damage minion'):return {'type':'MINION','keyword':'SPELLPOWER'}
  m=re.fullmatch(r'minions? with (\d+) Health',t)
  if m:return {'type':'MINION','health':int(m[1])}
@@ -183,6 +186,8 @@ def condition(t):
 def compile(t):
  t=t.strip().rstrip('.')
  t=t[:1].upper()+t[1:]
+ extra=compile_foundation(t,compile,target,filt,num,keywords,all_cards,current_card,choose_token)
+ if extra is not None:return extra
  extra=compile_more(t,compile,target,filt,num,keywords,all_cards,current_card,choose_token)
  if extra is not None:return extra
 
@@ -468,8 +473,8 @@ def main():
  if isinstance(all_cards,dict):all_cards=all_cards.get('cards',[])
  catalog={c['id']:{k:v for k,v in c.items() if k in ['id','name','type','cost','attack','health','cardClass','classes','mechanics','race','races','rarity','set','text','spellSchool','collectible','dbfId','durability']} for c in all_cards}
  registry={};death_registry={};rejected=[]
- allowed=set(keywords.values())|{'BATTLECRY','DISCOVER','SILENCE','FREEZE','DEATHRATTLE','OVERLOAD'}
- for c in cards:
+ allowed=set(keywords.values())|{'BATTLECRY','DISCOVER','SILENCE','FREEZE','DEATHRATTLE','OVERLOAD','DREDGE'}
+ for c in [*cards,*[c for c in all_cards if not c.get('collectible')]]:
   if c['type']!='MINION' or 'BATTLECRY' not in c.get('mechanics',[]):continue
   current_card=c
   t=clean(c.get('text',''));prefix=re.match(r'^(?:(?:Taunt|Rush|Charge|Lifesteal|Windfury|Poisonous|Divine Shield|Stealth|Reborn)[.,]? )*Battlecry(?: and Deathrattle)?: (.+)$',t)
@@ -497,7 +502,9 @@ def main():
  def tokens(steps):
   for step in steps:
    if 'token' in step:yield step['token']
+   if 'pool' in step and step['op'] in ('generate','discover','shuffle-pool','summon-pool'):yield from step['pool']
    if 'steps' in step:yield from tokens(step['steps'])
+   if 'elseSteps' in step:yield from tokens(step['elseSteps'])
  used={tid for e in [*registry.values(),*death_registry.values()] for tid in tokens(e['steps'])}
  compact={c['id']:{k:v for k,v in c.items() if k in ['id','name','type','cost','attack','health','cardClass','classes','mechanics','race','races','rarity','set','text','spellSchool','collectible','dbfId','durability']} for c in cards}
  for tid in sorted(used):compact.setdefault(tid,catalog[tid])

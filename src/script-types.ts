@@ -20,6 +20,12 @@ export interface CardFilter {
   any?: CardFilter[];
   notTribe?: string;
   health?: number;
+  minHealth?: number;
+  frozen?: boolean;
+  hasTribe?: boolean;
+  notName?: string;
+  nameSuffix?: string;
+  notClass?: string;
 }
 export type ScriptValue = number | { count?: string; stat?: string; filter?: CardFilter };
 export interface ScriptCondition {

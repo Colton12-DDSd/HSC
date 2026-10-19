@@ -63,6 +63,16 @@
       }
     ]
   },
+  "CORE_DMF_067": {
+    "text": "<b>Battlecry and Deathrattle:</b>& Each player draws a card.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1,
+        "allPlayers": true
+      }
+    ]
+  },
   "CORE_RLK_657": {
     "text": "[x]<b>Rush</b>\n<b>Battlecry and Deathrattle:</b>&\nGain 6 Armor.",
     "steps": [
@@ -99,6 +109,16 @@
       }
     ]
   },
+  "DMF_067": {
+    "text": "<b>Battlecry and Deathrattle:</b>& Each player draws a card.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1,
+        "allPlayers": true
+      }
+    ]
+  },
   "EDR_459": {
     "text": "[x]<b>Battlecry:</b> Deal 3 damage\nto all other friendly minions.\n<b>Deathrattle:</b> Deal 3 damage\nto all enemy minions.",
     "steps": [
@@ -106,6 +126,20 @@
         "op": "damage",
         "amount": 3,
         "scope": "enemy"
+      }
+    ]
+  },
+  "LOOT_511": {
+    "text": "<b>Battlecry and Deathrattle:</b> <b>Recruit</b> a Beast.",
+    "steps": [
+      {
+        "op": "recruit",
+        "zone": "deck",
+        "filter": {
+          "type": "MINION",
+          "tribe": "BEAST"
+        },
+        "amount": 1
       }
     ]
   },
@@ -205,9 +239,22 @@
     "steps": [
       {
         "op": "summon-token",
-        "token": "NAX1h_03",
+        "token": "FP1_007t",
         "amount": 1,
-        "enemy": false
+        "enemy": false,
+        "allPlayers": false
+      }
+    ]
+  },
+  "GVG_110t": {
+    "text": "<b>Deathrattle:</b> Deal 1-4 damage to a random enemy.",
+    "steps": [
+      {
+        "op": "random-damage",
+        "scope": "enemies",
+        "random": 1,
+        "amount": 1,
+        "until": 4
       }
     ]
   },
@@ -435,7 +482,8 @@
         "op": "summon-token",
         "token": "BOT_066t",
         "amount": 1,
-        "enemy": false
+        "enemy": false,
+        "allPlayers": false
       }
     ]
   },
@@ -445,7 +493,9 @@
       {
         "op": "generate-token",
         "token": "BOT_102t",
-        "amount": 2
+        "amount": 2,
+        "enemy": false,
+        "allPlayers": false
       }
     ]
   },
@@ -735,7 +785,27 @@
       {
         "op": "generate-token",
         "token": "DAL_354t",
-        "amount": 2
+        "amount": 2,
+        "enemy": false,
+        "allPlayers": false
+      }
+    ]
+  },
+  "DAL_413": {
+    "text": "<b>Deathrattle:</b> Add a <b>Lackey</b> to your hand.",
+    "steps": [
+      {
+        "op": "generate",
+        "amount": 1,
+        "pool": [
+          "DAL_613",
+          "DAL_614",
+          "DAL_615",
+          "DAL_739",
+          "DAL_741",
+          "DRG_052",
+          "ULD_616"
+        ]
       }
     ]
   },
@@ -857,6 +927,18 @@
       }
     ]
   },
+  "DMF_523": {
+    "text": "<b>Rush</b>\n<b>Deathrattle:</b> Add two 1/1 Riders with <b>Rush</b> to your hand.",
+    "steps": [
+      {
+        "op": "generate-token",
+        "token": "DMF_523t",
+        "amount": 2,
+        "enemy": false,
+        "allPlayers": false
+      }
+    ]
+  },
   "DRG_304": {
     "text": "[x]<b>Deathrattle:</b> If you're holding\na Dragon, deal 3 damage\nto all enemy minions.",
     "steps": [
@@ -971,7 +1053,8 @@
         "op": "summon-token",
         "token": "EX1_534t",
         "amount": 2,
-        "enemy": false
+        "enemy": false,
+        "allPlayers": false
       }
     ]
   },
@@ -1257,6 +1340,17 @@
       }
     ]
   },
+  "JAIL_720": {
+    "text": "<b>Deathrattle:</b>& Get a Coin.",
+    "steps": [
+      {
+        "op": "generate-token",
+        "token": "GAME_005",
+        "amount": 1,
+        "enemy": false
+      }
+    ]
+  },
   "JAIL_878": {
     "text": "[x]<b>Deathrattle:</b>& Summon\na random 1-Cost\n <b>Deathrattle</b> minion.",
     "steps": [
@@ -1291,6 +1385,17 @@
       }
     ]
   },
+  "LOE_012": {
+    "text": "<b>Deathrattle:</b> Get a Coin.",
+    "steps": [
+      {
+        "op": "generate-token",
+        "token": "GAME_005",
+        "amount": 1,
+        "enemy": false
+      }
+    ]
+  },
   "LOE_046": {
     "text": "<b>Deathrattle:</b> Deal 1 damage to a random enemy.",
     "steps": [
@@ -1313,6 +1418,34 @@
         },
         "amount": 1,
         "enemy": false
+      }
+    ]
+  },
+  "LOOT_184": {
+    "text": "<b>Deathrattle:</b> <b>Recruit</b> an\n8-Cost minion.",
+    "steps": [
+      {
+        "op": "recruit",
+        "zone": "deck",
+        "filter": {
+          "cost": 8,
+          "type": "MINION"
+        },
+        "amount": 1
+      }
+    ]
+  },
+  "LOOT_306": {
+    "text": "<b>Deathrattle:</b> <b>Recruit</b> a Demon.",
+    "steps": [
+      {
+        "op": "recruit",
+        "zone": "deck",
+        "filter": {
+          "type": "MINION",
+          "tribe": "DEMON"
+        },
+        "amount": 1
       }
     ]
   },
@@ -1342,6 +1475,17 @@
       {
         "op": "armor",
         "amount": 3
+      }
+    ]
+  },
+  "LOOT_534": {
+    "text": "<b>Deathrattle:</b> Add a Coin to your hand.",
+    "steps": [
+      {
+        "op": "generate-token",
+        "token": "GAME_005",
+        "amount": 1,
+        "enemy": false
       }
     ]
   },
@@ -1417,9 +1561,10 @@
     "steps": [
       {
         "op": "summon-token",
-        "token": "OG_202c",
+        "token": "OG_249a",
         "amount": 1,
-        "enemy": false
+        "enemy": false,
+        "allPlayers": false
       }
     ]
   },
@@ -1716,6 +1861,16 @@
       }
     ]
   },
+  "TOY_908": {
+    "text": "<b>Deathrattle:</b> Summon two 1/1 Boom Bots. <i>WARNING: Bots may explode.</i>",
+    "steps": [
+      {
+        "op": "summon-token",
+        "token": "GVG_110t",
+        "amount": 2
+      }
+    ]
+  },
   "TRL_505": {
     "text": "<b>Deathrattle:</b> Reduce the Cost of a Beast in your hand by (1).",
     "steps": [
@@ -1849,7 +2004,8 @@
         "op": "summon-token",
         "token": "UNG_076t1",
         "amount": 2,
-        "enemy": false
+        "enemy": false,
+        "allPlayers": false
       }
     ]
   },
@@ -1860,7 +2016,8 @@
         "op": "summon-token",
         "token": "UNG_083t1",
         "amount": 1,
-        "enemy": false
+        "enemy": false,
+        "allPlayers": false
       }
     ]
   },
@@ -1875,6 +2032,16 @@
         "filter": {
           "type": "MINION"
         }
+      }
+    ]
+  },
+  "UNG_845": {
+    "text": "<b>Deathrattle:</b> Add two 1/2 Flame Elementals to your hand.",
+    "steps": [
+      {
+        "op": "generate-token",
+        "token": "UNG_809t1",
+        "amount": 2
       }
     ]
   },
@@ -1914,6 +2081,17 @@
         "random": 1,
         "attack": 2,
         "health": 2
+      }
+    ]
+  },
+  "WON_340": {
+    "text": "<b>Deathrattle:</b> Get a Coin.",
+    "steps": [
+      {
+        "op": "generate-token",
+        "token": "GAME_005",
+        "amount": 1,
+        "enemy": false
       }
     ]
   },

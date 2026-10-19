@@ -1,0 +1,2933 @@
+{
+  "baselineCommit": "667d3f0",
+  "target": 315,
+  "completed": 246,
+  "remaining": 69,
+  "supportedBattlecryNames": 898,
+  "additionalOutsideBatch": [
+    "Conservator Nymph",
+    "Kathrena Winterwisp",
+    "Prize Vendor",
+    "Treespeaker"
+  ],
+  "entries": [
+    {
+      "name": "Abyssal Summoner",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "DRG_207"
+      ],
+      "text": "Battlecry: Summon a Demon with Taunt and stats equal to your hand size."
+    },
+    {
+      "name": "Alleycat",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "CFM_315"
+      ],
+      "text": "Battlecry: Summon a 1/1 Cat."
+    },
+    {
+      "name": "Arator the Redeemer",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "MEND_804"
+      ],
+      "text": "Battlecry: Double the stats of all friendly Silver Hand Recruits and give them Taunt."
+    },
+    {
+      "name": "Arcanosmith",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "KAR_710"
+      ],
+      "text": "Battlecry: Summon a 0/5 minion with Taunt."
+    },
+    {
+      "name": "Archwitch Willow",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "CORE_SCH_181",
+        "SCH_181"
+      ],
+      "text": "Battlecry: Summon a random Demon from your hand and deck."
+    },
+    {
+      "name": "Argent Braggart",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "SCH_149"
+      ],
+      "text": "Battlecry: Set this minion's Attack and Health to the highest in the battlefield."
+    },
+    {
+      "name": "Ashtongue Slayer",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "BT_702"
+      ],
+      "text": "Battlecry: Give a Stealthed minion +3 Attack and Immune this turn."
+    },
+    {
+      "name": "Astromancer",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "BOT_256",
+        "CORE_BOT_256"
+      ],
+      "text": "Battlecry: Summon a random minion with Cost equal to your hand size."
+    },
+    {
+      "name": "Azsharan Mooncatcher",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "TSC_644"
+      ],
+      "text": "Divine Shield. Battlecry: Put a 'Sunken Mooncatcher' on the bottom of your deck."
+    },
+    {
+      "name": "Azsharan Scavenger",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "TSC_039"
+      ],
+      "text": "Battlecry: Put a 'Sunken Scavenger' on the bottom of your deck."
+    },
+    {
+      "name": "Azsharan Sweeper",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "TSC_776"
+      ],
+      "text": "Battlecry: Put a 'Sunken Sweeper' on the bottom of your deck."
+    },
+    {
+      "name": "Balinda Stonehearth",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "AV_284"
+      ],
+      "text": "Battlecry: Draw 2 spells. Swap their Costs with this minion's stats."
+    },
+    {
+      "name": "Balloon Merchant",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "DMF_235"
+      ],
+      "text": "Battlecry: Give your Silver Hand Recruits +1 Attack and Divine Shield."
+    },
+    {
+      "name": "Baritone Imp",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "ETC_068"
+      ],
+      "text": "Battlecry: Take Fatigue damage. Gain that much Attack and Health."
+    },
+    {
+      "name": "Barnes",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "KAR_114"
+      ],
+      "text": "Battlecry: Summon a 1/1 copy of a random minion in your deck."
+    },
+    {
+      "name": "Bartend-O-Bot",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "WW_408"
+      ],
+      "text": "Battlecry: Draw an Outcast card and slide it to the left side of your hand."
+    },
+    {
+      "name": "Beanstalk Brute",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "EDR_230"
+      ],
+      "text": "Battlecry: Give +4/+4 to the top 3 minions in your deck."
+    },
+    {
+      "name": "Big-Time Racketeer",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "CFM_648"
+      ],
+      "text": "Battlecry: Summon a 6/6 Ogre."
+    },
+    {
+      "name": "Blazing Accretion",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "GDB_302"
+      ],
+      "text": "Battlecry: Destroy the top 3 cards of your deck. Any Fire spells or Elementals are drawn instead."
+    },
+    {
+      "name": "Blink Fox",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "GIL_827"
+      ],
+      "text": "Battlecry: Add a random card to your hand (from your opponent's class)."
+    },
+    {
+      "name": "Blood Knight",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "EX1_590"
+      ],
+      "text": "Battlecry: All minions lose Divine Shield. Gain +3/+3 for each Shield lost."
+    },
+    {
+      "name": "Bloodsail Flybooter",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "DRG_035"
+      ],
+      "text": "Battlecry: Add two 1/1 Pirates to your hand."
+    },
+    {
+      "name": "Bloodsail Howler",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "TRL_071"
+      ],
+      "text": "Rush Battlecry: Gain +1/+1 for each other Pirate you control."
+    },
+    {
+      "name": "Booty Bay Bookie",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "TRL_504"
+      ],
+      "text": "Battlecry: Give your opponent a Coin."
+    },
+    {
+      "name": "Bright-Eyed Scout",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "UNG_113"
+      ],
+      "text": "Battlecry: Draw a card. Change its Cost to (5)."
+    },
+    {
+      "name": "Bronze Dragonknight",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "WON_052"
+      ],
+      "text": "Taunt. Battlecry: If this has 5 or more Attack, summon a copy of this."
+    },
+    {
+      "name": "Broodchamber Tunneler",
+      "group": "generate-pools",
+      "complete": false,
+      "ids": [
+        "BE_720"
+      ],
+      "text": "Battlecry: Get a 1-Cost Larva with a Combo that triggers a Hero Power from another class.",
+      "dependency": "Generated-card keyword/subsystem and its complete lifecycle"
+    },
+    {
+      "name": "Bugsquasher",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "TLC_633"
+      ],
+      "text": "Battlecry: Deal 6 damage to an enemy minion with a minion type."
+    },
+    {
+      "name": "Busy-Bot",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "WORK_002"
+      ],
+      "text": "Battlecry: Give your 1-Attack minions +1/+1."
+    },
+    {
+      "name": "Bwonsamdi, the Dead",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "TRL_260"
+      ],
+      "text": "Battlecry: Draw 1-Cost minions from your deck until your hand is full."
+    },
+    {
+      "name": "C'Thun",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "OG_280",
+        "WON_135"
+      ],
+      "text": "Battlecry: Deal damage equal to this minion's Attack randomly split among all enemies."
+    },
+    {
+      "name": "Captain Hooktusk",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "TRL_126"
+      ],
+      "text": "Battlecry: Summon 3 Pirates from your deck. Give them Rush."
+    },
+    {
+      "name": "Caricature Artist",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "TOY_391"
+      ],
+      "text": "Battlecry: Draw a minion that costs (5) or more. Give it a funny mustache!"
+    },
+    {
+      "name": "Carry-On Grub",
+      "group": "generate-pools",
+      "complete": false,
+      "ids": [
+        "VAC_935"
+      ],
+      "text": "Battlecry: Get a 1-Cost Suitcase. Pack the top 2 cards of your deck into it.",
+      "dependency": "Generated cards that carry stored cards or victim-specific values"
+    },
+    {
+      "name": "Catch of the Day",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "VAC_412"
+      ],
+      "text": "Rush Battlecry: Summon a 2/1 Worm for your opponent."
+    },
+    {
+      "name": "Chalk Artist",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "TOY_388"
+      ],
+      "text": "Battlecry: Draw a minion. Transform it into a random Legendary one (keeping its original stats and Cost)."
+    },
+    {
+      "name": "Chaos Gazer",
+      "group": "draw-zones",
+      "complete": false,
+      "ids": [
+        "YOD_027"
+      ],
+      "text": "Battlecry: Curse a playable card in your opponent's hand. They have 1 turn to play it!",
+      "dependency": "Authored complete transaction, target relationship and independent outcome tests"
+    },
+    {
+      "name": "Chef Nomi",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "DAL_554"
+      ],
+      "text": "Battlecry: If your deck is empty, summon six 6/6 Greasefire Elementals."
+    },
+    {
+      "name": "Chillspine Stegodon",
+      "group": "damage-stats",
+      "complete": false,
+      "ids": [
+        "DINO_413"
+      ],
+      "text": "Battlecry: Deal 2 damage to two random enemy minions. Kindred: And Freeze them.",
+      "dependency": "Kindred activation, history and dependent targeting/costs"
+    },
+    {
+      "name": "Chromie, Timehopper",
+      "group": "draw-zones",
+      "complete": false,
+      "ids": [
+        "WON_041"
+      ],
+      "text": "Battlecry: Visit a Historical Epoch. Shuffle the others into your deck.",
+      "dependency": "Special token, passive, start/end trigger or Aura lifecycle"
+    },
+    {
+      "name": "City Chief Esho",
+      "group": "damage-stats",
+      "complete": false,
+      "ids": [
+        "TLC_110"
+      ],
+      "text": "Battlecry: If every minion in your deck shares a minion type, give your other minions +2/+2 (wherever they are).",
+      "dependency": "Authored complete transaction, target relationship and independent outcome tests"
+    },
+    {
+      "name": "Cobalt Spellkin",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "DRG_075"
+      ],
+      "text": "Battlecry: Add two 1-Cost spells from your class to your hand."
+    },
+    {
+      "name": "Coldlight Oracle",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "EX1_050"
+      ],
+      "text": "Battlecry: Each player draws 2 cards."
+    },
+    {
+      "name": "Coldwraith",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "ICC_252"
+      ],
+      "text": "Battlecry: If an enemy is Frozen, draw a card."
+    },
+    {
+      "name": "Colifero the Artist",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "TOY_703"
+      ],
+      "text": "Battlecry: Draw a minion. Transform all other friendly minions into copies of it."
+    },
+    {
+      "name": "Concoctor",
+      "group": "generate-pools",
+      "complete": false,
+      "ids": [
+        "RLK_568"
+      ],
+      "text": "Battlecry: Add a random Concoction to your hand.",
+      "dependency": "Verified named pool and complete generated-card behavior"
+    },
+    {
+      "name": "Corpsetaker",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "ICC_912"
+      ],
+      "text": "Battlecry: Gain Taunt if your deck has a Taunt minion. Repeat for Divine Shield, Lifesteal, Windfury."
+    },
+    {
+      "name": "Corrupt Constable",
+      "group": "draw-zones",
+      "complete": false,
+      "ids": [
+        "CAP_401"
+      ],
+      "text": "Battlecry: If the enemy deck has any Imp-formants, move one to the top and give it +2/+2.",
+      "dependency": "Authored complete transaction, target relationship and independent outcome tests"
+    },
+    {
+      "name": "Corrupted Seer",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "OG_161"
+      ],
+      "text": "Battlecry: Deal 2 damage to all non-Murloc minions."
+    },
+    {
+      "name": "Crazed Conductor",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "ETC_070"
+      ],
+      "text": "Battlecry: Take Fatigue damage. Summon that many 3/3 Imps."
+    },
+    {
+      "name": "Crow's Nest Lookout",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "DED_507"
+      ],
+      "text": "Battlecry: Deal 2 damage to the left and right-most enemy minions."
+    },
+    {
+      "name": "Crud Caretaker",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "REV_936"
+      ],
+      "text": "Battlecry: Summon a 3/5 Elemental with Taunt."
+    },
+    {
+      "name": "Cryomancer",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "CFM_671"
+      ],
+      "text": "Battlecry: If an enemy is Frozen, gain +2/+2."
+    },
+    {
+      "name": "Cryopractor",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "VAC_327"
+      ],
+      "text": "Battlecry: Give a minion +3/+3 and Freeze it."
+    },
+    {
+      "name": "Cumulo-Maximus",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "DRG_223"
+      ],
+      "text": "Battlecry: If you have Overloaded Mana Crystals, deal 5 damage."
+    },
+    {
+      "name": "Curious Grimlynx",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "BE_850t"
+      ],
+      "text": "Taunt. Battlecry: Summon a {0}/{1} Beast with Rush. (It has the opposite stats of this minion!)"
+    },
+    {
+      "name": "Deathwing",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "NEW1_030"
+      ],
+      "text": "Battlecry: Destroy all other minions and discard your hand."
+    },
+    {
+      "name": "Deathwing the Destroyer",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "LEG_CS3_036"
+      ],
+      "text": "Battlecry: Destroy all other minions. Discard a card for each destroyed."
+    },
+    {
+      "name": "Deepwater Evoker",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "DED_516"
+      ],
+      "text": "Battlecry: Draw a spell. Gain Armor equal to its Cost."
+    },
+    {
+      "name": "Derailed Coaster",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "DMF_202"
+      ],
+      "text": "Battlecry: Summon a 1/1 Rider with Rush for each minion in your hand."
+    },
+    {
+      "name": "Desert Camel",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "LOE_020"
+      ],
+      "text": "Battlecry: Put a 1-Cost minion from each deck into the battlefield."
+    },
+    {
+      "name": "Desert Hare",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "ULD_719"
+      ],
+      "text": "Battlecry: Summon two 1/1 Desert Hares."
+    },
+    {
+      "name": "Devout Dungeoneer",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "WC_013"
+      ],
+      "text": "Battlecry: Draw a spell. If it's a Holy spell, reduce its Cost by (2)."
+    },
+    {
+      "name": "Dinner Performer",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "REV_020"
+      ],
+      "text": "Battlecry: Summon a random minion from your deck that you can afford to play."
+    },
+    {
+      "name": "Dirty Rat",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "CFM_790",
+        "CORE_CFM_790"
+      ],
+      "text": "Taunt Battlecry: Your opponent summons a random minion from their hand."
+    },
+    {
+      "name": "Disarming Elemental",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "TID_700"
+      ],
+      "text": "Battlecry: Dredge for your opponent. Set its Cost to (6)."
+    },
+    {
+      "name": "Disciple of Demise",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "TIME_EVENT_301"
+      ],
+      "text": "Battlecry: Randomly destroy another minion. Repeat for each Dragon you're holding."
+    },
+    {
+      "name": "Dispatch Kodo",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "CFM_335"
+      ],
+      "text": "Battlecry: Deal damage equal to this minion's Attack."
+    },
+    {
+      "name": "Dissolving Ooze",
+      "group": "damage-stats",
+      "complete": false,
+      "ids": [
+        "TLC_252"
+      ],
+      "text": "Battlecry: Destroy a friendly minion. Spit out the Bones of its Attack and Health into your hand.",
+      "dependency": "Generated cards that carry stored cards or victim-specific values"
+    },
+    {
+      "name": "Divine Augur",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "TIME_429"
+      ],
+      "text": "Battlecry: Set the Attack and Health of every minion in your hand to the higher of the two stats."
+    },
+    {
+      "name": "Doommaiden",
+      "group": "draw-zones",
+      "complete": false,
+      "ids": [
+        "GDB_129"
+      ],
+      "text": "Battlecry: Draw a card from your opponent's deck. If you don't play it this turn, put it back.",
+      "dependency": "Authored complete transaction, target relationship and independent outcome tests"
+    },
+    {
+      "name": "Dr. Boom",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "GVG_110"
+      ],
+      "text": "Battlecry: Summon two 1/1 Boom Bots. WARNING: Bots may explode."
+    },
+    {
+      "name": "Dragonmaw Poacher",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "DRG_063"
+      ],
+      "text": "Battlecry: If your opponent controls a Dragon, gain +4/+4 and Rush."
+    },
+    {
+      "name": "Dragonqueen Alexstrasza",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "DRG_089"
+      ],
+      "text": "Battlecry: If your deck has no duplicates, add 2 other random Dragons to your hand. They cost (0)."
+    },
+    {
+      "name": "Drakkari Embalmer",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "RLK_119"
+      ],
+      "text": "Battlecry: Give a friendly Undead Reborn."
+    },
+    {
+      "name": "Dread Infernal",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "CS2_064"
+      ],
+      "text": "Battlecry: Deal 1 damage to ALL other characters."
+    },
+    {
+      "name": "Dreamboat",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "ETC_332"
+      ],
+      "text": "Battlecry: Restore 3 Health to all other friendly minions. Gain +1/+1 for each one Overhealed."
+    },
+    {
+      "name": "Dreamwarden",
+      "group": "draw-zones",
+      "complete": false,
+      "ids": [
+        "EDR_256"
+      ],
+      "text": "Taunt. Battlecry: If there is a card in your deck that didn't start there, draw it and gain +2/+2.",
+      "dependency": "Original-card identity, starting snapshots or while-held progression"
+    },
+    {
+      "name": "Drek'Thar",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "AV_100"
+      ],
+      "text": "Battlecry: If this costs more than every minion in your deck, summon one of those minions."
+    },
+    {
+      "name": "Drone Deconstructor",
+      "group": "generate-pools",
+      "complete": false,
+      "ids": [
+        "TTN_860"
+      ],
+      "text": "Battlecry: Get a 1/1 Magnetic Sparkbot with a random Bonus Effect.",
+      "dependency": "Generated-card keyword/subsystem and its complete lifecycle"
+    },
+    {
+      "name": "Elder Nadox",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "RLK_658"
+      ],
+      "text": "Battlecry: Destroy a friendly Undead. Your minions gain its Attack."
+    },
+    {
+      "name": "Elise Starseeker",
+      "group": "draw-zones",
+      "complete": false,
+      "ids": [
+        "LOE_079"
+      ],
+      "text": "Battlecry: Shuffle the 'Map to the Golden Monkey' into your deck.",
+      "dependency": "Authored complete transaction, target relationship and independent outcome tests"
+    },
+    {
+      "name": "Elise the Enlightened",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "ULD_139"
+      ],
+      "text": "Battlecry: If your deck has no duplicates, duplicate your hand."
+    },
+    {
+      "name": "Elise the Trailblazer",
+      "group": "draw-zones",
+      "complete": false,
+      "ids": [
+        "UNG_851"
+      ],
+      "text": "Battlecry: Shuffle a sealed Un'Goro pack into your deck. If your deck has no duplicates, draw it.",
+      "dependency": "Authored complete transaction, target relationship and independent outcome tests"
+    },
+    {
+      "name": "Elise, Badlands Savior",
+      "group": "summon-tokens",
+      "complete": false,
+      "ids": [
+        "WW_392"
+      ],
+      "text": "Battlecry: If your deck started with no duplicates, summon 5/5 copies of 4 random minions in your deck.",
+      "dependency": "Original-card identity, starting snapshots or while-held progression"
+    },
+    {
+      "name": "Elite Tauren Chieftain",
+      "group": "generate-pools",
+      "complete": false,
+      "ids": [
+        "PRO_001"
+      ],
+      "text": "Battlecry: Give both players the power to ROCK! (with a Power Chord card)",
+      "dependency": "Verified named pool and complete generated-card behavior"
+    },
+    {
+      "name": "Elitist Snob",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "REV_961"
+      ],
+      "text": "Battlecry: For each Paladin card in your hand, randomly gain Divine Shield, Lifesteal, Rush, or Taunt."
+    },
+    {
+      "name": "Endangered Dodo",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "TIME_703"
+      ],
+      "text": "Taunt Battlecry: If you have 10 or less Health, gain +5/+5 and summon a copy of this."
+    },
+    {
+      "name": "Enhance-o Mechano",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "GVG_107"
+      ],
+      "text": "Battlecry: Give your other minions Windfury, Taunt, or Divine Shield (at random)."
+    },
+    {
+      "name": "Entomologist Toru",
+      "group": "draw-zones",
+      "complete": false,
+      "ids": [
+        "TLC_841"
+      ],
+      "text": "Battlecry: Put each minion in your hand into 0/1 Jars that cost (1). Break them to release the minions!",
+      "dependency": "Generated cards that carry stored cards or victim-specific values"
+    },
+    {
+      "name": "Envoy of Prosperity",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "WORK_031"
+      ],
+      "text": "Battlecry: Put the highest Cost card in your hand on top of your deck."
+    },
+    {
+      "name": "EVIL Cable Rat",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "DAL_400"
+      ],
+      "text": "Battlecry: Add a Lackey to your hand."
+    },
+    {
+      "name": "EVIL Genius",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "DAL_606"
+      ],
+      "text": "Battlecry: Destroy a friendly minion to add 2 random Lackeys to your hand."
+    },
+    {
+      "name": "EVIL Quartermaster",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "DRG_020"
+      ],
+      "text": "Battlecry: Add a Lackey to your hand. Gain 3 Armor."
+    },
+    {
+      "name": "EVIL Recruiter",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "ULD_162"
+      ],
+      "text": "Battlecry: Destroy a friendly Lackey to summon a 5/5 Demon."
+    },
+    {
+      "name": "Excavation Specialist",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "TSC_911"
+      ],
+      "text": "Battlecry: Dredge. Reduce its Cost by (1)."
+    },
+    {
+      "name": "Eye of Chaos",
+      "group": "generate-pools",
+      "complete": false,
+      "ids": [
+        "YOG_515"
+      ],
+      "text": "Battlecry: Get two 1/1 Chaotic Tendrils.",
+      "dependency": "Generated-card keyword/subsystem and its complete lifecycle"
+    },
+    {
+      "name": "Felerin, the Forgotten",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "RLK_215"
+      ],
+      "text": "Battlecry: Add a random Outcast card to the left and right sides of your hand. They cost (2) less."
+    },
+    {
+      "name": "Felgorger",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "SW_043"
+      ],
+      "text": "Battlecry: Draw a Fel spell. Reduce its Cost by (2)."
+    },
+    {
+      "name": "Felguard",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "EX1_301"
+      ],
+      "text": "Taunt Battlecry: Destroy one of your Mana Crystals."
+    },
+    {
+      "name": "Fiddlefire Imp",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "JAM_032"
+      ],
+      "text": "Battlecry: Add a random Fire Mage and Fire Warlock spell to your hand."
+    },
+    {
+      "name": "Fight Promoter",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "CFM_328"
+      ],
+      "text": "Battlecry: If you control a minion with 6 or more Health, draw two cards."
+    },
+    {
+      "name": "Fire Breather",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "DMF_110"
+      ],
+      "text": "Battlecry: Deal 2 damage to all minions except Demons."
+    },
+    {
+      "name": "Fire Fly",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "CORE_UNG_809",
+        "UNG_809"
+      ],
+      "text": "Battlecry: Add a 1/2 Elemental to your hand."
+    },
+    {
+      "name": "First Blade of Wrynn",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "SW_305"
+      ],
+      "text": "Divine Shield Battlecry: Gain Rush if this has at least 4 Attack."
+    },
+    {
+      "name": "Flame Behemoth",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "TTN_716"
+      ],
+      "text": "Battlecry: Get two random Magnetic Mechs. They cost (2) less."
+    },
+    {
+      "name": "Flight Master",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "DAL_747"
+      ],
+      "text": "Battlecry: Summon a 2/2 Gryphon for each player."
+    },
+    {
+      "name": "Flik Skyshiv",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "DRG_037"
+      ],
+      "text": "Battlecry: Destroy a minion and all copies of it (wherever they are)."
+    },
+    {
+      "name": "Frantic Forger",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "JAIL_986"
+      ],
+      "text": "Battlecry: Get a random playable spell. It is Temporary."
+    },
+    {
+      "name": "Frostweave Dungeoneer",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "WC_805"
+      ],
+      "text": "Battlecry: Draw a spell. If it's a Frost spell, summon two 1/1 Elementals that Freeze."
+    },
+    {
+      "name": "Gaslight Gatekeeper",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "WW_398"
+      ],
+      "text": "Battlecry: Shuffle your hand into your deck, then draw that many cards."
+    },
+    {
+      "name": "Gelbin Mekkatorque",
+      "group": "summon-tokens",
+      "complete": false,
+      "ids": [
+        "EX1_112"
+      ],
+      "text": "Battlecry: Summon an AWESOME invention.",
+      "dependency": "Special token, passive, start/end trigger or Aura lifecycle"
+    },
+    {
+      "name": "Getaway Hogdriver",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "JAIL_462"
+      ],
+      "text": "Battlecry: Draw 2 cards. If they're both minions, gain Charge."
+    },
+    {
+      "name": "Ghastly Conjurer",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "ICC_069"
+      ],
+      "text": "Battlecry: Add a 'Mirror Image' spell to your hand."
+    },
+    {
+      "name": "Giftwrapped Whelp",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "TOY_386"
+      ],
+      "text": "Battlecry: If you're holding a Dragon, give it and this minion +1/+1."
+    },
+    {
+      "name": "Giggling Inventor",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "BOT_270"
+      ],
+      "text": "Battlecry: Summon two 1/2 Mechs with Taunt and Divine Shield."
+    },
+    {
+      "name": "Glitter Moth",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "GIL_837"
+      ],
+      "text": "Battlecry: If your deck has only odd-Cost cards, double the Health of your other minions."
+    },
+    {
+      "name": "Gloom Stag",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "GIL_130"
+      ],
+      "text": "Taunt Battlecry: If your deck has only odd-Cost cards, gain +2/+2."
+    },
+    {
+      "name": "Gnomeferatu",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "CORE_ICC_407",
+        "ICC_407"
+      ],
+      "text": "Battlecry: Remove the top card of your opponent's deck."
+    },
+    {
+      "name": "Gnomish Experimenter",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "GVG_092"
+      ],
+      "text": "Battlecry: Draw a card. If it's a minion, transform it into a Chicken."
+    },
+    {
+      "name": "Golakka Crawler",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "UNG_807"
+      ],
+      "text": "Battlecry: Destroy a Pirate and gain +1/+1."
+    },
+    {
+      "name": "Golakka Glutton",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "DED_523"
+      ],
+      "text": "Battlecry: Destroy a Beast and gain +1/+1."
+    },
+    {
+      "name": "Greedy Partner",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "WW_901"
+      ],
+      "text": "Battlecry: If you're holding another 2-Cost card, get a Coin."
+    },
+    {
+      "name": "Gruesome Nightmare",
+      "group": "damage-stats",
+      "complete": false,
+      "ids": [
+        "CATA_161"
+      ],
+      "text": "Battlecry: Give a minion in your hand or battlefield Attack equal to this minion's Attack.",
+      "dependency": "Multiple selections or a choice spanning hand and battlefield"
+    },
+    {
+      "name": "Grunty",
+      "group": "summon-tokens",
+      "complete": false,
+      "ids": [
+        "SC_013"
+      ],
+      "text": "Battlecry: Summon four random Murlocs, then shoot them at enemy minions. (You pick the targets!)",
+      "dependency": "Multiple selections or a choice spanning hand and battlefield"
+    },
+    {
+      "name": "Guild Recruiter",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "LOOT_375"
+      ],
+      "text": "Battlecry: Recruit a minion that costs (4) or less."
+    },
+    {
+      "name": "Gunslinger Kurtrus",
+      "group": "draw-zones",
+      "complete": false,
+      "ids": [
+        "WW_401"
+      ],
+      "text": "Battlecry: If your deck started with no duplicates, fire six 2 damage shots at minions in the enemy's hand.",
+      "dependency": "Original-card identity, starting snapshots or while-held progression"
+    },
+    {
+      "name": "Hailbringer",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "YOD_029"
+      ],
+      "text": "Battlecry: Summon two 1/1 Ice Shards that Freeze."
+    },
+    {
+      "name": "Halazzi, the Lynx",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "CORE_TRL_900",
+        "TRL_900"
+      ],
+      "text": "Rush. Battlecry: Fill your hand with 1/1 Lynxes that have Rush."
+    },
+    {
+      "name": "Hardcore Cultist",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "ETC_209"
+      ],
+      "text": "Battlecry: Deal 2 damage. Finale: To all enemies."
+    },
+    {
+      "name": "Hardlight Protector",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "TIME_015"
+      ],
+      "text": "Divine Shield Battlecry: Restore 3 Health to your hero and give them Divine Shield."
+    },
+    {
+      "name": "Hecklebot",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "DAL_058"
+      ],
+      "text": "Taunt Battlecry: Your opponent summons a minion from their deck."
+    },
+    {
+      "name": "Hench-Clan Hag",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "DAL_087"
+      ],
+      "text": "Battlecry: Summon two 1/1 Amalgams with all minion types."
+    },
+    {
+      "name": "Herald Volazj",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "OG_316"
+      ],
+      "text": "Battlecry: Summon a 1/1 copy of each of your other minions."
+    },
+    {
+      "name": "Hexmarshal",
+      "group": "generate-pools",
+      "complete": false,
+      "ids": [
+        "JAIL_806"
+      ],
+      "text": "Battlecry: Get a random spell that costs (5) or more. If your deck started with no spells, it costs (5) less.",
+      "dependency": "Original-card identity, starting snapshots or while-held progression"
+    },
+    {
+      "name": "High Exarch Yrel",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "DMF_241"
+      ],
+      "text": "Battlecry: If your deck has no Neutral cards, gain Rush, Lifesteal, Taunt, and Divine Shield."
+    },
+    {
+      "name": "High Priest Thekal",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "TRL_308"
+      ],
+      "text": "Battlecry: Convert all but 1 of your Hero's Health into Armor."
+    },
+    {
+      "name": "Hir'eek, the Bat",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "TRL_253"
+      ],
+      "text": "Battlecry: Fill your board with copies of this minion."
+    },
+    {
+      "name": "Hodir, Father of Giants",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "TTN_752"
+      ],
+      "text": "Battlecry: Set the stats of the next three minions you play to 8/8."
+    },
+    {
+      "name": "Hologram Operator",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "GDB_723"
+      ],
+      "text": "Battlecry: Get 3 random Temporary Draenei."
+    },
+    {
+      "name": "Hopeful Dryad",
+      "group": "generate-pools",
+      "complete": false,
+      "ids": [
+        "EDR_001"
+      ],
+      "text": "Battlecry: Get a random Dream card.",
+      "dependency": "Verified named pool and complete generated-card behavior"
+    },
+    {
+      "name": "Hungry Crab",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "NEW1_017"
+      ],
+      "text": "Battlecry: Destroy a Murloc and gain +2/+2."
+    },
+    {
+      "name": "Hydralisk",
+      "group": "damage-stats",
+      "complete": false,
+      "ids": [
+        "SC_008"
+      ],
+      "text": "Battlecry: Deal 2 damage to a random enemy. Repeat for each other Zerg minion you control.",
+      "dependency": "Authored complete transaction, target relationship and independent outcome tests"
+    },
+    {
+      "name": "Ice Cream Peddler",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "TRL_533"
+      ],
+      "text": "Battlecry: If you control a Frozen minion, gain 8 Armor."
+    },
+    {
+      "name": "Icebelt Magi",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "BE_270"
+      ],
+      "text": "Battlecry: Draw two cards. For each that isn't a minion, summon a 3/6 Water Elemental."
+    },
+    {
+      "name": "Igneous Lavagorger",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "TID_714"
+      ],
+      "text": "Taunt Battlecry: Dredge. Gain Armor equal to its Cost."
+    },
+    {
+      "name": "Injured Blademaster",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "CS2_181"
+      ],
+      "text": "Battlecry: Deal 4 damage to HIMSELF."
+    },
+    {
+      "name": "Isiset",
+      "group": "summon-tokens",
+      "complete": false,
+      "ids": [
+        "BE_259"
+      ],
+      "text": "Battlecry: Summon two 10/10 Constructs. They are Frozen until you spend 15 Mana on spells.",
+      "dependency": "Persistent rule, resource threshold or effect replacement"
+    },
+    {
+      "name": "Jerry Rig Carpenter",
+      "group": "draw-zones",
+      "complete": false,
+      "ids": [
+        "DED_003"
+      ],
+      "text": "Battlecry: Draw a Choose One spell and split it.",
+      "dependency": "Generated-card keyword/subsystem and its complete lifecycle"
+    },
+    {
+      "name": "K'thir Ritualist",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "DMF_081"
+      ],
+      "text": "Taunt Battlecry: Add a random 4-Cost minion to your opponent's hand."
+    },
+    {
+      "name": "K9-0tron",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "TID_099"
+      ],
+      "text": "Battlecry: Dredge. If it's a 1-Cost minion, summon it."
+    },
+    {
+      "name": "Kabal Chemist",
+      "group": "generate-pools",
+      "complete": false,
+      "ids": [
+        "CFM_619"
+      ],
+      "text": "Battlecry: Add a random Potion to your hand.",
+      "dependency": "Verified named pool and complete generated-card behavior"
+    },
+    {
+      "name": "King Maluk",
+      "group": "draw-zones",
+      "complete": false,
+      "ids": [
+        "TIME_042"
+      ],
+      "text": "Battlecry: Discard your hand. Get an Infinite Banana.",
+      "dependency": "Verified named pool and complete generated-card behavior"
+    },
+    {
+      "name": "King Plush",
+      "group": "draw-zones",
+      "complete": false,
+      "ids": [
+        "TOY_357"
+      ],
+      "text": "Charge Battlecry: Return all minions with less Attack than this to their owner's decks.",
+      "dependency": "Authored complete transaction, target relationship and independent outcome tests"
+    },
+    {
+      "name": "Kiri, Chosen of Elune",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "DMF_733"
+      ],
+      "text": "Battlecry: Add a Solar Eclipse and Lunar Eclipse to your hand."
+    },
+    {
+      "name": "Kobold Taskmaster",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "AV_136"
+      ],
+      "text": "Battlecry: Add 2 Armor Scraps to your hand that give +2 Health to a minion."
+    },
+    {
+      "name": "Krona, Keeper of Eons",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "TIME_705"
+      ],
+      "text": "Taunt Battlecry: Set the Costs of the bottom 5 cards of your deck to (1)."
+    },
+    {
+      "name": "Kronn the Impaler",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "BE_732"
+      ],
+      "text": "Battlecry: All your minions deal damage equal to their Attack to a random enemy."
+    },
+    {
+      "name": "Lady in White",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "GIL_840"
+      ],
+      "text": "Battlecry: Cast 'Inner Fire' on every minion in your deck (set Attack equal to Health)."
+    },
+    {
+      "name": "Lightmaw Netherdrake",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "ONY_026"
+      ],
+      "text": "Battlecry: If you're holding a Holy and a Shadow spell, deal 3 damage to all other minions."
+    },
+    {
+      "name": "Linedance Partner",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "WW_433"
+      ],
+      "text": "Battlecry: If you're holding another 3-Cost card, summon a random 3-Cost minion."
+    },
+    {
+      "name": "Lord Godfrey",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "GIL_825"
+      ],
+      "text": "Battlecry: Deal 2 damage to all other minions. If any die, repeat this Battlecry."
+    },
+    {
+      "name": "Lorekeeper Polkelt",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "SCH_428"
+      ],
+      "text": "Battlecry: Reorder your deck from the highest Cost card to the lowest Cost card."
+    },
+    {
+      "name": "Mad Hatter",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "GIL_125"
+      ],
+      "text": "Battlecry: Randomly toss 3 hats to other minions. Each hat gives +1/+1."
+    },
+    {
+      "name": "Mad Summoner",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "DAL_751"
+      ],
+      "text": "Battlecry: Fill each player's board with 1/1 Imps."
+    },
+    {
+      "name": "Magatha, Bane of Music",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "JAM_036"
+      ],
+      "text": "Battlecry: Draw 5 cards. Give any spells drawn to your opponent."
+    },
+    {
+      "name": "Malefic Rook",
+      "group": "damage-stats",
+      "complete": false,
+      "ids": [
+        "TOY_526"
+      ],
+      "text": "Battlecry: Attack YOUR hero.",
+      "dependency": "Forced attacks or a combat-result listener"
+    },
+    {
+      "name": "Malygos the Spellweaver",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "LEG_CS3_034"
+      ],
+      "text": "Battlecry: Draw spells until your hand is full."
+    },
+    {
+      "name": "Man'ari Mosher",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "DMF_111"
+      ],
+      "text": "Battlecry: Give a friendly Demon +3 Attack and Lifesteal this turn."
+    },
+    {
+      "name": "Manifested Timeways",
+      "group": "damage-stats",
+      "complete": false,
+      "ids": [
+        "TIME_019"
+      ],
+      "text": "Battlecry: If you control an Aura, deal 3 damage to all enemies.",
+      "dependency": "Special token, passive, start/end trigger or Aura lifecycle"
+    },
+    {
+      "name": "Marin the Fox",
+      "group": "summon-tokens",
+      "complete": false,
+      "ids": [
+        "LOOT_357"
+      ],
+      "text": "Battlecry: Summon a 0/8 Treasure Chest for your opponent. (Break it for awesome loot!)",
+      "dependency": "Special token, passive, start/end trigger or Aura lifecycle"
+    },
+    {
+      "name": "Marsh Drake",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "GIL_683"
+      ],
+      "text": "Battlecry: Summon a 2/1 Poisonous Drakeslayer for your opponent."
+    },
+    {
+      "name": "Master Oakheart",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "LOOT_521"
+      ],
+      "text": "Battlecry: Recruit a 1, 2, and 3-Attack minion."
+    },
+    {
+      "name": "Menagerie Jug",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "WON_142"
+      ],
+      "text": "Battlecry: Give 3 random friendly minions of different minion types +2/+2."
+    },
+    {
+      "name": "Menagerie Mug",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "CORE_WON_141",
+        "WON_141"
+      ],
+      "text": "Battlecry: Give 3 random friendly minions of different minion types +1/+1."
+    },
+    {
+      "name": "Mes'Adune the Fractured",
+      "group": "draw-zones",
+      "complete": false,
+      "ids": [
+        "WW_429"
+      ],
+      "text": "Battlecry: Draw an Elemental. Split it into two halves.",
+      "dependency": "Authored complete transaction, target relationship and independent outcome tests"
+    },
+    {
+      "name": "Mister Mukla",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "ETC_836"
+      ],
+      "text": "Rush. Battlecry: Fill your opponent's hand with Bananas."
+    },
+    {
+      "name": "Mogu Cultist",
+      "group": "summon-tokens",
+      "complete": false,
+      "ids": [
+        "ULD_705"
+      ],
+      "text": "Battlecry: If your board is full of Mogu Cultists, sacrifice them all and summon Highkeeper Ra.",
+      "dependency": "Special token, passive, start/end trigger or Aura lifecycle"
+    },
+    {
+      "name": "Morchok",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "CATA_570"
+      ],
+      "text": "Battlecry: Draw a card and reduce its Cost by (10). Repeat this with excess Cost reduction."
+    },
+    {
+      "name": "Mossy Horror",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "GIL_124"
+      ],
+      "text": "Battlecry: Destroy all other minions with 2 or less Attack."
+    },
+    {
+      "name": "Murkspark Eel",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "GIL_530"
+      ],
+      "text": "Battlecry: If your deck has only even-Cost cards, deal 2 damage."
+    },
+    {
+      "name": "Mutanus the Devourer",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "WC_030"
+      ],
+      "text": "Battlecry: Eat a minion in your opponent's hand. Gain its stats."
+    },
+    {
+      "name": "Mystified To'cha",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "GDB_440"
+      ],
+      "text": "Battlecry: If the combined Health of both heroes is exactly 42, set your hero's Health to 42."
+    },
+    {
+      "name": "Mythical Runebear",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "EDR_481"
+      ],
+      "text": "Taunt. Battlecry: If this has 4 or more Attack, summon a copy of this."
+    },
+    {
+      "name": "Nablya, the Watcher",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "TLC_624"
+      ],
+      "text": "Battlecry: Summon copies of your damaged minions. Give the copies Rush."
+    },
+    {
+      "name": "Natalie Seline",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "CORE_EX1_198",
+        "EX1_198"
+      ],
+      "text": "Battlecry: Destroy a minion and gain its Health."
+    },
+    {
+      "name": "Nefarian",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "BRM_030"
+      ],
+      "text": "Battlecry: Add 2 random spells to your hand (from your opponent's class)."
+    },
+    {
+      "name": "Nethrandamus",
+      "group": "summon-tokens",
+      "complete": false,
+      "ids": [
+        "BT_481"
+      ],
+      "text": "Battlecry: Summon two random 0-Cost minions. (Upgrades each time a friendly minion dies!)",
+      "dependency": "Original-card identity, starting snapshots or while-held progression"
+    },
+    {
+      "name": "Night Elf Huntress",
+      "group": "damage-stats",
+      "complete": false,
+      "ids": [
+        "TOY_101"
+      ],
+      "text": "Battlecry: Deal 3 damage to three different enemies. (You pick the targets!)",
+      "dependency": "Multiple selections or a choice spanning hand and battlefield"
+    },
+    {
+      "name": "Noxious Cadaver",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "LEG_RLK_079"
+      ],
+      "text": "Battlecry: Deal 2 damage to an enemy and your hero."
+    },
+    {
+      "name": "Oil Rig Ambusher",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "BAR_316"
+      ],
+      "text": "Battlecry: Deal 2 damage. If this entered your hand this turn, deal 4 instead."
+    },
+    {
+      "name": "Omen of the End",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "END_035"
+      ],
+      "text": "Battlecry: If your deck is empty, destroy the top 5 cards of the enemy deck."
+    },
+    {
+      "name": "Onyxia",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "EX1_562"
+      ],
+      "text": "Battlecry: Summon 1/1 Whelps until your side of the battlefield is full."
+    },
+    {
+      "name": "Onyxian Warder",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "ONY_001"
+      ],
+      "text": "Battlecry: If you're holding a Dragon, summon two 2/1 Whelps with Rush."
+    },
+    {
+      "name": "Outfit Tailor",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "ETC_420"
+      ],
+      "text": "Battlecry: Give a friendly minion Attack and Health equal to this minion's."
+    },
+    {
+      "name": "Overseer Frigidara",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "LEG_RLK_224"
+      ],
+      "text": "Battlecry: Draw 2 spells. If they're both Frost spells, deal 2 damage to all enemies."
+    },
+    {
+      "name": "P1CK-P0K3T",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "JAIL_456"
+      ],
+      "text": "Battlecry: If your deck has 25 or more cards, draw a card."
+    },
+    {
+      "name": "Pantry Spider",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "KAR_030a"
+      ],
+      "text": "Battlecry: Summon a 1/3 Spider."
+    },
+    {
+      "name": "Party Animal",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "ETC_350"
+      ],
+      "text": "Battlecry: Give +1/+1 to each minion of a different type in your hand."
+    },
+    {
+      "name": "Patchwerk",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "LEG_RLK_071"
+      ],
+      "text": "Battlecry: Destroy a random minion in your opponent's hand, deck, and battlefield."
+    },
+    {
+      "name": "Pebbly Page",
+      "group": "draw-zones",
+      "complete": false,
+      "ids": [
+        "WON_090"
+      ],
+      "text": "Battlecry: Draw an Overload card. You can't be Overloaded this turn.",
+      "dependency": "Persistent rule, resource threshold or effect replacement"
+    },
+    {
+      "name": "Pet Collector",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "ONY_009"
+      ],
+      "text": "Battlecry: Summon a Beast from your deck that costs (5) or less."
+    },
+    {
+      "name": "Photographer Fizzle",
+      "group": "draw-zones",
+      "complete": false,
+      "ids": [
+        "ETC_113"
+      ],
+      "text": "Battlecry: Take a Snapshot of your current hand and shuffle it into your deck. (Once per game)",
+      "dependency": "Generated cards that carry stored cards or victim-specific values"
+    },
+    {
+      "name": "Possessifier",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "LEG_RLK_077"
+      ],
+      "text": "Battlecry: Summon two 1/1 Fighters with Rush and Reborn."
+    },
+    {
+      "name": "Primal Dungeoneer",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "WC_005"
+      ],
+      "text": "Battlecry: Draw a spell. If it's a Nature spell, also draw an Elemental."
+    },
+    {
+      "name": "Primordial Lord",
+      "group": "generate-pools",
+      "complete": false,
+      "ids": [
+        "CATA_EVENT_000"
+      ],
+      "text": "Battlecry: Get a random Colossal minion from the past.",
+      "dependency": "Verified named pool and complete generated-card behavior"
+    },
+    {
+      "name": "Primordial Protector",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "BAR_042"
+      ],
+      "text": "Battlecry: Draw your highest Cost spell. Summon a random minion with the same Cost."
+    },
+    {
+      "name": "Princess Talanji",
+      "group": "summon-tokens",
+      "complete": false,
+      "ids": [
+        "TRL_259"
+      ],
+      "text": "Battlecry: Summon all minions from your hand that didn't start in your deck.",
+      "dependency": "Original-card identity, starting snapshots or while-held progression"
+    },
+    {
+      "name": "Quartermaster",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "GVG_060"
+      ],
+      "text": "Battlecry: Give your Silver Hand Recruits +2/+2."
+    },
+    {
+      "name": "Rainbow Seamstress",
+      "group": "draw-zones",
+      "complete": false,
+      "ids": [
+        "TOY_823"
+      ],
+      "text": "Battlecry: If your deck started with a Blood, Frost, or Unholy card, gain Lifesteal, Reborn, or Rush respectively.",
+      "dependency": "Original-card identity, starting snapshots or while-held progression"
+    },
+    {
+      "name": "Ram Commander",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "AV_219"
+      ],
+      "text": "Battlecry: Add two 1/1 Rams with Rush to your hand."
+    },
+    {
+      "name": "Ratcatcher",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "GIL_515"
+      ],
+      "text": "Rush Battlecry: Destroy a friendly minion and gain its Attack and Health."
+    },
+    {
+      "name": "Raven Familiar",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "LOOT_170"
+      ],
+      "text": "Battlecry: Reveal a spell in each deck. If yours costs more, draw it."
+    },
+    {
+      "name": "Ravenous Devilsaur",
+      "group": "damage-stats",
+      "complete": false,
+      "ids": [
+        "TLC_829"
+      ],
+      "text": "Battlecry: Destroy a minion. Kindred: Gain its stats.",
+      "dependency": "Kindred activation, history and dependent targeting/costs"
+    },
+    {
+      "name": "Razidir",
+      "group": "draw-zones",
+      "complete": false,
+      "ids": [
+        "TLC_463"
+      ],
+      "text": "Battlecry: Discard a random card from your hand. Kindred: Your opponent's hand instead.",
+      "dependency": "Kindred activation, history and dependent targeting/costs"
+    },
+    {
+      "name": "Razorpetal Lasher",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "UNG_058"
+      ],
+      "text": "Battlecry: Add a Razorpetal to your hand that deals 2 damage."
+    },
+    {
+      "name": "Relic Miner",
+      "group": "draw-zones",
+      "complete": false,
+      "ids": [
+        "TLC_109"
+      ],
+      "text": "Battlecry: Destroy the top card of your deck. Discover a card of the same Rarity.",
+      "dependency": "Authored complete transaction, target relationship and independent outcome tests"
+    },
+    {
+      "name": "Reno Jackson",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "LOE_011"
+      ],
+      "text": "Battlecry: If your deck has no duplicates, fully heal your hero."
+    },
+    {
+      "name": "Revenant Rascal",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "DMF_115"
+      ],
+      "text": "Battlecry: Destroy a Mana Crystal for each player."
+    },
+    {
+      "name": "Rheastrasza",
+      "group": "summon-tokens",
+      "complete": false,
+      "ids": [
+        "WW_824"
+      ],
+      "text": "Battlecry: If your deck started with no duplicates, summon the Purified Dragon Nest.",
+      "dependency": "Original-card identity, starting snapshots or while-held progression"
+    },
+    {
+      "name": "Riftcleaver",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "CORE_ULD_165",
+        "ULD_165"
+      ],
+      "text": "Battlecry: Destroy a minion. Your hero takes damage equal to its Health."
+    },
+    {
+      "name": "Rockskipper",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "TLC_427"
+      ],
+      "text": "Battlecry: Get a 1-Cost Rock that deals 3 damage."
+    },
+    {
+      "name": "Rolling Stone",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "ETC_742"
+      ],
+      "text": "Rush Battlecry: If the last card you played costs (1), gain +1/+1."
+    },
+    {
+      "name": "Rotting Necromancer",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "NX2_018"
+      ],
+      "text": "Battlecry: Dredge. If it's an Undead, deal 5 damage to the enemy hero."
+    },
+    {
+      "name": "Rowdy Partner",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "WW_906"
+      ],
+      "text": "Battlecry: If you're holding another 4-Cost card, deal 4 damage."
+    },
+    {
+      "name": "Safety Inspector",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "DMF_125"
+      ],
+      "text": "Battlecry: Shuffle the lowest-Cost card from your hand into your deck. Draw a card."
+    },
+    {
+      "name": "Saloon Brewmaster",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "WW_423"
+      ],
+      "text": "Battlecry: Return a friendly minion to your hand. Give it +2/+2."
+    },
+    {
+      "name": "Sanguine Reveler",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "ICC_903"
+      ],
+      "text": "Battlecry: Destroy a friendly minion and gain +2/+2."
+    },
+    {
+      "name": "Saronite Chain Gang",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "ICC_466"
+      ],
+      "text": "Taunt Battlecry: Summon a Saronite Chain Gang."
+    },
+    {
+      "name": "Savage Striker",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "CORE_TRL_240",
+        "TRL_240"
+      ],
+      "text": "Battlecry: Deal damage to an enemy minion equal to your hero's Attack."
+    },
+    {
+      "name": "Savage Ymirjar",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "RLK_535"
+      ],
+      "text": "Rush Battlecry: Discard 2 cards."
+    },
+    {
+      "name": "Scalehide Kodo",
+      "group": "damage-stats",
+      "complete": false,
+      "ids": [
+        "TLC_454"
+      ],
+      "text": "Battlecry: Destroy the lowest Attack enemy minion. Kindred: The highest Attack instead.",
+      "dependency": "Kindred activation, history and dependent targeting/costs"
+    },
+    {
+      "name": "Scarlet Recruiter",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "JAIL_516"
+      ],
+      "text": "Battlecry: Summon two minions from your deck that cost (2) or less. Give them Rush."
+    },
+    {
+      "name": "Scourge Rager",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "RLK_900"
+      ],
+      "text": "Reborn Battlecry: Die."
+    },
+    {
+      "name": "Scrapsmith",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "AV_323"
+      ],
+      "text": "Taunt Battlecry: Add two 2/4 Grunts with Taunt to your hand."
+    },
+    {
+      "name": "Seafloor Savior",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "TSC_083"
+      ],
+      "text": "Battlecry: Dredge. If it's a minion, give it this minion's Attack and Health."
+    },
+    {
+      "name": "Shadowcloaked Assailant",
+      "group": "draw-zones",
+      "complete": false,
+      "ids": [
+        "EDR_524"
+      ],
+      "text": "Battlecry: If you're holding one of the same cards as your opponent, shuffle theirs into their deck.",
+      "dependency": "Authored complete transaction, target relationship and independent outcome tests"
+    },
+    {
+      "name": "Shadowtouched Kvaldir",
+      "group": "damage-stats",
+      "complete": false,
+      "ids": [
+        "YOG_300"
+      ],
+      "text": "Battlecry: Your next healing effect deals damage instead.",
+      "dependency": "Persistent rule, resource threshold or effect replacement"
+    },
+    {
+      "name": "Sharp-Eyed Lookout",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "EDR_950"
+      ],
+      "text": "Battlecry: Draw a card. It costs (1) less this turn. (I know its name!)"
+    },
+    {
+      "name": "Sharp-Eyed Seeker",
+      "group": "draw-zones",
+      "complete": false,
+      "ids": [
+        "TTN_712"
+      ],
+      "text": "Battlecry: If there is a card in your deck that didn't start there, draw it.",
+      "dependency": "Original-card identity, starting snapshots or while-held progression"
+    },
+    {
+      "name": "Sheriff Barrelbrim",
+      "group": "damage-stats",
+      "complete": false,
+      "ids": [
+        "WW_359"
+      ],
+      "text": "Battlecry: If you have 20 or less Health, open the Badlands Jail.",
+      "dependency": "Generated-card keyword/subsystem and its complete lifecycle"
+    },
+    {
+      "name": "Shock Hopper",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "YOG_524"
+      ],
+      "text": "Battlecry: Get a random Overload card."
+    },
+    {
+      "name": "Shockspitter",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "RLK_825"
+      ],
+      "text": "Battlecry: Deal 1 damage. (Improved by your hero attacks this game!)"
+    },
+    {
+      "name": "Sightless Magistrate",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "MAW_008"
+      ],
+      "text": "Battlecry: Both players draw until they have 5 cards."
+    },
+    {
+      "name": "Sketch Artist",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "TOY_916"
+      ],
+      "text": "Battlecry: Draw a Shadow spell. Get a Temporary copy of it."
+    },
+    {
+      "name": "Skulking Geist",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "ICC_701"
+      ],
+      "text": "Battlecry: Destroy all 1-Cost spells in both hands and decks."
+    },
+    {
+      "name": "Sludge Slurper",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "DAL_433"
+      ],
+      "text": "Battlecry: Add a Lackey to your hand. Overload: (1)"
+    },
+    {
+      "name": "Smolderthorn Lancer",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "TRL_326"
+      ],
+      "text": "Battlecry: If you're holding a Dragon, destroy a damaged enemy minion."
+    },
+    {
+      "name": "Snapdragon",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "TID_710"
+      ],
+      "text": "Battlecry: Give all Battlecry minions in your deck +1/+1."
+    },
+    {
+      "name": "Specter Specialist",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "CAP_804"
+      ],
+      "text": "Battlecry: Give a friendly minion Reborn. If it already has Reborn, summon a copy of it."
+    },
+    {
+      "name": "Spiteful Chef",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "JAIL_507"
+      ],
+      "text": "Battlecry: Summon a 2-Cost Taunt minion. If you have 10 or more Mana, summon a 6-Cost instead."
+    },
+    {
+      "name": "Starlight Wanderer",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "GDB_720"
+      ],
+      "text": "Battlecry: The next Draenei you play gains +2/+1."
+    },
+    {
+      "name": "Starlight Whelp",
+      "group": "generate-pools",
+      "complete": false,
+      "ids": [
+        "TTN_718"
+      ],
+      "text": "Battlecry: Get a random card from your starting hand.",
+      "dependency": "Original-card identity, starting snapshots or while-held progression"
+    },
+    {
+      "name": "Steamcleaner",
+      "group": "damage-stats",
+      "complete": false,
+      "ids": [
+        "CORE_REV_946",
+        "REV_946"
+      ],
+      "text": "Battlecry: Destroy ALL cards in both players' decks that didn't start there.",
+      "dependency": "Original-card identity, starting snapshots or while-held progression"
+    },
+    {
+      "name": "Stone Trogg",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "BE_994"
+      ],
+      "text": "Battlecry: Deal 6 damage to a minion. If it survives, gain +6 Health and Taunt. ~GAMEPLAY ASPROXY BE 994"
+    },
+    {
+      "name": "Stonehearth Vindicator",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "AV_343"
+      ],
+      "text": "Battlecry: Draw a spell that costs (3) or less. It costs (0) this turn."
+    },
+    {
+      "name": "Stowaway",
+      "group": "draw-zones",
+      "complete": false,
+      "ids": [
+        "DRG_034"
+      ],
+      "text": "Battlecry: If there are cards in your deck that didn't start there, draw 2 of them.",
+      "dependency": "Original-card identity, starting snapshots or while-held progression"
+    },
+    {
+      "name": "Stranded Spaceman",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "GDB_861"
+      ],
+      "text": "Battlecry: The next Draenei you play gains +2 Health and Rush."
+    },
+    {
+      "name": "Streetwise Investigator",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "CFM_656"
+      ],
+      "text": "Battlecry: Enemy minions lose Stealth."
+    },
+    {
+      "name": "Summer Flowerchild",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "ETC_376"
+      ],
+      "text": "Battlecry: Draw two cards that cost (6) or more. Finale: They cost (1) less."
+    },
+    {
+      "name": "Talya Earthstrider",
+      "group": "summon-tokens",
+      "complete": false,
+      "ids": [
+        "MEND_304"
+      ],
+      "text": "Battlecry: Your cards that summon Animal Companions summon 1 more this game.",
+      "dependency": "Persistent rule, resource threshold or effect replacement"
+    },
+    {
+      "name": "Temporal Construct",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "TIME_858"
+      ],
+      "text": "Battlecry: Deal 5 damage to an enemy minion. Draw cards equal to the excess damage."
+    },
+    {
+      "name": "Tenwu of the Red Smoke",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "DMF_071"
+      ],
+      "text": "Battlecry: Return a friendly minion to your hand. It costs (1) this turn."
+    },
+    {
+      "name": "Terrorguard Escapee",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "BT_159"
+      ],
+      "text": "Battlecry: Summon three 1/1 Huntresses for your opponent."
+    },
+    {
+      "name": "The 8 Hands From Beyond",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "GDB_477"
+      ],
+      "text": "Battlecry: Destroy both players' decks EXCEPT the 8 highest Cost cards in each."
+    },
+    {
+      "name": "The Jailer",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "MAW_034"
+      ],
+      "text": "Battlecry: Destroy your deck. This minion gains Immune."
+    },
+    {
+      "name": "The Lurker Below",
+      "group": "damage-stats",
+      "complete": false,
+      "ids": [
+        "BT_230"
+      ],
+      "text": "Battlecry: Deal 3 damage to an enemy minion. If it dies, repeat on one of its neighbors.",
+      "dependency": "Authored complete transaction, target relationship and independent outcome tests"
+    },
+    {
+      "name": "The Purator",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "NX2_023"
+      ],
+      "text": "Taunt Battlecry: If your deck has no Neutral cards, draw a minion of each minion type."
+    },
+    {
+      "name": "The Unknowable One",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "BE_725"
+      ],
+      "text": "Battlecry: Set the Attack and Health of all Combo minions in your hand to 6."
+    },
+    {
+      "name": "Tidelost Burrower",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "TID_003"
+      ],
+      "text": "Battlecry: Dredge. If it's a Murloc, summon a 2/2 copy of it."
+    },
+    {
+      "name": "Time Adm'ral Hooktail",
+      "group": "summon-tokens",
+      "complete": false,
+      "ids": [
+        "TIME_713"
+      ],
+      "text": "Battlecry: Summon a 0/8 Chest for your opponent. It's FULL of Coins!",
+      "dependency": "Special token, passive, start/end trigger or Aura lifecycle"
+    },
+    {
+      "name": "Timeless Causality",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "TIME_061"
+      ],
+      "text": "Battlecry: Reverse the order of your deck."
+    },
+    {
+      "name": "Tinkertown Technician",
+      "group": "damage-stats",
+      "complete": false,
+      "ids": [
+        "GVG_102"
+      ],
+      "text": "Battlecry: If you have a Mech, gain +1/+1 and add a Spare Part to your hand.",
+      "dependency": "Verified named pool and complete generated-card behavior"
+    },
+    {
+      "name": "Togwaggle, Smuggler King",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "JAIL_852"
+      ],
+      "text": "Battlecry: Shuffle both players' hands together."
+    },
+    {
+      "name": "Toki, Time-Tinker",
+      "group": "generate-pools",
+      "complete": false,
+      "ids": [
+        "GIL_549"
+      ],
+      "text": "Battlecry: Add a random Legendary minion from the past to your hand.",
+      "dependency": "Verified named pool and complete generated-card behavior"
+    },
+    {
+      "name": "Tomb Traitor",
+      "group": "damage-stats",
+      "complete": false,
+      "ids": [
+        "TTN_455"
+      ],
+      "text": "Battlecry: Destroy a Plague in your opponent's deck to deal 3 damage to all enemy minions.",
+      "dependency": "Authored complete transaction, target relationship and independent outcome tests"
+    },
+    {
+      "name": "Torga",
+      "group": "draw-zones",
+      "complete": false,
+      "ids": [
+        "TLC_102"
+      ],
+      "text": "Battlecry: Draw a Kindred card and another card that activates it.",
+      "dependency": "Kindred activation, history and dependent targeting/costs"
+    },
+    {
+      "name": "Torghast Custodian",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "MAW_030"
+      ],
+      "text": "Battlecry: For each enemy minion, randomly gain Rush, Divine Shield, or Windfury."
+    },
+    {
+      "name": "Totem Cruncher",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "GIL_583"
+      ],
+      "text": "Taunt Battlecry: Destroy your Totems. Gain +2/+2 for each destroyed."
+    },
+    {
+      "name": "Travelmaster Dungar",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "WORK_043"
+      ],
+      "text": "Battlecry: Summon three minions from your deck that are from different expansions."
+    },
+    {
+      "name": "Trench Surveyor",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "TSC_642"
+      ],
+      "text": "Battlecry: Dredge. If it's a Mech, draw it."
+    },
+    {
+      "name": "Trenchstalker",
+      "group": "damage-stats",
+      "complete": false,
+      "ids": [
+        "TSC_659"
+      ],
+      "text": "Battlecry: Attack three different random enemies.",
+      "dependency": "Forced attacks or a combat-result listener"
+    },
+    {
+      "name": "Trinket Artist",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "TOY_882"
+      ],
+      "text": "Battlecry: Draw a Divine Shield minion and an Aura."
+    },
+    {
+      "name": "Tuskarr Totemic",
+      "group": "summon-tokens",
+      "complete": false,
+      "ids": [
+        "AT_046",
+        "WON_081"
+      ],
+      "text": "Battlecry: Summon a random basic Totem.",
+      "dependency": "Special token, passive, start/end trigger or Aura lifecycle"
+    },
+    {
+      "name": "Tuskarrrr Trawler",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "TSC_909"
+      ],
+      "text": "Battlecry: Dredge."
+    },
+    {
+      "name": "Twilight Deceptor",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "SW_444"
+      ],
+      "text": "Battlecry: If any hero took damage this turn, draw a Shadow spell."
+    },
+    {
+      "name": "Twin Tyrant",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "DRG_213"
+      ],
+      "text": "Battlecry: Deal 4 damage to two random enemy minions."
+    },
+    {
+      "name": "Undercooked Calamari",
+      "group": "damage-stats",
+      "complete": false,
+      "ids": [
+        "VAC_341"
+      ],
+      "text": "Battlecry: Destroy an enemy minion with Attack less than or equal to this minion's.",
+      "dependency": "Authored complete transaction, target relationship and independent outcome tests"
+    },
+    {
+      "name": "Unyielding Vindicator",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "GDB_232"
+      ],
+      "text": "Battlecry: The next Draenei you play gives your hero its Attack for that turn."
+    },
+    {
+      "name": "Utgarde Grapplesniper",
+      "group": "summon-tokens",
+      "complete": false,
+      "ids": [
+        "DRG_077"
+      ],
+      "text": "Battlecry: Both players draw a card. If it's a Dragon, summon it.",
+      "dependency": "Authored complete transaction, target relationship and independent outcome tests"
+    },
+    {
+      "name": "V'ama, Looming Death",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "JAIL_118"
+      ],
+      "text": "Battlecry: Destroy all non-Paladin minions."
+    },
+    {
+      "name": "Valdris Felgorge",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "DRG_208"
+      ],
+      "text": "Battlecry: Increase your maximum hand size to 12. Draw 4 cards."
+    },
+    {
+      "name": "Varden Dawngrasp",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "BAR_748"
+      ],
+      "text": "Battlecry: Freeze all enemy minions. If any are already Frozen, deal 4 damage to them instead."
+    },
+    {
+      "name": "Varian, King of Stormwind",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "SW_081"
+      ],
+      "text": "Battlecry: Draw a Rush minion to gain Rush. Repeat for Taunt and Divine Shield."
+    },
+    {
+      "name": "Veranus",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "DRG_095"
+      ],
+      "text": "Battlecry: Change the Health of all enemy minions to 1."
+    },
+    {
+      "name": "Vicious Bloodworm",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "RLK_711"
+      ],
+      "text": "Battlecry: Give a minion in your hand Attack equal to this minion's Attack."
+    },
+    {
+      "name": "Vigilant Sentry",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "JAIL_035"
+      ],
+      "text": "Taunt Battlecry: If your deck has no Neutral cards, summon two Vigilant Sentries."
+    },
+    {
+      "name": "Void Ray",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "SC_783"
+      ],
+      "text": "Rush, Divine Shield Battlecry: If this costs (0), gain +2/+2."
+    },
+    {
+      "name": "Void Terror",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "EX1_304"
+      ],
+      "text": "Battlecry: Destroy both adjacent minions and gain their Attack and Health."
+    },
+    {
+      "name": "Wandmaker",
+      "group": "generate-pools",
+      "complete": true,
+      "ids": [
+        "SCH_160"
+      ],
+      "text": "Battlecry: Add a 1-Cost spell from your class to your hand."
+    },
+    {
+      "name": "Warmaster Blackhorn",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "CATA_720"
+      ],
+      "text": "Battlecry: Destroy all cards that cost (2) or less in both players' decks."
+    },
+    {
+      "name": "Waste Warden",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "BT_729"
+      ],
+      "text": "Battlecry: Deal 3 damage to a minion and all others of the same minion type."
+    },
+    {
+      "name": "Wasteland Vanguard",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "MEND_302"
+      ],
+      "text": "Battlecry: Deal 3 damage split among all enemies. If any die, deal 3 more."
+    },
+    {
+      "name": "Wealth Redistributor",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "DED_500"
+      ],
+      "text": "Taunt. Battlecry: Swap the Attack of the highest and lowest Attack minion."
+    },
+    {
+      "name": "Weaponized Wasp",
+      "group": "damage-stats",
+      "complete": true,
+      "ids": [
+        "ULD_170"
+      ],
+      "text": "Battlecry: If you control a Lackey, deal 3 damage."
+    },
+    {
+      "name": "Windpeak Wyrm",
+      "group": "damage-stats",
+      "complete": false,
+      "ids": [
+        "TLC_600"
+      ],
+      "text": "Battlecry: Deal 5 damage and gain 5 Armor. Kindred: Costs (2) less.",
+      "dependency": "Kindred activation, history and dependent targeting/costs"
+    },
+    {
+      "name": "Windshear Stormcaller",
+      "group": "summon-tokens",
+      "complete": false,
+      "ids": [
+        "LOOT_518"
+      ],
+      "text": "Battlecry: If you control all 4 basic Totems, summon Al'Akir the Windlord.",
+      "dependency": "Special token, passive, start/end trigger or Aura lifecycle"
+    },
+    {
+      "name": "Wing Commander Ichman",
+      "group": "summon-tokens",
+      "complete": false,
+      "ids": [
+        "AV_336"
+      ],
+      "text": "Battlecry: Summon a Beast from your deck and give it Rush. If it kills a minion this turn, repeat.",
+      "dependency": "Forced attacks or a combat-result listener"
+    },
+    {
+      "name": "Witch of the Arch-Thief",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "WON_104"
+      ],
+      "text": "Battlecry: Summon a 1/3 Voidwalker with Taunt. If your opponent has more minions, repeat."
+    },
+    {
+      "name": "Witchwood Grizzly",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "CORE_GIL_623",
+        "GIL_623"
+      ],
+      "text": "Taunt Battlecry: Lose 1 Health for each card in your opponent's hand."
+    },
+    {
+      "name": "Witchwood Piper",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "GIL_584"
+      ],
+      "text": "Battlecry: Draw the lowest Cost minion from your deck."
+    },
+    {
+      "name": "Wrathion",
+      "group": "draw-zones",
+      "complete": true,
+      "ids": [
+        "CFM_806"
+      ],
+      "text": "Taunt. Battlecry: Draw cards until you draw one that isn't a Dragon."
+    },
+    {
+      "name": "Ysera the Dreamer",
+      "group": "generate-pools",
+      "complete": false,
+      "ids": [
+        "LEG_CS3_033"
+      ],
+      "text": "Battlecry: Add one of each Dream card to your hand.",
+      "dependency": "Verified named pool and complete generated-card behavior"
+    },
+    {
+      "name": "Zer'Ontu",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "BE_790"
+      ],
+      "text": "Taunt. Battlecry: Summon a 0, 1, and 2-Attack minion from your deck. Gain their stats."
+    },
+    {
+      "name": "Zergling",
+      "group": "summon-tokens",
+      "complete": true,
+      "ids": [
+        "SC_010"
+      ],
+      "text": "Battlecry: Summon a 1/1 Zergling."
+    }
+  ]
+}

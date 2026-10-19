@@ -1,4 +1,4 @@
-import type { Card } from './cards';
+import { freezesOnDamage, type Card } from './cards';
 import compiledBattlecries from './generated/battlecries.json';
 import compiledDeathrattles from './generated/deathrattles.json';
 import compiledSpells from './generated/spells.json';
@@ -24,8 +24,10 @@ export const expandedSpells = compiledSpells as unknown as Record<
 >;
 export function scriptTarget(steps: ScriptStep[]): ScriptStep | undefined {
   for (const step of steps) {
+    if (step.op === 'future-play') continue;
     if (step.target) return step;
-    const nested = step.steps && scriptTarget(step.steps);
+    const nested =
+      (step.steps && scriptTarget(step.steps)) || (step.elseSteps && scriptTarget(step.elseSteps));
     if (nested) return nested;
   }
 }
@@ -217,6 +219,7 @@ const basic = new Set([
 ]);
 export function supported(c: Card) {
   return (
+    (c.type === 'MINION' && freezesOnDamage(c)) ||
     (c.type === 'WEAPON' && !c.text) ||
     !!effectFor(c) ||
     !!deathrattleFor(c) ||

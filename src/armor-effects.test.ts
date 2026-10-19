@@ -195,7 +195,7 @@ describe('Armor, self-damage, and ordered Battlecry effects', () => {
     expect(passed.players[2].health).toBe(35);
   });
   it('keeps incomplete multi-part armor cards blocked', () => {
-    for (const id of ['BE_557', 'DRG_020', 'RLK_659', 'YOG_500'])
+    for (const id of ['BE_557', 'RLK_659', 'YOG_500'])
       expect(supported(card(id)), id).toBe(false);
   });
 });

@@ -68,4 +68,24 @@ class CompleteTextTests(unittest.TestCase):
     def test_ui_variant_cleanup_preserves_the_first_complete_rules_clause(self):
         self.assertEqual(compiler.clean('Battlecry: Draw 2 cards.@ (Ready!)'),'Battlecry: Draw 2 cards.')
 
+    def test_foundation_clauses_keep_linked_draws_and_temporary_costs(self):
+        self.assertEqual(compiler.compile('Draw a spell. Gain Armor equal to its Cost.')[0]['mode'],'armor')
+        self.assertEqual(compiler.compile('Draw a card. It costs (1) less this turn. (I know its name!)')[0]['expires'],'turn')
+        self.assertEqual(compiler.compile('Deal 4 damage to HIMSELF.')[0]['scope'],'self')
+        self.assertEqual(compiler.compile('Deal 2 damage to two random enemy minions.')[0]['random'],2)
+
+    def test_foundation_patterns_reject_unknown_riders(self):
+        for text in ['Draw a spell. Gain Armor equal to its Cost. Cast it twice.', 'Give a minion +3/+3 and Freeze it. Teach it an unknown ability.', 'Set the stats of the next three minions you play to 8/8. Make them Immune forever.']:
+            with self.subTest(text=text):self.assertIsNone(compiler.compile(text))
+
+    def test_token_description_must_match_the_pinned_token(self):
+        original_card,original_refs=compiler.current_card,compiler.all_cards
+        try:
+            compiler.current_card={'id':'CFM_315','set':'GANGS'}
+            compiler.all_cards=[{'id':'CFM_315t','type':'MINION','name':'Tabbycat','attack':1,'health':1,'set':'GANGS'}]
+            self.assertEqual(compiler.compile('Summon a 1/1 Cat.')[0]['token'],'CFM_315t')
+            self.assertIsNone(compiler.compile('Summon a 1/1 Cat with an unknown ability.'))
+            self.assertIsNone(compiler.compile('Summon a 1/1 Cat that destroys all minions.'))
+        finally:compiler.current_card,compiler.all_cards=original_card,original_refs
+
 if __name__=='__main__':unittest.main()

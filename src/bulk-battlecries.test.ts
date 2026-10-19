@@ -116,7 +116,7 @@ describe('500 additional distinct Battlecry names', () => {
       s = finish(play(s, id, target));
       for (const p of s.players) {
         expect(p.board.length).toBeLessThanOrEqual(7);
-        expect(p.hand.length).toBeLessThanOrEqual(10);
+        expect(p.hand.length).toBeLessThanOrEqual(p.maxHandSize ?? 10);
         expect(Number.isFinite(p.health)).toBe(true);
         expect(p.armor).toBeGreaterThanOrEqual(0);
         for (const u of p.board) {
@@ -136,7 +136,7 @@ describe('500 additional distinct Battlecry names', () => {
   )('%s executes its conditional branch when the prerequisite is present', (id, c) => {
     let s = fixture();
     const condition = expandedBattlecries[id].steps[0].condition!;
-    const p = s.players[0];
+    let p = s.players[0];
     p.weapon = { card: card('CS2_106'), attack: 3, durability: 2 };
     const find = () =>
       [...cards, ...catalog].find((x) => {
@@ -146,7 +146,9 @@ describe('500 additional distinct Battlecry names', () => {
             condition.filter?.keyword === 'SECRET' ||
             x.type === 'MINION') &&
           (!f.name || x.name === f.name) &&
+          (!f.nameSuffix || x.name.endsWith(f.nameSuffix)) &&
           (f.health === undefined || x.health === f.health) &&
+          (f.minHealth === undefined || (x.health ?? 0) >= f.minHealth) &&
           (!f.type || x.type === f.type) &&
           (!f.tribe || x.race === f.tribe || x.races?.includes(f.tribe)) &&
           (!f.school || x.spellSchool === f.school) &&
@@ -168,7 +170,12 @@ describe('500 additional distinct Battlecry names', () => {
         condition.max !== undefined
           ? []
           : Array.from({ length: count }, () => structuredClone(find()));
-    if (condition.zone === 'friendly' || condition.zone === 'all' || condition.zone === 'enemy') {
+    if (
+      condition.zone === 'friendly' ||
+      condition.zone === 'friendly-including-self' ||
+      condition.zone === 'all' ||
+      condition.zone === 'enemy'
+    ) {
       if (condition.filter?.keyword === 'SECRET') p.secrets = [find()];
       else {
         const owner = condition.zone === 'enemy' ? 1 : 0;
@@ -177,6 +184,7 @@ describe('500 additional distinct Battlecry names', () => {
         if (condition.max === undefined)
           for (let i = 0; i < count; i++) {
             s = debugAction(s, { type: 'summon', p: owner, card: find() });
+            if (condition.filter?.frozen) s.players[owner].board.at(-1)!.frozen = true;
             if (condition.filter?.damaged) {
               const u = s.players[owner].board.at(-1)!;
               u.maxHealth = Math.max(2, u.maxHealth);
@@ -185,6 +193,31 @@ describe('500 additional distinct Battlecry names', () => {
           }
       }
     }
+    p = s.players[0];
+    if (id === 'ONY_026') p.hand.push({ ...card('CS2_029'), spellSchool: 'SHADOW' });
+    if (id === 'KAR_033') s.players[1].board[0].attack = 2;
+    if (id === 'TRL_326')
+      s.players[1].board[0].health = Math.max(1, s.players[1].board[0].maxHealth - 1);
+    if (condition.zone === 'enemy-frozen') s.players[1].frozen = true;
+    if (condition.stat === 'overload') p.overload = 1;
+    if (condition.special === 'odd-deck') p.deck = p.deck.filter((c) => c.cost % 2 === 1);
+    if (condition.special === 'even-deck') p.deck = p.deck.filter((c) => c.cost % 2 === 0);
+    if (condition.special === 'last-cost-one')
+      (s.events ??= []).push({
+        type: 'play',
+        player: 0,
+        turn: s.turn,
+        card: { ...card('CS2_182'), cost: 1 },
+      });
+    if (condition.special === 'any-hero-damage')
+      (s.events ??= []).push({ type: 'hero-damage', player: 1, turn: s.turn, amount: 1 });
+    if (condition.special === 'combined-health-42')
+      s.players.forEach((p, i) => {
+        p.health = i < 2 ? 11 : 10;
+      });
+    if (condition.special === 'source-more-expensive')
+      for (const c of p.deck) if (c.type === 'MINION') c.cost = 0;
+    if (condition.stat === 'remaining-mana') p.mana = c.cost;
     if (condition.stat === 'enemy-health')
       s.players[1].health = condition.max ?? condition.min ?? 15;
     if (condition.stat === 'health') p.health = condition.min ?? condition.max ?? 30;
@@ -217,7 +250,23 @@ describe('500 additional distinct Battlecry names', () => {
         })),
       ];
     }
-    s.players[0].hand.push({ ...c, heldSince: 0 });
+    s.players[0].hand.push({
+      ...c,
+      heldSince: 0,
+      ...(condition.stat === 'source-attack'
+        ? {
+            modifiers: [
+              {
+                sourceCardId: 'fixture',
+                sourceName: 'Fixture',
+                attack: Math.max(0, (condition.min ?? 0) - (c.attack ?? 0)),
+                health: 0,
+              },
+            ],
+          }
+        : {}),
+      ...(condition.stat === 'source-cost' ? { cost: 0 } : {}),
+    });
     const target = effectTargets(s, 0, c).find((t) => t.p === 1) ?? effectTargets(s, 0, c)[0];
     s = applyAction(s, { type: 'cast', p: 0, index: s.players[0].hand.length - 1, target });
     s = finish(s);
@@ -620,6 +669,43 @@ describe('Independent mechanic and interaction checks', () => {
   });
   it('all generated opcodes are recognized and every nested condition has an implemented shape', () => {
     const valid = new Set([
+      'deck-token',
+      'consume',
+      'set-minion-health',
+      'edge-damage',
+      'remove-keyword',
+      'deck-order',
+      'battlefield-stats',
+      'shield-harvest',
+      'draw-linked',
+      'shuffle-hand-draw',
+      'board-shots',
+      'random-keyword',
+      'source-stats',
+      'zone-stats',
+      'convert-health',
+      'hand-limit',
+      'freeze-or-damage',
+      'reborn-or-copy',
+      'overheal-buff',
+      'tribe-damage',
+      'destroy-copies',
+      'eat-hand',
+      'hand-to-deck',
+      'deck-cost',
+      'held-damage',
+      'hero-history-damage',
+      'fatigue-payoff',
+      'summon-sized',
+      'menagerie',
+      'future-play',
+      'random-damage',
+      'missiles-then',
+      'summon-until',
+      'swap-extreme-attack',
+      'burn-or-draw',
+      'recruit-gain',
+      'shuffle-hands',
       'overload',
       'random-attack',
       'choose-hand',

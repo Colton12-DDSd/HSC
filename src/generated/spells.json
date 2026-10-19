@@ -420,6 +420,29 @@
       }
     ]
   },
+  "BOT_600": {
+    "text": "Each player draws 2 cards.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 2,
+        "allPlayers": true
+      }
+    ]
+  },
+  "BRM_005": {
+    "text": "[x]Deal $2 damage to all\nminions except Demons.",
+    "steps": [
+      {
+        "op": "damage",
+        "scope": "all",
+        "filter": {
+          "notTribe": "DEMON"
+        },
+        "amount": 2
+      }
+    ]
+  },
   "BRM_013": {
     "text": "Deal $3 damage.\nIf your hand is empty, draw a card.",
     "steps": [
@@ -885,6 +908,19 @@
         "attack": 1,
         "health": 1,
         "scope": "friendly"
+      }
+    ]
+  },
+  "CFM_662": {
+    "text": "[x]Deal $5 damage to all\nminions except Dragons.",
+    "steps": [
+      {
+        "op": "damage",
+        "scope": "all",
+        "filter": {
+          "notTribe": "DRAGON"
+        },
+        "amount": 5
       }
     ]
   },
@@ -1791,6 +1827,17 @@
       }
     ]
   },
+  "CS2_114": {
+    "text": "[x]Deal $2 damage to\ntwo random enemy\nminions.",
+    "steps": [
+      {
+        "op": "damage",
+        "scope": "enemy",
+        "random": 2,
+        "amount": 2
+      }
+    ]
+  },
   "CS2_234": {
     "text": "Destroy a minion with 3 or less Attack.",
     "steps": [
@@ -1920,6 +1967,36 @@
       }
     ]
   },
+  "DAL_769": {
+    "text": "[x]Deal $1 damage\nto a minion.\nIf it survives, add a\n<b>Lackey</b> to your hand.",
+    "steps": [
+      {
+        "op": "damage-then",
+        "amount": 1,
+        "mode": "survives",
+        "steps": [
+          {
+            "op": "generate",
+            "amount": 1,
+            "pool": [
+              "DAL_613",
+              "DAL_614",
+              "DAL_615",
+              "DAL_739",
+              "DAL_741",
+              "DRG_052",
+              "ULD_616"
+            ]
+          }
+        ],
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
   "DEEP_011": {
     "text": "Deal $2 damage to a minion. If it survives, give your hero +3 Attack this turn.",
     "steps": [
@@ -2031,6 +2108,24 @@
           "type": "SPELL"
         },
         "after": "heal"
+      }
+    ]
+  },
+  "DMF_219": {
+    "text": "Give your hero +4 Attack and <b>Immune</b> this turn.",
+    "steps": [
+      {
+        "op": "buff",
+        "attack": 4,
+        "health": 0,
+        "expires": "turn",
+        "scope": "hero"
+      },
+      {
+        "op": "immune",
+        "keyword": null,
+        "expires": "turn",
+        "scope": "hero"
       }
     ]
   },
@@ -2150,6 +2245,24 @@
       }
     ]
   },
+  "DRG_301": {
+    "text": "Add a <b>Lackey</b> to your hand.",
+    "steps": [
+      {
+        "op": "generate",
+        "amount": 1,
+        "pool": [
+          "DAL_613",
+          "DAL_614",
+          "DAL_615",
+          "DAL_739",
+          "DAL_741",
+          "DRG_052",
+          "ULD_616"
+        ]
+      }
+    ]
+  },
   "DRG_318": {
     "text": "Draw a card. If you're holding a Dragon, gain an empty Mana Crystal.",
     "steps": [
@@ -2205,6 +2318,17 @@
             "amount": 5
           }
         ]
+      }
+    ]
+  },
+  "DS1_183": {
+    "text": "Deal $3 damage to two random enemy minions.",
+    "steps": [
+      {
+        "op": "damage",
+        "scope": "enemy",
+        "random": 2,
+        "amount": 3
       }
     ]
   },
@@ -2361,9 +2485,10 @@
         "steps": [
           {
             "op": "summon-token",
-            "token": "EX1_tk9",
+            "token": "EX1_158t",
             "amount": 1,
-            "enemy": false
+            "enemy": false,
+            "allPlayers": false
           }
         ],
         "scope": "friendly"
@@ -2776,6 +2901,34 @@
       }
     ]
   },
+  "EX1_549": {
+    "text": "Give a friendly Beast +2 Attack and <b>Immune</b> this turn.",
+    "steps": [
+      {
+        "op": "buff",
+        "attack": 2,
+        "health": 0,
+        "expires": "turn",
+        "scope": "target",
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION",
+          "tribe": "BEAST"
+        }
+      },
+      {
+        "op": "immune",
+        "keyword": null,
+        "expires": "turn",
+        "scope": "target",
+        "target": "friendly-minion",
+        "filter": {
+          "type": "MINION",
+          "tribe": "BEAST"
+        }
+      }
+    ]
+  },
   "EX1_570": {
     "text": "Give your hero +4 Attack this turn. Gain 4 Armor.",
     "steps": [
@@ -2994,7 +3147,32 @@
       {
         "op": "generate-token",
         "token": "GIL_663t",
-        "amount": 2
+        "amount": 2,
+        "enemy": false,
+        "allPlayers": false
+      }
+    ]
+  },
+  "GIL_687": {
+    "text": "Deal $3 damage to a minion. If it dies, add a Coin to your hand.",
+    "steps": [
+      {
+        "op": "damage-then",
+        "amount": 3,
+        "mode": "killed",
+        "steps": [
+          {
+            "op": "generate-token",
+            "token": "GAME_005",
+            "amount": 1,
+            "enemy": false
+          }
+        ],
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -3037,10 +3215,9 @@
             "op": "draw",
             "amount": 1,
             "filter": {
-              "school": "SHADOW",
-              "type": "SPELL"
-            },
-            "order": ""
+              "type": "SPELL",
+              "school": "SHADOW"
+            }
           }
         ],
         "scope": "target",
@@ -3074,6 +3251,23 @@
       }
     ]
   },
+  "ICC_056": {
+    "text": "Give a minion +3/+3 and <b>Freeze</b> it.",
+    "steps": [
+      {
+        "op": "buff",
+        "scope": "target",
+        "target": "minion",
+        "attack": 3,
+        "health": 3
+      },
+      {
+        "op": "freeze",
+        "scope": "target",
+        "target": "minion"
+      }
+    ]
+  },
   "ICC_079": {
     "text": "Give your hero +3 Attack this turn. Gain 3 Armor.",
     "steps": [
@@ -3098,6 +3292,22 @@
           "type": "MINION",
           "tribe": "MURLOC"
         }
+      }
+    ]
+  },
+  "ICC_235": {
+    "text": "Summon a 5/5 copy of a random minion in your deck.",
+    "steps": [
+      {
+        "op": "recruit",
+        "zone": "deck",
+        "filter": {
+          "type": "MINION"
+        },
+        "amount": 1,
+        "copy": true,
+        "attack": 5,
+        "health": 5
       }
     ]
   },
@@ -3417,6 +3627,72 @@
       }
     ]
   },
+  "LOOT_333": {
+    "text": "Give your Silver Hand Recruits +2/+2 and <b>Taunt</b>.",
+    "steps": [
+      {
+        "op": "buff",
+        "attack": 2,
+        "health": 2,
+        "scope": "friendly",
+        "filter": {
+          "type": "MINION",
+          "name": "Silver Hand Recruit"
+        }
+      },
+      {
+        "op": "keyword",
+        "keyword": "TAUNT",
+        "scope": "friendly",
+        "filter": {
+          "type": "MINION",
+          "name": "Silver Hand Recruit"
+        }
+      }
+    ]
+  },
+  "LOOT_370": {
+    "text": "<b>Recruit</b> a minion.",
+    "steps": [
+      {
+        "op": "recruit",
+        "zone": "deck",
+        "filter": {
+          "type": "MINION"
+        },
+        "amount": 1
+      }
+    ]
+  },
+  "LOOT_417": {
+    "text": "Destroy all minions. Discard 2 cards.",
+    "steps": [
+      {
+        "op": "destroy",
+        "scope": "all",
+        "other": false
+      },
+      {
+        "op": "discard",
+        "amount": 2,
+        "order": ""
+      }
+    ]
+  },
+  "MAW_027": {
+    "text": "Your opponent summons a random minion from their hand.",
+    "steps": [
+      {
+        "op": "recruit",
+        "zone": "hand",
+        "filter": {
+          "type": "MINION"
+        },
+        "amount": 1,
+        "enemy": true
+      }
+    ]
+  },
   "MEND_305": {
     "text": "[x]Give a friendly\nBeast +2/+2.\nGive a random Beast\nin your hand +2/+2.",
     "steps": [
@@ -3614,9 +3890,10 @@
         "steps": [
           {
             "op": "summon-token",
-            "token": "OG_202c",
+            "token": "OG_314b",
             "amount": 1,
-            "enemy": false
+            "enemy": false,
+            "allPlayers": false
           }
         ],
         "scope": "target",
@@ -3687,6 +3964,32 @@
       {
         "op": "armor",
         "amount": 4
+      }
+    ]
+  },
+  "REV_842": {
+    "text": "[x]Give a Silver Hand\nRecruit +3/+3\nand <b>Taunt</b>.",
+    "steps": [
+      {
+        "op": "buff",
+        "attack": 3,
+        "health": 3,
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION",
+          "name": "Silver Hand Recruit"
+        }
+      },
+      {
+        "op": "keyword",
+        "keyword": "TAUNT",
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION",
+          "name": "Silver Hand Recruit"
+        }
       }
     ]
   },
@@ -4055,6 +4358,17 @@
       }
     ]
   },
+  "TLC_901": {
+    "text": "Deal $3 damage to a minion and all others of the same minion type.",
+    "steps": [
+      {
+        "op": "tribe-damage",
+        "scope": "target",
+        "target": "minion",
+        "amount": 3
+      }
+    ]
+  },
   "TOY_508": {
     "text": "Deal $2 damage. Summon two 0/1 Frogs with <b>Taunt</b>.",
     "steps": [
@@ -4268,6 +4582,19 @@
       }
     ]
   },
+  "ULD_160": {
+    "text": "<b>Discover</b> a <b>Lackey</b>.",
+    "steps": [
+      {
+        "op": "discover",
+        "filter": {
+          "type": "MINION",
+          "nameSuffix": "Lackey"
+        },
+        "reduction": 0
+      }
+    ]
+  },
   "ULD_171": {
     "text": "Give your Totems +2 Attack.",
     "steps": [
@@ -4279,6 +4606,20 @@
         "filter": {
           "type": "MINION",
           "tribe": "TOTEM"
+        }
+      }
+    ]
+  },
+  "ULD_265": {
+    "text": "Give a minion <b>Reborn</b>.",
+    "steps": [
+      {
+        "op": "keyword",
+        "keyword": "REBORN",
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
         }
       }
     ]
@@ -4532,10 +4873,9 @@
             "op": "draw",
             "amount": 1,
             "filter": {
-              "school": "SHADOW",
-              "type": "SPELL"
-            },
-            "order": ""
+              "type": "SPELL",
+              "school": "SHADOW"
+            }
           }
         ],
         "scope": "target",
@@ -4773,6 +5113,30 @@
       }
     ]
   },
+  "YOD_023": {
+    "text": "<b>Discover</b> a <b>Lackey</b>, Mech, or Dragon.",
+    "steps": [
+      {
+        "op": "discover",
+        "filter": {
+          "any": [
+            {
+              "type": "MINION",
+              "nameSuffix": "Lackey"
+            },
+            {
+              "type": "MINION",
+              "tribe": "MECHANICAL"
+            },
+            {
+              "type": "MINION",
+              "tribe": "DRAGON"
+            }
+          ]
+        }
+      }
+    ]
+  },
   "YOG_410": {
     "text": "<b>Discover</b> a Mech from another class.",
     "steps": [
@@ -4801,6 +5165,21 @@
         "attack": 2,
         "health": 1,
         "scope": "friendly"
+      }
+    ]
+  },
+  "AV_136t": {
+    "text": "Give a minion\n+2 Health.",
+    "steps": [
+      {
+        "op": "buff",
+        "attack": 0,
+        "health": 2,
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
       }
     ]
   },
@@ -4846,6 +5225,28 @@
         "filter": {
           "type": "MINION"
         }
+      }
+    ]
+  },
+  "UNG_057t1": {
+    "text": "Deal $2 damage.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 2,
+        "scope": "target",
+        "target": "character"
+      }
+    ]
+  },
+  "WW_001t": {
+    "text": "Deal $3 damage.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 3,
+        "scope": "target",
+        "target": "character"
       }
     ]
   }

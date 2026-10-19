@@ -98,12 +98,14 @@ function CardArt({
   onInspect,
   selected = false,
   pointerHandlers,
+  playCost,
 }: {
   card: Card;
   onClick?: () => void;
   onInspect?: () => void;
   selected?: boolean;
   pointerHandlers?: PointerHandlers;
+  playCost?: number;
 }) {
   return (
     <button
@@ -119,7 +121,7 @@ function CardArt({
       }
       {...pointerHandlers}
       style={pointerHandlers ? { touchAction: 'none', cursor: 'grab' } : undefined}
-      title={`${card.name} · ${clean(card.text)} · ${supported(card) ? 'Supported' : 'Effects not implemented'}`}
+      title={`${card.name}${playCost === undefined ? '' : ` · Costs ${playCost} mana now`} · ${clean(card.text)} · ${supported(card) ? 'Supported' : 'Effects not implemented'}`}
     >
       <img
         loading="lazy"
@@ -131,9 +133,14 @@ function CardArt({
         }}
       />
       <span className="card-fallback">
-        {card.cost} ◈<br />
+        {playCost ?? card.cost} ◈<br />
         {card.name}
       </span>
+      {playCost !== undefined ? (
+        <span className="card-play-cost" title="Current playable mana cost">
+          {playCost}
+        </span>
+      ) : null}
       {card.modifiers?.length ? (
         <small className="card-modifier-badge">
           {cardStats(card).attack} ⚔ / {cardStats(card).health} ♥ · buffed
@@ -1201,6 +1208,9 @@ export default function App() {
                                 </span>
                                 <span className="reserve">◈ {p.reserve}/3</span>
                                 {p.armor > 0 ? <span>🛡 {p.armor}</span> : null}
+                                {p.shield ? (
+                                  <span title="Absorbs the next damage hit">Divine Shield</span>
+                                ) : null}
                                 {p.weapon ? (
                                   <span
                                     title={`${p.weapon.card.name} · ${p.weapon.attack} Attack · ${p.weapon.durability} Durability`}
@@ -1242,6 +1252,8 @@ export default function App() {
                           p.nextDiscounts?.length ||
                           p.endEffects?.length ||
                           p.summonEffects?.length ||
+                          p.playEffects?.length ||
+                          p.maxHandSize ||
                           p.overload ||
                           p.lockedMana ? (
                             <details className="player-effects">
@@ -1250,6 +1262,14 @@ export default function App() {
                                 effects
                               </summary>
                               <ul>
+                                {p.maxHandSize ? <li>Maximum hand size: {p.maxHandSize}</li> : null}
+                                {p.playEffects?.map((e, i) => (
+                                  <li key={`play-${i}`}>
+                                    {e.source.name}: {e.remaining} matching minion
+                                    {e.remaining === 1 ? '' : 's'} remaining ·{' '}
+                                    {clean(e.source.text)}
+                                  </li>
+                                ))}
                                 {p.effects?.map((effect, index) => (
                                   <li key={index}>
                                     {effect.sourceName}: +{effect.amount} to your healing effects
@@ -1422,12 +1442,13 @@ export default function App() {
                                           <b>{u.health}</b>
                                         </span>
                                       </span>
-                                      {u.frozen || u.silenced || !supported(u.card) ? (
+                                      {u.frozen || u.silenced || u.immune || !supported(u.card) ? (
                                         <small
                                           className="unit-state"
                                           title={[
                                             u.frozen ? 'Frozen' : null,
                                             u.silenced ? 'Silenced' : null,
+                                            u.immune ? 'Immune' : null,
                                             !supported(u.card)
                                               ? 'This generated minion has separate effects that are not implemented yet'
                                               : null,
@@ -1438,6 +1459,7 @@ export default function App() {
                                           {[
                                             u.frozen ? 'Frozen' : null,
                                             u.silenced ? 'Silenced' : null,
+                                            u.immune ? 'Immune' : null,
                                             !supported(u.card) ? 'Effects pending' : null,
                                           ]
                                             .filter(Boolean)
@@ -1670,6 +1692,7 @@ export default function App() {
                         <div className="hand-card" key={`${c.id}-${i}`}>
                           <CardArt
                             card={c}
+                            playCost={handCost(game.players[0], c)}
                             onInspect={() => openInspect(c, true)}
                             selected={!!placing && !placing.command && placing.index === i}
                             pointerHandlers={
@@ -1901,6 +1924,7 @@ export default function App() {
                       ...unitMechanics(inspectedUnit),
                       ...(inspectedUnit.frozen ? ['FROZEN'] : []),
                       ...(inspectedUnit.silenced ? ['SILENCED'] : []),
+                      ...(inspectedUnit.immune ? ['IMMUNE'] : []),
                       ...(inspectedUnit.immuneUntilTurn !== undefined &&
                       game &&
                       inspectedUnit.immuneUntilTurn >= game.turn
@@ -1917,7 +1941,9 @@ export default function App() {
                           {effect.sourceName}: {effect.keyword.replaceAll('_', ' ').toLowerCase()} ·{' '}
                           {effect.keyword === 'DIVINE_SHIELD' && !inspectedUnit.shield
                             ? 'shield consumed'
-                            : 'until this minion leaves play'}
+                            : effect.expiresAtTurn !== undefined
+                              ? 'until end of turn'
+                              : 'until this minion leaves play'}
                         </li>
                       ))}
                     </ul>

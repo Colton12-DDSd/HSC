@@ -8,6 +8,9 @@ export interface StatModifier {
 export interface Card {
   spellSchool?: string;
   heldSince?: number;
+  heldTurn?: number;
+  temporaryCosts?: { turn: number; reduction?: number; set?: number; source: string }[];
+  temporaryUntilTurn?: number;
   printedCost?: number;
   modifiers?: StatModifier[];
   id: string;
@@ -36,6 +39,20 @@ export interface Deck {
   class: string;
   commander: string | null;
   cards: string[];
+}
+export function cardCost(c: Card) {
+  return (c.temporaryCosts ?? []).reduce(
+    (cost, e) => e.set ?? Math.max(0, cost - (e.reduction ?? 0)),
+    c.cost,
+  );
+}
+export function freezesOnDamage(c: Card) {
+  return /^Freeze any character damaged by this minion\.$/.test(
+    (c.text ?? '')
+      .replace(/<[^>]*>/g, '')
+      .replace(/\s+/g, ' ')
+      .trim(),
+  );
 }
 export const classes = [
   'DEATHKNIGHT',
