@@ -148,6 +148,42 @@ function CardArt({
   );
 }
 export default function App() {
+  const [castReveal, setCastReveal] = useState<{
+    card: Card;
+    caster: string;
+    cost: number;
+    before: Game;
+    after: Game;
+  } | null>(null);
+  const revealingCast = useRef(false);
+  function presentAction(before: Game, after: Game, action: Action | DebugAction) {
+    if (action.type === 'cast') {
+      const player = before.players[action.p];
+      const card = action.command ? player.commander : player.hand[action.index!];
+      revealingCast.current = true;
+      setHoverCard(null);
+      setCastReveal({
+        card,
+        caster: player.name,
+        cost: action.command ? commandCost(player) : handCost(player, card),
+        before,
+        after,
+      });
+    } else {
+      if (!['edit', 'add', 'summon'].includes(action.type)) showDamageFeedback(before, after);
+      setGame(after);
+    }
+  }
+  useEffect(() => {
+    if (!castReveal) return;
+    const timeout = setTimeout(() => {
+      showDamageFeedback(castReveal.before, castReveal.after);
+      setGame(castReveal.after);
+      revealingCast.current = false;
+      setCastReveal(null);
+    }, 1800);
+    return () => clearTimeout(timeout);
+  }, [castReveal]);
   const [hoverCard, setHoverCard] = useState<HoverCard | null>(null);
   function previewHandlers(card: Card, target?: Target, cost?: number) {
     const show = (event: { currentTarget: HTMLElement }) => {
@@ -205,6 +241,8 @@ export default function App() {
     [],
   );
   function clearDamageFlashes() {
+    revealingCast.current = false;
+    setCastReveal(null);
     setHoverCard(null);
     for (const timer of damageTimers.current) clearTimeout(timer);
     damageTimers.current.clear();
@@ -710,14 +748,13 @@ export default function App() {
     }
   }
   function dispatch(a: Action | DebugAction) {
-    if (!game) return;
+    if (!game || revealingCast.current) return;
     try {
       const n = ['edit', 'add', 'summon', 'advance'].includes(a.type)
         ? debugAction(game, a as DebugAction)
         : applyAction(game, a as Action);
       record.current?.actions.push(a);
-      if (!['edit', 'add', 'summon'].includes(a.type)) showDamageFeedback(game, n);
-      setGame(n);
+      presentAction(game, n, a);
       if (a.type === 'attack' && a.target.uid === undefined) {
         const before = game.players[a.target.p],
           after = n.players[a.target.p];
@@ -741,7 +778,7 @@ export default function App() {
     }
   }
   useEffect(() => {
-    if (!game || game.winner !== null || paused || inspect) return;
+    if (!game || game.winner !== null || paused || inspect || castReveal) return;
     const actor = game.choice?.player ?? game.pending?.queue[0] ?? game.active;
     if (actor === 0) return;
     const t = setTimeout(() => {
@@ -750,8 +787,7 @@ export default function App() {
         try {
           const n = applyAction(game, action);
           record.current?.actions.push(action);
-          showDamageFeedback(game, n);
-          setGame(n);
+          presentAction(game, n, action);
         } catch {
           const fallback: Action = game.pending
             ? { type: 'pass', p: actor }
@@ -764,14 +800,14 @@ export default function App() {
       }
     }, 850);
     return () => clearTimeout(t);
-  }, [game, paused, inspect]);
+  }, [game, paused, inspect, castReveal]);
   useEffect(() => {
     if (!game?.pending) {
       setRemaining(timer);
       return;
     }
     setRemaining(timer);
-    if (paused || inspect) return;
+    if (paused || inspect || castReveal) return;
     const t = setInterval(() => setRemaining((v) => Math.max(0, v - 1)), 1000);
     const end = setTimeout(
       () => dispatch({ type: 'pass', p: game.pending!.queue[0] }),
@@ -781,7 +817,7 @@ export default function App() {
       clearInterval(t);
       clearTimeout(end);
     };
-  }, [game?.pending, timer, paused, inspect]);
+  }, [game?.pending, timer, paused, inspect, castReveal]);
   const hoveredUnit =
     hoverCard?.target?.uid === undefined
       ? undefined
@@ -798,7 +834,7 @@ export default function App() {
   ];
   return (
     <div className={`app ${game && (tab === 'table' || tab === 'lab') ? 'match-mode' : ''}`}>
-      <aside className="rail">
+      <aside className="rail" inert={!!castReveal}>
         <a
           className="brand-mark"
           href="#"
@@ -829,7 +865,7 @@ export default function App() {
         </button>
         <span className="rail-version">0.1</span>
       </aside>
-      <div className="workspace">
+      <div className="workspace" inert={!!castReveal}>
         <header>
           <div className="wordmark">
             HEARTHSTONE <span>COMMANDER</span>
@@ -2404,7 +2440,38 @@ export default function App() {
           </button>
         </div>
       ) : null}
-      {hoverVisible ? (
+      {castReveal ? (
+        <div className="cast-reveal-backdrop">
+          <section
+            className="cast-reveal"
+            role="status"
+            aria-label={`${castReveal.caster === 'You' ? 'You play' : `${castReveal.caster} plays`} ${castReveal.card.name}`}
+          >
+            <img src={image(castReveal.card)} alt={castReveal.card.name} />
+            <div>
+              <small>
+                {castReveal.caster === 'You' ? 'You play' : `${castReveal.caster} plays`}
+              </small>
+              <h2>{castReveal.card.name}</h2>
+              <p>
+                {castReveal.cost} mana · {pretty(castReveal.card.type)}
+              </p>
+              <p>
+                {clean(castReveal.card.text) ||
+                  castReveal.card.mechanics?.map(pretty).join(' · ') ||
+                  'No additional abilities.'}
+              </p>
+              {castReveal.card.attack !== undefined ? (
+                <p>
+                  {cardStats(castReveal.card).attack} Attack · {cardStats(castReveal.card).health}{' '}
+                  Health
+                </p>
+              ) : null}
+            </div>
+          </section>
+        </div>
+      ) : null}
+      {hoverVisible && !castReveal ? (
         <div
           className="card-hover-preview"
           role="tooltip"
