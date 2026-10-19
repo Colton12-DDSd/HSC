@@ -1476,6 +1476,34 @@ header {
 .pending-card-rules {
   white-space: pre-line;
 }
+.card-hover-preview {
+  position: fixed;
+  z-index: 1400;
+  display: flex;
+  gap: 12px;
+  width: min(390px, calc(100vw - 24px));
+  padding: 14px;
+  overflow: hidden;
+  border: 1px solid #c2a65f;
+  border-radius: 9px;
+  background: #172019;
+  box-shadow: 0 8px 28px #000b;
+  color: #f5eddb;
+  pointer-events: none;
+}
+.card-hover-preview > img {
+  width: 140px;
+  height: 204px;
+  object-fit: contain;
+  align-self: flex-start;
+  flex-shrink: 0;
+}
+@media (max-width: 480px) {
+  .card-hover-preview > img {
+    width: 95px;
+    height: 140px;
+  }
+}
 .pending-card-details small {
   color: #b7bba8;
   font-size: 10px;
@@ -2112,14 +2140,6 @@ footer > span:last-child {
 .hand .hand-card .card-art {
   flex: none;
 }
-.inspect-hand {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  font-size: 11px;
-  padding: 5px;
-}
 .inspection-hint {
   margin: 10px 0;
   color: #b9c7aa;
@@ -2417,10 +2437,6 @@ footer > span:last-child {
 .match-mode .hand .card-fallback {
   font-size: 9px;
   overflow: hidden;
-}
-.match-mode .inspect-hand {
-  padding: 3px;
-  font-size: 9px;
 }
 .match-mode .history {
   position: absolute;

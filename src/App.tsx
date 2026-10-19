@@ -35,7 +35,6 @@ import {
   RotateCcw,
   ArrowRight,
   Layers,
-  ZoomIn,
 } from 'lucide-react';
 import {
   type Card,
@@ -89,6 +88,7 @@ const statTone = (value: number, base: number) =>
 const signed = (value: number) => `${value >= 0 ? '+' : ''}${value}`;
 type Placement = { card: Card; index?: number; command?: boolean };
 type DragSession = { source: Placement; x: number; y: number; moved: boolean };
+type HoverCard = { card: Card; target?: Target; cost?: number; left: number; top: number };
 type PointerHandlers = Pick<
   ButtonHTMLAttributes<HTMLButtonElement>,
   'onPointerDown' | 'onPointerMove' | 'onPointerUp' | 'onPointerCancel'
@@ -96,14 +96,12 @@ type PointerHandlers = Pick<
 function CardArt({
   card,
   onClick,
-  onInspect,
   selected = false,
   pointerHandlers,
   playCost,
 }: {
   card: Card;
   onClick?: () => void;
-  onInspect?: () => void;
   selected?: boolean;
   pointerHandlers?: PointerHandlers;
   playCost?: number;
@@ -112,17 +110,13 @@ function CardArt({
     <button
       className={`card-art ${selected ? 'chosen' : ''}`}
       onClick={onClick}
-      onContextMenu={
-        onInspect
-          ? (event) => {
-              event.preventDefault();
-              onInspect();
-            }
-          : undefined
-      }
       {...pointerHandlers}
       style={pointerHandlers ? { touchAction: 'none', cursor: 'grab' } : undefined}
-      title={`${card.name}${playCost === undefined ? '' : ` · Costs ${playCost} mana now`} · ${clean(card.text)} · ${supported(card) ? 'Supported' : 'Effects not implemented'}`}
+      title={
+        playCost === undefined
+          ? `${card.name} · ${clean(card.text)} · ${supported(card) ? 'Supported' : 'Effects not implemented'}`
+          : undefined
+      }
     >
       <img
         loading="lazy"
@@ -154,6 +148,49 @@ function CardArt({
   );
 }
 export default function App() {
+  const [hoverCard, setHoverCard] = useState<HoverCard | null>(null);
+  function previewHandlers(card: Card, target?: Target, cost?: number) {
+    const show = (event: { currentTarget: HTMLElement }) => {
+      const rect = event.currentTarget.getBoundingClientRect();
+      const width = Math.min(390, window.innerWidth - 24);
+      setHoverCard({
+        card,
+        target,
+        cost,
+        left: Math.max(
+          12,
+          Math.min(
+            rect.right + 12 + width <= window.innerWidth ? rect.right + 12 : rect.left - width - 12,
+            window.innerWidth - width - 12,
+          ),
+        ),
+        top: Math.max(12, Math.min(rect.top - 60, window.innerHeight - 330)),
+      });
+    };
+    const hide = () =>
+      setHoverCard((old) =>
+        old?.card.id === card.id && old.target?.p === target?.p && old.target?.uid === target?.uid
+          ? null
+          : old,
+      );
+    return {
+      onMouseEnter: show,
+      onFocus: show,
+      onMouseLeave: hide,
+      onBlur: hide,
+      onPointerDownCapture: () => setHoverCard(null),
+      onKeyDown: (event: { key: string }) => {
+        if (event.key === 'Escape') setHoverCard(null);
+      },
+    };
+  }
+  useEffect(() => {
+    const dismiss = () => setHoverCard(null);
+    window.addEventListener('resize', dismiss);
+    return () => {
+      window.removeEventListener('resize', dismiss);
+    };
+  }, []);
   const [damageFlashes, setDamageFlashes] = useState<
     (DamageFeedback & { id: number; left: number; top: number })[]
   >([]);
@@ -168,6 +205,7 @@ export default function App() {
     [],
   );
   function clearDamageFlashes() {
+    setHoverCard(null);
     for (const timer of damageTimers.current) clearTimeout(timer);
     damageTimers.current.clear();
     for (const frame of damageFrames.current) cancelAnimationFrame(frame);
@@ -453,6 +491,7 @@ export default function App() {
         if (!session.moved && Math.hypot(event.clientX - session.x, event.clientY - session.y) < 6)
           return;
         session.moved = true;
+        setHoverCard(null);
         event.preventDefault();
         setPlacing(session.source);
         setDragPreview({ card: session.source.card, x: event.clientX, y: event.clientY });
@@ -743,6 +782,15 @@ export default function App() {
       clearTimeout(end);
     };
   }, [game?.pending, timer, paused, inspect]);
+  const hoveredUnit =
+    hoverCard?.target?.uid === undefined
+      ? undefined
+      : game?.players[hoverCard.target.p].board.find((u) => u.uid === hoverCard.target!.uid);
+  const hoverVisible =
+    hoverCard &&
+    !inspect &&
+    (tab === 'table' || tab === 'lab') &&
+    (hoverCard.target?.uid === undefined || hoveredUnit);
   const menu = [
     { id: 'collection', icon: BookOpen, label: 'Collection' },
     { id: 'table', icon: Swords, label: 'Play table' },
@@ -1324,6 +1372,7 @@ export default function App() {
                             </div>
                             <button
                               className="zone"
+                              {...previewHandlers(p.commander, undefined, commandCost(p))}
                               onContextMenu={(event) => {
                                 event.preventDefault();
                                 openInspect(p.commander, true);
@@ -1500,9 +1549,9 @@ export default function App() {
                                   {u ? (
                                     <button
                                       key={u.uid}
+                                      {...previewHandlers(u.card, { p: i, uid: u.uid })}
                                       className={`unit ${isEffectTarget({ p: i, uid: u.uid }) ? 'effect-target' : ''} ${selected === u.uid ? 'selected' : ''} ${i === 0 ? (canAttack ? 'can-attack' : 'cannot-attack') : ''} ${target.uid === u.uid ? 'targeted' : ''} ${u.health < u.maxHealth ? 'damaged' : ''} ${unitMechanics(u).includes('TAUNT') ? 'taunt' : ''} ${selected !== undefined && i !== 0 ? (attackError(game, 0, selected, { p: i, uid: u.uid }) ? 'attack-blocked' : 'attackable') : ''}`}
                                       aria-label={`${p.name}'s ${u.card.name}, minion ${j + 1}, ${u.attack} attack, ${u.health} of ${u.maxHealth} health${unitMechanics(u).includes('TAUNT') ? ', Taunt' : ''}${i === 0 ? `, ${attackStatus}` : ''}${lastingLabel ? `, ${lastingLabel}` : ''}`}
-                                      title={`${u.card.name} · ${lastingLabel ? `${lastingLabel} · ` : ''}${i === 0 ? `${attackStatus} · ` : ''}${u.health}/${u.maxHealth} health · ${Math.max(0, u.maxHealth - u.health)} damage taken · ${clean(u.card.text)}${selected !== undefined && i !== 0 ? ` · ${attackError(game, 0, selected, { p: i, uid: u.uid }) ?? 'Click to attack this minion'}` : ''}`}
                                       onClick={() =>
                                         targetingPlay
                                           ? chooseBattlecryTarget({ p: i, uid: u.uid })
@@ -1669,7 +1718,7 @@ export default function App() {
                       </div>
                     ) : null}
                     <p className="inspection-hint">
-                      Right-click a minion or commander to inspect it. Stat colors compare printed
+                      Hover over cards or commanders to preview them. Stat colors compare printed
                       base: white = normal, red = lower, green = higher.
                     </p>
                     <div className="battle-controls">
@@ -1826,11 +1875,14 @@ export default function App() {
                     </div>
                     <div>
                       {game.players[0].hand.map((c, i) => (
-                        <div className="hand-card" key={`${c.id}-${i}`}>
+                        <div
+                          className="hand-card"
+                          key={`${c.id}-${i}`}
+                          {...previewHandlers(c, undefined, handCost(game.players[0], c))}
+                        >
                           <CardArt
                             card={c}
                             playCost={handCost(game.players[0], c)}
-                            onInspect={() => openInspect(c, true)}
                             selected={!!placing && !placing.command && placing.index === i}
                             pointerHandlers={
                               c.type === 'MINION'
@@ -1843,13 +1895,6 @@ export default function App() {
                                 : dispatch({ type: 'cast', p: 0, index: i, target })
                             }
                           />
-                          <button
-                            className="inspect-hand"
-                            aria-label={`Inspect ${c.name}`}
-                            onClick={() => openInspect(c, true)}
-                          >
-                            <ZoomIn size={13} /> Inspect
-                          </button>
                         </div>
                       ))}
                     </div>
@@ -2357,6 +2402,82 @@ export default function App() {
           <button title="Dismiss notification" onClick={() => setToast('')}>
             <X size={14} />
           </button>
+        </div>
+      ) : null}
+      {hoverVisible ? (
+        <div
+          className="card-hover-preview"
+          role="tooltip"
+          aria-label={`${hoverCard.card.name} preview`}
+          style={{
+            left: hoverCard.left,
+            top: hoverCard.top,
+            maxHeight: `calc(100dvh - ${hoverCard.top + 12}px)`,
+          }}
+        >
+          <img src={image(hoverCard.card)} alt="" />
+          <div className="pending-card-details">
+            <strong>{hoverCard.card.name}</strong>
+            <span>
+              {hoverCard.cost ?? hoverCard.card.cost} mana · {pretty(hoverCard.card.type)}
+            </span>
+            <span className="pending-card-rules">
+              {clean(hoverCard.card.text) ||
+                hoverCard.card.mechanics?.map(pretty).join(' · ') ||
+                'No additional abilities.'}
+            </span>
+            {hoveredUnit ? (
+              <>
+                <span>
+                  {hoveredUnit.attack} Attack · {hoveredUnit.health}/{hoveredUnit.maxHealth} Health
+                  · {Math.max(0, hoveredUnit.maxHealth - hoveredUnit.health)} damage taken
+                </span>
+                <span>
+                  Current effects:{' '}
+                  {[
+                    ...unitMechanics(hoveredUnit),
+                    ...(hoveredUnit.frozen ? ['FROZEN'] : []),
+                    ...(hoveredUnit.silenced ? ['SILENCED'] : []),
+                    ...(hoveredUnit.immune ? ['IMMUNE'] : []),
+                    ...(hoveredUnit.immuneUntilTurn !== undefined &&
+                    game &&
+                    hoveredUnit.immuneUntilTurn >= game.turn
+                      ? ['IMMUNE THIS TURN']
+                      : []),
+                  ]
+                    .map(pretty)
+                    .join(' · ') || 'None'}
+                </span>
+                {hoveredUnit.grantedDeathrattles?.map((grant, i) => (
+                  <small key={i}>
+                    Deathrattle from {grant.source.name} · until this minion leaves play
+                  </small>
+                ))}
+                {hoveredUnit.keywordSources?.map((effect, i) => (
+                  <small key={i}>
+                    {effect.sourceName}: {pretty(effect.keyword)} ·{' '}
+                    {effect.keyword === 'DIVINE_SHIELD' && !hoveredUnit.shield
+                      ? 'Shield consumed'
+                      : effect.expiresAtTurn !== undefined
+                        ? 'until end of turn'
+                        : 'until this minion leaves play'}
+                  </small>
+                ))}
+              </>
+            ) : hoverCard.card.attack !== undefined ? (
+              <span>
+                {cardStats(hoverCard.card).attack} Attack · {cardStats(hoverCard.card).health}{' '}
+                Health
+              </span>
+            ) : null}
+            {(hoveredUnit?.modifiers ?? hoverCard.card.modifiers)?.map((modifier, i) => (
+              <small key={i}>
+                {modifier.sourceName}: {signed(modifier.attack)}/{signed(modifier.health)} ·{' '}
+                {modifier.expiresAtTurn !== undefined ? 'until end of turn' : 'lasting buff'}
+              </small>
+            ))}
+            {!supported(hoverCard.card) ? <small>Effect not implemented yet.</small> : null}
+          </div>
         </div>
       ) : null}
       {damageFlashes.map((f) => (
