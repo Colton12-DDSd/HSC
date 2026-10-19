@@ -10,6 +10,8 @@
     "import:cards": "node scripts/import-cards.mjs",
     "audit:minions": "node scripts/audit-minion-coverage.mjs",
     "audit:battlecries": "npm run audit:minions && node scripts/report-battlecries.mjs",
+    "group:battlecries": "npm run audit:minions && node scripts/group-battlecries.mjs",
+    "test:battlecry-groups": "node --test scripts/battlecry-groups.test.mjs",
     "compile:battlecries": "python scripts/compile-battlecries.py",
     "test:compiler": "python scripts/test_compile_battlecries.py"
   },

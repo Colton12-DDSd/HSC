@@ -35,6 +35,8 @@ Dependencies are pinned, and package-lock.json is tracked. No images are stored 
 - Testing lab: any candidate card into hand/board, health/mana/reserve/tax/reductions, turn advance, elimination, destination replacement, reset, priority decisions, detailed logs and deterministic JSON replay.
 - Independent engine and a server-side match adapter with authenticated seat binding, revision checks and hidden-hand/deck projections. This adapter is not deployed. There are no online rooms, networking, reconnection or server timers yet.
 
+The remaining 1,247 Battlecry names are organized into [implementation groups](docs/BATTLECRY-GROUPS.md), with one primary group per name and overlapping dependencies recorded separately. Run `npm run group:battlecries` to refresh the report and `npm run test:battlecry-groups` to check complete coverage and classification regressions.
+
 ## Important: Wild verification is pending
 
 The downloaded collectible list is **not** presented as a verified Wild pool. Without authoritative format data, wildLegal is null in the local snapshot and false/unverified in the database. The collection explicitly says “Wild candidates.” Drafts can be edited and saved, but unverified decks cannot enter the deck-based match flow.
