@@ -109,7 +109,17 @@ export interface Pending {
 export interface Game {
   testPreset?: { id: string; name: string; objectives: string[]; guided: boolean };
   catalogVersion?: string;
-  events?: { type: string; player: number; turn: number; card?: Card; amount?: number }[];
+  events?: {
+    type: string;
+    player: number;
+    turn: number;
+    card?: Card;
+    amount?: number;
+    targetUid?: number;
+    healthDamage?: number;
+    armorDamage?: number;
+    blocked?: boolean;
+  }[];
   choice?: {
     player: number;
     options: Card[];
@@ -627,10 +637,22 @@ function damage(s: Game, t: Target, n: number) {
     return 0;
   if ('shield' in x && x.shield && n > 0) {
     x.shield = false;
+    (s.events ??= []).push({
+      type: 'damage',
+      player: t.p,
+      turn: s.turn,
+      targetUid: t.uid,
+      amount: 0,
+      healthDamage: 0,
+      armorDamage: 0,
+      blocked: true,
+    });
     return 0;
   }
+  let armorDamage = 0;
   if ('armor' in x) {
     const absorbed = Math.min(x.armor, n);
+    armorDamage = absorbed;
     x.armor -= absorbed;
     n -= absorbed;
   }
@@ -639,7 +661,18 @@ function damage(s: Game, t: Target, n: number) {
     if (n > 0) event(s, t.p, 'health-change', -n);
     if (dealt !== n) event(s, t.p, 'armor-change', -(dealt - n));
   }
+  const healthDamage = Math.max(0, Math.min(x.health, n));
   x.health -= n;
+  if (dealt > 0)
+    (s.events ??= []).push({
+      type: 'damage',
+      player: t.p,
+      turn: s.turn,
+      targetUid: t.uid,
+      amount: dealt,
+      healthDamage,
+      armorDamage,
+    });
   return dealt;
 }
 /** Remove deaths in batches; queue their effects by summon ID (global order of play).
@@ -2875,6 +2908,8 @@ export function applyAction(state: Game, a: Action): Game {
     else event(s, a.p, 'hero-attack');
     const t = getTarget(s, a.target),
       enemy = s.players[a.target.p];
+    const defendingArmor = 'card' in t ? 0 : t.armor;
+    const defendingHealth = t.health;
     const dealt = damage(s, a.target, atk);
     const lifestealHeals: string[] = [];
     const restoreLifesteal = (owner: Player, source: Unit, amount: number) => {
@@ -2908,7 +2943,7 @@ export function applyAction(state: Game, a: Action): Game {
       freezeCharacter(s, { p: a.p, uid: u?.uid });
     note(
       s,
-      `${u?.card.name ?? p.name} attacks ${'card' in t ? `${enemy.name}'s ${t.card.name}` : `${enemy.name}'s hero`} for ${dealt}${'card' in t ? `; defender ${Math.max(0, t.health)}/${t.maxHealth} health` : ''}${u ? `; attacker ${Math.max(0, u.health)}/${u.maxHealth} health` : ''}`,
+      `${u?.card.name ?? p.name} attacks ${'card' in t ? `${enemy.name}'s ${t.card.name}` : `${enemy.name}'s hero`} for ${dealt}${'card' in t ? `; defender ${Math.max(0, t.health)}/${t.maxHealth} health` : `; Armor ${defendingArmor} → ${t.armor}; Health ${defendingHealth} → ${t.health}`}${u ? `; attacker ${Math.max(0, u.health)}/${u.maxHealth} health` : ''}`,
     );
     lifestealHeals.forEach((message) => note(s, message));
     settle(s);

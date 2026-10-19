@@ -968,6 +968,86 @@ header {
 .hero small {
   font-size: 7px;
 }
+.hero > .hero-armor {
+  position: absolute;
+  top: -9px;
+  right: -12px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-width: 31px;
+  min-height: 24px;
+  padding: 2px 5px;
+  border: 2px solid #d2e2ed;
+  border-radius: 5px 5px 45% 45%;
+  background: linear-gradient(#60788f, #263b50);
+  color: #fff;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  box-shadow: 0 2px 5px #0009;
+}
+.hero-armor strong {
+  font-weight: 800;
+}
+.damage-flash {
+  position: fixed;
+  z-index: 1500;
+  pointer-events: none;
+  transform: translateX(-50%);
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: #291714ee;
+  color: #ff9b87;
+  font-size: 15px;
+  line-height: 19px;
+  font-weight: 850;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 1px 2px #000;
+  box-shadow: 0 1px 5px #0009;
+  animation: damage-flash 1.8s ease-out forwards;
+}
+.damage-flash-armor,
+.damage-flash-blocked {
+  background: #263b50ed;
+  color: #e1f4ff;
+}
+.damage-flash-blocked {
+  font-size: 10px;
+}
+@keyframes damage-flash {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -3px) scale(0.8);
+  }
+  12%,
+  70% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 9px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .damage-flash {
+    animation: none;
+  }
+}
+.resources .armor-resource {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  border: 1px solid #8da9bd;
+  border-radius: 4px;
+  background: #263b50;
+  color: #eef7ff;
+  font-size: 11px;
+  white-space: nowrap;
+}
 .player h3 {
   font-size: 12px;
   font-weight: 550;

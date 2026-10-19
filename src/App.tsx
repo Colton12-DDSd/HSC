@@ -1,5 +1,6 @@
 import { loadCollection } from './collection';
 import { DeckPresets } from './DeckPresets';
+import { damageFeedback, type DamageFeedback } from './combat-feedback';
 import { createPremadeGame } from './premades';
 import {
   Fragment,
@@ -153,6 +154,73 @@ function CardArt({
   );
 }
 export default function App() {
+  const [damageFlashes, setDamageFlashes] = useState<
+    (DamageFeedback & { id: number; left: number; top: number })[]
+  >([]);
+  const damageSequence = useRef(0);
+  const damageTimers = useRef(new Set<ReturnType<typeof setTimeout>>());
+  const damageFrames = useRef(new Set<number>());
+  useEffect(
+    () => () => {
+      for (const timer of damageTimers.current) clearTimeout(timer);
+      for (const frame of damageFrames.current) cancelAnimationFrame(frame);
+    },
+    [],
+  );
+  function clearDamageFlashes() {
+    for (const timer of damageTimers.current) clearTimeout(timer);
+    damageTimers.current.clear();
+    for (const frame of damageFrames.current) cancelAnimationFrame(frame);
+    damageFrames.current.clear();
+    setDamageFlashes([]);
+  }
+  function showDamageFeedback(before: Game, after: Game) {
+    const grouped = new Map<string, DamageFeedback>();
+    for (const hit of damageFeedback(before, after)) {
+      const key = `${hit.anchor}:${hit.kind}`,
+        old = grouped.get(key);
+      grouped.set(key, { ...hit, amount: (old?.amount ?? 0) + hit.amount });
+    }
+    // Preserve positions for units killed by this action; resolve new summons
+    // after React commits so their own damage can appear as well.
+    const positions = new Map<string, DOMRect>();
+    for (const hit of grouped.values()) {
+      const anchor = document.querySelector<HTMLElement>(`[data-damage-anchor="${hit.anchor}"]`);
+      if (anchor) positions.set(hit.anchor, anchor.getBoundingClientRect());
+    }
+    if (!grouped.size) return;
+    const frame = requestAnimationFrame(() => {
+      damageFrames.current.delete(frame);
+      const flashes = [...grouped.values()].flatMap((hit) => {
+        const anchor =
+          document
+            .querySelector<HTMLElement>(`[data-damage-anchor="${hit.anchor}"]`)
+            ?.getBoundingClientRect() ?? positions.get(hit.anchor);
+        if (!anchor) return [];
+        const rect = anchor;
+        return [
+          {
+            ...hit,
+            id: damageSequence.current++,
+            left: rect.left + rect.width / 2,
+            top: rect.bottom + 2,
+          },
+        ];
+      });
+      if (!flashes.length) return;
+      setDamageFlashes((old) => [
+        ...old.filter((x) => !flashes.some((f) => f.anchor === x.anchor)),
+        ...flashes,
+      ]);
+      const ids = new Set(flashes.map((f) => f.id));
+      const timer = setTimeout(() => {
+        setDamageFlashes((old) => old.filter((f) => !ids.has(f.id)));
+        damageTimers.current.delete(timer);
+      }, 1800);
+      damageTimers.current.add(timer);
+    });
+    damageFrames.current.add(frame);
+  }
   const [cards, setCards] = useState<Card[]>([]),
     [loadError, setLoadError] = useState(''),
     [tab, setTab] = useState('collection'),
@@ -593,6 +661,7 @@ export default function App() {
               useDeck ? deck.class : 'HUNTER',
             );
       setGame(s);
+      clearDamageFlashes();
       record.current = { version: 1, initial: structuredClone(s), actions: [] };
       setTab('table');
       setSelected(undefined);
@@ -608,7 +677,18 @@ export default function App() {
         ? debugAction(game, a as DebugAction)
         : applyAction(game, a as Action);
       record.current?.actions.push(a);
+      if (!['edit', 'add', 'summon'].includes(a.type)) showDamageFeedback(game, n);
       setGame(n);
+      if (a.type === 'attack' && a.target.uid === undefined) {
+        const before = game.players[a.target.p],
+          after = n.players[a.target.p];
+        const armorLost = Math.max(0, before.armor - after.armor);
+        const healthLost = Math.max(0, before.health - after.health);
+        if (armorLost > 0)
+          setToast(
+            `${before.name}: Armor ${before.armor} → ${after.armor}${healthLost > 0 ? ` · Health ${before.health} → ${after.health}` : ` · Health stays ${after.health}`}`,
+          );
+      }
       if (
         target.uid !== undefined &&
         !n.players[target.p].board.some((unit) => unit.uid === target.uid)
@@ -631,13 +711,16 @@ export default function App() {
         try {
           const n = applyAction(game, action);
           record.current?.actions.push(action);
+          showDamageFeedback(game, n);
           setGame(n);
         } catch {
           const fallback: Action = game.pending
             ? { type: 'pass', p: actor }
             : { type: 'end', p: actor };
           record.current?.actions.push(fallback);
-          setGame(applyAction(game, fallback));
+          const next = applyAction(game, fallback);
+          showDamageFeedback(game, next);
+          setGame(next);
         }
       }
     }, 850);
@@ -1175,12 +1258,15 @@ export default function App() {
                           <div className="player-heading">
                             <button
                               className={`hero ${isEffectTarget({ p: i }) ? 'effect-target' : ''} ${target.p === i && target.uid === undefined ? 'targeted' : ''} ${selected !== undefined && i !== 0 ? (attackError(game, 0, selected, { p: i }) ? 'attack-blocked' : 'attackable') : ''}`}
-                              aria-label={`${p.name}'s hero, ${p.health} health`}
+                              aria-label={`${p.name}'s hero, ${p.health} health, ${p.armor} armor`}
                               title={
-                                selected !== undefined && i !== 0
+                                (selected !== undefined && i !== 0
                                   ? (attackError(game, 0, selected, { p: i }) ??
                                     `Attack ${p.name}'s hero`)
-                                  : `Select ${p.name}'s hero as target`
+                                  : `Select ${p.name}'s hero as target`) +
+                                (p.armor > 0
+                                  ? ` · ${p.armor} Armor absorbs damage before Health`
+                                  : '')
                               }
                               onClick={() => chooseTargetOrAttack({ p: i })}
                               onContextMenu={(event) => {
@@ -1189,7 +1275,16 @@ export default function App() {
                               }}
                             >
                               <span>{['✦', '♜', '❖', '☽'][i]}</span>
-                              <b className={`stat-${statTone(p.health, 40)}`}>
+                              {p.armor > 0 ? (
+                                <span className="hero-armor" aria-hidden="true">
+                                  <Shield size={12} />
+                                  <strong data-damage-anchor={`hero:${i}:armor`}>{p.armor}</strong>
+                                </span>
+                              ) : null}
+                              <b
+                                className={`stat-${statTone(p.health, 40)}`}
+                                data-damage-anchor={`hero:${i}:health`}
+                              >
                                 {p.health}
                                 <Droplet size={10} aria-hidden="true" />
                               </b>
@@ -1207,7 +1302,14 @@ export default function App() {
                                   ◆ {p.mana}/{p.maxMana}
                                 </span>
                                 <span className="reserve">◈ {p.reserve}/3</span>
-                                {p.armor > 0 ? <span>🛡 {p.armor}</span> : null}
+                                {p.armor > 0 ? (
+                                  <span
+                                    className="armor-resource"
+                                    title="Armor absorbs damage before Health"
+                                  >
+                                    <Shield size={12} aria-hidden="true" /> Armor <b>{p.armor}</b>
+                                  </span>
+                                ) : null}
                                 {p.shield ? (
                                   <span title="Absorbs the next damage hit">Divine Shield</span>
                                 ) : null}
@@ -1439,7 +1541,9 @@ export default function App() {
                                           title={`Health ${u.health}/${u.maxHealth} · printed base ${u.card.health ?? 1}`}
                                         >
                                           <Droplet className="stat-icon" aria-hidden="true" />
-                                          <b>{u.health}</b>
+                                          <b data-damage-anchor={`unit:${u.uid}:health`}>
+                                            {u.health}
+                                          </b>
                                         </span>
                                       </span>
                                       {u.frozen || u.silenced || u.immune || !supported(u.card) ? (
@@ -2190,6 +2294,7 @@ export default function App() {
               if (f.size > 10000000) throw Error('Replay too large');
               const r = JSON.parse(await f.text()) as Replay;
               setGame(replay(r));
+              clearDamageFlashes();
               cancelPlacement();
               setSelected(undefined);
               record.current = r;
@@ -2221,6 +2326,16 @@ export default function App() {
           </button>
         </div>
       ) : null}
+      {damageFlashes.map((f) => (
+        <span
+          key={f.id}
+          aria-hidden="true"
+          className={`damage-flash damage-flash-${f.kind}`}
+          style={{ left: f.left, top: f.top }}
+        >
+          {f.kind === 'blocked' ? 'Blocked' : `−${f.amount}`}
+        </span>
+      ))}
     </div>
   );
 }
