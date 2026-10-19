@@ -7,6 +7,8 @@ export interface Premade {
   id: string;
   name: string;
   class: string;
+  commander: string;
+  commanderGoal: string;
   description: string;
   objectives: string[];
   core: string[];
@@ -21,6 +23,8 @@ export const premades: Premade[] = [
     id: 'token-workshop',
     name: 'Token Workshop',
     class: 'HUNTER',
+    commander: 'Onyxia',
+    commanderGoal: 'Cast Onyxia with open board slots; her Whelps fill only the remaining spaces.',
     description: 'Board placement, full-board limits and Divine Shield interactions.',
     objectives: [
       'Place Alleycat or Desert Hare between two minions; their summons do not repeat Battlecries.',
@@ -51,6 +55,8 @@ export const premades: Premade[] = [
     id: 'hungry-board',
     name: 'Hungry Board',
     class: 'WARLOCK',
+    commander: 'Natalie Seline',
+    commanderGoal: 'Use Natalie to consume a damaged minion; she gains its remaining Health.',
     description: 'Sacrifice fodder, consume live stats, and test Deathrattle ordering.',
     objectives: [
       'Use Alleycat as fodder for Sanguine Reveler or Ratcatcher; compare their stat gains.',
@@ -76,6 +82,9 @@ export const premades: Premade[] = [
     id: 'deck-laboratory',
     name: 'Deck Laboratory',
     class: 'MAGE',
+    commander: 'Balinda Stonehearth',
+    commanderGoal:
+      'Cast Balinda to draw two spells and compare their Costs with her resulting stats.',
     description: 'Dredge, temporary discounts, linked draws and deliberate deck order.',
     objectives: [
       'Use Excavation Specialist to discount a bottom-three card and put it on top; draw it next.',
@@ -115,6 +124,9 @@ export const premades: Premade[] = [
     id: 'spellwork',
     name: 'Ember & Ice',
     class: 'MAGE',
+    commander: 'Varden Dawngrasp',
+    commanderGoal:
+      'Freeze enemies before casting Varden; compare damage to already Frozen minions with fresh freezes.',
     description: 'Targeted damage, area damage, Freeze and Silence.',
     objectives: [
       'Use Elven Archer on a chosen minion; verify that damage persists.',
@@ -139,6 +151,9 @@ export const premades: Premade[] = [
     id: 'last-rites',
     name: 'Last Rites',
     class: 'WARLOCK',
+    commander: "N'Zoth, the Corruptor",
+    commanderGoal:
+      'Let Deathrattle minions die, then cast N’Zoth to bring them back without repeating Battlecries.',
     description: 'Deathrattle tokens, copied Deathrattles, resurrection and Reborn.',
     objectives: [
       'Copy a Loot Hoarder Deathrattle with Mok’Nathal Lion, then kill the Lion.',
@@ -177,6 +192,8 @@ export const premades: Premade[] = [
     id: 'iron-reserve',
     name: 'Iron Reserve',
     class: 'WARRIOR',
+    commander: 'Captain Greenskin',
+    commanderGoal: 'Equip a weapon before casting Greenskin; verify +1 Attack and +1 Durability.',
     description: 'Armor, self-damage, weapon durability and weapon removal.',
     objectives: [
       'Play Crystallizer and verify damage happens before Armor gain.',
@@ -201,6 +218,9 @@ export const premades: Premade[] = [
     id: 'life-garden',
     name: 'Life Garden',
     class: 'PRIEST',
+    commander: 'Wickerflame Burnbristle',
+    commanderGoal:
+      'Attack with Wickerflame to test Lifesteal, Taunt and Divine Shield on the same minion.',
     description: 'Uncapped hero healing, Lifesteal and lasting stat growth.',
     objectives: [
       'Play Cleansing Cleric, then heal your hero past the starting 40.',
@@ -231,6 +251,9 @@ export const premades: Premade[] = [
     id: 'dragon-school',
     name: 'Dragon School',
     class: 'HUNTER',
+    commander: 'Frizz Kindleroost',
+    commanderGoal:
+      'Cast Frizz before drawing Dragons; only Dragons still in your deck receive the two-mana discount.',
     description: 'Hold a Dragon, check conditional Battlecries, then compare tribal buffs.',
     objectives: [
       'Keep Twilight Whelp in hand while playing Blackwing Corruptor.',
@@ -262,6 +285,9 @@ export const premades: Premade[] = [
     id: 'discovery',
     name: 'Curiosity Cabinet',
     class: 'MAGE',
+    commander: 'Brightwing',
+    commanderGoal:
+      'Cast Brightwing to generate a random legendary; inspect it to check effect support before playing it.',
     description: 'Discover, filtered draws, generation, hand choices and deck order.',
     objectives: [
       'Play Ethereal Conjurer; choose one card and verify exactly one addition.',
@@ -310,8 +336,9 @@ export function buildPremade(cards: Card[], id: string) {
     ).values(),
   ];
   const byName = new Map(pool.map((c) => [c.name, c]));
-  const commander = byName.get('King Krush');
-  if (!commander) throw Error('Test commander is unavailable');
+  const commander = byName.get(preset.commander);
+  if (!commander || commander.type !== 'MINION' || commander.rarity !== 'LEGENDARY')
+    throw Error(`${preset.name}: supported legendary commander ${preset.commander} is unavailable`);
   const preferred = [...new Set([...preset.opening, ...preset.core])].filter((name) =>
     byName.has(name),
   );

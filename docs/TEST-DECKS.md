@@ -1,6 +1,20 @@
-# Themed test decks — 2026-10-18
+# Themed test decks — 2026-10-19
 
-Open **Play** or **Testing**, choose **Test deck**, then press **New game**. Starter remains available. Each list contains 100 supported cards, singleton by name, with a separate King Krush commander. These are mixed-class local tests, not verified Wild decks. Each has at least 50 cards costing four or less.
+Open **Play** or **Testing**, choose **Test deck**, then press **New game**. Starter remains available with King Krush. Each themed list contains 100 supported cards, singleton by name, with its own separate supported legendary commander. These are mixed-class local tests, not verified Wild decks. Each has at least 50 cards costing four or less.
+
+| Deck | Commander | Commander test |
+| --- | --- | --- |
+| Token Workshop | Onyxia | Fill remaining board slots with Whelps |
+| Hungry Board | Natalie Seline | Destroy a minion and absorb its current Health |
+| Deck Laboratory | Balinda Stonehearth | Draw two spells and swap their Costs with her stats |
+| Ember & Ice | Varden Dawngrasp | Freeze enemies; damage already Frozen minions |
+| Last Rites | N'Zoth, the Corruptor | Resurrect fallen Deathrattle minions |
+| Iron Reserve | Captain Greenskin | Add weapon Attack and Durability |
+| Life Garden | Wickerflame Burnbristle | Lifesteal, Taunt and Divine Shield |
+| Dragon School | Frizz Kindleroost | Discount Dragons still in the deck |
+| Curiosity Cabinet | Brightwing | Generate a random legendary |
+
+Commander names appear in the selector, and **Deck & test goals** includes a commander-specific test. Commanders are excluded from their own 100-card main decks. All four seats use different commanders in themed matches. Their costs, command tax and destination choices use the normal commander rules.
 
 | Deck | Theme | Repeatable test |
 | --- | --- | --- |

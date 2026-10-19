@@ -15,6 +15,10 @@ describe('themed premade test decks', () => {
       expect(new Set(deck.cards.map((c) => c.name)).size).toBe(100);
       expect(deck.cards.some((c) => c.name === deck.commander.name)).toBe(false);
       expect(deck.cards.every(supported)).toBe(true);
+      expect(deck.commander.name).toBe(p.commander);
+      expect(deck.commander.type).toBe('MINION');
+      expect(deck.commander.rarity).toBe('LEGENDARY');
+      expect(supported(deck.commander)).toBe(true);
       for (const name of p.opening)
         expect(
           deck.cards.some((c) => c.name === name),
@@ -25,6 +29,9 @@ describe('themed premade test decks', () => {
     },
   );
   it('uses distinct theme lists rather than renaming the starter deck', () => {
+    expect(new Set(premades.map((p) => buildPremade(cards, p.id).commander.name)).size).toBe(
+      premades.length,
+    );
     const lists = premades.map((p) => new Set(buildPremade(cards, p.id).cards.map((c) => c.name)));
     for (let i = 0; i < lists.length; i++)
       for (let j = i + 1; j < lists.length; j++)
@@ -36,6 +43,8 @@ describe('themed premade test decks', () => {
       const s = createPremadeGame(cards, id, true);
       expect(s.players[0].hand.map((c) => c.name)).toEqual(p.opening);
       expect(s.testPreset?.name).toBe(p.name);
+      expect(s.players[0].commander.name).toBe(p.commander);
+      expect(new Set(s.players.map((p) => p.commander.name)).size).toBe(4);
       expect(s.players.every((p) => p.deck.length + p.hand.length === 100)).toBe(true);
       expect(
         s.players

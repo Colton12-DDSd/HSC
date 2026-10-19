@@ -28,7 +28,7 @@ export function DeckPresets({
           <option value="starter">Starter · mixed mechanics</option>
           {premades.map((p) => (
             <option key={p.id} value={p.id}>
-              {p.name}
+              {p.name} · {p.commander}
             </option>
           ))}
         </select>
@@ -45,9 +45,12 @@ export function DeckPresets({
               <h3>{preset.name}</h3>
               <p>{preset.description}</p>
               <small>
-                100 singleton cards + King Krush · mixed-class local sandbox · {preset.class} hero
-                power
+                100 singleton cards + {preset.commander} · mixed-class local sandbox ·{' '}
+                {preset.class} hero power
               </small>
+              <p>
+                <strong>Commander test:</strong> {preset.commanderGoal}
+              </p>
               <ol>
                 {preset.objectives.map((goal) => (
                   <li key={goal}>{goal}</li>
