@@ -1713,7 +1713,40 @@ export default function App() {
                         <div>
                           <b>
                             {game.players[game.pending.caster].name} is casting{' '}
-                            {game.pending.card.name}
+                            <span className="pending-card-preview" key={game.pending.card.id}>
+                              <button
+                                className="pending-card-name"
+                                aria-describedby="pending-card-tooltip"
+                                onClick={() => openInspect(game.pending!.card, true)}
+                              >
+                                {game.pending.card.name}
+                              </button>
+                              <span
+                                className="pending-card-tooltip"
+                                id="pending-card-tooltip"
+                                role="tooltip"
+                              >
+                                <img src={image(game.pending.card)} alt="" />
+                                <span className="pending-card-details">
+                                  <strong>{game.pending.card.name}</strong>
+                                  <span>
+                                    {game.pending.cost} mana · {pretty(game.pending.card.type)}
+                                  </span>
+                                  <span className="pending-card-rules">
+                                    {clean(game.pending.card.text) ||
+                                      game.pending.card.mechanics?.map(pretty).join(' · ') ||
+                                      'No additional abilities.'}
+                                  </span>
+                                  {game.pending.card.attack !== undefined ? (
+                                    <span>
+                                      {cardStats(game.pending.card).attack} Attack ·{' '}
+                                      {cardStats(game.pending.card).health} Health
+                                    </span>
+                                  ) : null}
+                                  <small>Click the name to inspect and pause the match.</small>
+                                </span>
+                              </span>
+                            </span>
                           </b>
                           <p>
                             Clockwise priority → {game.players[game.pending.queue[0]].name} ·{' '}
