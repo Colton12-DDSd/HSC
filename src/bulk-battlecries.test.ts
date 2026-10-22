@@ -160,6 +160,13 @@ describe('500 additional distinct Battlecry names', () => {
         );
       }) ?? card('CS2_182');
     const count = condition.min ?? 1;
+    if (condition.zone === 'friendly-deaths')
+      s.events = Array.from({ length: count }, () => ({
+        type: 'death',
+        player: 0,
+        turn: s.turn,
+        card: card('CS2_182'),
+      }));
     if (condition.zone === 'enemy-hand')
       s.players[1].hand = Array.from({ length: condition.min ?? 0 }, () => card('CS2_182'));
     if (condition.zone === 'hand')
@@ -716,6 +723,12 @@ describe('Independent mechanic and interaction checks', () => {
       'destroy-weapon',
       'weapon-durability',
       'weapon-recover',
+      'allegiance-effect',
+      'attack-threshold-destroy',
+      'shuffle-weaker',
+      'neighbor-damage',
+      'draw-summon-matching',
+      'lowest-health-damage',
       'destroy-armor',
       'equip',
       'resurrect',

@@ -2,17 +2,17 @@
   "summary": {
     "collectionRecords": 6470,
     "battlecryRecords": 2011,
-    "supportedBattlecryRecords": 981,
+    "supportedBattlecryRecords": 991,
     "battlecryNames": 1895,
-    "supportedBattlecryNames": 910,
-    "additionalBattlecryNames": 874,
-    "remainingBattlecryNames": 985,
-    "supportedCollectionRecords": 1646,
+    "supportedBattlecryNames": 920,
+    "additionalBattlecryNames": 884,
+    "remainingBattlecryNames": 975,
+    "supportedCollectionRecords": 1656,
     "triggerRecords": 2521,
-    "supportedTriggerRecords": 1144,
+    "supportedTriggerRecords": 1154,
     "triggerNames": 2381,
-    "fullySupportedTriggerNames": 1062,
-    "remainingTriggerRecords": 1377
+    "fullySupportedTriggerNames": 1072,
+    "remainingTriggerRecords": 1367
   },
   "minions": [
     {
@@ -208,8 +208,8 @@
         {
           "id": "EDR_430",
           "text": "[x]<b>Battlecry:</b> If 20 friendly\nminions have died this game,\ndeal 20 damage split among\nall enemies.@ <i>({0} left!)</i>@ <i>(Ready!)</i>",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -431,8 +431,8 @@
         {
           "id": "LEG_CS3_031",
           "text": "[x]<b>Battlecry</b>: Choose a\ncharacter. If it's friendly,\nrestore #8 Health. If it's an\n   enemy, deal 8 damage.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -2023,9 +2023,9 @@
         {
           "id": "TOY_642",
           "text": "[x]<b>Lifesteal</b>\n<b>Battlecry and Deathrattle:</b>\nDeal 3 damage to the\nlowest Health enemy.",
-          "supported": false,
-          "battlecry": false,
-          "deathrattle": false
+          "supported": true,
+          "battlecry": true,
+          "deathrattle": true
         }
       ]
     },
@@ -2960,8 +2960,8 @@
         {
           "id": "ULD_720",
           "text": "[x]<b>Battlecry</b>: Choose a\ndamaged friendly minion.\nSummon a copy of it.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -5466,8 +5466,8 @@
         {
           "id": "GIL_578",
           "text": "[x]<b>Battlecry:</b> Draw a <b>Rush</b>,\n<b>Lifesteal</b>, and <b>Deathrattle</b>\ncard from your deck.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -14179,8 +14179,8 @@
         {
           "id": "TOY_357",
           "text": "[x]<b>Charge</b>\n<b>Battlecry:</b> Return all minions\nwith less Attack than this\n  to their owner's decks.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -17020,8 +17020,8 @@
         {
           "id": "DED_524",
           "text": "[x]<b>Battlecry:</b> Draw a card for\n each different spell school \n you've cast this game.@ <i>(@)</i>",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -25609,8 +25609,8 @@
         {
           "id": "BT_230",
           "text": "[x]<b>Battlecry:</b> Deal 3 damage\nto an enemy minion. If it\ndies, repeat on one of\nits neighbors.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -27429,8 +27429,8 @@
         {
           "id": "VAC_341",
           "text": "[x]<b>Battlecry:</b> Destroy an enemy\nminion with Attack less than\nor equal to this minion's.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -27640,8 +27640,8 @@
         {
           "id": "DRG_077",
           "text": "<b>Battlecry:</b> Both players draw a card. If it's a Dragon, summon it.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]

@@ -1,8 +1,8 @@
 # Foundation Battlecry implementation pass
 
-The original candidate list is frozen at commit 667d3f0: **315 unique names**. **246 are implemented across every listed printing; 69 remain blocked.** The initial grouping was a planning estimate. It was too optimistic about custom tokens, named pools, identity/history, Kindred and target choices. This pass does not claim all 315 are finished.
+The original candidate list is frozen at commit 667d3f0: **315 unique names**. **250 are implemented across every listed printing; 65 remain blocked.** The initial grouping was a planning estimate. It was too optimistic about custom tokens, named pools, identity/history, Kindred and target choices. This pass does not claim all 315 are finished.
 
-Total supported Battlecry names: **910**, up from **648**. Shared patterns also added 16 names outside the frozen list: Air Guitarist; Arathi Weaponsmith; Blackscale Brute; Bloodsail Corsair; Bloodsail Raider; Conservator Nymph; Gluttonous Ooze; Grimtotem Buzzkill; Harrison Jones; Hoard Pillager; Kathrena Winterwisp; Luckydo Buccaneer; Prize Vendor; Rummaging Kobold; Toxic Sewer Ooze; Treespeaker. Counts come from the actual support registry. Alternate printings do not inflate name counts.
+Total supported Battlecry names: **920**, up from **648**. Shared patterns also added 22 names outside the frozen list: Aessina; Air Guitarist; Alexstrasza the Life-Binder; Arathi Weaponsmith; Ball Hog; Blackscale Brute; Bloodsail Corsair; Bloodsail Raider; Bloodsworn Mercenary; Conservator Nymph; Countess Ashmore; Gluttonous Ooze; Grimtotem Buzzkill; Harrison Jones; Hoard Pillager; Kathrena Winterwisp; Luckydo Buccaneer; Multicaster; Prize Vendor; Rummaging Kobold; Toxic Sewer Ooze; Treespeaker. Counts come from the actual support registry. Alternate printings do not inflate name counts.
 
 The new shared transactions cover linked draws, temporary Costs, Dredge rewards, consumed live stats, random keyword grants, tribal selection, future-play buffs, full-hand/board limits, deck ordering, burn/draw replacement, hero Divine Shield and permanent minion Immunity. Boom Bots have their Deathrattles; Ice Shards and Water Elementals freeze on damage, including retaliation, and respect Shield and Silence. Unrecognized clauses still block the whole source card. Generation can produce cards with separately unimplemented abilities; these stay explicitly labeled and cannot be played. Summoned special passives are enabled only when their behavior is handled.
 
@@ -136,6 +136,7 @@ Three new [test decks](TEST-DECKS.md) provide guided openings: Token Workshop, H
 | Injured Blademaster | CS2_181 | Battlecry: Deal 4 damage to HIMSELF. |
 | K'thir Ritualist | DMF_081 | Taunt Battlecry: Add a random 4-Cost minion to your opponent's hand. |
 | K9-0tron | TID_099 | Battlecry: Dredge. If it's a 1-Cost minion, summon it. |
+| King Plush | TOY_357 | Charge Battlecry: Return all minions with less Attack than this to their owner's decks. |
 | Kiri, Chosen of Elune | DMF_733 | Battlecry: Add a Solar Eclipse and Lunar Eclipse to your hand. |
 | Kobold Taskmaster | AV_136 | Battlecry: Add 2 Armor Scraps to your hand that give +2 Health to a minion. |
 | Krona, Keeper of Eons | TIME_705 | Taunt Battlecry: Set the Costs of the bottom 5 cards of your deck to (1). |
@@ -223,6 +224,7 @@ Three new [test decks](TEST-DECKS.md) provide guided openings: Token Workshop, H
 | Terrorguard Escapee | BT_159 | Battlecry: Summon three 1/1 Huntresses for your opponent. |
 | The 8 Hands From Beyond | GDB_477 | Battlecry: Destroy both players' decks EXCEPT the 8 highest Cost cards in each. |
 | The Jailer | MAW_034 | Battlecry: Destroy your deck. This minion gains Immune. |
+| The Lurker Below | BT_230 | Battlecry: Deal 3 damage to an enemy minion. If it dies, repeat on one of its neighbors. |
 | The Purator | NX2_023 | Taunt Battlecry: If your deck has no Neutral cards, draw a minion of each minion type. |
 | The Unknowable One | BE_725 | Battlecry: Set the Attack and Health of all Combo minions in your hand to 6. |
 | Tidelost Burrower | TID_003 | Battlecry: Dredge. If it's a Murloc, summon a 2/2 copy of it. |
@@ -236,7 +238,9 @@ Three new [test decks](TEST-DECKS.md) provide guided openings: Token Workshop, H
 | Tuskarrrr Trawler | TSC_909 | Battlecry: Dredge. |
 | Twilight Deceptor | SW_444 | Battlecry: If any hero took damage this turn, draw a Shadow spell. |
 | Twin Tyrant | DRG_213 | Battlecry: Deal 4 damage to two random enemy minions. |
+| Undercooked Calamari | VAC_341 | Battlecry: Destroy an enemy minion with Attack less than or equal to this minion's. |
 | Unyielding Vindicator | GDB_232 | Battlecry: The next Draenei you play gives your hero its Attack for that turn. |
+| Utgarde Grapplesniper | DRG_077 | Battlecry: Both players draw a card. If it's a Dragon, summon it. |
 | V'ama, Looming Death | JAIL_118 | Battlecry: Destroy all non-Paladin minions. |
 | Valdris Felgorge | DRG_208 | Battlecry: Increase your maximum hand size to 12. Draw 4 cards. |
 | Varden Dawngrasp | BAR_748 | Battlecry: Freeze all enemy minions. If any are already Frozen, deal 4 damage to them instead. |
@@ -294,7 +298,6 @@ These are still work items, not approximate implementations. Some need an author
 | Jerry Rig Carpenter | Generated-card keyword/subsystem and its complete lifecycle | Battlecry: Draw a Choose One spell and split it. |
 | Kabal Chemist | Verified named pool and complete generated-card behavior | Battlecry: Add a random Potion to your hand. |
 | King Maluk | Verified named pool and complete generated-card behavior | Battlecry: Discard your hand. Get an Infinite Banana. |
-| King Plush | Authored complete transaction, target relationship and independent outcome tests | Charge Battlecry: Return all minions with less Attack than this to their owner's decks. |
 | Malefic Rook | Forced attacks or a combat-result listener | Battlecry: Attack YOUR hero. |
 | Manifested Timeways | Special token, passive, start/end trigger or Aura lifecycle | Battlecry: If you control an Aura, deal 3 damage to all enemies. |
 | Marin the Fox | Special token, passive, start/end trigger or Aura lifecycle | Battlecry: Summon a 0/8 Treasure Chest for your opponent. (Break it for awesome loot!) |
@@ -320,7 +323,6 @@ These are still work items, not approximate implementations. Some need an author
 | Steamcleaner | Original-card identity, starting snapshots or while-held progression | Battlecry: Destroy ALL cards in both players' decks that didn't start there. |
 | Stowaway | Original-card identity, starting snapshots or while-held progression | Battlecry: If there are cards in your deck that didn't start there, draw 2 of them. |
 | Talya Earthstrider | Persistent rule, resource threshold or effect replacement | Battlecry: Your cards that summon Animal Companions summon 1 more this game. |
-| The Lurker Below | Authored complete transaction, target relationship and independent outcome tests | Battlecry: Deal 3 damage to an enemy minion. If it dies, repeat on one of its neighbors. |
 | Time Adm'ral Hooktail | Special token, passive, start/end trigger or Aura lifecycle | Battlecry: Summon a 0/8 Chest for your opponent. It's FULL of Coins! |
 | Tinkertown Technician | Verified named pool and complete generated-card behavior | Battlecry: If you have a Mech, gain +1/+1 and add a Spare Part to your hand. |
 | Toki, Time-Tinker | Verified named pool and complete generated-card behavior | Battlecry: Add a random Legendary minion from the past to your hand. |
@@ -328,8 +330,6 @@ These are still work items, not approximate implementations. Some need an author
 | Torga | Kindred activation, history and dependent targeting/costs | Battlecry: Draw a Kindred card and another card that activates it. |
 | Trenchstalker | Forced attacks or a combat-result listener | Battlecry: Attack three different random enemies. |
 | Tuskarr Totemic | Special token, passive, start/end trigger or Aura lifecycle | Battlecry: Summon a random basic Totem. |
-| Undercooked Calamari | Authored complete transaction, target relationship and independent outcome tests | Battlecry: Destroy an enemy minion with Attack less than or equal to this minion's. |
-| Utgarde Grapplesniper | Authored complete transaction, target relationship and independent outcome tests | Battlecry: Both players draw a card. If it's a Dragon, summon it. |
 | Windpeak Wyrm | Kindred activation, history and dependent targeting/costs | Battlecry: Deal 5 damage and gain 5 Armor. Kindred: Costs (2) less. |
 | Windshear Stormcaller | Special token, passive, start/end trigger or Aura lifecycle | Battlecry: If you control all 4 basic Totems, summon Al'Akir the Windlord. |
 | Wing Commander Ichman | Forced attacks or a combat-result listener | Battlecry: Summon a Beast from your deck and give it Rush. If it kills a minion this turn, repeat. |

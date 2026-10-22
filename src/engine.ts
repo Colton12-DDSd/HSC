@@ -241,6 +241,20 @@ function scriptCount(
   sourceUid?: number,
 ): number {
   const p = s.players[player];
+  if (zone === 'friendly-deaths')
+    return (s.events ?? []).filter((e) => e.type === 'death' && e.player === player).length;
+  if (zone === 'spell-schools-played')
+    return new Set(
+      (s.events ?? [])
+        .filter(
+          (e) =>
+            e.type === 'play' &&
+            e.player === player &&
+            e.card?.type === 'SPELL' &&
+            e.card.spellSchool,
+        )
+        .map((e) => e.card!.spellSchool),
+    ).size;
   if (zone === 'enemy-frozen')
     return s.players.reduce(
       (n, owner, i) =>
@@ -748,10 +762,16 @@ function settle(s: Game) {
       note(s, `${s.players[player].name}'s ${unit.card.name} triggers Deathrattle`);
     const before = s.nextId;
     if (deathrattleFor(unit.card))
-      runEffect(s, player, deathrattleFor(unit.card)!, undefined, position, unit.card);
+      runEffect(s, player, deathrattleFor(unit.card)!, undefined, position, {
+        ...unit.card,
+        mechanics: unitMechanics(unit),
+      });
     for (const grant of unit.grantedDeathrattles ?? []) {
       note(s, `${unit.card.name} triggers Deathrattle granted by ${grant.source.name}`);
-      runScript(s, player, grant.steps, undefined, position, grant.source);
+      runScript(s, player, grant.steps, undefined, position, {
+        ...grant.source,
+        mechanics: unitMechanics(unit),
+      });
     }
     if (
       unitMechanics(unit).includes('REBORN') &&
@@ -825,6 +845,22 @@ export function effectTargets(s: Game, player: number, card: Card): Target[] {
   if (!rule) return [];
   const effect = activeEffect,
     selector = effect?.type === 'script' ? scriptTarget(effect.steps) : undefined;
+  // This selector depends on the entering minion's stats. Preview queued play
+  // buffs on a clone so target highlighting never consumes those effects or RNG.
+  let sourceAttack = cardStats(card).attack;
+  if (selector?.op === 'attack-threshold-destroy' && s.players[player].board.length < 7) {
+    const preview = structuredClone(s),
+      owner = preview.players[player];
+    const index = owner.hand.findIndex((c) => c.id === card.id);
+    if (index >= 0) owner.hand.splice(index, 1);
+    owner.mana -= handCost(owner, card);
+    const uid = summon(preview, player, card);
+    event(preview, player, 'play', undefined, card);
+    for (const q of owner.playEffects ?? [])
+      if (q.remaining > 0 && matchesCard(card, q.filter, owner))
+        runScript(preview, player, q.steps, { p: player, uid }, owner.board.length, q.source, uid);
+    sourceAttack = owner.board.find((u) => u.uid === uid)?.attack ?? sourceAttack;
+  }
   return s.players
     .flatMap((p, index) =>
       p.health <= 0
@@ -855,6 +891,11 @@ export function effectTargets(s: Game, player: number, card: Card): Target[] {
         return false;
       if (selector?.filterHeroes && 'uid' in t && t.uid !== undefined) return false;
       if (['enemy-minion', 'enemy-character'].includes(rule) && t.p === player) return false;
+      if (
+        selector?.op === 'attack-threshold-destroy' &&
+        (!('card' in chosen) || chosen.attack > sourceAttack)
+      )
+        return false;
       if (!selector?.filter) return true;
       const x = getTarget(s, t);
       return 'card' in x && matchesCard(x.card, selector.filter, s.players[player], x);
@@ -994,6 +1035,12 @@ const scriptOperations = new Set([
   'destroy-weapon',
   'weapon-durability',
   'weapon-recover',
+  'allegiance-effect',
+  'attack-threshold-destroy',
+  'shuffle-weaker',
+  'neighbor-damage',
+  'draw-summon-matching',
+  'lowest-health-damage',
   'destroy-armor',
   'equip',
   'resurrect',
@@ -1062,6 +1109,131 @@ function runScript(
     const step = steps[n],
       amount = scriptNumber(s, player, step.amount, sourceUid);
     if (!scriptOperations.has(step.op)) throw Error(`Unknown scripted effect: ${step.op}`);
+    if (step.op === 'allegiance-effect') {
+      if (target)
+        runScript(
+          s,
+          player,
+          [
+            {
+              op: target.p === player ? 'heal' : 'damage',
+              scope: 'target',
+              target: 'character',
+              amount,
+            },
+          ],
+          target,
+          position,
+          source,
+          sourceUid,
+        );
+      continue;
+    }
+    if (step.op === 'attack-threshold-destroy') {
+      const self = p.board.find((u) => u.uid === sourceUid);
+      if (target && target.p !== player && self) {
+        const victim = getTarget(s, target);
+        if (
+          'card' in victim &&
+          victim.health > 0 &&
+          victim.attack <= self.attack &&
+          !victim.immune &&
+          !(victim.immuneUntilTurn !== undefined && victim.immuneUntilTurn >= s.turn) &&
+          !unitMechanics(victim).includes('STEALTH')
+        ) {
+          victim.health = 0;
+          note(s, `${source.name} destroys ${victim.card.name} with ${victim.attack} Attack`);
+        }
+      }
+      continue;
+    }
+    if (step.op === 'shuffle-weaker') {
+      const self = p.board.find((u) => u.uid === sourceUid);
+      if (!self) continue;
+      for (const owner of s.players) {
+        if (owner.health <= 0) continue;
+        for (const u of [...owner.board]) {
+          if (u.health <= 0 || u.attack >= self.attack) continue;
+          owner.board = owner.board.filter((v) => v.uid !== u.uid);
+          const destination =
+            s.players[
+              u.commander
+                ? (u.commanderOwner ?? s.players.indexOf(owner))
+                : s.players.indexOf(owner)
+            ];
+          if (u.commander) {
+            destination.zone = 'command';
+            destination.replacement = true;
+          } else
+            destination.deck.splice(random(s, destination.deck.length + 1), 0, printedCard(u.card));
+          note(
+            s,
+            `${source.name} returns ${u.card.name} to ${destination.name}'s ${u.commander ? 'command zone' : 'deck'}`,
+          );
+        }
+      }
+      continue;
+    }
+    if (step.op === 'lowest-health-damage') {
+      const ts = scriptTargets(
+        s,
+        player,
+        { op: 'damage', scope: 'enemies' },
+        undefined,
+        sourceUid,
+        position,
+      );
+      const lowest = Math.min(...ts.map((t) => getTarget(s, t).health));
+      const choices = ts.filter((t) => getTarget(s, t).health === lowest);
+      if (choices.length) {
+        const t = choices[random(s, choices.length)];
+        note(
+          s,
+          `${source.name} hits ${s.players[t.p].name}'s lowest-Health enemy for ${scriptedDamage(s, player, t, amount, source, sourceUid)}`,
+        );
+      }
+      continue;
+    }
+    if (step.op === 'neighbor-damage') {
+      let current = target;
+      const visited = new Set<number>();
+      while (current?.uid !== undefined) {
+        const owner = s.players[current.p],
+          index = owner.board.findIndex((u) => u.uid === current!.uid),
+          victim = owner.board[index];
+        if (!victim || victim.health <= 0 || visited.has(victim.uid)) break;
+        visited.add(victim.uid);
+        const neighbors = [owner.board[index - 1], owner.board[index + 1]].filter(
+          (u) => u && u.health > 0 && !visited.has(u.uid),
+        );
+        const dealt = scriptedDamage(s, player, current, amount, source, sourceUid);
+        note(s, `${source.name} deals ${dealt} to ${victim.card.name}`);
+        if (victim.health > 0 || !neighbors.length) break;
+        current = { p: current.p, uid: neighbors[random(s, neighbors.length)].uid };
+      }
+      continue;
+    }
+    if (step.op === 'draw-summon-matching') {
+      const owners = s.players
+        .map((owner, i) => ({ owner, i }))
+        .filter(({ owner }) => owner.health > 0);
+      for (const { owner, i } of owners) {
+        const drawn = owner.deck[0],
+          before = owner.hand.length;
+        draw(s, i);
+        if (
+          !drawn ||
+          owner.health <= 0 ||
+          owner.hand.length <= before ||
+          !matchesCard(drawn, step.filter, owner) ||
+          owner.board.length >= 7
+        )
+          continue;
+        const [c] = owner.hand.splice(before, 1);
+        summon(s, i, c, false, owner.board.length);
+      }
+      continue;
+    }
     if (step.op === 'summon-until') {
       do {
         if (p.board.length >= 7) break;

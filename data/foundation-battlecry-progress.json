@@ -1,22 +1,28 @@
 {
   "baselineCommit": "667d3f0",
   "target": 315,
-  "completed": 246,
-  "remaining": 69,
-  "supportedBattlecryNames": 910,
+  "completed": 250,
+  "remaining": 65,
+  "supportedBattlecryNames": 920,
   "additionalOutsideBatch": [
+    "Aessina",
     "Air Guitarist",
+    "Alexstrasza the Life-Binder",
     "Arathi Weaponsmith",
+    "Ball Hog",
     "Blackscale Brute",
     "Bloodsail Corsair",
     "Bloodsail Raider",
+    "Bloodsworn Mercenary",
     "Conservator Nymph",
+    "Countess Ashmore",
     "Gluttonous Ooze",
     "Grimtotem Buzzkill",
     "Harrison Jones",
     "Hoard Pillager",
     "Kathrena Winterwisp",
     "Luckydo Buccaneer",
+    "Multicaster",
     "Prize Vendor",
     "Rummaging Kobold",
     "Toxic Sewer Ooze",
@@ -1439,12 +1445,11 @@
     {
       "name": "King Plush",
       "group": "draw-zones",
-      "complete": false,
+      "complete": true,
       "ids": [
         "TOY_357"
       ],
-      "text": "Charge Battlecry: Return all minions with less Attack than this to their owner's decks.",
-      "dependency": "Authored complete transaction, target relationship and independent outcome tests"
+      "text": "Charge Battlecry: Return all minions with less Attack than this to their owner's decks."
     },
     {
       "name": "Kiri, Chosen of Elune",
@@ -2487,12 +2492,11 @@
     {
       "name": "The Lurker Below",
       "group": "damage-stats",
-      "complete": false,
+      "complete": true,
       "ids": [
         "BT_230"
       ],
-      "text": "Battlecry: Deal 3 damage to an enemy minion. If it dies, repeat on one of its neighbors.",
-      "dependency": "Authored complete transaction, target relationship and independent outcome tests"
+      "text": "Battlecry: Deal 3 damage to an enemy minion. If it dies, repeat on one of its neighbors."
     },
     {
       "name": "The Purator",
@@ -2685,12 +2689,11 @@
     {
       "name": "Undercooked Calamari",
       "group": "damage-stats",
-      "complete": false,
+      "complete": true,
       "ids": [
         "VAC_341"
       ],
-      "text": "Battlecry: Destroy an enemy minion with Attack less than or equal to this minion's.",
-      "dependency": "Authored complete transaction, target relationship and independent outcome tests"
+      "text": "Battlecry: Destroy an enemy minion with Attack less than or equal to this minion's."
     },
     {
       "name": "Unyielding Vindicator",
@@ -2704,12 +2707,11 @@
     {
       "name": "Utgarde Grapplesniper",
       "group": "summon-tokens",
-      "complete": false,
+      "complete": true,
       "ids": [
         "DRG_077"
       ],
-      "text": "Battlecry: Both players draw a card. If it's a Dragon, summon it.",
-      "dependency": "Authored complete transaction, target relationship and independent outcome tests"
+      "text": "Battlecry: Both players draw a card. If it's a Dragon, summon it."
     },
     {
       "name": "V'ama, Looming Death",

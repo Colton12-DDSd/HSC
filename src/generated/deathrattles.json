@@ -190,6 +190,15 @@
       }
     ]
   },
+  "TOY_642": {
+    "text": "[x]<b>Lifesteal</b>\n<b>Battlecry and Deathrattle:</b>\nDeal 3 damage to the\nlowest Health enemy.",
+    "steps": [
+      {
+        "op": "lowest-health-damage",
+        "amount": 3
+      }
+    ]
+  },
   "VAC_917": {
     "text": "[x]<b>Battlecry:</b> Draw your\nlowest Cost card.\n<b>Deathrattle:</b> Draw your\nhighest Cost card.",
     "steps": [

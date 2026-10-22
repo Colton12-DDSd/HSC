@@ -2,6 +2,16 @@
 import re
 
 def compile_foundation(t, compile, target, filt, num, keywords, refs, card, choose):
+    if t == "Choose a character. If it's friendly, restore 8 Health. If it's an enemy, deal 8 damage":return [dict(op='allegiance-effect',scope='target',target='character',amount=8)]
+    if t == "Destroy an enemy minion with Attack less than or equal to this minion's":return [dict(op='attack-threshold-destroy',scope='target',target='enemy-minion')]
+    if t == "Return all minions with less Attack than this to their owner's decks":return [dict(op='shuffle-weaker')]
+    if t == 'Deal 3 damage to an enemy minion. If it dies, repeat on one of its neighbors':return [dict(op='neighbor-damage',scope='target',target='enemy-minion',amount=3)]
+    if t == 'Deal 3 damage to the lowest Health enemy':return [dict(op='lowest-health-damage',amount=3)]
+    if t == "Both players draw a card. If it's a Dragon, summon it":return [dict(op='draw-summon-matching',filter={'type':'MINION','tribe':'DRAGON'})]
+    if t == 'Choose a damaged friendly minion. Summon a copy of it':return [dict(op='summon-copy',scope='target',target='friendly-minion',filter={'damaged':True},amount=1)]
+    if t == 'Draw a Rush, Lifesteal, and Deathrattle card from your deck':return [dict(op='draw',amount=1,filter={'keyword':k}) for k in ('RUSH','LIFESTEAL','DEATHRATTLE')]
+    if t == "Draw a card for each different spell school you've cast this game":return [dict(op='draw',amount={'count':'spell-schools-played'})]
+    if t == 'If 20 friendly minions have died this game, deal 20 damage split among all enemies':return [dict(op='if',condition={'zone':'friendly-deaths','min':20},steps=[dict(op='missiles',scope='enemies',amount=20)])]
     m=re.fullmatch(r'Give your weapon \+(\d+) (Attack|Durability)',t)
     if m:return [dict(op='buff',attack=int(m[1]) if m[2]=='Attack' else 0,health=int(m[1]) if m[2]=='Durability' else 0,scope='weapon')]
     m=re.fullmatch(r'Remove (\d+) Durability from your opponent\x27s weapon',t)

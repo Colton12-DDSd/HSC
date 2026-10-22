@@ -1,19 +1,19 @@
 {
   "snapshot": "2026-10-18",
   "basis": "Pinned local collection; exact remaining-name membership from the support audit",
-  "supportedBattlecryNames": 910,
-  "totalRemaining": 985,
+  "supportedBattlecryNames": 920,
+  "totalRemaining": 975,
   "replacementCharacterPrintings": 0,
   "lanes": [
     {
       "id": "foundation",
       "label": "Existing foundations: pattern, value, filter or sequencing extensions",
-      "count": 69
+      "count": 65
     },
     {
       "id": "shared",
       "label": "Extend a shared engine family",
-      "count": 412
+      "count": 406
     },
     {
       "id": "system",
@@ -32,21 +32,21 @@
       "label": "Damage, healing, Armor and board stats",
       "lane": "foundation",
       "work": "Extend numeric expressions, target-dependent branches, tribal filters and compound stat effects.",
-      "count": 19
+      "count": 17
     },
     {
       "id": "draw-zones",
       "label": "Draw, discard and hand/deck movement",
       "lane": "foundation",
       "work": "Extend existing zone operations: draws, burns, ordering, bottom-of-deck placement and hand replacement.",
-      "count": 22
+      "count": 21
     },
     {
       "id": "summon-tokens",
       "label": "Summons, recruits and token definitions",
       "lane": "foundation",
       "work": "Add exact token definitions, variable summon stats, filtered recruitment and placement rules. Generated minion abilities need their own coverage.",
-      "count": 15
+      "count": 14
     },
     {
       "id": "generate-pools",
@@ -67,7 +67,7 @@
       "label": "Discover and other player choices",
       "lane": "shared",
       "work": "Extend existing choices with multiple selections, target/choice relationships, hidden selections and result-dependent riders.",
-      "count": 80
+      "count": 78
     },
     {
       "id": "copy-transform",
@@ -81,7 +81,7 @@
       "label": "Deathrattles, resurrection and remembered victims",
       "lane": "shared",
       "work": "Track the exact destroyed/discarded/chosen minion and carry that identity into later Deathrattles or resurrection.",
-      "count": 89
+      "count": 86
     },
     {
       "id": "weapons-combat",
@@ -95,7 +95,7 @@
       "label": "History, thresholds and scaling conditions",
       "lane": "shared",
       "work": "Extend public history, while-held counters, distinct schools/types, spent mana, starting decks and previous-turn queries.",
-      "count": 62
+      "count": 61
     },
     {
       "id": "scheduling",
@@ -221,17 +221,17 @@
     {
       "id": "damage-stats",
       "label": "Damage, healing, Armor and board stats",
-      "count": 429
+      "count": 422
     },
     {
       "id": "draw-zones",
       "label": "Draw, discard and hand/deck movement",
-      "count": 342
+      "count": 338
     },
     {
       "id": "summon-tokens",
       "label": "Summons, recruits and token definitions",
-      "count": 143
+      "count": 141
     },
     {
       "id": "generate-pools",
@@ -246,17 +246,17 @@
     {
       "id": "choices",
       "label": "Discover and other player choices",
-      "count": 171
+      "count": 169
     },
     {
       "id": "copy-transform",
       "label": "Copies, transformations, swaps and control",
-      "count": 152
+      "count": 151
     },
     {
       "id": "death-memory",
       "label": "Deathrattles, resurrection and remembered victims",
-      "count": 121
+      "count": 118
     },
     {
       "id": "weapons-combat",
@@ -266,7 +266,7 @@
     {
       "id": "history",
       "label": "History, thresholds and scaling conditions",
-      "count": 181
+      "count": 180
     },
     {
       "id": "scheduling",
@@ -1140,31 +1140,6 @@
       ]
     },
     {
-      "name": "Aessina",
-      "primary": "death-memory",
-      "lane": "shared",
-      "dependencies": [
-        "death-memory",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "EDR_430",
-          "text": "[x]<b>Battlecry:</b> If 20 friendly\nminions have died this game,\ndeal 20 damage split among\nall enemies.@ <i>({0} left!)</i>@ <i>(Ready!)</i>",
-          "normalizedText": "Battlecry: If 20 friendly minions have died this game, deal 20 damage split among all enemies.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Agamaggan",
       "primary": "alternate-payments",
       "lane": "system",
@@ -1419,31 +1394,6 @@
           "id": "RLK_706",
           "text": "<b>Battlecry:</b> For the rest of the game, deal 3 damage to your opponent at the end of your turns.",
           "normalizedText": "Battlecry: For the rest of the game, deal 3 damage to your opponent at the end of your turns.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Alexstrasza the Life-Binder",
-      "primary": "choices",
-      "lane": "shared",
-      "dependencies": [
-        "choices",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "LEG_CS3_031",
-          "text": "[x]<b>Battlecry</b>: Choose a\ncharacter. If it's friendly,\nrestore #8 Health. If it's an\n   enemy, deal 8 damage.",
-          "normalizedText": "Battlecry: Choose a character. If it's friendly, restore 8 Health. If it's an enemy, deal 8 damage.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -3021,33 +2971,6 @@
       ]
     },
     {
-      "name": "Ball Hog",
-      "primary": "death-memory",
-      "lane": "shared",
-      "dependencies": [
-        "death-memory",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TOY_642",
-          "text": "[x]<b>Lifesteal</b>\n<b>Battlecry and Deathrattle:</b>\nDeal 3 damage to the\nlowest Health enemy.",
-          "normalizedText": "Lifesteal Battlecry and Deathrattle: Deal 3 damage to the lowest Health enemy.",
-          "mechanics": [
-            "BATTLECRY",
-            "DEATHRATTLE",
-            "LIFESTEAL"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Barbaric Sorceress",
       "primary": "copy-transform",
       "lane": "shared",
@@ -3664,32 +3587,6 @@
           "mechanics": [
             "BATTLECRY",
             "DREDGE"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Bloodsworn Mercenary",
-      "primary": "choices",
-      "lane": "shared",
-      "dependencies": [
-        "choices",
-        "copy-transform",
-        "summon-tokens"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "ULD_720",
-          "text": "[x]<b>Battlecry</b>: Choose a\ndamaged friendly minion.\nSummon a copy of it.",
-          "normalizedText": "Battlecry: Choose a damaged friendly minion. Summon a copy of it.",
-          "mechanics": [
-            "BATTLECRY"
           ]
         }
       ]
@@ -5985,32 +5882,6 @@
           "mechanics": [
             "BATTLECRY",
             "COMBO"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Countess Ashmore",
-      "primary": "death-memory",
-      "lane": "shared",
-      "dependencies": [
-        "death-memory",
-        "draw-zones",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "GIL_578",
-          "text": "[x]<b>Battlecry:</b> Draw a <b>Rush</b>,\n<b>Lifesteal</b>, and <b>Deathrattle</b>\ncard from your deck.",
-          "normalizedText": "Battlecry: Draw a Rush, Lifesteal, and Deathrattle card from your deck.",
-          "mechanics": [
-            "BATTLECRY"
           ]
         }
       ]
@@ -13402,32 +13273,6 @@
       ]
     },
     {
-      "name": "King Plush",
-      "primary": "draw-zones",
-      "lane": "foundation",
-      "dependencies": [
-        "draw-zones",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TOY_357",
-          "text": "[x]<b>Charge</b>\n<b>Battlecry:</b> Return all minions\nwith less Attack than this\n  to their owner's decks.",
-          "normalizedText": "Charge Battlecry: Return all minions with less Attack than this to their owner's decks.",
-          "mechanics": [
-            "BATTLECRY",
-            "CHARGE"
-          ]
-        }
-      ]
-    },
-    {
       "name": "King Tide",
       "primary": "scheduling",
       "lane": "shared",
@@ -16133,31 +15978,6 @@
           "id": "DAL_052",
           "text": "[x]<b>Battlecry:</b> Transform into\na 4/4 copy of a different\nminion in your deck.",
           "normalizedText": "Battlecry: Transform into a 4/4 copy of a different minion in your deck.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Multicaster",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "DED_524",
-          "text": "[x]<b>Battlecry:</b> Draw a card for\n each different spell school \n you've cast this game.@ <i>(@)</i>",
-          "normalizedText": "Battlecry: Draw a card for each different spell school you've cast this game.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -24187,30 +24007,6 @@
       ]
     },
     {
-      "name": "The Lurker Below",
-      "primary": "damage-stats",
-      "lane": "foundation",
-      "dependencies": [
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "BT_230",
-          "text": "[x]<b>Battlecry:</b> Deal 3 damage\nto an enemy minion. If it\ndies, repeat on one of\nits neighbors.",
-          "normalizedText": "Battlecry: Deal 3 damage to an enemy minion. If it dies, repeat on one of its neighbors.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "The Nameless One",
       "primary": "choices",
       "lane": "shared",
@@ -26072,30 +25868,6 @@
       ]
     },
     {
-      "name": "Undercooked Calamari",
-      "primary": "damage-stats",
-      "lane": "foundation",
-      "dependencies": [
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "VAC_341",
-          "text": "[x]<b>Battlecry:</b> Destroy an enemy\nminion with Attack less than\nor equal to this minion's.",
-          "normalizedText": "Battlecry: Destroy an enemy minion with Attack less than or equal to this minion's.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Unliving Champion",
       "primary": "death-memory",
       "lane": "shared",
@@ -26224,31 +25996,6 @@
           "id": "EDR_259",
           "text": "[x]<b>Battlecry:</b> Cast the highest\nCost spell from your hand as\n an Aura that lasts 3 turns.",
           "normalizedText": "Battlecry: Cast the highest Cost spell from your hand as an Aura that lasts 3 turns.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Utgarde Grapplesniper",
-      "primary": "summon-tokens",
-      "lane": "foundation",
-      "dependencies": [
-        "summon-tokens",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "DRG_077",
-          "text": "<b>Battlecry:</b> Both players draw a card. If it's a Dragon, summon it.",
-          "normalizedText": "Battlecry: Both players draw a card. If it's a Dragon, summon it.",
           "mechanics": [
             "BATTLECRY"
           ]

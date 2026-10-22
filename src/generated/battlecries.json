@@ -2380,6 +2380,17 @@
       }
     ]
   },
+  "BT_230": {
+    "text": "[x]<b>Battlecry:</b> Deal 3 damage\nto an enemy minion. If it\ndies, repeat on one of\nits neighbors.",
+    "steps": [
+      {
+        "op": "neighbor-damage",
+        "scope": "target",
+        "target": "enemy-minion",
+        "amount": 3
+      }
+    ]
+  },
   "BT_262": {
     "text": "<b>Battlecry:</b> If you're holding a Dragon, gain +1 Attack and <b>Lifesteal</b>.",
     "steps": [
@@ -4901,6 +4912,17 @@
       }
     ]
   },
+  "DED_524": {
+    "text": "[x]<b>Battlecry:</b> Draw a card for\n each different spell school \n you've cast this game.@ <i>(@)</i>",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": {
+          "count": "spell-schools-played"
+        }
+      }
+    ]
+  },
   "DEEP_030": {
     "text": "<b>Battlecry and Deathrattle:</b>\nDraw a card. Deal 2 damage to your hero.",
     "steps": [
@@ -5625,6 +5647,18 @@
       }
     ]
   },
+  "DRG_077": {
+    "text": "<b>Battlecry:</b> Both players draw a card. If it's a Dragon, summon it.",
+    "steps": [
+      {
+        "op": "draw-summon-matching",
+        "filter": {
+          "type": "MINION",
+          "tribe": "DRAGON"
+        }
+      }
+    ]
+  },
   "DRG_081": {
     "text": "<b>Battlecry:</b> If you're holding a Dragon, deal 2 damage.",
     "steps": [
@@ -5923,6 +5957,25 @@
         "until": 3,
         "attack": 4,
         "health": 4
+      }
+    ]
+  },
+  "EDR_430": {
+    "text": "[x]<b>Battlecry:</b> If 20 friendly\nminions have died this game,\ndeal 20 damage split among\nall enemies.@ <i>({0} left!)</i>@ <i>(Ready!)</i>",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "zone": "friendly-deaths",
+          "min": 20
+        },
+        "steps": [
+          {
+            "op": "missiles",
+            "scope": "enemies",
+            "amount": 20
+          }
+        ]
       }
     ]
   },
@@ -7460,6 +7513,32 @@
       }
     ]
   },
+  "GIL_578": {
+    "text": "[x]<b>Battlecry:</b> Draw a <b>Rush</b>,\n<b>Lifesteal</b>, and <b>Deathrattle</b>\ncard from your deck.",
+    "steps": [
+      {
+        "op": "draw",
+        "amount": 1,
+        "filter": {
+          "keyword": "RUSH"
+        }
+      },
+      {
+        "op": "draw",
+        "amount": 1,
+        "filter": {
+          "keyword": "LIFESTEAL"
+        }
+      },
+      {
+        "op": "draw",
+        "amount": 1,
+        "filter": {
+          "keyword": "DEATHRATTLE"
+        }
+      }
+    ]
+  },
   "GIL_580": {
     "text": "<b>Battlecry:</b> Draw a <b>Rush</b> minion from your deck.",
     "steps": [
@@ -8968,6 +9047,17 @@
         "zone": "deck",
         "reduction": 0,
         "copy": true
+      }
+    ]
+  },
+  "LEG_CS3_031": {
+    "text": "[x]<b>Battlecry</b>: Choose a\ncharacter. If it's friendly,\nrestore #8 Health. If it's an\n   enemy, deal 8 damage.",
+    "steps": [
+      {
+        "op": "allegiance-effect",
+        "scope": "target",
+        "target": "character",
+        "amount": 8
       }
     ]
   },
@@ -12034,6 +12124,14 @@
       }
     ]
   },
+  "TOY_357": {
+    "text": "[x]<b>Charge</b>\n<b>Battlecry:</b> Return all minions\nwith less Attack than this\n  to their owner's decks.",
+    "steps": [
+      {
+        "op": "shuffle-weaker"
+      }
+    ]
+  },
   "TOY_370": {
     "text": "<b>Battlecry:</b> Deal 2 damage to a random enemy,\nthree times.",
     "steps": [
@@ -12128,6 +12226,15 @@
           "type": "MINION"
         },
         "order": ""
+      }
+    ]
+  },
+  "TOY_642": {
+    "text": "[x]<b>Lifesteal</b>\n<b>Battlecry and Deathrattle:</b>\nDeal 3 damage to the\nlowest Health enemy.",
+    "steps": [
+      {
+        "op": "lowest-health-damage",
+        "amount": 3
       }
     ]
   },
@@ -13675,6 +13782,20 @@
       }
     ]
   },
+  "ULD_720": {
+    "text": "[x]<b>Battlecry</b>: Choose a\ndamaged friendly minion.\nSummon a copy of it.",
+    "steps": [
+      {
+        "op": "summon-copy",
+        "scope": "target",
+        "target": "friendly-minion",
+        "filter": {
+          "damaged": true
+        },
+        "amount": 1
+      }
+    ]
+  },
   "UNG_015": {
     "text": "<b>Taunt</b>\n<b>Battlecry:</b> Set all other minions' Attack and Health to 3.",
     "steps": [
@@ -14135,6 +14256,16 @@
         "op": "freeze",
         "scope": "target",
         "target": "minion"
+      }
+    ]
+  },
+  "VAC_341": {
+    "text": "[x]<b>Battlecry:</b> Destroy an enemy\nminion with Attack less than\nor equal to this minion's.",
+    "steps": [
+      {
+        "op": "attack-threshold-destroy",
+        "scope": "target",
+        "target": "enemy-minion"
       }
     ]
   },

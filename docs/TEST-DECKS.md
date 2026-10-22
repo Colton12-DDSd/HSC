@@ -34,9 +34,11 @@ Cards shown in hand have their **current payable mana cost** over the artwork. T
 
 The [weapon batch](WEAPON-BATTLECRIES.md) adds twelve examples to Iron Reserve. Its guided hand is Fiery War Axe, Air Guitarist, Bloodsail Raider, Hoard Pillager, and Harrison Jones.
 
+The [precision batch](PRECISION-BATTLECRIES.md) adds guided targeting/copy tests to Ember & Ice, linked Dragon draws to Dragon School, and Aessina to Token Workshop.
+
 ## Coverage and rules
 
-Current support: **910 Battlecry names / 981 collection printings** and **1,646 supported collection records**. The latest pass implements **246 of the original 315 foundation candidates** and 16 additional names. **69 of that batch remain blocked**; the [complete report](FOUNDATION-BATTLECRIES.md) lists each one and its next dependency. Across the whole collection, **985 Battlecry names remain unsupported**. No approximate effect substitutes for unrecognized rules.
+Current support: **920 Battlecry names / 991 collection printings** and **1,656 supported collection records**. The latest pass implements **250 of the original 315 foundation candidates** and 22 additional names. **65 of that batch remain blocked**; the [complete report](FOUNDATION-BATTLECRIES.md) lists each one and its next dependency. Across the whole collection, **975 Battlecry names remain unsupported**. No approximate effect substitutes for unrecognized rules.
 
 New shared families include consuming live stats, linked draws, Dredge rewards, temporary costs, Menagerie selection, future-play buffs, deck ordering, burn/draw replacement, expanded hand limits, hero Divine Shield and permanent Immunity. Boom Bot Deathrattles and Ice Shard/Water Elemental freezing are implemented. Generated cards can have separately unsupported abilities, labeled effects pending; those cards cannot be played. Named pools and special summoned passives require exact definitions.
 

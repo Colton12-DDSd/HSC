@@ -10,6 +10,10 @@ spec.loader.exec_module(compiler)
 compiler.current_card={'id':'TEST','set':'LEGACY'}
 
 class CompleteTextTests(unittest.TestCase):
+    def test_precision_effects_keep_chosen_targets_and_complete_conditions(self):
+        self.assertEqual(compiler.compile("Choose a character. If it's friendly, restore 8 Health. If it's an enemy, deal 8 damage."),[{'op':'allegiance-effect','scope':'target','target':'character','amount':8}])
+        self.assertEqual(compiler.compile("Both players draw a card. If it's a Dragon, summon it."),[{'op':'draw-summon-matching','filter':{'type':'MINION','tribe':'DRAGON'}}])
+        self.assertIsNone(compiler.compile('Deal 3 damage to the lowest Health enemy. Repeat an unknown rule.'))
     def test_weapon_transactions_keep_exact_reward_stats(self):
         self.assertEqual(compiler.compile('Give your weapon +1 Durability.'),[{'op':'buff','scope':'weapon','attack':0,'health':1}])
         self.assertEqual(compiler.compile("Destroy your opponent's weapon and draw cards equal to its Durability."),[{'op':'destroy-weapon','after':'draw-durability'}])
