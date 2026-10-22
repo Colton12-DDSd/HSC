@@ -1,7 +1,10 @@
 """Complete clauses built on the existing engine. Never discard an unknown rider."""
 import re
+from progression_patterns import compile_progression
 
 def compile_foundation(t, compile, target, filt, num, keywords, refs, card, choose):
+    progression=compile_progression(t)
+    if progression is not None:return progression
     if t == "Choose a character. If it's friendly, restore 8 Health. If it's an enemy, deal 8 damage":return [dict(op='allegiance-effect',scope='target',target='character',amount=8)]
     if t == "Destroy an enemy minion with Attack less than or equal to this minion's":return [dict(op='attack-threshold-destroy',scope='target',target='enemy-minion')]
     if t == "Return all minions with less Attack than this to their owner's decks":return [dict(op='shuffle-weaker')]

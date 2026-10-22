@@ -55,7 +55,7 @@ export async function buildGrouping(coverage, cards) {
     .flatMap((e) => e.printings)
     .filter((p) => p.text?.includes('\uFFFD')).length;
   return {
-    snapshot: '2026-10-18',
+    snapshot: '2026-10-22',
     basis: 'Pinned local collection; exact remaining-name membership from the support audit',
     supportedBattlecryNames: coverage.summary.supportedBattlecryNames,
     totalRemaining: entries.length,
@@ -87,7 +87,7 @@ export function markdown(report) {
       .join('\n');
   return `# Remaining Battlecries grouped for implementation
 
-Audit date: **2026-10-18**. Reviewed the complete pinned backlog: **${report.totalRemaining.toLocaleString('en-US')} unique minion names** across **${report.entries.reduce((n, e) => n + e.printings.length, 0).toLocaleString('en-US')} printings**. **${report.supportedBattlecryNames} names are already supported** and excluded here. Matching Core printings do not count as extra names.
+Audit date: **2026-10-22**. Reviewed the complete pinned backlog: **${report.totalRemaining.toLocaleString('en-US')} unique minion names** across **${report.entries.reduce((n, e) => n + e.printings.length, 0).toLocaleString('en-US')} printings**. **${report.supportedBattlecryNames} names are already supported** and excluded here. Matching Core printings do not count as extra names.
 
 Every remaining name has **one primary group**, so the primary counts add up to ${report.totalRemaining.toLocaleString('en-US')}. Extra dependencies, keywords and named families can overlap: their counts must not be added together. Group membership is a planning judgment based on the complete printed card, including passives, separate Deathrattles and attached keywords. It does not enable a card or prove that a whole group shares one identical script.
 

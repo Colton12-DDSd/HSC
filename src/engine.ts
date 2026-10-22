@@ -59,7 +59,14 @@ export interface Player {
   playEffects?: { source: Card; filter: CardFilter; remaining: number; steps: ScriptStep[] }[];
   overload?: number;
   lockedMana?: number;
-  nextDiscounts?: { filter: CardFilter; amount: number; source: string }[];
+  nextDiscounts?: {
+    filter: CardFilter;
+    amount: number;
+    source: string;
+    remaining?: number;
+    set?: number;
+    expiresAtTurn?: number;
+  }[];
   endEffects?: { source: Card; steps: ScriptStep[]; once: boolean; sourceUid?: number }[];
   summonEffects?: {
     source: Card;
@@ -242,6 +249,18 @@ function scriptCount(
   sourceUid?: number,
 ): number {
   const p = s.players[player];
+  if (zone === 'armor-gained' || zone === 'healed-game')
+    return (s.events ?? [])
+      .filter(
+        (e) =>
+          e.player === player && e.type === (zone === 'armor-gained' ? 'armor-change' : 'heal'),
+      )
+      .reduce((n, e) => n + Math.max(0, e.amount ?? 0), 0);
+  if (zone === 'played-other')
+    return (s.events ?? [])
+      .filter((e) => e.player === player && e.type === 'play')
+      .slice(0, -1)
+      .filter((e) => e.card && matchesCard(e.card, filter, p)).length;
   if (zone === 'friendly-deaths')
     return (s.events ?? []).filter((e) => e.type === 'death' && e.player === player).length;
   if (zone === 'spell-schools-played')
@@ -384,6 +403,10 @@ function scriptCondition(s: Game, player: number, c: ScriptCondition, sourceUid?
     return (s.events ?? []).some((e) => e.turn === s.turn && e.type === 'hero-damage');
   if (c.special === 'combined-health-42')
     return s.players.filter((p) => p.health > 0).reduce((n, p) => n + p.health, 0) === 42;
+  if (c.special === 'source-less-expensive')
+    return p.deck
+      .filter((c) => c.type === 'MINION')
+      .every((c) => c.cost > (p.board.find((u) => u.uid === sourceUid)?.playedCost ?? Infinity));
   if (c.special === 'source-more-expensive')
     return p.deck
       .filter((c) => c.type === 'MINION')
@@ -547,20 +570,21 @@ function draw(s: Game, p: number) {
   }
 }
 export function commandCost(p: Player) {
-  return Math.max(
-    0,
-    Math.max(1, p.commander.cost + 2 * p.casts - p.reduction - p.handReduction) -
-      nextDiscount(p, p.commander),
+  return applyNextCosts(
+    p,
+    p.commander,
+    Math.max(1, p.commander.cost + 2 * p.casts - p.reduction - p.handReduction),
   );
 }
-function nextDiscount(p: Player, c: Card) {
+function applyNextCosts(p: Player, c: Card, base: number) {
   return (p.nextDiscounts ?? [])
     .filter((d) => matchesCard(c, d.filter, p))
-    .reduce((n, d) => n + d.amount, 0);
+    .reduce((cost, d) => d.set ?? Math.max(0, cost - d.amount), base);
 }
 export function handCost(p: Player, c: Card) {
-  return Math.max(0, cardCost(c) - p.reduction - p.handReduction - nextDiscount(p, c));
+  return applyNextCosts(p, c, Math.max(0, cardCost(c) - p.reduction - p.handReduction));
 }
+
 function getTarget(s: Game, t: Target) {
   if (!Number.isInteger(t.p) || !s.players[t.p] || s.players[t.p].health <= 0)
     throw Error('Invalid target');
@@ -1404,8 +1428,14 @@ function runScript(
         filter: step.filter ?? {},
         amount: step.reduction ?? 0,
         source: source.name,
+        remaining: step.amount === undefined ? 1 : amount,
+        ...(step.setCost != null ? { set: step.setCost } : {}),
+        ...(step.expires === 'turn' ? { expiresAtTurn: s.turn } : {}),
       });
-      note(s, `${source.name}: next matching card costs ${step.reduction} less`);
+      note(
+        s,
+        `${source.name}: next ${step.amount === undefined ? 1 : amount} matching card(s) ${step.setCost != null ? `costs (${step.setCost})` : `costs (${step.reduction ?? 0}) less`}${step.expires === 'turn' ? ' until end of turn' : ''}`,
+      );
       continue;
     }
     if (step.op === 'end-effect') {
@@ -1776,7 +1806,7 @@ function runScript(
           const copy = structuredClone(c);
           if (step.op === 'cost') {
             copy.printedCost ??= copy.cost;
-            copy.cost = Math.max(0, copy.cost - (step.reduction ?? 0));
+            copy.cost = step.setCost ?? Math.max(0, copy.cost - (step.reduction ?? 0));
           } else {
             const stats = cardStats(c);
             (copy.modifiers ??= []).push({
@@ -2754,6 +2784,9 @@ function advance(s: Game) {
   if (s.winner !== null) return;
   expireTurnModifiers(s);
   for (const owner of s.players) {
+    owner.nextDiscounts = (owner.nextDiscounts ?? []).filter(
+      (d) => d.expiresAtTurn === undefined || d.expiresAtTurn > s.turn,
+    );
     for (const zone of ['hand', 'deck'] as const) {
       for (const c of owner[zone])
         c.temporaryCosts = (c.temporaryCosts ?? []).filter((e) => e.turn > s.turn);
@@ -3111,7 +3144,13 @@ export function applyAction(state: Game, a: Action): Game {
     const chosenTarget =
       targetFor(effectFor(c)) && effectTargets(s, a.p, c).length ? a.target : undefined;
     p.mana -= cost;
-    p.nextDiscounts = (p.nextDiscounts ?? []).filter((d) => !matchesCard(c, d.filter, p));
+    p.nextDiscounts = (p.nextDiscounts ?? []).flatMap((d) =>
+      !matchesCard(c, d.filter, p)
+        ? [d]
+        : (d.remaining ?? 1) > 1
+          ? [{ ...d, remaining: (d.remaining ?? 1) - 1 }]
+          : [],
+    );
     if (c.id === p.commander.id) p.replacement = false;
     if (!a.command) p.hand.splice(a.index!, 1);
     const queue: number[] = [];

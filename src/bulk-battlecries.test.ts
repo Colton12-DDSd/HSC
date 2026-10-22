@@ -160,6 +160,15 @@ describe('500 additional distinct Battlecry names', () => {
         );
       }) ?? card('CS2_182');
     const count = condition.min ?? 1;
+    if (condition.zone === 'armor-gained' || condition.zone === 'healed-game')
+      s.events = [
+        {
+          type: condition.zone === 'armor-gained' ? 'armor-change' : 'heal',
+          player: 0,
+          turn: s.turn,
+          amount: count,
+        },
+      ];
     if (condition.zone === 'friendly-deaths')
       s.events = Array.from({ length: count }, () => ({
         type: 'death',
@@ -222,6 +231,8 @@ describe('500 additional distinct Battlecry names', () => {
       s.players.forEach((p, i) => {
         p.health = i < 2 ? 11 : 10;
       });
+    if (condition.special === 'source-less-expensive')
+      for (const x of p.deck) if (x.type === 'MINION') x.cost = c.cost + 1;
     if (condition.special === 'source-more-expensive')
       for (const c of p.deck) if (c.type === 'MINION') c.cost = 0;
     if (condition.stat === 'remaining-mana') p.mana = c.cost;
@@ -248,7 +259,7 @@ describe('500 additional distinct Battlecry names', () => {
           )[condition.zone];
       s.events = [
         { type: 'turn', turn, player: 0 },
-        ...Array.from({ length: count }, () => ({
+        ...Array.from({ length: condition.max === 0 ? 0 : count }, () => ({
           type,
           turn,
           player: 0,
@@ -706,6 +717,11 @@ describe('Independent mechanic and interaction checks', () => {
       'summon-sized',
       'menagerie',
       'held-spells',
+      'history-cards',
+      'resource-payoff',
+      'unlock-mana',
+      'reveal-spell',
+      'copy-board-hand',
       'discard-weapons-stats',
       'deck-copy',
       'future-play',

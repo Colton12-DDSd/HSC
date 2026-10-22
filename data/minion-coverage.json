@@ -2,17 +2,17 @@
   "summary": {
     "collectionRecords": 6470,
     "battlecryRecords": 2011,
-    "supportedBattlecryRecords": 1001,
+    "supportedBattlecryRecords": 1052,
     "battlecryNames": 1895,
-    "supportedBattlecryNames": 930,
-    "additionalBattlecryNames": 894,
-    "remainingBattlecryNames": 965,
-    "supportedCollectionRecords": 1666,
+    "supportedBattlecryNames": 980,
+    "additionalBattlecryNames": 944,
+    "remainingBattlecryNames": 915,
+    "supportedCollectionRecords": 1720,
     "triggerRecords": 2521,
-    "supportedTriggerRecords": 1164,
+    "supportedTriggerRecords": 1216,
     "triggerNames": 2381,
-    "fullySupportedTriggerNames": 1082,
-    "remainingTriggerRecords": 1357
+    "fullySupportedTriggerNames": 1133,
+    "remainingTriggerRecords": 1305
   },
   "minions": [
     {
@@ -1539,8 +1539,8 @@
         {
           "id": "GDB_461",
           "text": "<b>Battlecry:</b> Get a copy of the last Draenei you played.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -1999,8 +1999,8 @@
         {
           "id": "CATA_EVENT_002",
           "text": "<b>Battlecry:</b> If you've played a Fire spell this turn, destroy a minion.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -2095,8 +2095,8 @@
         {
           "id": "DAL_546",
           "text": "<b>Battlecry:</b> Add a copy of each of your other <b>Battlecry</b> minions to your hand.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -4034,8 +4034,8 @@
         {
           "id": "AV_145",
           "text": "[x]<b>Battlecry:</b> If you have\ngained 15 or more Armor\nthis game, gain +3/+3\nand <b>Charge</b>.@ <i>({0} left!)</i>@ <i>(Ready!)</i>",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -4876,8 +4876,8 @@
         {
           "id": "TLC_888",
           "text": "[x]<b>Battlecry:</b> Get a copy\nof another Elemental or\nDragon in your hand.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -4888,8 +4888,8 @@
         {
           "id": "TID_004",
           "text": "<b>Battlecry:</b> Your next two Murlocs cost (2) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -5063,8 +5063,8 @@
         {
           "id": "TSC_087",
           "text": "[x]<b>Battlecry:</b> If you've cast\nthree spells while holding\nthis, add those spells back\nto your hand.@ <i>({0} left!)</i>@ <i>(Ready!)</i>",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -5286,8 +5286,8 @@
         {
           "id": "TSC_648",
           "text": "[x]<b>Battlecry:</b> Summon a\n3/3 Elemental for each\nspell school you've\ncast this game.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -5761,8 +5761,8 @@
         {
           "id": "DAL_799",
           "text": "<b>Rush</b>. <b>Battlecry:</b> If you've restored 5 Health this game, summon a copy of this.@ <i>({0} left!)</i>@ <i>(Ready!)</i>",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -7443,8 +7443,8 @@
         {
           "id": "LOOT_535",
           "text": "<b>Battlecry:</b> Summon a 5/5 Dragon for each spell you cast this game that costs (5) or more.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -7455,8 +7455,8 @@
         {
           "id": "DRG_322",
           "text": "<b>Battlecry:</b> If you're holding a Dragon, your next spell this turn costs (0).",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -7827,8 +7827,8 @@
         {
           "id": "GVG_080",
           "text": "<b>Battlecry:</b> If you have a Beast, transform this minion into a 7/7.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -8650,8 +8650,8 @@
         {
           "id": "OG_026",
           "text": "<b>Battlecry:</b> Unlock your <b>Overloaded</b> Mana Crystals.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -8698,8 +8698,8 @@
         {
           "id": "KAR_070",
           "text": "<b>Battlecry:</b> If you're holding any cards from another class, reduce their Cost by (2).",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -9262,8 +9262,8 @@
         {
           "id": "VAC_942",
           "text": "[x]<b>Battlecry:</b> Gain stats equal\nto the damage your hero\n has taken this turn.@ <i>(@)</i>",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -10036,8 +10036,8 @@
         {
           "id": "ETC_336",
           "text": "[x]<b>Charge</b>\n<b>Battlecry:</b> Gain +1/+1 for\neach other Freebird you've\nplayed this game.@ <i>(@)</i>",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -10252,8 +10252,8 @@
         {
           "id": "WON_140",
           "text": "[x]<b>Battlecry:</b> Reduce the Cost\nof all Dragons in your hand\n by (1). Give them +1/+1.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -11156,8 +11156,8 @@
         {
           "id": "TSC_652",
           "text": "[x]<b>Battlecry:</b> Refresh empty\nMana Crystals equal to the\nCost of the highest Cost\nspell in your hand.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -11849,8 +11849,8 @@
         {
           "id": "TSC_658",
           "text": "[x]<b>Battlecry:</b> For each spell\nyou've cast while holding\nthis, summon a minion\nof that spell's Cost.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -12775,8 +12775,8 @@
         {
           "id": "SC_763",
           "text": "[x]<b>Taunt</b>, <b>Divine Shield</b>\n<b>Battlecry:</b> Spend 4 Mana to\ndouble this minion's stats.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -13118,8 +13118,8 @@
         {
           "id": "CFM_687",
           "text": "[x]<b>Battlecry:</b> If your deck has\nno duplicates, the next\nspell you cast this turn\ncosts (0).",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -14474,15 +14474,15 @@
         {
           "id": "CORE_TRL_345",
           "text": "<b>Battlecry:</b> Return all spells you played last turn to your hand.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         },
         {
           "id": "TRL_345",
           "text": "<b>Battlecry:</b> Return all spells you played last turn to your hand.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -15392,8 +15392,8 @@
         {
           "id": "GDB_863",
           "text": "[x]<b>Battlecry:</b> Set the Cost of a\nrandom spell in your hand\nto this minion's Cost.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -15742,8 +15742,8 @@
         {
           "id": "DAL_603",
           "text": "[x]<b>Battlecry:</b> For each spell\nyou've cast this turn, add\na random Mage spell\nto your hand.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -16382,8 +16382,8 @@
         {
           "id": "SW_451",
           "text": "<b>Taunt</b>\n<b>Battlecry:</b> If you've cast a Fel spell this turn, gain +2/+2.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -17382,8 +17382,8 @@
         {
           "id": "ULD_435",
           "text": "[x]<b>Battlecry:</b> Change the Cost\nof spells in your hand to (5).",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -17643,8 +17643,8 @@
         {
           "id": "BOT_226",
           "text": "<b>Battlecry:</b> Gain +1 Attack for each damage your hero has taken this turn.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -17801,8 +17801,8 @@
         {
           "id": "SW_074",
           "text": "<b>Battlecry:</b> Create a Golden copy of a random card in your hand.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -17813,8 +17813,8 @@
         {
           "id": "CS3_012",
           "text": "<b>Battlecry:</b> The next spell you cast this turn costs (3) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -18403,8 +18403,8 @@
         {
           "id": "UNG_907",
           "text": "[x]<b>Taunt</b>\n<b>Battlecry:</b> Gain +5 Health\nfor each Elemental you\nplayed last turn.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -19233,8 +19233,8 @@
         {
           "id": "TSC_828",
           "text": "[x]<b>Battlecry:</b> Refresh an empty\nMana Crystal for each spell\n   you've cast this turn.@ <i>(@)</i>",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -19360,8 +19360,8 @@
         {
           "id": "TIME_213",
           "text": "[x]<b>Battlecry:</b> If you've cast a\nNature spell while holding\nthis,& gain +1/+1 and\ndraw a card.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -19674,8 +19674,8 @@
         {
           "id": "TSC_213",
           "text": "<b>Battlecry:</b> Gain +1/+1\nfor each spell you've cast this turn.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -20211,8 +20211,8 @@
         {
           "id": "VAC_301",
           "text": "[x]<b>Battlecry:</b> Summon a\nrandom 5-Cost minion.\n   Repeat for each spell school   \n you've cast this game.@ <i>(@)</i>",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -20590,8 +20590,8 @@
         {
           "id": "NX2_035",
           "text": "[x]<b>Battlecry:</b> If you've cast three\nspells while holding this,\n<b>Freeze</b> 3 random enemy\nminions.@ <i>({0} left!)</i>@ <i>(Ready!)</i>",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -21782,8 +21782,8 @@
         {
           "id": "VAC_332",
           "text": "<b>Battlecry:</b> The next card you play from another class costs (2) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -22113,8 +22113,8 @@
         {
           "id": "DED_503",
           "text": "[x]<b>Battlecry:</b> If you've taken\ndamage this turn, deal that\n much to an enemy minion.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -22367,8 +22367,8 @@
         {
           "id": "TTN_441",
           "text": "<b>Battlecry:</b> Transform into\nan 8/8 copy of a random\nminion in your hand.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -24007,8 +24007,8 @@
         {
           "id": "JAIL_379",
           "text": "[x]<b>Battlecry:</b> Reveal a spell in\nyour deck. If it costs (5) or\nmore,& deal 5 damage split\n   among enemy minions.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -24127,8 +24127,8 @@
         {
           "id": "LOOT_539",
           "text": "[x]<b>Battlecry:</b> Reveal a spell\nfrom your deck. Summon\n a random minion with\nthe same Cost.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -24530,8 +24530,8 @@
         {
           "id": "UNG_208",
           "text": "<b>Battlecry:</b> If you played an Elemental last turn, summon two 2/3 Elementals with <b>Taunt</b>.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -24633,9 +24633,9 @@
         {
           "id": "CATA_724",
           "text": "[x]<b>Deathrattle:</b> Unlock your\n<b>Overloaded</b> Mana Crystals.\n<b>Overload:</b> (3)",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -25067,8 +25067,8 @@
         {
           "id": "TSC_936",
           "text": "<b>Battlecry:</b> Your next spell this turn costs (0).",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -25813,8 +25813,8 @@
         {
           "id": "TTN_835",
           "text": "[x]<b>Battlecry:</b> Unlock your\n<b>Overloaded</b> Mana Crystals.\nDraw that many cards.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -27103,8 +27103,8 @@
         {
           "id": "VAC_423",
           "text": "[x]<b>Taunt</b>\n<b>Battlecry:</b> Set the Cost of the\ntop card of your deck to (0).",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -27374,8 +27374,8 @@
         {
           "id": "TTN_475",
           "text": "[x]<b>Battlecry:</b> Draw a card.\nRepeat for each Elemental\nyou played last turn.@ <i>(@)</i>",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -27688,8 +27688,8 @@
         {
           "id": "AV_223",
           "text": "[x]<b>Battlecry</b>: If this costs\nless than every minion\nin your deck, reduce\ntheir Cost by (3).",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -28961,8 +28961,8 @@
         {
           "id": "MEND_041",
           "text": "[x]<b>Taunt</b>\n<b>Battlecry:</b> If you didn't play\na minion last turn, refresh\n3 Mana Crystals.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -29201,8 +29201,8 @@
         {
           "id": "BAR_735",
           "text": "<b>Battlecry:</b> If you've restored Health this turn, deal that much damage to all enemy minions.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -29429,8 +29429,8 @@
         {
           "id": "TRL_545",
           "text": "[x]<b>Battlecry:</b> If you've restored\n10 Health this game, gain\n+4/+4 and <b>Taunt</b>.@ <i>({0} left!)</i>@ <i>(Ready!)</i>",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -29441,8 +29441,8 @@
         {
           "id": "FIR_940",
           "text": "<b>Battlecry:</b> If every card in your hand is of a different Cost, reduce their Costs by (2).",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]

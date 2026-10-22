@@ -619,6 +619,18 @@
       }
     ]
   },
+  "CATA_724": {
+    "text": "[x]<b>Deathrattle:</b> Unlock your\n<b>Overloaded</b> Mana Crystals.\n<b>Overload:</b> (3)",
+    "steps": [
+      {
+        "op": "unlock-mana"
+      },
+      {
+        "op": "overload",
+        "amount": 3
+      }
+    ]
+  },
   "CFM_120": {
     "text": "<b>Deathrattle:</b> Restore #4 Health to each hero.",
     "steps": [

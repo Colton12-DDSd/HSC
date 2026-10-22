@@ -1,8 +1,8 @@
 {
-  "snapshot": "2026-10-18",
+  "snapshot": "2026-10-22",
   "basis": "Pinned local collection; exact remaining-name membership from the support audit",
-  "supportedBattlecryNames": 930,
-  "totalRemaining": 965,
+  "supportedBattlecryNames": 980,
+  "totalRemaining": 915,
   "replacementCharacterPrintings": 0,
   "lanes": [
     {
@@ -13,7 +13,7 @@
     {
       "id": "shared",
       "label": "Extend a shared engine family",
-      "count": 396
+      "count": 346
     },
     {
       "id": "system",
@@ -60,7 +60,7 @@
       "label": "Card costs, mana and ordinary discounts",
       "lane": "shared",
       "work": "Extend cost-setting, discount duration/counts, mana caps and multi-card cost relationships.",
-      "count": 46
+      "count": 28
     },
     {
       "id": "choices",
@@ -74,7 +74,7 @@
       "label": "Copies, transformations, swaps and control",
       "lane": "shared",
       "work": "Extend physical-card copying, stat preservation, owner/controller identity and linked swaps or transformations.",
-      "count": 46
+      "count": 40
     },
     {
       "id": "death-memory",
@@ -95,7 +95,7 @@
       "label": "History, thresholds and scaling conditions",
       "lane": "shared",
       "work": "Extend public history, while-held counters, distinct schools/types, spent mana, starting decks and previous-turn queries.",
-      "count": 57
+      "count": 31
     },
     {
       "id": "scheduling",
@@ -221,27 +221,27 @@
     {
       "id": "damage-stats",
       "label": "Damage, healing, Armor and board stats",
-      "count": 417
+      "count": 397
     },
     {
       "id": "draw-zones",
       "label": "Draw, discard and hand/deck movement",
-      "count": 332
+      "count": 312
     },
     {
       "id": "summon-tokens",
       "label": "Summons, recruits and token definitions",
-      "count": 139
+      "count": 132
     },
     {
       "id": "generate-pools",
       "label": "Generated cards and named card pools",
-      "count": 103
+      "count": 98
     },
     {
       "id": "cost-mana",
       "label": "Card costs, mana and ordinary discounts",
-      "count": 210
+      "count": 186
     },
     {
       "id": "choices",
@@ -251,7 +251,7 @@
     {
       "id": "copy-transform",
       "label": "Copies, transformations, swaps and control",
-      "count": 148
+      "count": 141
     },
     {
       "id": "death-memory",
@@ -266,7 +266,7 @@
     {
       "id": "history",
       "label": "History, thresholds and scaling conditions",
-      "count": 174
+      "count": 146
     },
     {
       "id": "scheduling",
@@ -2495,32 +2495,6 @@
       ]
     },
     {
-      "name": "Astral Vigilant",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform",
-        "history",
-        "generate-pools"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "GDB_461",
-          "text": "<b>Battlecry:</b> Get a copy of the last Draenei you played.",
-          "normalizedText": "Battlecry: Get a copy of the last Draenei you played.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Astrobiologist",
       "primary": "scheduling",
       "lane": "shared",
@@ -2946,31 +2920,6 @@
       ]
     },
     {
-      "name": "Baleful Blazer",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "CATA_EVENT_002",
-          "text": "<b>Battlecry:</b> If you've played a Fire spell this turn, destroy a minion.",
-          "normalizedText": "Battlecry: If you've played a Fire spell this turn, destroy a minion.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Barbaric Sorceress",
       "primary": "copy-transform",
       "lane": "shared",
@@ -2994,32 +2943,6 @@
           "mechanics": [
             "BATTLECRY",
             "TAUNT"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Barista Lynchen",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform",
-        "generate-pools",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "DAL_546",
-          "text": "<b>Battlecry:</b> Add a copy of each of your other <b>Battlecry</b> minions to your hand.",
-          "normalizedText": "Battlecry: Add a copy of each of your other Battlecry minions to your hand.",
-          "mechanics": [
-            "BATTLECRY"
           ]
         }
       ]
@@ -4495,31 +4418,6 @@
       ]
     },
     {
-      "name": "Captain Galvangar",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "AV_145",
-          "text": "[x]<b>Battlecry:</b> If you have\ngained 15 or more Armor\nthis game, gain +3/+3\nand <b>Charge</b>.@ <i>({0} left!)</i>@ <i>(Ready!)</i>",
-          "normalizedText": "Battlecry: If you have gained 15 or more Armor this game, gain +3/+3 and Charge.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Cardboard Golem",
       "primary": "lasting",
       "lane": "system",
@@ -5256,56 +5154,6 @@
       ]
     },
     {
-      "name": "Cloud Serpent",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform",
-        "generate-pools",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TLC_888",
-          "text": "[x]<b>Battlecry:</b> Get a copy\nof another Elemental or\nDragon in your hand.",
-          "normalizedText": "Battlecry: Get a copy of another Elemental or Dragon in your hand.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Clownfish",
-      "primary": "cost-mana",
-      "lane": "shared",
-      "dependencies": [
-        "cost-mana"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TID_004",
-          "text": "<b>Battlecry:</b> Your next two Murlocs cost (2) less.",
-          "normalizedText": "Battlecry: Your next two Murlocs cost (2) less.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Clumsy Courier",
       "primary": "spell-casting",
       "lane": "system",
@@ -5409,32 +5257,6 @@
           "id": "CATA_591",
           "text": "[x]<b>Battlecry:</b> Instead of drawing\neach turn, <b>Discover</b> a card\nfrom your deck. It costs (3)\n  less. Destroy the others.",
           "normalizedText": "Battlecry: Instead of drawing each turn, Discover a card from your deck. It costs (3) less. Destroy the others.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Commander Sivara",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "generate-pools",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TSC_087",
-          "text": "[x]<b>Battlecry:</b> If you've cast\nthree spells while holding\nthis, add those spells back\nto your hand.@ <i>({0} left!)</i>@ <i>(Ready!)</i>",
-          "normalizedText": "Battlecry: If you've cast three spells while holding this, add those spells back to your hand.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -5689,31 +5511,6 @@
           "id": "DED_514",
           "text": "<b>Battlecry:</b> Add a copy of the next card your opponent plays to your hand.",
           "normalizedText": "Battlecry: Add a copy of the next card your opponent plays to your hand.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Coral Keeper",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "summon-tokens"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TSC_648",
-          "text": "[x]<b>Battlecry:</b> Summon a\n3/3 Elemental for each\nspell school you've\ncast this game.",
-          "normalizedText": "Battlecry: Summon a 3/3 Elemental for each spell school you've cast this game.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -6075,34 +5872,6 @@
           "normalizedText": "Battlecry: Destroy a random enemy minion, location, and weapon.",
           "mechanics": [
             "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Crystal Stag",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "copy-transform",
-        "summon-tokens",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "DAL_799",
-          "text": "<b>Rush</b>. <b>Battlecry:</b> If you've restored 5 Health this game, summon a copy of this.@ <i>({0} left!)</i>@ <i>(Ready!)</i>",
-          "normalizedText": "Rush. Battlecry: If you've restored 5 Health this game, summon a copy of this.",
-          "mechanics": [
-            "BATTLECRY",
-            "RUSH"
           ]
         }
       ]
@@ -7313,56 +7082,6 @@
       ]
     },
     {
-      "name": "Dragoncaller Alanna",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "cost-mana",
-        "summon-tokens"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "LOOT_535",
-          "text": "<b>Battlecry:</b> Summon a 5/5 Dragon for each spell you cast this game that costs (5) or more.",
-          "normalizedText": "Battlecry: Summon a 5/5 Dragon for each spell you cast this game that costs (5) or more.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Dragoncaster",
-      "primary": "cost-mana",
-      "lane": "shared",
-      "dependencies": [
-        "cost-mana"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "DRG_322",
-          "text": "<b>Battlecry:</b> If you're holding a Dragon, your next spell this turn costs (0).",
-          "normalizedText": "Battlecry: If you're holding a Dragon, your next spell this turn costs (0).",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Drakkari Trickster",
       "primary": "copy-transform",
       "lane": "shared",
@@ -7638,30 +7357,6 @@
           "id": "TIME_033",
           "text": "<b>Rewind</b>\n<b>Battlecry:</b> Cast 2 random Nature spells.",
           "normalizedText": "Rewind Battlecry: Cast 2 random Nature spells.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Druid of the Fang",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "GVG_080",
-          "text": "<b>Battlecry:</b> If you have a Beast, transform this minion into a 7/7.",
-          "normalizedText": "Battlecry: If you have a Beast, transform this minion into a 7/7.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -8374,30 +8069,6 @@
       ]
     },
     {
-      "name": "Eternal Sentinel",
-      "primary": "cost-mana",
-      "lane": "shared",
-      "dependencies": [
-        "cost-mana"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "OG_026",
-          "text": "<b>Battlecry:</b> Unlock your <b>Overloaded</b> Mana Crystals.",
-          "normalizedText": "Battlecry: Unlock your Overloaded Mana Crystals.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Eternus",
       "primary": "copy-transform",
       "lane": "shared",
@@ -8441,30 +8112,6 @@
           "id": "BT_724",
           "text": "<b>Battlecry:</b> Deal 1 damage to a minion and give it <b>Spell Damage +1</b>.",
           "normalizedText": "Battlecry: Deal 1 damage to a minion and give it Spell Damage +1.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Ethereal Peddler",
-      "primary": "cost-mana",
-      "lane": "shared",
-      "dependencies": [
-        "cost-mana"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "KAR_070",
-          "text": "<b>Battlecry:</b> If you're holding any cards from another class, reduce their Cost by (2).",
-          "normalizedText": "Battlecry: If you're holding any cards from another class, reduce their Cost by (2).",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -9051,31 +8698,6 @@
       ]
     },
     {
-      "name": "Fearless Flamejuggler",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "VAC_942",
-          "text": "[x]<b>Battlecry:</b> Gain stats equal\nto the damage your hero\n has taken this turn.@ <i>(@)</i>",
-          "normalizedText": "Battlecry: Gain stats equal to the damage your hero has taken this turn.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Felsoul Jailer",
       "primary": "death-memory",
       "lane": "shared",
@@ -9543,32 +9165,6 @@
       ]
     },
     {
-      "name": "Freebird",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "ETC_336",
-          "text": "[x]<b>Charge</b>\n<b>Battlecry:</b> Gain +1/+1 for\neach other Freebird you've\nplayed this game.@ <i>(@)</i>",
-          "normalizedText": "Charge Battlecry: Gain +1/+1 for each other Freebird you've played this game.",
-          "mechanics": [
-            "BATTLECRY",
-            "CHARGE"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Frostburn Matriarch",
       "primary": "keyword-packages",
       "lane": "system",
@@ -9618,32 +9214,6 @@
           "id": "LOOT_150",
           "text": "<b>Battlecry:</b> Transform a friendly minion into a 6/6 Elemental.",
           "normalizedText": "Battlecry: Transform a friendly minion into a 6/6 Elemental.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Future Emissary",
-      "primary": "cost-mana",
-      "lane": "shared",
-      "dependencies": [
-        "cost-mana",
-        "draw-zones",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "WON_140",
-          "text": "[x]<b>Battlecry:</b> Reduce the Cost\nof all Dragons in your hand\n by (1). Give them +1/+1.",
-          "normalizedText": "Battlecry: Reduce the Cost of all Dragons in your hand by (1). Give them +1/+1.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -10368,31 +9938,6 @@
       ]
     },
     {
-      "name": "Green-Thumb Gardener",
-      "primary": "cost-mana",
-      "lane": "shared",
-      "dependencies": [
-        "cost-mana",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TSC_652",
-          "text": "[x]<b>Battlecry:</b> Refresh empty\nMana Crystals equal to the\nCost of the highest Cost\nspell in your hand.",
-          "normalizedText": "Battlecry: Refresh empty Mana Crystals equal to the Cost of the highest Cost spell in your hand.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Grey Sage Parrot",
       "primary": "spell-casting",
       "lane": "system",
@@ -10822,32 +10367,6 @@
           "mechanics": [
             "BATTLECRY",
             "OVERHEAL"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Hedra the Heretic",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "cost-mana",
-        "summon-tokens"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TSC_658",
-          "text": "[x]<b>Battlecry:</b> For each spell\nyou've cast while holding\nthis, summon a minion\nof that spell's Cost.",
-          "normalizedText": "Battlecry: For each spell you've cast while holding this, summon a minion of that spell's Cost.",
-          "mechanics": [
-            "BATTLECRY"
           ]
         }
       ]
@@ -11574,33 +11093,6 @@
       ]
     },
     {
-      "name": "Immortal",
-      "primary": "cost-mana",
-      "lane": "shared",
-      "dependencies": [
-        "cost-mana",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "SC_763",
-          "text": "[x]<b>Taunt</b>, <b>Divine Shield</b>\n<b>Battlecry:</b> Spend 4 Mana to\ndouble this minion's stats.",
-          "normalizedText": "Taunt, Divine Shield Battlecry: Spend 4 Mana to double this minion's stats.",
-          "mechanics": [
-            "BATTLECRY",
-            "DIVINE_SHIELD",
-            "TAUNT"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Imp King Rafaam",
       "primary": "keyword-packages",
       "lane": "system",
@@ -11787,32 +11279,6 @@
           "mechanics": [
             "BATTLECRY",
             "OVERHEAL"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Inkmaster Solia",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "cost-mana",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "CFM_687",
-          "text": "[x]<b>Battlecry:</b> If your deck has\nno duplicates, the next\nspell you cast this turn\ncosts (0).",
-          "normalizedText": "Battlecry: If your deck has no duplicates, the next spell you cast this turn costs (0).",
-          "mechanics": [
-            "BATTLECRY"
           ]
         }
       ]
@@ -13469,39 +12935,6 @@
       ]
     },
     {
-      "name": "Krag'wa, the Frog",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": true,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "CORE_TRL_345",
-          "text": "<b>Battlecry:</b> Return all spells you played last turn to your hand.",
-          "normalizedText": "Battlecry: Return all spells you played last turn to your hand.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        },
-        {
-          "id": "TRL_345",
-          "text": "<b>Battlecry:</b> Return all spells you played last turn to your hand.",
-          "normalizedText": "Battlecry: Return all spells you played last turn to your hand.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Kronx Dragonhoof",
       "primary": "named-progression",
       "lane": "system",
@@ -14247,31 +13680,6 @@
       ]
     },
     {
-      "name": "Lunar Trailblazer",
-      "primary": "cost-mana",
-      "lane": "shared",
-      "dependencies": [
-        "cost-mana",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "GDB_863",
-          "text": "[x]<b>Battlecry:</b> Set the Cost of a\nrandom spell in your hand\nto this minion's Cost.",
-          "normalizedText": "Battlecry: Set the Cost of a random spell in your hand to this minion's Cost.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Lunarwing Messenger",
       "primary": "hero-powers",
       "lane": "system",
@@ -14610,32 +14018,6 @@
           "mechanics": [
             "BATTLECRY",
             "DISCOVER"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Mana Cyclone",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "generate-pools",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "DAL_603",
-          "text": "[x]<b>Battlecry:</b> For each spell\nyou've cast this turn, add\na random Mage spell\nto your hand.",
-          "normalizedText": "Battlecry: For each spell you've cast this turn, add a random Mage spell to your hand.",
-          "mechanics": [
-            "BATTLECRY"
           ]
         }
       ]
@@ -15148,32 +14530,6 @@
           "normalizedText": "Battlecry: Draw an Elemental. Split it into two halves.",
           "mechanics": [
             "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Metamorfin",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "SW_451",
-          "text": "<b>Taunt</b>\n<b>Battlecry:</b> If you've cast a Fel spell this turn, gain +2/+2.",
-          "normalizedText": "Taunt Battlecry: If you've cast a Fel spell this turn, gain +2/+2.",
-          "mechanics": [
-            "BATTLECRY",
-            "TAUNT"
           ]
         }
       ]
@@ -16193,31 +15549,6 @@
       ]
     },
     {
-      "name": "Naga Sand Witch",
-      "primary": "cost-mana",
-      "lane": "shared",
-      "dependencies": [
-        "cost-mana",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "ULD_435",
-          "text": "[x]<b>Battlecry:</b> Change the Cost\nof spells in your hand to (5).",
-          "normalizedText": "Battlecry: Change the Cost of spells in your hand to (5).",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Najak Hexxen",
       "primary": "death-memory",
       "lane": "shared",
@@ -16479,31 +15810,6 @@
       ]
     },
     {
-      "name": "Nethersoul Buster",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "BOT_226",
-          "text": "<b>Battlecry:</b> Gain +1 Attack for each damage your hero has taken this turn.",
-          "normalizedText": "Battlecry: Gain +1 Attack for each damage your hero has taken this turn.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Nethrandamus",
       "primary": "summon-tokens",
       "lane": "foundation",
@@ -16605,56 +15911,6 @@
           "id": "DRG_224",
           "text": "[x]<b>Battlecry:</b> Summon two\n0/3 Eggs. Next turn they\nhatch into 4/4 Drakes\nwith <b>Rush</b>.",
           "normalizedText": "Battlecry: Summon two 0/3 Eggs. Next turn they hatch into 4/4 Drakes with Rush.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Nobleman",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "SW_074",
-          "text": "<b>Battlecry:</b> Create a Golden copy of a random card in your hand.",
-          "normalizedText": "Battlecry: Create a Golden copy of a random card in your hand.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Nordrassil Druid",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "cost-mana"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "CS3_012",
-          "text": "<b>Battlecry:</b> The next spell you cast this turn costs (3) less.",
-          "normalizedText": "Battlecry: The next spell you cast this turn costs (3) less.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -17181,32 +16437,6 @@
           "normalizedText": "Battlecry: Choose three cards from your deck to put on top in that order.",
           "mechanics": [
             "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Ozruk",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "UNG_907",
-          "text": "[x]<b>Taunt</b>\n<b>Battlecry:</b> Gain +5 Health\nfor each Elemental you\nplayed last turn.",
-          "normalizedText": "Taunt Battlecry: Gain +5 Health for each Elemental you played last turn.",
-          "mechanics": [
-            "BATTLECRY",
-            "TAUNT"
           ]
         }
       ]
@@ -17992,31 +17222,6 @@
       ]
     },
     {
-      "name": "Priestess Valishj",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "cost-mana"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TSC_828",
-          "text": "[x]<b>Battlecry:</b> Refresh an empty\nMana Crystal for each spell\n   you've cast this turn.@ <i>(@)</i>",
-          "normalizedText": "Battlecry: Refresh an empty Mana Crystal for each spell you've cast this turn.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Primalfin Challenger",
       "primary": "keyword-packages",
       "lane": "system",
@@ -18067,32 +17272,6 @@
           "id": "CATA_EVENT_000",
           "text": "<b>Battlecry:</b>& Get a random <b>Colossal</b> minion\nfrom the past.",
           "normalizedText": "Battlecry: Get a random Colossal minion from the past.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Primordial Overseer",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "draw-zones",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TIME_213",
-          "text": "[x]<b>Battlecry:</b> If you've cast a\nNature spell while holding\nthis,& gain +1/+1 and\ndraw a card.",
-          "normalizedText": "Battlecry: If you've cast a Nature spell while holding this, gain +1/+1 and draw a card.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -18392,31 +17571,6 @@
           "id": "TSC_641",
           "text": "<b>Battlecry:</b> If you've cast three spells while holding this, choose an Ancient Relic.@ <i>({0} left!)</i>@ <i>(Ready!)</i>",
           "normalizedText": "Battlecry: If you've cast three spells while holding this, choose an Ancient Relic.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Queensguard",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TSC_213",
-          "text": "<b>Battlecry:</b> Gain +1/+1\nfor each spell you've cast this turn.",
-          "normalizedText": "Battlecry: Gain +1/+1 for each spell you've cast this turn.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -19015,32 +18169,6 @@
       ]
     },
     {
-      "name": "Razzle-Dazzler",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "cost-mana",
-        "summon-tokens"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Repeat the summon operation for counted spell schools; this does not replay the spells themselves.",
-      "printings": [
-        {
-          "id": "VAC_301",
-          "text": "[x]<b>Battlecry:</b> Summon a\nrandom 5-Cost minion.\n   Repeat for each spell school   \n you've cast this game.@ <i>(@)</i>",
-          "normalizedText": "Battlecry: Summon a random 5-Cost minion. Repeat for each spell school you've cast this game.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Reckless Apprentice",
       "primary": "hero-powers",
       "lane": "system",
@@ -19294,31 +18422,6 @@
           "id": "LEG_RLK_752",
           "text": "[x]<b>Battlecry:</b> Summon two\n2/1 Rime Elementals with\n\"<b>Deathrattle:</b> Deal 2 damage\nto a random enemy.\"",
           "normalizedText": "Battlecry: Summon two 2/1 Rime Elementals with \"Deathrattle: Deal 2 damage to a random enemy.\"",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Rimescale Siren",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "NX2_035",
-          "text": "[x]<b>Battlecry:</b> If you've cast three\nspells while holding this,\n<b>Freeze</b> 3 random enemy\nminions.@ <i>({0} left!)</i>@ <i>(Ready!)</i>",
-          "normalizedText": "Battlecry: If you've cast three spells while holding this, Freeze 3 random enemy minions.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -20244,30 +19347,6 @@
       ]
     },
     {
-      "name": "Sea Shill",
-      "primary": "cost-mana",
-      "lane": "shared",
-      "dependencies": [
-        "cost-mana"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "VAC_332",
-          "text": "<b>Battlecry:</b> The next card you play from another class costs (2) less.",
-          "normalizedText": "Battlecry: The next card you play from another class costs (2) less.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Seadevil Stinger",
       "primary": "alternate-payments",
       "lane": "system",
@@ -20541,31 +19620,6 @@
       ]
     },
     {
-      "name": "Shadowblade Slinger",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "DED_503",
-          "text": "[x]<b>Battlecry:</b> If you've taken\ndamage this turn, deal that\n much to an enemy minion.",
-          "normalizedText": "Battlecry: If you've taken damage this turn, deal that much to an enemy minion.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Shadowcaster",
       "primary": "choices",
       "lane": "shared",
@@ -20814,31 +19868,6 @@
           "mechanics": [
             "BATTLECRY",
             "TAUNT"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Shapeless Constellation",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TTN_441",
-          "text": "<b>Battlecry:</b> Transform into\nan 8/8 copy of a random\nminion in your hand.",
-          "normalizedText": "Battlecry: Transform into an 8/8 copy of a random minion in your hand.",
-          "mechanics": [
-            "BATTLECRY"
           ]
         }
       ]
@@ -22328,32 +21357,6 @@
       ]
     },
     {
-      "name": "Spire Security",
-      "primary": "cost-mana",
-      "lane": "shared",
-      "dependencies": [
-        "cost-mana",
-        "draw-zones",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "JAIL_379",
-          "text": "[x]<b>Battlecry:</b> Reveal a spell in\nyour deck. If it costs (5) or\nmore,& deal 5 damage split\n   among enemy minions.",
-          "normalizedText": "Battlecry: Reveal a spell in your deck. If it costs (5) or more, deal 5 damage split among enemy minions.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Spirit Gatherer",
       "primary": "hero-powers",
       "lane": "system",
@@ -22507,32 +21510,6 @@
           "id": "MEND_301",
           "text": "<b>Battlecry:</b>& Choose an Animal Companion to summon.",
           "normalizedText": "Battlecry: Choose an Animal Companion to summon.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Spiteful Summoner",
-      "primary": "cost-mana",
-      "lane": "shared",
-      "dependencies": [
-        "cost-mana",
-        "summon-tokens",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "LOOT_539",
-          "text": "[x]<b>Battlecry:</b> Reveal a spell\nfrom your deck. Summon\n a random minion with\nthe same Cost.",
-          "normalizedText": "Battlecry: Reveal a spell from your deck. Summon a random minion with the same Cost.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -22905,32 +21882,6 @@
       ]
     },
     {
-      "name": "Stone Sentinel",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "summon-tokens",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "UNG_208",
-          "text": "<b>Battlecry:</b> If you played an Elemental last turn, summon two 2/3 Elementals with <b>Taunt</b>.",
-          "normalizedText": "Battlecry: If you played an Elemental last turn, summon two 2/3 Elementals with Taunt.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Stowaway",
       "primary": "draw-zones",
       "lane": "foundation",
@@ -23248,30 +22199,6 @@
           "mechanics": [
             "BATTLECRY",
             "MINIATURIZE"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Swiftscale Trickster",
-      "primary": "cost-mana",
-      "lane": "shared",
-      "dependencies": [
-        "cost-mana"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TSC_936",
-          "text": "<b>Battlecry:</b> Your next spell this turn costs (0).",
-          "normalizedText": "Battlecry: Your next spell this turn costs (0).",
-          "mechanics": [
-            "BATTLECRY"
           ]
         }
       ]
@@ -23957,31 +22884,6 @@
           "id": "SC_414",
           "text": "[x]<b>Battlecry:</b> Deal 5 damage.\n<i>(Transforms if you launched\na <b>Starship</b> this game.)</i>",
           "normalizedText": "Battlecry: Deal 5 damage. (Transforms if you launched a Starship this game.)",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Thorim, Stormlord",
-      "primary": "cost-mana",
-      "lane": "shared",
-      "dependencies": [
-        "cost-mana",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TTN_835",
-          "text": "[x]<b>Battlecry:</b> Unlock your\n<b>Overloaded</b> Mana Crystals.\nDraw that many cards.",
-          "normalizedText": "Battlecry: Unlock your Overloaded Mana Crystals. Draw that many cards.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -25249,33 +24151,6 @@
       ]
     },
     {
-      "name": "Twilight Medium",
-      "primary": "cost-mana",
-      "lane": "shared",
-      "dependencies": [
-        "cost-mana",
-        "draw-zones",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "VAC_423",
-          "text": "[x]<b>Taunt</b>\n<b>Battlecry:</b> Set the Cost of the\ntop card of your deck to (0).",
-          "normalizedText": "Taunt Battlecry: Set the Cost of the top card of your deck to (0).",
-          "mechanics": [
-            "BATTLECRY",
-            "TAUNT"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Twilight Timehopper",
       "primary": "cast-when-drawn",
       "lane": "system",
@@ -25556,31 +24431,6 @@
       ]
     },
     {
-      "name": "Unchained Gladiator",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TTN_475",
-          "text": "[x]<b>Battlecry:</b> Draw a card.\nRepeat for each Elemental\nyou played last turn.@ <i>(@)</i>",
-          "normalizedText": "Battlecry: Draw a card. Repeat for each Elemental you played last turn.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Undefeated Champion",
       "primary": "cost-mana",
       "lane": "shared",
@@ -25736,31 +24586,6 @@
           "id": "EDR_259",
           "text": "[x]<b>Battlecry:</b> Cast the highest\nCost spell from your hand as\n an Aura that lasts 3 turns.",
           "normalizedText": "Battlecry: Cast the highest Cost spell from your hand as an Aura that lasts 3 turns.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Vanndar Stormpike",
-      "primary": "cost-mana",
-      "lane": "shared",
-      "dependencies": [
-        "cost-mana",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "AV_223",
-          "text": "[x]<b>Battlecry</b>: If this costs\nless than every minion\nin your deck, reduce\ntheir Cost by (3).",
-          "normalizedText": "Battlecry: If this costs less than every minion in your deck, reduce their Cost by (3).",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -26860,33 +25685,6 @@
       ]
     },
     {
-      "name": "Wizened Wildspeaker",
-      "primary": "cost-mana",
-      "lane": "shared",
-      "dependencies": [
-        "cost-mana",
-        "history",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "MEND_041",
-          "text": "[x]<b>Taunt</b>\n<b>Battlecry:</b> If you didn't play\na minion last turn, refresh\n3 Mana Crystals.",
-          "normalizedText": "Taunt Battlecry: If you didn't play a minion last turn, refresh 3 Mana Crystals.",
-          "mechanics": [
-            "BATTLECRY",
-            "TAUNT"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Worgen Roadie",
       "primary": "weapons-combat",
       "lane": "shared",
@@ -27091,31 +25889,6 @@
           "id": "GDB_118",
           "text": "[x]<b>Battlecry:</b> Add two Stars\n   to both sides of your hand.   \nWhen they collide, deal 5\ndamage to all enemies.",
           "normalizedText": "Battlecry: Add two Stars to both sides of your hand. When they collide, deal 5 damage to all enemies.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Xyrella",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "BAR_735",
-          "text": "<b>Battlecry:</b> If you've restored Health this turn, deal that much damage to all enemy minions.",
-          "normalizedText": "Battlecry: If you've restored Health this turn, deal that much damage to all enemy minions.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -27415,56 +26188,6 @@
           "id": "DMF_231",
           "text": "<b>Battlecry:</b> Copy the left- and right-most cards in your hand.",
           "normalizedText": "Battlecry: Copy the left- and right-most cards in your hand.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Zandalari Templar",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TRL_545",
-          "text": "[x]<b>Battlecry:</b> If you've restored\n10 Health this game, gain\n+4/+4 and <b>Taunt</b>.@ <i>({0} left!)</i>@ <i>(Ready!)</i>",
-          "normalizedText": "Battlecry: If you've restored 10 Health this game, gain +4/+4 and Taunt.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Zaqali Flamemancer",
-      "primary": "cost-mana",
-      "lane": "shared",
-      "dependencies": [
-        "cost-mana",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "FIR_940",
-          "text": "<b>Battlecry:</b> If every card in your hand is of a different Cost, reduce their Costs by (2).",
-          "normalizedText": "Battlecry: If every card in your hand is of a different Cost, reduce their Costs by (2).",
           "mechanics": [
             "BATTLECRY"
           ]

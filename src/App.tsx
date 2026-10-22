@@ -1464,7 +1464,12 @@ export default function App() {
                                 ))}
                                 {p.nextDiscounts?.map((e, i) => (
                                   <li key={`discount-${i}`}>
-                                    {e.source}: next matching card costs ({e.amount}) less
+                                    {e.source}: next {e.remaining ?? 1} matching card
+                                    {(e.remaining ?? 1) === 1 ? '' : 's'}{' '}
+                                    {e.set !== undefined
+                                      ? `costs (${e.set})`
+                                      : `costs (${e.amount}) less`}
+                                    {e.expiresAtTurn !== undefined ? ' · until end of turn' : ''}
                                   </li>
                                 ))}
                                 {p.endEffects?.map((e, i) => (

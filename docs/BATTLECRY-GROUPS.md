@@ -1,15 +1,15 @@
 # Remaining Battlecries grouped for implementation
 
-Audit date: **2026-10-18**. Reviewed the complete pinned backlog: **965 unique minion names** across **1,010 printings**. **930 names are already supported** and excluded here. Matching Core printings do not count as extra names.
+Audit date: **2026-10-22**. Reviewed the complete pinned backlog: **915 unique minion names** across **959 printings**. **980 names are already supported** and excluded here. Matching Core printings do not count as extra names.
 
-Every remaining name has **one primary group**, so the primary counts add up to 965. Extra dependencies, keywords and named families can overlap: their counts must not be added together. Group membership is a planning judgment based on the complete printed card, including passives, separate Deathrattles and attached keywords. It does not enable a card or prove that a whole group shares one identical script.
+Every remaining name has **one primary group**, so the primary counts add up to 915. Extra dependencies, keywords and named families can overlap: their counts must not be added together. Group membership is a planning judgment based on the complete printed card, including passives, separate Deathrattles and attached keywords. It does not enable a card or prove that a whole group shares one identical script.
 
 ## Implementation lanes
 
 | Lane | Names |
 | --- | --- |
 | Existing foundations: pattern, value, filter or sequencing extensions | 65 |
-| Extend a shared engine family | 396 |
+| Extend a shared engine family | 346 |
 | Add or complete a game subsystem | 466 |
 | Card-specific design or manual rules review | 38 |
 
@@ -23,12 +23,12 @@ Every remaining name has **one primary group**, so the primary counts add up to 
 | [Draw, discard and hand/deck movement](#draw-zones) | 21 | Existing foundations: pattern, value, filter or sequencing extensions |
 | [Summons, recruits and token definitions](#summon-tokens) | 14 | Existing foundations: pattern, value, filter or sequencing extensions |
 | [Generated cards and named card pools](#generate-pools) | 13 | Existing foundations: pattern, value, filter or sequencing extensions |
-| [Card costs, mana and ordinary discounts](#cost-mana) | 46 | Extend a shared engine family |
+| [Card costs, mana and ordinary discounts](#cost-mana) | 28 | Extend a shared engine family |
 | [Discover and other player choices](#choices) | 78 | Extend a shared engine family |
-| [Copies, transformations, swaps and control](#copy-transform) | 46 | Extend a shared engine family |
+| [Copies, transformations, swaps and control](#copy-transform) | 40 | Extend a shared engine family |
 | [Deathrattles, resurrection and remembered victims](#death-memory) | 83 | Extend a shared engine family |
 | [Weapons, forced attacks and combat restrictions](#weapons-combat) | 34 | Extend a shared engine family |
-| [History, thresholds and scaling conditions](#history) | 57 | Extend a shared engine family |
+| [History, thresholds and scaling conditions](#history) | 31 | Extend a shared engine family |
 | [Delayed effects and start/end-of-turn triggers](#scheduling) | 52 | Extend a shared engine family |
 | [Auras, listeners and ongoing board effects](#ongoing) | 35 | Add or complete a game subsystem |
 | [Lasting rules and game-wide replacements](#lasting) | 14 | Add or complete a game subsystem |
@@ -73,16 +73,16 @@ These counts answer “how many remaining names mention or require this kind of 
 
 | Dependency | Names touching it |
 | --- | --- |
-| Damage, healing, Armor and board stats | 417 |
-| Draw, discard and hand/deck movement | 332 |
-| Card costs, mana and ordinary discounts | 210 |
-| History, thresholds and scaling conditions | 174 |
+| Damage, healing, Armor and board stats | 397 |
+| Draw, discard and hand/deck movement | 312 |
+| Card costs, mana and ordinary discounts | 186 |
 | Discover and other player choices | 169 |
-| Copies, transformations, swaps and control | 148 |
+| History, thresholds and scaling conditions | 146 |
 | Extra keywords and attached mechanics | 143 |
-| Summons, recruits and token definitions | 139 |
+| Copies, transformations, swaps and control | 141 |
+| Summons, recruits and token definitions | 132 |
 | Deathrattles, resurrection and remembered victims | 115 |
-| Generated cards and named card pools | 103 |
+| Generated cards and named card pools | 98 |
 | Delayed effects and start/end-of-turn triggers | 72 |
 | Automatic casting and replaying spells/Battlecries | 61 |
 | Auras, listeners and ongoing board effects | 51 |
@@ -270,7 +270,7 @@ Define precise named/tribal/class/school pools and generated-card metadata; impl
 
 <a id="cost-mana"></a>
 
-### Card costs, mana and ordinary discounts — 46
+### Card costs, mana and ordinary discounts — 28
 
 Extend cost-setting, discount duration/counts, mana caps and multi-card cost relationships.
 
@@ -280,48 +280,30 @@ Extend cost-setting, discount duration/counts, mana caps and multi-card cost rel
 | Audio Amplifier | ETC_087 | Draw, discard and hand/deck movement | Battlecry: Set your maximum Mana and hand size to 11. |
 | Cabaret Headliner | VAC_954 | Draw, discard and hand/deck movement | Battlecry: Reduce the Cost of a spell of each school in your hand by (2). |
 | Chronogor | TIME_032 | Draw, discard and hand/deck movement | Battlecry: You draw your 2 highest Cost cards. Your opponent draws your 2 lowest Cost cards. |
-| Clownfish | TID_004 |  | Battlecry: Your next two Murlocs cost (2) less. |
 | Dark Inquisitor Xanesh | YOP_007 | Draw, discard and hand/deck movement · References: Corrupt | Battlecry: Reduce the Cost of all Corrupt and Corrupted cards in your hand and deck by (2). |
 | Doomkin | JAM_029 |  | Battlecry: Take one of your opponent's empty Mana Crystals. |
-| Dragoncaster | DRG_322 |  | Battlecry: If you're holding a Dragon, your next spell this turn costs (0). |
-| Eternal Sentinel | OG_026 |  | Battlecry: Unlock your Overloaded Mana Crystals. |
-| Ethereal Peddler | KAR_070 |  | Battlecry: If you're holding any cards from another class, reduce their Cost by (2). |
 | Forbidden Ancient | OG_051 | History, thresholds and scaling conditions; Damage, healing, Armor and board stats | Battlecry: Spend all your Mana. Gain +1/+1 for each Mana spent. |
 | Foreboding Flame | GDB_121 | Draw, discard and hand/deck movement | Battlecry: Demons that didn't start in your deck cost (1) less this game. |
 | Foxy Fraud | CORE_DMF_511, DMF_511 |  · References: Combo | Battlecry: Your next Combo card this turn costs (2) less. |
-| Future Emissary | WON_140 | Draw, discard and hand/deck movement; Damage, healing, Armor and board stats | Battlecry: Reduce the Cost of all Dragons in your hand by (1). Give them +1/+1. |
 | Ghoulish Alchemist | RLK_570 |  | Battlecry: Your next Concoction costs (0). |
-| Green-Thumb Gardener | TSC_652 | Draw, discard and hand/deck movement | Battlecry: Refresh empty Mana Crystals equal to the Cost of the highest Cost spell in your hand. |
 | Hot Spring Glider | TLC_428 | Damage, healing, Armor and board stats · References: Kindred | Battlecry: Your next Murloc costs (1) less. Kindred: And gains Divine Shield. |
-| Immortal | SC_763 | Damage, healing, Armor and board stats | Taunt, Divine Shield Battlecry: Spend 4 Mana to double this minion's stats. |
 | Ingenious Artificer | GDB_135 | Damage, healing, Armor and board stats | Battlecry: The next Draenei you play refreshes Mana Crystals equal to its Attack. |
 | Ivus, the Forest Lord | AV_142t | Damage, healing, Armor and board stats | Battlecry: Spend the rest of your Mana and gain +2/+2, Rush, Divine Shield, or Taunt at random for each. |
 | King Phaoris | ULD_304 | Summons, recruits and token definitions; Draw, discard and hand/deck movement | Battlecry: For each spell in your hand, summon a random minion of the same Cost. |
 | Leyline Manipulator | LOOT_537 | Draw, discard and hand/deck movement | Battlecry: If you're holding any cards that didn't start in your deck, reduce their Cost by (2). |
-| Lunar Trailblazer | GDB_863 | Draw, discard and hand/deck movement | Battlecry: Set the Cost of a random spell in your hand to this minion's Cost. |
 | M.O.T.H.E.R. | BE_036 | Draw, discard and hand/deck movement | Battlecry: Reduce the Cost of a card in your hand by (5). This continues to the left and right with (1) less reduction. |
 | Mysterious Visitor | REV_246 |  | Battlecry: Reduce the Cost of cards copied from your opponent by (3). |
-| Naga Sand Witch | ULD_435 | Draw, discard and hand/deck movement | Battlecry: Change the Cost of spells in your hand to (5). |
 | Overgrown Horror | EDR_654 | Draw, discard and hand/deck movement; Damage, healing, Armor and board stats | Taunt Battlecry: Reduce the Cost of minions in your hand with Dark Gifts by (2). |
 | Planetary Navigator | GDB_444 |  | Battlecry: The next Draenei you play costs (2) less, but has Overload: (2). |
 | Pride Seeker | AV_296 |  · References: Choose One | Battlecry: Your next Choose One card costs (2) less. |
-| Sea Shill | VAC_332 |  | Battlecry: The next card you play from another class costs (2) less. |
 | SI:7 Skulker | SW_418 | Draw, discard and hand/deck movement; Damage, healing, Armor and board stats | Stealth Battlecry: The next card you draw costs (1) less. |
 | Skittish Saucier | DINO_137 | Draw, discard and hand/deck movement | Battlecry: Reduce the Cost of adjacent cards in your hand by (1). |
 | Spacerock Collector | GDB_875 |  · References: Combo | Battlecry: Your next Combo card costs (1) less. |
 | Spelunker | TLC_450 |  | Battlecry: Your next Temporary card costs (2) less. |
-| Spire Security | JAIL_379 | Draw, discard and hand/deck movement; Damage, healing, Armor and board stats | Battlecry: Reveal a spell in your deck. If it costs (5) or more, deal 5 damage split among enemy minions. |
-| Spiteful Summoner | LOOT_539 | Summons, recruits and token definitions; Draw, discard and hand/deck movement | Battlecry: Reveal a spell from your deck. Summon a random minion with the same Cost. |
 | Stickybomb Saboteur | CATA_186 | Generated cards and named card pools | Battlecry: Give your opponent a 2-Cost Sabotage. Cards next to it cost (1) more. |
-| Swiftscale Trickster | TSC_936 |  | Battlecry: Your next spell this turn costs (0). |
-| Thorim, Stormlord | TTN_835 | Draw, discard and hand/deck movement | Battlecry: Unlock your Overloaded Mana Crystals. Draw that many cards. |
-| Twilight Medium | VAC_423 | Draw, discard and hand/deck movement; Damage, healing, Armor and board stats | Taunt Battlecry: Set the Cost of the top card of your deck to (0). |
 | Undefeated Champion | TIME_872 | Summons, recruits and token definitions; Damage, healing, Armor and board stats | Rush. Battlecry: Fill your opponent's board with random 1-Cost minions. |
-| Vanndar Stormpike | AV_223 | Draw, discard and hand/deck movement | Battlecry: If this costs less than every minion in your deck, reduce their Cost by (3). |
 | Wizened Truthseeker | TIME_057 |  | Battlecry: Set the Cost of every card in both player's hands back to their original Costs. |
-| Wizened Wildspeaker | MEND_041 | History, thresholds and scaling conditions; Damage, healing, Armor and board stats | Taunt Battlecry: If you didn't play a minion last turn, refresh 3 Mana Crystals. |
 | Ysiel Windsinger | BT_131 |  | Battlecry: Your spells cost (1) this turn. |
-| Zaqali Flamemancer | FIR_940 | Draw, discard and hand/deck movement | Battlecry: If every card in your hand is of a different Cost, reduce their Costs by (2). |
 
 <a id="choices"></a>
 
@@ -412,7 +394,7 @@ Extend existing choices with multiple selections, target/choice relationships, h
 
 <a id="copy-transform"></a>
 
-### Copies, transformations, swaps and control — 46
+### Copies, transformations, swaps and control — 40
 
 Extend physical-card copying, stat preservation, owner/controller identity and linked swaps or transformations.
 
@@ -422,16 +404,12 @@ Extend physical-card copying, stat preservation, owner/controller identity and l
 | Arch-Villain Rafaam | DAL_422 | Draw, discard and hand/deck movement; Damage, healing, Armor and board stats | Taunt Battlecry: Replace your hand and deck with Legendary minions. |
 | Ashamane | EDR_527 | Card costs, mana and ordinary discounts; Draw, discard and hand/deck movement | Battlecry: Fill your hand with copies of cards from your opponent's deck. They cost (3) less. |
 | Askara | GDB_455 | Summons, recruits and token definitions | Battlecry: The next two Draenei you play summon a copy of themselves. |
-| Astral Vigilant | GDB_461 | History, thresholds and scaling conditions; Generated cards and named card pools | Battlecry: Get a copy of the last Draenei you played. |
 | Azalina Soulthief | GIL_198 | Draw, discard and hand/deck movement | Battlecry: Replace your hand with a copy of your opponent's. |
 | Barbaric Sorceress | TSC_020 | Card costs, mana and ordinary discounts; Draw, discard and hand/deck movement; Damage, healing, Armor and board stats | Taunt. Battlecry: Swap the Cost of a random spell in each player's hand. |
-| Barista Lynchen | DAL_546 | Generated cards and named card pools; Draw, discard and hand/deck movement | Battlecry: Add a copy of each of your other Battlecry minions to your hand. |
 | Cera'thine Fleetrunner | AV_403 | Card costs, mana and ordinary discounts; Draw, discard and hand/deck movement | Battlecry: Replace your minions in hand and deck with ones from other classes. They cost (2) less. |
-| Cloud Serpent | TLC_888 | Generated cards and named card pools; Draw, discard and hand/deck movement | Battlecry: Get a copy of another Elemental or Dragon in your hand. |
 | Copycat | DED_514 | Generated cards and named card pools; Draw, discard and hand/deck movement | Battlecry: Add a copy of the next card your opponent plays to your hand. |
 | Darkspeaker | OG_102 | Damage, healing, Armor and board stats | Battlecry: Swap stats with a friendly minion. |
 | Drakkari Trickster | TRL_527 | Draw, discard and hand/deck movement | Battlecry: Give each player a copy of a random card from their opponent's deck. |
-| Druid of the Fang | GVG_080 |  | Battlecry: If you have a Beast, transform this minion into a 7/7. |
 | Dryscale Deputy | WW_383 | Generated cards and named card pools; Draw, discard and hand/deck movement | Battlecry: The next time you draw a spell, get a copy of it. |
 | Energy Shaper | RLK_545 | Card costs, mana and ordinary discounts; Draw, discard and hand/deck movement | Battlecry: Transform all spells in your hand into ones that cost (3) more. (They keep their original Cost.) |
 | Envoy of the Glade | EDR_873 | Draw, discard and hand/deck movement | Battlecry: Transform all Neutral cards in your deck into random Druid ones. |
@@ -444,7 +422,6 @@ Extend physical-card copying, stat preservation, owner/controller identity and l
 | Mischief Maker | ULD_229 | Draw, discard and hand/deck movement | Battlecry: Swap the top card of your deck with your opponent's. |
 | Murloc Holmes | REV_022 | Generated cards and named card pools | Battlecry: Solve 3 Clues about your opponent's cards to get copies of them. |
 | Narain Soothfancy | VAC_420 | Generated cards and named card pools; Draw, discard and hand/deck movement | Battlecry: Get two Fortunes that are copies of the top card of your deck. |
-| Nobleman | SW_074 | Draw, discard and hand/deck movement | Battlecry: Create a Golden copy of a random card in your hand. |
 | Origami Crane | TOY_895 | Damage, healing, Armor and board stats | Taunt Battlecry: Swap Health with another minion. |
 | Origami Dragon | TOY_896 | Damage, healing, Armor and board stats | Divine Shield, Lifesteal Battlecry: Swap stats with another minion. |
 | Origami Frog | TOY_894 | Damage, healing, Armor and board stats | Rush Battlecry: Swap Attack with another minion. |
@@ -452,7 +429,6 @@ Extend physical-card copying, stat preservation, owner/controller identity and l
 | Prince Liam | GIL_694 | Card costs, mana and ordinary discounts; Draw, discard and hand/deck movement | Battlecry: Transform all 1-Cost cards in your deck into Legendary minions. |
 | Psychic Conjurer | CORE_EX1_193, EX1_193 | Generated cards and named card pools; Draw, discard and hand/deck movement | Battlecry: Copy a card in your opponent's deck and add it to your hand. |
 | Royal Informant | TIME_036 | Card costs, mana and ordinary discounts; Generated cards and named card pools; Draw, discard and hand/deck movement | Battlecry: Look at the right- most card in your opponent's hand. Either get a copy of it or increase its Cost by (2). |
-| Shapeless Constellation | TTN_441 | Draw, discard and hand/deck movement | Battlecry: Transform into an 8/8 copy of a random minion in your hand. |
 | Sir Finley, Sea Guide | TSC_908 | Draw, discard and hand/deck movement | Battlecry: Swap your hand with the bottom of your deck. |
 | Soul Seeker | MAW_004 | Draw, discard and hand/deck movement | Battlecry: Swap this with a random minion from your opponent's deck. |
 | Spirit of the Badlands | WW_337 | Generated cards and named card pools; Draw, discard and hand/deck movement | Battlecry: If your deck started with no duplicates, get a permanent Mirage. |
@@ -602,68 +578,42 @@ Extend weapon effects, durability, forced combat, repeated attacks and special a
 
 <a id="history"></a>
 
-### History, thresholds and scaling conditions — 57
+### History, thresholds and scaling conditions — 31
 
 Extend public history, while-held counters, distinct schools/types, spent mana, starting decks and previous-turn queries.
 
 | Minion | Candidate IDs | Other dependencies | Complete printed rules |
 | --- | --- | --- | --- |
 | Archimonde | GDB_128 | Summons, recruits and token definitions; Draw, discard and hand/deck movement | Battlecry: Summon every Demon you played this game that didn't start in your deck. |
-| Baleful Blazer | CATA_EVENT_002 | Damage, healing, Armor and board stats | Battlecry: If you've played a Fire spell this turn, destroy a minion. |
 | Bearon Gla'shear | AV_257 | Summons, recruits and token definitions | Battlecry: For each Frost spell you've cast this game, summon a 3/4 Elemental that Freezes. |
 | Broodwatcher | CATA_132 | Card costs, mana and ordinary discounts; Summons, recruits and token definitions; Generated cards and named card pools; Damage, healing, Armor and board stats | Battlecry: Get two 3/3 Whelps with Taunt. If you spent 8 Mana while holding this, summon them. ({0} left!) |
-| Captain Galvangar | AV_145 | Damage, healing, Armor and board stats | Battlecry: If you have gained 15 or more Armor this game, gain +3/+3 and Charge. |
 | Chrono-Lord Epoch | TIME_714 | Damage, healing, Armor and board stats | Battlecry: Destroy all minions that your opponent played last turn. |
 | Colossus | SC_758 | Damage, healing, Armor and board stats | Battlecry: Deal 1 damage to all enemies, twice. (Improved by Protoss spells you cast this game!) |
-| Commander Sivara | TSC_087 | Generated cards and named card pools; Draw, discard and hand/deck movement | Battlecry: If you've cast three spells while holding this, add those spells back to your hand. |
-| Coral Keeper | TSC_648 | Summons, recruits and token definitions | Battlecry: Summon a 3/3 Elemental for each spell school you've cast this game. |
-| Crystal Stag | DAL_799 | Copies, transformations, swaps and control; Summons, recruits and token definitions; Damage, healing, Armor and board stats | Rush. Battlecry: If you've restored 5 Health this game, summon a copy of this. |
-| Dragoncaller Alanna | LOOT_535 | Card costs, mana and ordinary discounts; Summons, recruits and token definitions | Battlecry: Summon a 5/5 Dragon for each spell you cast this game that costs (5) or more. |
 | Eroded Sediment | WW_428 | Discover and other player choices | Battlecry: If you played an Elemental last turn, Discover any Elemental from the past. |
-| Fearless Flamejuggler | VAC_942 | Damage, healing, Armor and board stats | Battlecry: Gain stats equal to the damage your hero has taken this turn. |
 | Felwood Treant | CATA_131 | Card costs, mana and ordinary discounts | Battlecry: Gain a temporary Mana Crystal. If you spent 4 Mana while holding this, it's permanent. ({0} left!) |
-| Freebird | ETC_336 | Damage, healing, Armor and board stats | Charge Battlecry: Gain +1/+1 for each other Freebird you've played this game. |
-| Hedra the Heretic | TSC_658 | Card costs, mana and ordinary discounts; Summons, recruits and token definitions | Battlecry: For each spell you've cast while holding this, summon a minion of that spell's Cost. |
 | Herald of Shadows | TID_717 | Copies, transformations, swaps and control; Damage, healing, Armor and board stats | Battlecry: If you've cast a Shadow spell while holding this, steal 2 Health from a minion. |
-| Inkmaster Solia | CFM_687 | Card costs, mana and ordinary discounts; Draw, discard and hand/deck movement | Battlecry: If your deck has no duplicates, the next spell you cast this turn costs (0). |
 | Inquisitive Creation | TTN_478 | Damage, healing, Armor and board stats | Battlecry: Deal 1 damage to all enemy minions. (Improved by each spell school you've cast this game!) |
 | Joymancer Jepetto | TOY_960 | Copies, transformations, swaps and control; Generated cards and named card pools; Damage, healing, Armor and board stats | Battlecry: Get copies of every 1-Attack or 1-Health minion you've played this game. |
 | Kargal Battlescar | BAR_077 | Summons, recruits and token definitions | Battlecry: Summon a 5/5 Lookout for each Watch Post you've summoned this game. |
 | Keli'dan the Breaker | BT_196 | Damage, healing, Armor and board stats | Battlecry: Destroy a minion. If drawn this turn, instead destroy all minions except this one. |
-| Krag'wa, the Frog | CORE_TRL_345, TRL_345 | Draw, discard and hand/deck movement | Battlecry: Return all spells you played last turn to your hand. |
 | Lady Liadrin | BT_334 | Copies, transformations, swaps and control; Generated cards and named card pools; Draw, discard and hand/deck movement | Battlecry: Add a copy of each spell you cast on friendly characters this game to your hand. |
 | Lifeguard | VAC_919 | Damage, healing, Armor and board stats | Taunt Battlecry: The next spell you cast has Lifesteal. |
 | Living Prairie | WW_024 | Summons, recruits and token definitions; Damage, healing, Armor and board stats | Battlecry: If you played an Elemental last turn, summon two 3/3 Cows with Rush. |
-| Mana Cyclone | DAL_603 | Generated cards and named card pools; Draw, discard and hand/deck movement | Battlecry: For each spell you've cast this turn, add a random Mage spell to your hand. |
 | Merithra of the Dream | CATA_140 | Card costs, mana and ordinary discounts; Draw, discard and hand/deck movement | Battlecry: Fill your hand with random Dragons. If you spent 25 Mana while holding this, they cost (1). ({0} left!) |
-| Metamorfin | SW_451 | Damage, healing, Armor and board stats | Taunt Battlecry: If you've cast a Fel spell this turn, gain +2/+2. |
 | Mind Sweeper | JAIL_432 | Copies, transformations, swaps and control; Damage, healing, Armor and board stats | Battlecry: If you played a copy of an opponent's card while holding this, deal 2 damage to all enemy minions. |
 | Mindbender | YOG_402 | Damage, healing, Armor and board stats | Battlecry: Deal 1 damage for each card you have drawn this turn. |
 | Minecart Cruiser | WW_326 | Damage, healing, Armor and board stats | Rush, Overload: (2) Battlecry: If you played an Elemental last turn, don't Overload. |
-| Nethersoul Buster | BOT_226 | Damage, healing, Armor and board stats | Battlecry: Gain +1 Attack for each damage your hero has taken this turn. |
-| Nordrassil Druid | CS3_012 | Card costs, mana and ordinary discounts | Battlecry: The next spell you cast this turn costs (3) less. |
-| Ozruk | UNG_907 | Damage, healing, Armor and board stats | Taunt Battlecry: Gain +5 Health for each Elemental you played last turn. |
 | Party Planner Vona | VAC_945 | Summons, recruits and token definitions; Damage, healing, Armor and board stats | Battlecry: If you've taken 8 damage on your turns, summon Ourobos. |
 | Pogo-Hopper | BOT_283 | Damage, healing, Armor and board stats | Battlecry: Gain +2/+2 for each other Pogo-Hopper you played this game. |
-| Priestess Valishj | TSC_828 | Card costs, mana and ordinary discounts | Battlecry: Refresh an empty Mana Crystal for each spell you've cast this turn. |
-| Primordial Overseer | TIME_213 | Draw, discard and hand/deck movement; Damage, healing, Armor and board stats | Battlecry: If you've cast a Nature spell while holding this, gain +1/+1 and draw a card. |
-| Queensguard | TSC_213 | Damage, healing, Armor and board stats | Battlecry: Gain +1/+1 for each spell you've cast this turn. |
-| Razzle-Dazzler | VAC_301 | Card costs, mana and ordinary discounts; Summons, recruits and token definitions | Battlecry: Summon a random 5-Cost minion. Repeat for each spell school you've cast this game. |
 | Renferal, the Malignant | EDR_526 | Draw, discard and hand/deck movement | Battlecry: Trap 1 random card in your opponent's hand for a turn. (Improved for each time you've played this.) |
-| Rimescale Siren | NX2_035 | Damage, healing, Armor and board stats | Battlecry: If you've cast three spells while holding this, Freeze 3 random enemy minions. |
 | Sasquawk | VAC_415 |  | Battlecry: Repeat each card you played last turn. |
-| Shadowblade Slinger | DED_503 | Damage, healing, Armor and board stats | Battlecry: If you've taken damage this turn, deal that much to an enemy minion. |
 | SI:7 Informant | SW_411 | Damage, healing, Armor and board stats | Battlecry: Gain +1/+1 for each other SI:7 card you've played this game. |
 | SI:7 Smuggler | ONY_030 | Card costs, mana and ordinary discounts; Summons, recruits and token definitions | Battlecry: Summon a random 1-Cost minion. (Upgraded for each other SI:7 card you have played this game.) |
 | Soulwarden | TRL_247 | Generated cards and named card pools; Draw, discard and hand/deck movement | Battlecry: Add 3 random cards you discarded this game to your hand. |
-| Stone Sentinel | UNG_208 | Summons, recruits and token definitions; Damage, healing, Armor and board stats | Battlecry: If you played an Elemental last turn, summon two 2/3 Elementals with Taunt. |
 | Tidepool Pupil | VAC_304 | Discover and other player choices | Battlecry: If you've cast 3 spells while holding this, Discover one of them. |
-| Unchained Gladiator | TTN_475 | Draw, discard and hand/deck movement | Battlecry: Draw a card. Repeat for each Elemental you played last turn. |
 | Vyranoth | CATA_213 | Card costs, mana and ordinary discounts; Draw, discard and hand/deck movement; Damage, healing, Armor and board stats | Battlecry: If the total Cost of your starting minions was 100, split 100 stats among minions in your deck. |
-| Xyrella | BAR_735 | Damage, healing, Armor and board stats | Battlecry: If you've restored Health this turn, deal that much damage to all enemy minions. |
 | Y'Shaarj, the Defiler | DMF_188 | Copies, transformations, swaps and control; Card costs, mana and ordinary discounts; Generated cards and named card pools; Draw, discard and hand/deck movement · References: Corrupt | Battlecry: Add a copy of each Corrupted card you've played this game to your hand. They cost (0) this turn. |
 | Y'Shaarj, Titan Bane | BE_784 | Card costs, mana and ordinary discounts; Damage, healing, Armor and board stats | Old God. Battlecry: If you've spent 30 Mana on minions this game, gain Immune for 1 turn. ({0} left!) |
-| Zandalari Templar | TRL_545 | Damage, healing, Armor and board stats | Battlecry: If you've restored 10 Health this game, gain +4/+4 and Taunt. |
 | Zok Fogsnout | ETC_386 | Summons, recruits and token definitions; Damage, healing, Armor and board stats | Battlecry: Summon two {0}/{1} Quilboar with Taunt. (Improved by your hero Attack \ Armor gained this turn!) |
 
 <a id="scheduling"></a>

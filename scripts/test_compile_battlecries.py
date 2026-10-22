@@ -10,6 +10,11 @@ spec.loader.exec_module(compiler)
 compiler.current_card={'id':'TEST','set':'LEGACY'}
 
 class CompleteTextTests(unittest.TestCase):
+    def test_fifty_card_batch_keeps_limits_expiry_and_unknown_riders(self):
+        self.assertEqual(compiler.compile('Your next two Murlocs cost (2) less.'),[{'op':'next-cost','reduction':2,'amount':2,'filter':{'tribe':'MURLOC'}}])
+        self.assertEqual(compiler.compile('Your next spell this turn costs (0).'),[{'op':'next-cost','reduction':0,'setCost':0,'filter':{'type':'SPELL'},'expires':'turn'}])
+        self.assertIsNone(compiler.compile('Change the Cost of spells in your hand to (5). Also do an unknown thing.'))
+        self.assertEqual(compiler.compile('Set the Cost of the top card of your deck to (0).'),[{'op':'deck-cost','mode':'top','until':1,'setCost':0}])
     def test_five_group_clauses_preserve_restrictions(self):
         self.assertEqual(compiler.compile('Resurrect all different friendly minions that cost (8) or more.'),[{'op':'resurrect','filter':{'type':'MINION','minCost':8},'amount':7,'distinct':True}])
         self.assertEqual(compiler.compile('Draw a spell. Your hero takes damage equal to its Cost.'),[{'op':'draw-linked','amount':1,'filter':{'type':'SPELL'},'mode':'self-damage'}])

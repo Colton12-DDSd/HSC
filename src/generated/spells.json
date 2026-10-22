@@ -443,6 +443,20 @@
       }
     ]
   },
+  "BRM_011": {
+    "text": "Deal $2 damage.\nUnlock your <b>Overloaded</b> Mana Crystals.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 2,
+        "scope": "target",
+        "target": "character"
+      },
+      {
+        "op": "unlock-mana"
+      }
+    ]
+  },
   "BRM_013": {
     "text": "Deal $3 damage.\nIf your hand is empty, draw a card.",
     "steps": [
@@ -4414,6 +4428,26 @@
         ],
         "scope": "all",
         "other": false
+      }
+    ]
+  },
+  "TRL_058": {
+    "text": "The next spell you cast this turn costs (3) less. <b>Discover</b> a spell.",
+    "steps": [
+      {
+        "op": "next-cost",
+        "reduction": 3,
+        "filter": {
+          "type": "SPELL"
+        },
+        "expires": "turn"
+      },
+      {
+        "op": "discover",
+        "filter": {
+          "type": "SPELL"
+        },
+        "reduction": 0
       }
     ]
   },

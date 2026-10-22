@@ -1,4 +1,4 @@
-import { cardStats, type Card } from './cards';
+import { cardCost, cardStats, type Card } from './cards';
 import { deathrattleFor } from './effects';
 import type { Game, Player, Unit, Target } from './engine';
 import type { CardFilter, ScriptStep } from './script-types';
@@ -30,6 +30,11 @@ export const foundationOperations = [
   'summon-sized',
   'menagerie',
   'held-spells',
+  'history-cards',
+  'resource-payoff',
+  'unlock-mana',
+  'reveal-spell',
+  'copy-board-hand',
   'discard-weapons-stats',
   'deck-copy',
   'swap-extreme-attack',
@@ -69,6 +74,81 @@ export function resolveFoundation(
     self = p.board.find((u) => u.uid === sourceUid);
   const op = step.op;
   if (!foundationOperations.includes(op)) return false;
+  if (op === 'history-cards') {
+    const previous =
+      (s.events ?? [])
+        .filter((e) => e.type === 'turn' && e.player === player && e.turn < s.turn)
+        .at(-1)?.turn ??
+      (s.events ?? [])
+        .filter((e) => e.type === 'play' && e.player === player && e.turn < s.turn)
+        .at(-1)?.turn;
+    let played = (s.events ?? []).filter(
+      (e, i) =>
+        e.type === 'play' &&
+        e.player === player &&
+        e.card &&
+        h.matches(e.card, step.filter) &&
+        (step.zone !== 'held' || i >= (source.heldSince ?? 0)) &&
+        (step.zone !== 'previous' || e.turn === previous),
+    );
+    if (step.mode === 'last-copy') played = played.slice(-1);
+    if (step.amount !== undefined) played = played.length >= amount ? played.slice(0, amount) : [];
+    for (const e of played) {
+      if (step.mode === 'summon-cost')
+        h.run([{ op: 'summon-pool', amount: 1, filter: { type: 'MINION', cost: e.card!.cost } }]);
+      else h.add(player, e.card!);
+    }
+    h.note(`${source.name} uses ${played.length} cards from play history`);
+  }
+  if (op === 'unlock-mana') {
+    const locked = p.lockedMana ?? 0,
+      total = locked + (p.overload ?? 0);
+    p.lockedMana = 0;
+    p.overload = 0;
+    p.mana = Math.min(p.maxMana, p.mana + locked);
+    if (step.after === 'draw') for (let i = 0; i < total && p.health > 0; i++) h.draw();
+    h.note(`${source.name} unlocks ${total} Mana Crystals`);
+  }
+  if (op === 'resource-payoff') {
+    if (step.mode === 'highest-spell')
+      h.run([
+        {
+          op: 'mana',
+          mode: 'refresh',
+          amount: Math.max(0, ...p.hand.filter((c) => c.type === 'SPELL').map(cardCost)),
+        },
+      ]);
+    if (step.mode === 'spend-double' && self && p.mana >= amount) {
+      p.mana -= amount;
+      h.buff(self, self.attack, self.health);
+    }
+    if (step.mode === 'spell-cost') {
+      const spells = p.hand.filter((c) => c.type === 'SPELL');
+      if (spells.length) {
+        const c = spells[h.random(spells.length)];
+        c.printedCost ??= c.cost;
+        c.cost = cardCost(source);
+      }
+    }
+    if (step.mode === 'distinct-costs' && new Set(p.hand.map(cardCost)).size === p.hand.length)
+      h.run([{ op: 'cost', zone: 'hand', reduction: step.reduction }]);
+  }
+  if (op === 'reveal-spell') {
+    const pool = p.deck.filter((c) => c.type === 'SPELL');
+    if (pool.length) {
+      const c = pool[h.random(pool.length)];
+      h.note(`${source.name} reveals ${c.name} (Cost ${c.cost})`);
+      if (step.mode === 'summon')
+        h.run([{ op: 'summon-pool', amount: 1, filter: { type: 'MINION', cost: c.cost } }]);
+      if (step.mode === 'missiles' && c.cost >= 5)
+        h.run([{ op: 'missiles', scope: 'enemy', amount }]);
+    }
+  }
+  if (op === 'copy-board-hand')
+    for (const t of h.targets(step)) {
+      const u = h.get(t);
+      if ('card' in u) h.add(player, u.card);
+    }
   if (op === 'held-spells') {
     const spells = (s.events ?? []).filter(
       (e, i) =>
@@ -99,7 +179,9 @@ export function resolveFoundation(
     }
   }
   if (op === 'deck-copy') {
-    const pool = p.deck.filter((c) => c.type === 'MINION' && c.name !== source.name);
+    const pool = p[step.zone === 'hand' ? 'hand' : 'deck'].filter(
+      (c) => c.type === 'MINION' && (step.zone === 'hand' || c.name !== source.name),
+    );
     if (pool.length)
       h.run([
         {
@@ -440,7 +522,9 @@ export function resolveFoundation(
     }
   }
   if (op === 'deck-cost')
-    for (const c of p.deck.slice(-(step.until ?? 0))) {
+    for (const c of step.mode === 'top'
+      ? p.deck.slice(0, step.until)
+      : p.deck.slice(-(step.until ?? 0))) {
       c.printedCost ??= c.cost;
       c.cost = step.setCost!;
     }
