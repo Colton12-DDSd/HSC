@@ -2957,6 +2957,27 @@
       }
     ]
   },
+  "CFM_342": {
+    "text": "<b>Battlecry:</b> If your weapon has at least 3 Attack, gain +4/+4.",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "stat": "weapon-attack",
+          "min": 3
+        },
+        "steps": [
+          {
+            "op": "buff",
+            "scope": "self",
+            "attack": 4,
+            "health": 4,
+            "scale": 1
+          }
+        ]
+      }
+    ]
+  },
   "CFM_605": {
     "text": "[x]<b>Battlecry:</b> If you're holding\na Dragon, <b>Discover</b> a\ncopy of a card in your\nopponent's deck.",
     "steps": [
@@ -3088,6 +3109,15 @@
         "attack": 1,
         "health": 0,
         "scope": "weapon"
+      }
+    ]
+  },
+  "CFM_655": {
+    "text": "<b>Battlecry:</b> Remove 1 Durability from your opponent's weapon.",
+    "steps": [
+      {
+        "op": "weapon-durability",
+        "amount": 1
       }
     ]
   },
@@ -3853,6 +3883,20 @@
         "op": "damage",
         "amount": 2,
         "scope": "hero"
+      }
+    ]
+  },
+  "CORE_NEW1_018": {
+    "text": "<b>Battlecry:</b> Gain Attack equal to the Attack\nof your weapon.",
+    "steps": [
+      {
+        "op": "buff",
+        "scope": "self",
+        "attack": 1,
+        "health": 0,
+        "scale": {
+          "stat": "weapon-attack"
+        }
       }
     ]
   },
@@ -5412,6 +5456,15 @@
       }
     ]
   },
+  "DRG_055": {
+    "text": "<b>Battlecry:</b> Equip one of your destroyed weapons.",
+    "steps": [
+      {
+        "op": "weapon-recover",
+        "mode": "equip"
+      }
+    ]
+  },
   "DRG_059": {
     "text": "<b>Battlecry:</b> If you control a Mech, gain +1/+1 and <b>Rush</b>.",
     "steps": [
@@ -6147,6 +6200,17 @@
       }
     ]
   },
+  "ETC_102": {
+    "text": "<b>Battlecry:</b> Give your weapon +1 Durability.",
+    "steps": [
+      {
+        "op": "buff",
+        "attack": 0,
+        "health": 1,
+        "scope": "weapon"
+      }
+    ]
+  },
   "ETC_106": {
     "text": "<b>Battlecry:</b> The next Mech you play costs (1) less.",
     "steps": [
@@ -6735,6 +6799,24 @@
         "filter": {
           "type": "MINION"
         }
+      }
+    ]
+  },
+  "EX1_398": {
+    "text": "<b>Battlecry:</b> Equip a 2/2 weapon.",
+    "steps": [
+      {
+        "op": "equip",
+        "token": "EX1_398t"
+      }
+    ]
+  },
+  "EX1_558": {
+    "text": "<b>Battlecry:</b> Destroy your opponent's weapon and draw cards equal to its Durability.",
+    "steps": [
+      {
+        "op": "destroy-weapon",
+        "after": "draw-durability"
       }
     ]
   },
@@ -8586,6 +8668,34 @@
       }
     ]
   },
+  "JAM_035": {
+    "text": "<b>Battlecry:</b> Discard a weapon to draw 3 cards.",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "zone": "hand",
+          "filter": {
+            "type": "WEAPON"
+          },
+          "min": 1
+        },
+        "steps": [
+          {
+            "op": "discard",
+            "amount": 1,
+            "filter": {
+              "type": "WEAPON"
+            }
+          },
+          {
+            "op": "draw",
+            "amount": 3
+          }
+        ]
+      }
+    ]
+  },
   "JAM_036": {
     "text": "<b>Battlecry:</b> Draw 5 cards. Give any spells drawn\nto your opponent.",
     "steps": [
@@ -9414,6 +9524,15 @@
       }
     ]
   },
+  "LOOT_389": {
+    "text": "<b>Battlecry:</b> Return one of your destroyed weapons to your hand.",
+    "steps": [
+      {
+        "op": "weapon-recover",
+        "mode": "hand"
+      }
+    ]
+  },
   "LOOT_410": {
     "text": "<b>Battlecry:</b> If you're holding\na Dragon, deal 3 damage to all other minions.",
     "steps": [
@@ -9678,6 +9797,20 @@
       }
     ]
   },
+  "NEW1_018": {
+    "text": "<b>Battlecry:</b> Gain Attack equal to the Attack\nof your weapon.",
+    "steps": [
+      {
+        "op": "buff",
+        "scope": "self",
+        "attack": 1,
+        "health": 0,
+        "scale": {
+          "stat": "weapon-attack"
+        }
+      }
+    ]
+  },
   "NEW1_024": {
     "text": "<b>Battlecry:</b> Give your weapon +1/+1.",
     "steps": [
@@ -9686,6 +9819,15 @@
         "attack": 1,
         "health": 1,
         "scope": "weapon"
+      }
+    ]
+  },
+  "NEW1_025": {
+    "text": "[x]<b>Battlecry:</b> Remove\n1 Durability from your\nopponent's weapon.",
+    "steps": [
+      {
+        "op": "weapon-durability",
+        "amount": 1
       }
     ]
   },
@@ -12872,6 +13014,25 @@
       }
     ]
   },
+  "TSC_917": {
+    "text": "<b>Taunt</b>. <b>Battlecry:</b> If you\nhave a weapon equipped, summon a 5/6 Naga with <b>Rush</b>.",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "stat": "weapon",
+          "min": 1
+        },
+        "steps": [
+          {
+            "op": "summon-token",
+            "token": "TSC_917t",
+            "amount": 1
+          }
+        ]
+      }
+    ]
+  },
   "TSC_926": {
     "text": "<b>Battlecry:</b> <b>Silence</b> ALL other minions.",
     "steps": [
@@ -13948,6 +14109,15 @@
         "amount": 3,
         "scope": "target",
         "target": "character"
+      }
+    ]
+  },
+  "UNG_946": {
+    "text": "<b>Battlecry:</b> Destroy your opponent's weapon and gain Armor equal to its Attack.",
+    "steps": [
+      {
+        "op": "destroy-weapon",
+        "after": "armor"
       }
     ]
   },

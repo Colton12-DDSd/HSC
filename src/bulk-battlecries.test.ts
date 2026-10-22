@@ -714,6 +714,8 @@ describe('Independent mechanic and interaction checks', () => {
       'end-effect',
       'summon-effect',
       'destroy-weapon',
+      'weapon-durability',
+      'weapon-recover',
       'destroy-armor',
       'equip',
       'resurrect',

@@ -2,6 +2,23 @@
 import re
 
 def compile_foundation(t, compile, target, filt, num, keywords, refs, card, choose):
+    m=re.fullmatch(r'Give your weapon \+(\d+) (Attack|Durability)',t)
+    if m:return [dict(op='buff',attack=int(m[1]) if m[2]=='Attack' else 0,health=int(m[1]) if m[2]=='Durability' else 0,scope='weapon')]
+    m=re.fullmatch(r'Remove (\d+) Durability from your opponent\x27s weapon',t)
+    if m:return [dict(op='weapon-durability',amount=int(m[1]))]
+    if t == 'Gain Attack equal to the Attack of your weapon':return [dict(op='buff',scope='self',attack=1,health=0,scale={'stat':'weapon-attack'})]
+    m=re.fullmatch(r'If your weapon has at least (\d+) Attack, (.+)',t)
+    if m:
+        e=compile(m[2])
+        if e is not None:return [dict(op='if',condition={'stat':'weapon-attack','min':int(m[1])},steps=e)]
+    if t == "Destroy your opponent's weapon and draw cards equal to its Durability":return [dict(op='destroy-weapon',after='draw-durability')]
+    if t == "Destroy your opponent's weapon and gain Armor equal to its Attack":return [dict(op='destroy-weapon',after='armor')]
+    if t == 'Equip one of your destroyed weapons':return [dict(op='weapon-recover',mode='equip')]
+    if t == 'Return one of your destroyed weapons to your hand':return [dict(op='weapon-recover',mode='hand')]
+    m=re.fullmatch(r'Discard a weapon to draw (\d+) cards',t)
+    if m:return [dict(op='if',condition={'zone':'hand','filter':{'type':'WEAPON'},'min':1},steps=[dict(op='discard',amount=1,filter={'type':'WEAPON'}),dict(op='draw',amount=int(m[1]))])]
+    if t == 'Equip a 2/2 weapon':return [dict(op='equip',token='EX1_398t')]
+    if t == 'Summon a 5/6 Naga with Rush':return [dict(op='summon-token',token='TSC_917t',amount=1)]
     lackeys=['DAL_613','DAL_614','DAL_615','DAL_739','DAL_741','DRG_052','ULD_616']
     if t == 'Add a Lackey to your hand':return [dict(op='generate',amount=1,pool=lackeys)]
     if t == 'Destroy a friendly minion to add 2 random Lackeys to your hand':return [dict(op='destroy',scope='target',target='friendly-minion'),dict(op='generate',amount=2,pool=lackeys)]

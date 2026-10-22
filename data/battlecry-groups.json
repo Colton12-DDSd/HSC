@@ -1,8 +1,8 @@
 {
   "snapshot": "2026-10-18",
   "basis": "Pinned local collection; exact remaining-name membership from the support audit",
-  "supportedBattlecryNames": 898,
-  "totalRemaining": 997,
+  "supportedBattlecryNames": 910,
+  "totalRemaining": 985,
   "replacementCharacterPrintings": 0,
   "lanes": [
     {
@@ -13,7 +13,7 @@
     {
       "id": "shared",
       "label": "Extend a shared engine family",
-      "count": 424
+      "count": 412
     },
     {
       "id": "system",
@@ -88,7 +88,7 @@
       "label": "Weapons, forced attacks and combat restrictions",
       "lane": "shared",
       "work": "Extend weapon effects, durability, forced combat, repeated attacks and special attack restrictions.",
-      "count": 47
+      "count": 35
     },
     {
       "id": "history",
@@ -221,17 +221,17 @@
     {
       "id": "damage-stats",
       "label": "Damage, healing, Armor and board stats",
-      "count": 435
+      "count": 429
     },
     {
       "id": "draw-zones",
       "label": "Draw, discard and hand/deck movement",
-      "count": 345
+      "count": 342
     },
     {
       "id": "summon-tokens",
       "label": "Summons, recruits and token definitions",
-      "count": 144
+      "count": 143
     },
     {
       "id": "generate-pools",
@@ -261,7 +261,7 @@
     {
       "id": "weapons-combat",
       "label": "Weapons, forced attacks and combat restrictions",
-      "count": 61
+      "count": 49
     },
     {
       "id": "history",
@@ -1247,31 +1247,6 @@
       ]
     },
     {
-      "name": "Air Guitarist",
-      "primary": "weapons-combat",
-      "lane": "shared",
-      "dependencies": [
-        "weapons-combat",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "ETC_102",
-          "text": "<b>Battlecry:</b> Give your weapon +1 Durability.",
-          "normalizedText": "Battlecry: Give your weapon +1 Durability.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Air Support",
       "primary": "weapons-combat",
       "lane": "shared",
@@ -2125,30 +2100,6 @@
           "id": "REV_363",
           "text": "<b>Battlecry:</b> Summon one of each <b>Dormant</b> Wildseed.",
           "normalizedText": "Battlecry: Summon one of each Dormant Wildseed.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Arathi Weaponsmith",
-      "primary": "weapons-combat",
-      "lane": "shared",
-      "dependencies": [
-        "weapons-combat"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "EX1_398",
-          "text": "<b>Battlecry:</b> Equip a 2/2 weapon.",
-          "normalizedText": "Battlecry: Equip a 2/2 weapon.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -3439,33 +3390,6 @@
       ]
     },
     {
-      "name": "Blackscale Brute",
-      "primary": "weapons-combat",
-      "lane": "shared",
-      "dependencies": [
-        "weapons-combat",
-        "summon-tokens",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TSC_917",
-          "text": "<b>Taunt</b>. <b>Battlecry:</b> If you\nhave a weapon equipped, summon a 5/6 Naga with <b>Rush</b>.",
-          "normalizedText": "Taunt. Battlecry: If you have a weapon equipped, summon a 5/6 Naga with Rush.",
-          "mechanics": [
-            "BATTLECRY",
-            "TAUNT"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Blackwald Pixie",
       "primary": "hero-powers",
       "lane": "system",
@@ -3710,63 +3634,6 @@
           "id": "BE_283",
           "text": "[x]<b>Battlecry:</b> Spend up to 4\n<b>Corpses</b>. Deal 1 damage to\nall other minions for each.",
           "normalizedText": "Battlecry: Spend up to 4 Corpses. Deal 1 damage to all other minions for each.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Bloodsail Corsair",
-      "primary": "weapons-combat",
-      "lane": "shared",
-      "dependencies": [
-        "weapons-combat"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "NEW1_025",
-          "text": "[x]<b>Battlecry:</b> Remove\n1 Durability from your\nopponent's weapon.",
-          "normalizedText": "Battlecry: Remove 1 Durability from your opponent's weapon.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Bloodsail Raider",
-      "primary": "weapons-combat",
-      "lane": "shared",
-      "dependencies": [
-        "weapons-combat",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": true,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "CORE_NEW1_018",
-          "text": "<b>Battlecry:</b> Gain Attack equal to the Attack\nof your weapon.",
-          "normalizedText": "Battlecry: Gain Attack equal to the Attack of your weapon.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        },
-        {
-          "id": "NEW1_018",
-          "text": "<b>Battlecry:</b> Gain Attack equal to the Attack\nof your weapon.",
-          "normalizedText": "Battlecry: Gain Attack equal to the Attack of your weapon.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -10470,31 +10337,6 @@
       ]
     },
     {
-      "name": "Gluttonous Ooze",
-      "primary": "weapons-combat",
-      "lane": "shared",
-      "dependencies": [
-        "weapons-combat",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "UNG_946",
-          "text": "<b>Battlecry:</b> Destroy your opponent's weapon and gain Armor equal to its Attack.",
-          "normalizedText": "Battlecry: Destroy your opponent's weapon and gain Armor equal to its Attack.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Godfather Kazakus",
       "primary": "custom-build",
       "lane": "bespoke",
@@ -10869,31 +10711,6 @@
       ]
     },
     {
-      "name": "Grimtotem Buzzkill",
-      "primary": "weapons-combat",
-      "lane": "shared",
-      "dependencies": [
-        "weapons-combat",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "JAM_035",
-          "text": "<b>Battlecry:</b> Discard a weapon to draw 3 cards.",
-          "normalizedText": "Battlecry: Discard a weapon to draw 3 cards.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Grizzled Wizard",
       "primary": "hero-powers",
       "lane": "system",
@@ -11126,32 +10943,6 @@
           "mechanics": [
             "BATTLECRY",
             "DISCOVER"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Harrison Jones",
-      "primary": "weapons-combat",
-      "lane": "shared",
-      "dependencies": [
-        "weapons-combat",
-        "draw-zones",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "EX1_558",
-          "text": "<b>Battlecry:</b> Destroy your opponent's weapon and draw cards equal to its Durability.",
-          "normalizedText": "Battlecry: Destroy your opponent's weapon and draw cards equal to its Durability.",
-          "mechanics": [
-            "BATTLECRY"
           ]
         }
       ]
@@ -11642,30 +11433,6 @@
           "mechanics": [
             "BATTLECRY",
             "DISCOVER"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Hoard Pillager",
-      "primary": "weapons-combat",
-      "lane": "shared",
-      "dependencies": [
-        "weapons-combat"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "DRG_055",
-          "text": "<b>Battlecry:</b> Equip one of your destroyed weapons.",
-          "normalizedText": "Battlecry: Equip one of your destroyed weapons.",
-          "mechanics": [
-            "BATTLECRY"
           ]
         }
       ]
@@ -14700,31 +14467,6 @@
           "id": "JAIL_470",
           "text": "[x]<b>Battlecry:</b> Deal 1 damage to a\nrandom enemy. Shoot 1 time!\n<i>(While in hand or deck play cards\nfor 2 Mana to shoot more!)</i>",
           "normalizedText": "Battlecry: Deal 1 damage to a random enemy. Shoot 1 time! (While in hand or deck play cards for 2 Mana to shoot more!)",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Luckydo Buccaneer",
-      "primary": "weapons-combat",
-      "lane": "shared",
-      "dependencies": [
-        "weapons-combat",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "CFM_342",
-          "text": "<b>Battlecry:</b> If your weapon has at least 3 Attack, gain +4/+4.",
-          "normalizedText": "Battlecry: If your weapon has at least 3 Attack, gain +4/+4.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -20175,31 +19917,6 @@
       ]
     },
     {
-      "name": "Rummaging Kobold",
-      "primary": "weapons-combat",
-      "lane": "shared",
-      "dependencies": [
-        "weapons-combat",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "LOOT_389",
-          "text": "<b>Battlecry:</b> Return one of your destroyed weapons to your hand.",
-          "normalizedText": "Battlecry: Return one of your destroyed weapons to your hand.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Runi, Temporal Guardian",
       "primary": "scheduling",
       "lane": "shared",
@@ -25442,30 +25159,6 @@
           "id": "SCH_312",
           "text": "<b>Battlecry:</b> Your next Hero Power costs (0).",
           "normalizedText": "Battlecry: Your next Hero Power costs (0).",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Toxic Sewer Ooze",
-      "primary": "weapons-combat",
-      "lane": "shared",
-      "dependencies": [
-        "weapons-combat"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "CFM_655",
-          "text": "<b>Battlecry:</b> Remove 1 Durability from your opponent's weapon.",
-          "normalizedText": "Battlecry: Remove 1 Durability from your opponent's weapon.",
           "mechanics": [
             "BATTLECRY"
           ]

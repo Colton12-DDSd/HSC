@@ -1,4 +1,4 @@
-# Themed test decks — 2026-10-19
+# Themed test decks — 2026-10-22
 
 Open **Play** or **Testing**, choose **Test deck**, then press **New game**. Starter remains available with King Krush. Each themed list contains 100 supported cards, singleton by name, with its own separate supported legendary commander. These are mixed-class local tests, not verified Wild decks. Each has at least 50 cards costing four or less.
 
@@ -23,7 +23,7 @@ Commander names appear in the selector, and **Deck & test goals** includes a com
 | **Deck Laboratory — new** | Dredge, temporary Costs, linked draws | Excavation Specialist → Novice Engineer; Sharp-Eyed Lookout; Deepwater Evoker |
 | Ember & Ice | Damage, Freeze, Silence | Targeted Archer, Freeze/cleanse, one target versus every opponent; now includes Varden |
 | Last Rites | Deathrattles, tokens, resurrection | Copy Loot Hoarder with Mok'Nathal Lion, trigger or kill the Lion |
-| Iron Reserve | Armor, self-damage, weapons | Crystallizer ordering, durability, enemy weapon removal |
+| Iron Reserve | Armor and weapon interactions | Axe → Air Guitarist → Raider; break/recover weapons; Harrison draws by Durability |
 | Life Garden | Healing, Lifesteal, buffs | Cleansing Cleric, Health above 40, current versus maximum Health |
 | Dragon School | Dragon prerequisites, placement | Hold Twilight Whelp, conditional Battlecries, adjacent effects |
 | Curiosity Cabinet | Discover, hand choices, deck order | Copy Chaos Strike with Grave Defiler; arrange the next draw with Sightless Watcher |
@@ -32,9 +32,11 @@ Commander names appear in the selector, and **Deck & test goals** includes a com
 
 Cards shown in hand have their **current payable mana cost** over the artwork. Temporary discounts expire at the end of the turn without removing earlier permanent discounts. **Active effects** shows future-play buffs and remaining counts, expanded hand limits, Overload and lasting effects. Inspectors distinguish temporary keyword grants from grants lasting until the minion leaves play. Hero Divine Shield and permanent minion Immunity have visible labels.
 
+The [weapon batch](WEAPON-BATTLECRIES.md) adds twelve examples to Iron Reserve. Its guided hand is Fiery War Axe, Air Guitarist, Bloodsail Raider, Hoard Pillager, and Harrison Jones.
+
 ## Coverage and rules
 
-Current support: **898 Battlecry names / 968 collection printings** and **1,633 supported collection records**. The latest pass implements **246 of the original 315 foundation candidates** and four additional names. **69 of that batch remain blocked**; the [complete report](FOUNDATION-BATTLECRIES.md) lists each one and its next dependency. Across the whole collection, **997 Battlecry names remain unsupported**. No approximate effect substitutes for unrecognized rules.
+Current support: **910 Battlecry names / 981 collection printings** and **1,646 supported collection records**. The latest pass implements **246 of the original 315 foundation candidates** and 16 additional names. **69 of that batch remain blocked**; the [complete report](FOUNDATION-BATTLECRIES.md) lists each one and its next dependency. Across the whole collection, **985 Battlecry names remain unsupported**. No approximate effect substitutes for unrecognized rules.
 
 New shared families include consuming live stats, linked draws, Dredge rewards, temporary costs, Menagerie selection, future-play buffs, deck ordering, burn/draw replacement, expanded hand limits, hero Divine Shield and permanent Immunity. Boom Bot Deathrattles and Ice Shard/Water Elemental freezing are implemented. Generated cards can have separately unsupported abilities, labeled effects pending; those cards cannot be played. Named pools and special summoned passives require exact definitions.
 

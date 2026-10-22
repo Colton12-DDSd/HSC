@@ -1,15 +1,15 @@
 # Remaining Battlecries grouped for implementation
 
-Audit date: **2026-10-18**. Reviewed the complete pinned backlog: **997 unique minion names** across **1,043 printings**. **898 names are already supported** and excluded here. Matching Core printings do not count as extra names.
+Audit date: **2026-10-18**. Reviewed the complete pinned backlog: **985 unique minion names** across **1,030 printings**. **910 names are already supported** and excluded here. Matching Core printings do not count as extra names.
 
-Every remaining name has **one primary group**, so the primary counts add up to 997. Extra dependencies, keywords and named families can overlap: their counts must not be added together. Group membership is a planning judgment based on the complete printed card, including passives, separate Deathrattles and attached keywords. It does not enable a card or prove that a whole group shares one identical script.
+Every remaining name has **one primary group**, so the primary counts add up to 985. Extra dependencies, keywords and named families can overlap: their counts must not be added together. Group membership is a planning judgment based on the complete printed card, including passives, separate Deathrattles and attached keywords. It does not enable a card or prove that a whole group shares one identical script.
 
 ## Implementation lanes
 
 | Lane | Names |
 | --- | --- |
 | Existing foundations: pattern, value, filter or sequencing extensions | 69 |
-| Extend a shared engine family | 424 |
+| Extend a shared engine family | 412 |
 | Add or complete a game subsystem | 466 |
 | Card-specific design or manual rules review | 38 |
 
@@ -27,7 +27,7 @@ Every remaining name has **one primary group**, so the primary counts add up to 
 | [Discover and other player choices](#choices) | 80 | Extend a shared engine family |
 | [Copies, transformations, swaps and control](#copy-transform) | 48 | Extend a shared engine family |
 | [Deathrattles, resurrection and remembered victims](#death-memory) | 89 | Extend a shared engine family |
-| [Weapons, forced attacks and combat restrictions](#weapons-combat) | 47 | Extend a shared engine family |
+| [Weapons, forced attacks and combat restrictions](#weapons-combat) | 35 | Extend a shared engine family |
 | [History, thresholds and scaling conditions](#history) | 62 | Extend a shared engine family |
 | [Delayed effects and start/end-of-turn triggers](#scheduling) | 52 | Extend a shared engine family |
 | [Auras, listeners and ongoing board effects](#ongoing) | 35 | Add or complete a game subsystem |
@@ -73,20 +73,20 @@ These counts answer “how many remaining names mention or require this kind of 
 
 | Dependency | Names touching it |
 | --- | --- |
-| Damage, healing, Armor and board stats | 435 |
-| Draw, discard and hand/deck movement | 345 |
+| Damage, healing, Armor and board stats | 429 |
+| Draw, discard and hand/deck movement | 342 |
 | Card costs, mana and ordinary discounts | 212 |
 | History, thresholds and scaling conditions | 181 |
 | Discover and other player choices | 171 |
 | Copies, transformations, swaps and control | 152 |
-| Summons, recruits and token definitions | 144 |
+| Summons, recruits and token definitions | 143 |
 | Extra keywords and attached mechanics | 143 |
 | Deathrattles, resurrection and remembered victims | 121 |
 | Generated cards and named card pools | 103 |
 | Delayed effects and start/end-of-turn triggers | 72 |
-| Weapons, forced attacks and combat restrictions | 61 |
 | Automatic casting and replaying spells/Battlecries | 61 |
 | Auras, listeners and ongoing board effects | 51 |
+| Weapons, forced attacks and combat restrictions | 49 |
 | Quests, Excavation and expansion objectives | 44 |
 | Hero powers, upgrades and replacements | 39 |
 | Dormant, locations and board-state systems | 38 |
@@ -573,18 +573,13 @@ Track the exact destroyed/discarded/chosen minion and carry that identity into l
 
 <a id="weapons-combat"></a>
 
-### Weapons, forced attacks and combat restrictions — 47
+### Weapons, forced attacks and combat restrictions — 35
 
 Extend weapon effects, durability, forced combat, repeated attacks and special attack restrictions.
 
 | Minion | Candidate IDs | Other dependencies | Complete printed rules |
 | --- | --- | --- | --- |
-| Air Guitarist | ETC_102 | Damage, healing, Armor and board stats | Battlecry: Give your weapon +1 Durability. |
 | Air Support | CATA_564 | Damage, healing, Armor and board stats | Battlecry: Give a friendly minion Mega-Windfury. It can't attack heroes. |
-| Arathi Weaponsmith | EX1_398 |  | Battlecry: Equip a 2/2 weapon. |
-| Blackscale Brute | TSC_917 | Summons, recruits and token definitions; Damage, healing, Armor and board stats | Taunt. Battlecry: If you have a weapon equipped, summon a 5/6 Naga with Rush. |
-| Bloodsail Corsair | NEW1_025 |  | Battlecry: Remove 1 Durability from your opponent's weapon. |
-| Bloodsail Raider | CORE_NEW1_018, NEW1_018 | Damage, healing, Armor and board stats | Battlecry: Gain Attack equal to the Attack of your weapon. |
 | Brood Keeper | EDR_457 |  | Battlecry: If you're holding a Dragon, equip a 2/2 Sword. |
 | Charged Devilsaur | UNG_099 | Damage, healing, Armor and board stats | Charge Battlecry: Can't attack heroes this turn. |
 | Deathwing, Mad Aspect | DRG_026 | Damage, healing, Armor and board stats | Battlecry: Attack ALL other minions. |
@@ -593,14 +588,9 @@ Extend weapon effects, durability, forced combat, repeated attacks and special a
 | Doctor Holli'dae | WW_010 | Draw, discard and hand/deck movement | Battlecry: If your deck started with no duplicates, equip the Staff of the Nine Frogs. |
 | Expedition Sergeant | GDB_229 |  | Battlecry: The next Draenei you play immediately attacks a random enemy. |
 | Furnacefire Colossus | ICC_096 | Draw, discard and hand/deck movement; Damage, healing, Armor and board stats | Battlecry: Discard all weapons from your hand and gain their stats. |
-| Gluttonous Ooze | UNG_946 | Damage, healing, Armor and board stats | Battlecry: Destroy your opponent's weapon and gain Armor equal to its Attack. |
-| Grimtotem Buzzkill | JAM_035 | Draw, discard and hand/deck movement | Battlecry: Discard a weapon to draw 3 cards. |
-| Harrison Jones | EX1_558 | Draw, discard and hand/deck movement; Damage, healing, Armor and board stats | Battlecry: Destroy your opponent's weapon and draw cards equal to its Durability. |
-| Hoard Pillager | DRG_055 |  | Battlecry: Equip one of your destroyed weapons. |
 | Kobold Stickyfinger | DRG_082 | Copies, transformations, swaps and control | Battlecry: Steal your opponent's weapon. |
 | Lady Ashvane | TSC_943 | Draw, discard and hand/deck movement; Damage, healing, Armor and board stats | Battlecry: Give all weapons in your hand, deck, and battlefield +1/+1. |
 | Lightforged Zealot | DRG_232 | Draw, discard and hand/deck movement | Battlecry: If your deck has no Neutral cards, equip a 4/2 Truesilver Champion. |
-| Luckydo Buccaneer | CFM_342 | Damage, healing, Armor and board stats | Battlecry: If your weapon has at least 3 Attack, gain +4/+4. |
 | Malkorok | OG_220 |  | Battlecry: Equip a random weapon. |
 | Maxima Blastenheimer | DMF_089 | Summons, recruits and token definitions; Draw, discard and hand/deck movement | Battlecry: Summon a minion from your deck. It attacks the enemy hero, then dies. |
 | MC Blingtron | ETC_078 | Damage, healing, Armor and board stats | Battlecry: Both players equip 1/2 Microphones. Your opponent's increases all damage they take by 1! |
@@ -609,7 +599,6 @@ Extend weapon effects, durability, forced combat, repeated attacks and special a
 | Obsidiansmith | TSC_942 | Draw, discard and hand/deck movement; Damage, healing, Armor and board stats | Battlecry: Dredge. If it's a minion or a weapon, give it +1/+1. |
 | Phantom Freebooter | ICC_018 | Damage, healing, Armor and board stats | Battlecry: Gain stats equal to your weapon's. |
 | PMM Infinitizer | TIME_043 | Damage, healing, Armor and board stats | Battlecry: Set a friendly minion's Attack and Health to 8. It can't attack heroes this turn. |
-| Rummaging Kobold | LOOT_389 | Draw, discard and hand/deck movement | Battlecry: Return one of your destroyed weapons to your hand. |
 | Selfless Sidekick | WC_029 | Draw, discard and hand/deck movement | Battlecry: Equip a random weapon from your deck. |
 | Snoozin' Zookeeper | VAC_421 | Summons, recruits and token definitions | Battlecry: Summon an 8/8 Beast for your opponent. It attacks all of their minions. |
 | Steeldancer | SCH_522 | Card costs, mana and ordinary discounts; Summons, recruits and token definitions; Damage, healing, Armor and board stats | Battlecry: Summon a random minion with Cost equal to your weapon's Attack. |
@@ -617,7 +606,6 @@ Extend weapon effects, durability, forced combat, repeated attacks and special a
 | Swarthy Swordshiner | VAC_701 | Damage, healing, Armor and board stats | Battlecry: Set the Attack and Durability of your weapon to 3. |
 | Sword Eater | DMF_521 | Damage, healing, Armor and board stats | Taunt Battlecry: Equip a 3/2 Sword. |
 | Theldurin the Lost | WW_815 | Draw, discard and hand/deck movement; Damage, healing, Armor and board stats | Battlecry: If your deck started with no duplicates, gain Immune this turn and attack all enemies. |
-| Toxic Sewer Ooze | CFM_655 |  | Battlecry: Remove 1 Durability from your opponent's weapon. |
 | Verdant Dreamsaber | EDR_014 | Card costs, mana and ordinary discounts; Damage, healing, Armor and board stats | Battlecry: If this costs (3) or less, attack two random enemy minions. |
 | Vereesa Windrunner | DAL_379 |  | Battlecry: Equip Thori'dal, the Stars' Fury. |
 | Viper | SC_018 | Summons, recruits and token definitions; Draw, discard and hand/deck movement; Damage, healing, Armor and board stats | Battlecry: Summon a minion from your opponent's hand. Your other Zerg minions gain Reborn and attack it. |

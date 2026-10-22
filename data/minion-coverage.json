@@ -2,17 +2,17 @@
   "summary": {
     "collectionRecords": 6470,
     "battlecryRecords": 2011,
-    "supportedBattlecryRecords": 968,
+    "supportedBattlecryRecords": 981,
     "battlecryNames": 1895,
-    "supportedBattlecryNames": 898,
-    "additionalBattlecryNames": 862,
-    "remainingBattlecryNames": 997,
-    "supportedCollectionRecords": 1633,
+    "supportedBattlecryNames": 910,
+    "additionalBattlecryNames": 874,
+    "remainingBattlecryNames": 985,
+    "supportedCollectionRecords": 1646,
     "triggerRecords": 2521,
-    "supportedTriggerRecords": 1131,
+    "supportedTriggerRecords": 1144,
     "triggerNames": 2381,
-    "fullySupportedTriggerNames": 1050,
-    "remainingTriggerRecords": 1390
+    "fullySupportedTriggerNames": 1062,
+    "remainingTriggerRecords": 1377
   },
   "minions": [
     {
@@ -280,8 +280,8 @@
         {
           "id": "ETC_102",
           "text": "<b>Battlecry:</b> Give your weapon +1 Durability.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -1021,8 +1021,8 @@
         {
           "id": "EX1_398",
           "text": "<b>Battlecry:</b> Equip a 2/2 weapon.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -2488,8 +2488,8 @@
         {
           "id": "TSC_917",
           "text": "<b>Taunt</b>. <b>Battlecry:</b> If you\nhave a weapon equipped, summon a 5/6 Naga with <b>Rush</b>.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -2845,8 +2845,8 @@
         {
           "id": "NEW1_025",
           "text": "[x]<b>Battlecry:</b> Remove\n1 Durability from your\nopponent's weapon.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -2905,15 +2905,15 @@
         {
           "id": "CORE_NEW1_018",
           "text": "<b>Battlecry:</b> Gain Attack equal to the Attack\nof your weapon.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         },
         {
           "id": "NEW1_018",
           "text": "<b>Battlecry:</b> Gain Attack equal to the Attack\nof your weapon.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -10739,8 +10739,8 @@
         {
           "id": "UNG_946",
           "text": "<b>Battlecry:</b> Destroy your opponent's weapon and gain Armor equal to its Attack.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -11350,8 +11350,8 @@
         {
           "id": "JAM_035",
           "text": "<b>Battlecry:</b> Discard a weapon to draw 3 cards.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -11729,8 +11729,8 @@
         {
           "id": "EX1_558",
           "text": "<b>Battlecry:</b> Destroy your opponent's weapon and draw cards equal to its Durability.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -12300,8 +12300,8 @@
         {
           "id": "DRG_055",
           "text": "<b>Battlecry:</b> Equip one of your destroyed weapons.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -15368,8 +15368,8 @@
         {
           "id": "CFM_342",
           "text": "<b>Battlecry:</b> If your weapon has at least 3 Attack, gain +4/+4.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -20921,8 +20921,8 @@
         {
           "id": "LOOT_389",
           "text": "<b>Battlecry:</b> Return one of your destroyed weapons to your hand.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -26518,8 +26518,8 @@
         {
           "id": "CFM_655",
           "text": "<b>Battlecry:</b> Remove 1 Durability from your opponent's weapon.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]

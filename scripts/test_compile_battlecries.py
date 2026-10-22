@@ -10,6 +10,11 @@ spec.loader.exec_module(compiler)
 compiler.current_card={'id':'TEST','set':'LEGACY'}
 
 class CompleteTextTests(unittest.TestCase):
+    def test_weapon_transactions_keep_exact_reward_stats(self):
+        self.assertEqual(compiler.compile('Give your weapon +1 Durability.'),[{'op':'buff','scope':'weapon','attack':0,'health':1}])
+        self.assertEqual(compiler.compile("Destroy your opponent's weapon and draw cards equal to its Durability."),[{'op':'destroy-weapon','after':'draw-durability'}])
+        self.assertEqual(compiler.compile("Destroy your opponent's weapon and gain Armor equal to its Attack."),[{'op':'destroy-weapon','after':'armor'}])
+        self.assertIsNone(compiler.compile('Give your weapon +1 Durability. Also summon something unknown.'))
     def test_unknown_residual_text_never_becomes_supported(self):
         for text in [
             'Deal 3 damage. Do something unimplemented.',

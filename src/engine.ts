@@ -178,6 +178,14 @@ function event(s: Game, player: number, type: string, amount?: number, card?: Ca
     ...(card ? { card: printedCard(card) } : {}),
   });
 }
+function destroyWeapon(s: Game, player: number) {
+  const owner = s.players[player];
+  if (!owner.weapon) return;
+  const card = printedCard(owner.weapon.card);
+  owner.grave.push(card);
+  event(s, player, 'weapon-destroyed', undefined, card);
+  delete owner.weapon;
+}
 export const unitMechanics = (u: Unit) =>
   [
     ...new Set([
@@ -340,7 +348,9 @@ function scriptNumber(
         ? p.armor
         : value.stat === 'hero-attack'
           ? p.heroAttack + (p.weapon?.attack ?? 0)
-          : 0;
+          : value.stat === 'weapon-attack'
+            ? (p.weapon?.attack ?? 0)
+            : 0;
 }
 function scriptCondition(s: Game, player: number, c: ScriptCondition, sourceUid?: number) {
   const p = s.players[player];
@@ -368,6 +378,12 @@ function scriptCondition(s: Game, player: number, c: ScriptCondition, sourceUid?
   if (c.stat === 'source-cost')
     return (p.board.find((u) => u.uid === sourceUid)?.playedCost ?? Infinity) <= (c.max ?? 0);
   if (c.stat === 'overload') return (p.overload ?? 0) + (p.lockedMana ?? 0) >= (c.min ?? 0);
+  if (c.stat === 'weapon-attack')
+    return (
+      !!p.weapon &&
+      (c.min === undefined || p.weapon.attack >= c.min) &&
+      (c.max === undefined || p.weapon.attack <= c.max)
+    );
   if (c.stat === 'remaining-mana')
     return (c.max === undefined || p.mana <= c.max) && (c.min === undefined || p.mana >= c.min);
   const n = c.stat
@@ -976,6 +992,8 @@ const scriptOperations = new Set([
   'end-effect',
   'summon-effect',
   'destroy-weapon',
+  'weapon-durability',
+  'weapon-recover',
   'destroy-armor',
   'equip',
   'resurrect',
@@ -1237,18 +1255,55 @@ function runScript(
       note(s, `${source.name} changes matching future summons for the rest of the game`);
       continue;
     }
+    if (step.op === 'weapon-durability') {
+      for (const [i, owner] of s.players.entries()) {
+        if (i === player || owner.health <= 0 || !owner.weapon) continue;
+        owner.weapon.durability -= amount;
+        note(s, `${source.name}: ${owner.name}'s weapon loses ${amount} Durability`);
+        if (owner.weapon.durability <= 0) destroyWeapon(s, i);
+      }
+      continue;
+    }
+    if (step.op === 'weapon-recover') {
+      const pool = (s.events ?? [])
+        .filter(
+          (e) => e.player === player && e.type === 'weapon-destroyed' && e.card?.type === 'WEAPON',
+        )
+        .map((e) => e.card!);
+      if (!pool.length) continue;
+      const card = printedCard(pool[random(s, pool.length)]);
+      if (step.mode === 'equip') {
+        destroyWeapon(s, player);
+        p.weapon = {
+          card,
+          attack: card.attack ?? 0,
+          durability: card.durability || card.health || 1,
+        };
+        note(s, `${source.name}: ${p.name} re-equips ${card.name}`);
+      } else {
+        addGenerated(s, player, card);
+        note(s, `${source.name}: ${p.name} recovers ${card.name}`);
+      }
+      continue;
+    }
     if (step.op === 'destroy-weapon' || step.op === 'destroy-armor') {
       for (const [i, owner] of s.players.entries())
         if (i !== player && owner.health > 0) {
           if (step.op === 'destroy-weapon' && owner.weapon) {
-            if (step.after === 'draw')
-              for (let j = 0; j < owner.weapon.attack && p.health > 0; j++) draw(s, player);
+            const attack = owner.weapon.attack,
+              durability = owner.weapon.durability;
+            destroyWeapon(s, i);
+            if (step.after === 'draw' || step.after === 'draw-durability')
+              for (
+                let j = 0;
+                j < (step.after === 'draw-durability' ? durability : attack) && p.health > 0;
+                j++
+              )
+                draw(s, player);
             if (step.after === 'armor') {
-              p.armor += owner.weapon.attack;
-              event(s, player, 'armor-change', owner.weapon.attack);
+              p.armor += attack;
+              event(s, player, 'armor-change', attack);
             }
-            owner.grave.push(owner.weapon.card);
-            delete owner.weapon;
           }
           if (step.op === 'destroy-armor') {
             event(s, i, 'armor-change', -owner.armor);
@@ -1269,7 +1324,7 @@ function runScript(
             : scriptPool(s, i, { ...step, filter: { ...step.filter, type: 'WEAPON' } });
           if (!pool.length) continue;
           const c = structuredClone(pool[random(s, pool.length)]);
-          if (owner.weapon) owner.grave.push(owner.weapon.card);
+          destroyWeapon(s, i);
           owner.weapon = {
             card: c,
             attack: c.attack ?? 0,
@@ -1492,7 +1547,10 @@ function runScript(
     }
     if (step.op === 'discard') {
       for (let i = 0; i < amount && p.hand.length; i++) {
-        let options = p.hand.map((c, index) => ({ c, index }));
+        let options = p.hand
+          .map((c, index) => ({ c, index }))
+          .filter(({ c }) => matchesCard(c, step.filter, p));
+        if (!options.length) break;
         if (step.order) {
           const cost = (step.order === 'lowest Cost' ? Math.min : Math.max)(
             ...options.map((o) => o.c.cost),
@@ -2443,7 +2501,7 @@ function resolve(s: Game) {
       ));
   let sourceUid: number | undefined;
   if (w.card.type === 'WEAPON') {
-    if (p.weapon) p.grave.push(p.weapon.card);
+    destroyWeapon(s, w.caster);
     p.weapon = {
       card: w.card,
       attack: w.card.attack ?? 0,
@@ -2933,8 +2991,7 @@ export function applyAction(state: Game, a: Action): Game {
     } else {
       p.heroReady = false;
       if (p.weapon && --p.weapon.durability <= 0) {
-        p.grave.push(p.weapon.card);
-        delete p.weapon;
+        destroyWeapon(s, a.p);
       }
     }
     if (dealt > 0 && u && !u.silenced && freezesOnDamage(u.card)) freezeCharacter(s, a.target);

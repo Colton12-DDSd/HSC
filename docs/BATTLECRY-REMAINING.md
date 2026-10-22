@@ -1,6 +1,6 @@
-# Remaining Battlecries — 2026-10-18
+# Remaining Battlecries — 2026-10-22
 
-**997 unique Battlecry minion names remain unsupported** in the pinned collection. This list is an implementation backlog, not enabled content. Some require new systems (auras, Secrets, spell casting/repetition, hero powers, mana/health/corpse resources, custom card construction, Infuse, Forge, Herald, Ritual and other expansion mechanics); others need additional full-clause patterns or card-specific rules. Existing numeric templates alone cannot finish the list.
+**985 unique Battlecry minion names remain unsupported** in the pinned collection. This list is an implementation backlog, not enabled content. Some require new systems (auras, Secrets, spell casting/repetition, hero powers, mana/health/corpse resources, custom card construction, Infuse, Forge, Herald, Ritual and other expansion mechanics); others need additional full-clause patterns or card-specific rules. Existing numeric templates alone cannot finish the list.
 
 Unknown clauses remain blocked. Generated-card abilities are tracked independently from the source Battlecry. Local sandbox decks do not assert Wild legality. Run `npm run audit:battlecries` to regenerate both this backlog and the added-card manifest.
 
@@ -13,7 +13,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Agamaggan | EDR_489 | Battlecry: The next card you play costs your OPPONENT'S Health instead of Mana (up to 10). |
 | Agent of the Old Ones | CATA_200 | Battlecry: Choose a card in your hand to transform into a Coin. |
 | Aggramar, the Avenger | TTN_092 | Titan Battlecry: Equip a 3/3 Taeshalach. |
-| Air Guitarist | ETC_102 | Battlecry: Give your weapon +1 Durability. |
 | Air Support | CATA_564 | Battlecry: Give a friendly minion Mega-Windfury. It can't attack heroes. |
 | Al'Akir, Lord of Storms | CATA_153 | Colossal +2, Rush, Windfury Battlecry: Get 2 minions with Cost equal to this minion's Attack. They cost (1). |
 | Alara'shi | EDR_493 | Battlecry: Transform minions in your hand into random Demons. (They keep their original stats and Cost.) |
@@ -45,7 +44,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Apothecary Helbrim | BAR_324 | Battlecry and Deathrattle: Add a random Poison to your hand. |
 | Aqir Goliath | BE_721 | Costs (2) less for each Combo card played this turn. Battlecry: Draw a card. |
 | Ara'lon | REV_363 | Battlecry: Summon one of each Dormant Wildseed. |
-| Arathi Weaponsmith | EX1_398 | Battlecry: Equip a 2/2 weapon. |
 | Arcane Golem | EX1_089 | Charge. Battlecry: Give your opponent a Mana Crystal. |
 | Arcane Keysmith | GIL_116 | Battlecry: Discover a Secret. Put it into the battlefield. |
 | Arch-Thief Rafaam | LOE_092 | Battlecry: Discover a powerful Artifact. |
@@ -92,7 +90,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Big Game Hunter | CORE_EX1_005, EX1_005 | Tradeable Battlecry: Destroy a minion with 7 or more Attack. |
 | Bitterbloom Knight | EDR_852 | Battlecry: Imbue your Hero Power. |
 | Black Cat | GIL_838 | Spell Damage +1 Battlecry: If your deck has only odd-Cost cards, draw a card. |
-| Blackscale Brute | TSC_917 | Taunt. Battlecry: If you have a weapon equipped, summon a 5/6 Naga with Rush. |
 | Blackwald Pixie | GIL_561 | Battlecry: Refresh your Hero Power. |
 | Blade of C'Thun | OG_282, WON_075 | Battlecry: Destroy a minion. Add its Attack and Health to your C'Thun's (wherever it is). |
 | Blademaster Okani | TSC_032 | Battlecry: Secretly choose to Counter the next minion or spell your opponent plays while this is alive. |
@@ -102,8 +99,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Blood Crusader | RLK_927 | Battlecry: Your next Paladin minion this turn costs Health instead of Mana. |
 | Blood Doctor Thal'ena | JAIL_446 | Battlecry: Get a second Hero Power that costs Corpses. |
 | Bloodfiend | BE_283 | Battlecry: Spend up to 4 Corpses. Deal 1 damage to all other minions for each. |
-| Bloodsail Corsair | NEW1_025 | Battlecry: Remove 1 Durability from your opponent's weapon. |
-| Bloodsail Raider | CORE_NEW1_018, NEW1_018 | Battlecry: Gain Attack equal to the Attack of your weapon. |
 | Bloodscent Vilefin | TSC_753 | Battlecry: Dredge. If it's a Murloc, change its Cost to Health instead of Mana. |
 | Bloodsworn Mercenary | ULD_720 | Battlecry: Choose a damaged friendly minion. Summon a copy of it. |
 | Bloodthistle Illusionist | EDR_780 | Battlecry: Summon a copy of this. One secretly dies when it takes damage. |
@@ -348,7 +343,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Ghost Writer | ETC_088 | Battlecry: Discover a spell. Finale: Discover another. |
 | Ghoulish Alchemist | RLK_570 | Battlecry: Your next Concoction costs (0). |
 | Gigafin | TSC_962 | Colossal +1. Battlecry: Devour all enemy minions. Deathrattle: Spit them back out. |
-| Gluttonous Ooze | UNG_946 | Battlecry: Destroy your opponent's weapon and gain Armor equal to its Attack. |
 | Godfather Kazakus | CAP_405 | Battlecry: Plot a custom sham trial! Then choose the trial's length. |
 | Goldpetal Drake | EDR_451 | Battlecry and Deathrattle: Imbue your Hero Power. |
 | Goliath, Sneed's Masterpiece | DED_525 | Battlecry: Fire five rockets at enemy minions that deal 2 damage each. (You pick the targets!) |
@@ -363,7 +357,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Griftah | TRL_096 | Battlecry: Discover two cards. Give one to your opponent at random. |
 | Griftah, Trusted Vendor | VAC_959 | Battlecry: Discover an amazing Amulet to give to both players. (The enemy's is a phony version!) |
 | Grimestreet Informant | CFM_321, WON_331 | Battlecry: Discover a Hunter, Paladin, or Warrior card. |
-| Grimtotem Buzzkill | JAM_035 | Battlecry: Discard a weapon to draw 3 cards. |
 | Grizzled Wizard | DRG_401 | Battlecry: Swap Hero Powers with your opponent until your next turn. |
 | Groovy Cat | ETC_385 | Battlecry and Deathrattle: Your Hero Power gives your hero 1 more Attack this game. |
 | Gruesome Nightmare | CATA_161 | Battlecry: Give a minion in your hand or battlefield Attack equal to this minion's Attack. |
@@ -373,7 +366,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Hagatha the Fabled | TOY_504 | Battlecry: Draw 2 spells that cost (5) or more. Transform them into Slimes that cast the spells. |
 | Halduron Brightwing | RLK_820 | Battlecry: Give all Arcane spells in your hand and deck Spell Damage +1. |
 | Harmonica Soloist | ETC_028 | Battlecry: If you control no other minions, Discover and cast a Secret. |
-| Harrison Jones | EX1_558 | Battlecry: Destroy your opponent's weapon and draw cards equal to its Durability. |
 | Harrowing Ox | WW_356 | Taunt Battlecry: If you've Excavated twice, your next card this turn costs (7) less. |
 | Harth Stonebrew | GIFT_01 | Battlecry: Replace your hand with an iconic one from Hearthstone's past. (Once per game) |
 | Heartbreaker Hedanis | ETC_334 | Battlecry: Deal 4 damage to this minion. Overheal: Deal 5 damage to a random enemy. |
@@ -392,7 +384,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Highborne Mentor | TIME_704 | Battlecry: Get a 2/2 Pupil. Discover a spell that costs (7) or more from the past to teach it. |
 | Hijacked Securitybot | JAIL_457 | Prepare Battlecry: Give your other minions +1/+1. |
 | Hipster | ETC_103 | Battlecry: Discover a spell from your opponent's class that isn't in their deck. |
-| Hoard Pillager | DRG_055 | Battlecry: Equip one of your destroyed weapons. |
 | Hollow Abomination | AV_313 | Battlecry: Deal 1 damage to all enemy minions. Honorable Kill: Gain the minion's Attack. |
 | Hopeful Dryad | EDR_001 | Battlecry: Get a random Dream card. |
 | Horde Operative | BAR_430 | Battlecry: Copy your opponent's Secrets and put them into play. |
@@ -502,7 +493,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Lothraxion the Redeemed | DMF_240 | Battlecry: For the rest of the game, after you summon a Silver Hand Recruit, give it Divine Shield. |
 | Lotus Agents | CFM_852, WON_332 | Battlecry: Discover a Druid, Rogue, or Shaman card. |
 | Lotus Troublemaker | JAIL_470 | Battlecry: Deal 1 damage to a random enemy. Shoot 1 time! (While in hand or deck play cards for 2 Mana to shoot more!) |
-| Luckydo Buccaneer | CFM_342 | Battlecry: If your weapon has at least 3 Attack, gain +4/+4. |
 | Luckysoul Hoarder | YOP_003 | Battlecry: Shuffle 2 Soul Fragments into your deck. Corrupt: Draw a card. |
 | Lunar Trailblazer | GDB_863 | Battlecry: Set the Cost of a random spell in your hand to this minion's Cost. |
 | Lunarwing Messenger | EDR_449 | Lifesteal Battlecry: Imbue your Hero Power. |
@@ -703,7 +693,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Royal Informant | TIME_036 | Battlecry: Look at the right- most card in your opponent's hand. Either get a copy of it or increase its Cost by (2). |
 | Royal Librarian | CORE_SW_066, SW_066 | Tradeable Battlecry: Silence a minion. |
 | Ruinous Velocidrake | TIME_029 | Rush Battlecry: Cast a Shred of Time from your deck to summon a copy of this. |
-| Rummaging Kobold | LOOT_389 | Battlecry: Return one of your destroyed weapons to your hand. |
 | Runi, Temporal Guardian | TIME_EVENT_998 | Battlecry: Send all minions in your hand 2 turns into the future. They return with +5/+5. |
 | Runi, Time Explorer | WON_053 | Battlecry: Discover a location from the FUTURE! |
 | Rustrot Viper | CORE_SW_072, SW_072 | Tradeable Battlecry: Destroy your opponent's weapon. |
@@ -896,7 +885,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Tortollan Primalist | UNG_088 | Battlecry: Discover a spell and cast it with random targets. |
 | Toshley | GVG_115 | Battlecry and Deathrattle: Add a Spare Part card to your hand. |
 | Tour Guide | SCH_312 | Battlecry: Your next Hero Power costs (0). |
-| Toxic Sewer Ooze | CFM_655 | Battlecry: Remove 1 Durability from your opponent's weapon. |
 | Toy Captain Tarim | TOY_813 | Miniaturize Taunt. Battlecry: Set a minion's Attack and Health to this minion's. |
 | Toyrantus | MIS_712 | Taunt, Elusive Battlecry: If you have 10 Mana Crystals, gain +7/+7. |
 | Toysnatching Geist | MIS_006 | Gigantify Battlecry: Discover an Undead. Reduce its Cost by this minion's Attack. |
