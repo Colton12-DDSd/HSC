@@ -36,9 +36,11 @@ The [weapon batch](WEAPON-BATTLECRIES.md) adds twelve examples to Iron Reserve. 
 
 The [precision batch](PRECISION-BATTLECRIES.md) adds guided targeting/copy tests to Ember & Ice, linked Dragon draws to Dragon School, and Aessina to Token Workshop.
 
+The [five-group batch](FIVE-GROUP-BATTLECRIES.md) adds tribal variety to Token Workshop, held-spell tests and Muckmorpher to Deck Laboratory, linked Deathrattles and Merithra to Last Rites, and Furnacefire Colossus to Iron Reserve. Last Rites opens with Whomper; Deck Laboratory opens with Primus. Use Scenario controls to add Fireball and Frostbolt, cast them while Primus is held, then play Primus to check its Taunt copy.
+
 ## Coverage and rules
 
-Current support: **920 Battlecry names / 991 collection printings** and **1,656 supported collection records**. The latest pass implements **250 of the original 315 foundation candidates** and 22 additional names. **65 of that batch remain blocked**; the [complete report](FOUNDATION-BATTLECRIES.md) lists each one and its next dependency. Across the whole collection, **975 Battlecry names remain unsupported**. No approximate effect substitutes for unrecognized rules.
+Current support: **930 Battlecry names / 1,001 collection printings** and **1,666 supported collection records**. The latest pass implements **250 of the original 315 foundation candidates** and 32 additional names. **65 of that batch remain blocked**; the [complete report](FOUNDATION-BATTLECRIES.md) lists each one and its next dependency. Across the whole collection, **965 Battlecry names remain unsupported**. No approximate effect substitutes for unrecognized rules.
 
 New shared families include consuming live stats, linked draws, Dredge rewards, temporary costs, Menagerie selection, future-play buffs, deck ordering, burn/draw replacement, expanded hand limits, hero Divine Shield and permanent Immunity. Boom Bot Deathrattles and Ice Shard/Water Elemental freezing are implemented. Generated cards can have separately unsupported abilities, labeled effects pending; those cards cannot be played. Named pools and special summoned passives require exact definitions.
 

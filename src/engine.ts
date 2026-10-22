@@ -1,3 +1,4 @@
+import { cardMechanics } from './cards';
 import { cardCost, cardStats, freezesOnDamage, type Card, type StatModifier } from './cards';
 import { foundationOperations, resolveFoundation } from './foundation-effects';
 import catalogData from './generated/catalog.json';
@@ -189,7 +190,7 @@ function destroyWeapon(s: Game, player: number) {
 export const unitMechanics = (u: Unit) =>
   [
     ...new Set([
-      ...(u.silenced ? [] : (u.card.mechanics ?? [])),
+      ...(u.silenced ? [] : cardMechanics(u.card)),
       ...(u.keywords ?? []),
       ...(u.temporaryKeywords ?? []).map((k) => k.keyword),
       ...(u.grantedDeathrattles?.length ? ['DEATHRATTLE'] : []),
@@ -199,7 +200,7 @@ export const unitMechanics = (u: Unit) =>
     .filter((k) => k !== 'REBORN' || !u.rebornUsed)
     .filter((k) => k !== 'DIVINE_SHIELD' || u.shield);
 function matchesCard(c: Card, f: CardFilter = {}, player?: Player, unit?: Unit): boolean {
-  const keys = unit ? unitMechanics(unit) : (c.mechanics ?? []);
+  const keys = unit ? unitMechanics(unit) : cardMechanics(c);
   const attack = unit?.attack ?? cardStats(c).attack;
   return (
     (!f.type || c.type === f.type) &&
@@ -806,6 +807,7 @@ function summon(
   commander = false,
   position = s.players[p].board.length,
 ) {
+  c = { ...c, mechanics: cardMechanics(c) };
   const x = s.players[p];
   if (x.board.length >= 7) throw Error('Battlefield is full');
   x.board.splice(position, 0, {
@@ -1517,6 +1519,7 @@ function runScript(
             matchesCard(e.card, step.filter, p),
         )
         .map((e) => e.card!);
+      if (step.distinct) pool = [...new Map(pool.map((c) => [c.name, c])).values()];
       if (step.order === 'highest Cost' && pool.length) {
         const max = Math.max(...pool.map((c) => c.cost));
         pool = pool.filter((c) => c.cost === max);

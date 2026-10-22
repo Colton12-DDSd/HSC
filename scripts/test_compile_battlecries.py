@@ -10,6 +10,11 @@ spec.loader.exec_module(compiler)
 compiler.current_card={'id':'TEST','set':'LEGACY'}
 
 class CompleteTextTests(unittest.TestCase):
+    def test_five_group_clauses_preserve_restrictions(self):
+        self.assertEqual(compiler.compile('Resurrect all different friendly minions that cost (8) or more.'),[{'op':'resurrect','filter':{'type':'MINION','minCost':8},'amount':7,'distinct':True}])
+        self.assertEqual(compiler.compile('Draw a spell. Your hero takes damage equal to its Cost.'),[{'op':'draw-linked','amount':1,'filter':{'type':'SPELL'},'mode':'self-damage'}])
+        self.assertIsNone(compiler.compile('Discard all weapons from your hand and gain their stats. Do an unknown thing.'))
+
     def test_precision_effects_keep_chosen_targets_and_complete_conditions(self):
         self.assertEqual(compiler.compile("Choose a character. If it's friendly, restore 8 Health. If it's an enemy, deal 8 damage."),[{'op':'allegiance-effect','scope':'target','target':'character','amount':8}])
         self.assertEqual(compiler.compile("Both players draw a card. If it's a Dragon, summon it."),[{'op':'draw-summon-matching','filter':{'type':'MINION','tribe':'DRAGON'}}])

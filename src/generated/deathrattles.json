@@ -82,6 +82,19 @@
       }
     ]
   },
+  "DED_505": {
+    "text": "[x]<b>Battlecry and Deathrattle:</b>\nDraw a spell. Your hero takes\ndamage equal to its Cost.",
+    "steps": [
+      {
+        "op": "draw-linked",
+        "amount": 1,
+        "filter": {
+          "type": "SPELL"
+        },
+        "mode": "self-damage"
+      }
+    ]
+  },
   "DEEP_030": {
     "text": "<b>Battlecry and Deathrattle:</b>\nDraw a card. Deal 2 damage to your hero.",
     "steps": [

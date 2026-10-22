@@ -32,6 +32,11 @@ export interface Card {
   collectible: boolean;
   wildLegal: boolean | null;
 }
+// The pinned BE_171 record omits the Taunt keyword printed in its card text.
+// Keep the raw snapshot intact and apply the reviewed correction to game objects.
+export function cardMechanics(c: Card): string[] {
+  return c.id === 'BE_171' ? [...new Set([...(c.mechanics ?? []), 'TAUNT'])] : (c.mechanics ?? []);
+}
 export interface Deck {
   version: 1;
   id?: string;

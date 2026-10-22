@@ -1,8 +1,8 @@
 {
   "snapshot": "2026-10-18",
   "basis": "Pinned local collection; exact remaining-name membership from the support audit",
-  "supportedBattlecryNames": 920,
-  "totalRemaining": 975,
+  "supportedBattlecryNames": 930,
+  "totalRemaining": 965,
   "replacementCharacterPrintings": 0,
   "lanes": [
     {
@@ -13,7 +13,7 @@
     {
       "id": "shared",
       "label": "Extend a shared engine family",
-      "count": 406
+      "count": 396
     },
     {
       "id": "system",
@@ -74,28 +74,28 @@
       "label": "Copies, transformations, swaps and control",
       "lane": "shared",
       "work": "Extend physical-card copying, stat preservation, owner/controller identity and linked swaps or transformations.",
-      "count": 48
+      "count": 46
     },
     {
       "id": "death-memory",
       "label": "Deathrattles, resurrection and remembered victims",
       "lane": "shared",
       "work": "Track the exact destroyed/discarded/chosen minion and carry that identity into later Deathrattles or resurrection.",
-      "count": 86
+      "count": 83
     },
     {
       "id": "weapons-combat",
       "label": "Weapons, forced attacks and combat restrictions",
       "lane": "shared",
       "work": "Extend weapon effects, durability, forced combat, repeated attacks and special attack restrictions.",
-      "count": 35
+      "count": 34
     },
     {
       "id": "history",
       "label": "History, thresholds and scaling conditions",
       "lane": "shared",
       "work": "Extend public history, while-held counters, distinct schools/types, spent mana, starting decks and previous-turn queries.",
-      "count": 61
+      "count": 57
     },
     {
       "id": "scheduling",
@@ -221,17 +221,17 @@
     {
       "id": "damage-stats",
       "label": "Damage, healing, Armor and board stats",
-      "count": 422
+      "count": 417
     },
     {
       "id": "draw-zones",
       "label": "Draw, discard and hand/deck movement",
-      "count": 338
+      "count": 332
     },
     {
       "id": "summon-tokens",
       "label": "Summons, recruits and token definitions",
-      "count": 141
+      "count": 139
     },
     {
       "id": "generate-pools",
@@ -241,7 +241,7 @@
     {
       "id": "cost-mana",
       "label": "Card costs, mana and ordinary discounts",
-      "count": 212
+      "count": 210
     },
     {
       "id": "choices",
@@ -251,22 +251,22 @@
     {
       "id": "copy-transform",
       "label": "Copies, transformations, swaps and control",
-      "count": 151
+      "count": 148
     },
     {
       "id": "death-memory",
       "label": "Deathrattles, resurrection and remembered victims",
-      "count": 118
+      "count": 115
     },
     {
       "id": "weapons-combat",
       "label": "Weapons, forced attacks and combat restrictions",
-      "count": 49
+      "count": 48
     },
     {
       "id": "history",
       "label": "History, thresholds and scaling conditions",
-      "count": 180
+      "count": 174
     },
     {
       "id": "scheduling",
@@ -6534,31 +6534,6 @@
       ]
     },
     {
-      "name": "Death Blossom Whomper",
-      "primary": "death-memory",
-      "lane": "shared",
-      "dependencies": [
-        "death-memory",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "REV_310",
-          "text": "<b>Battlecry:</b> Draw a <b>Deathrattle</b> minion and gain its <b>Deathrattle.</b>",
-          "normalizedText": "Battlecry: Draw a Deathrattle minion and gain its Deathrattle.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Deathwing, Mad Aspect",
       "primary": "weapons-combat",
       "lane": "shared",
@@ -9101,32 +9076,6 @@
       ]
     },
     {
-      "name": "Felscale Evoker",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "summon-tokens",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "NX2_026",
-          "text": "[x]<b>Battlecry:</b> If you've cast three\nspells while holding this,\nsummon a different Demon\nfrom your deck.@ <i>({0} left!)</i>@ <i>(Ready!)</i>",
-          "normalizedText": "Battlecry: If you've cast three spells while holding this, summon a different Demon from your deck.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Felsoul Jailer",
       "primary": "death-memory",
       "lane": "shared",
@@ -9669,32 +9618,6 @@
           "id": "LOOT_150",
           "text": "<b>Battlecry:</b> Transform a friendly minion into a 6/6 Elemental.",
           "normalizedText": "Battlecry: Transform a friendly minion into a 6/6 Elemental.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Furnacefire Colossus",
-      "primary": "weapons-combat",
-      "lane": "shared",
-      "dependencies": [
-        "weapons-combat",
-        "draw-zones",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "ICC_096",
-          "text": "<b>Battlecry:</b> Discard all weapons from your hand and gain their stats.",
-          "normalizedText": "Battlecry: Discard all weapons from your hand and gain their stats.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -11476,34 +11399,6 @@
           "normalizedText": "Battlecry: Your next Murloc costs (1) less. Kindred: And gains Divine Shield.",
           "mechanics": [
             "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Hullbreaker",
-      "primary": "death-memory",
-      "lane": "shared",
-      "dependencies": [
-        "death-memory",
-        "cost-mana",
-        "draw-zones",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "DED_505",
-          "text": "[x]<b>Battlecry and Deathrattle:</b>\nDraw a spell. Your hero takes\ndamage equal to its Cost.",
-          "normalizedText": "Battlecry and Deathrattle: Draw a spell. Your hero takes damage equal to its Cost.",
-          "mechanics": [
-            "BATTLECRY",
-            "DEATHRATTLE"
           ]
         }
       ]
@@ -15208,31 +15103,6 @@
       ]
     },
     {
-      "name": "Merithra",
-      "primary": "death-memory",
-      "lane": "shared",
-      "dependencies": [
-        "death-memory",
-        "cost-mana"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "EDR_238",
-          "text": "[x]<b>Battlecry:</b> Resurrect all\ndifferent friendly minions\nthat cost (8) or more.",
-          "normalizedText": "Battlecry: Resurrect all different friendly minions that cost (8) or more.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Merithra of the Dream",
       "primary": "history",
       "lane": "shared",
@@ -15954,32 +15824,6 @@
             "BATTLECRY",
             "DEATHRATTLE",
             "TAUNT"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Muckmorpher",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform",
-        "history",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "DAL_052",
-          "text": "[x]<b>Battlecry:</b> Transform into\na 4/4 copy of a different\nminion in your deck.",
-          "normalizedText": "Battlecry: Transform into a 4/4 copy of a different minion in your deck.",
-          "mechanics": [
-            "BATTLECRY"
           ]
         }
       ]
@@ -18067,32 +17911,6 @@
       ]
     },
     {
-      "name": "Power Slider",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "ETC_408",
-          "text": "[x]<b>Rush</b>. <b>Battlecry:</b> Gain\n+1/+1 for each minion\nof a different type you've\nplayed this game.@ <i>(@)</i>",
-          "normalizedText": "Rush. Battlecry: Gain +1/+1 for each minion of a different type you've played this game.",
-          "mechanics": [
-            "BATTLECRY",
-            "RUSH"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Pozzik, Audio Engineer",
       "primary": "death-memory",
       "lane": "shared",
@@ -18275,33 +18093,6 @@
           "id": "TIME_213",
           "text": "[x]<b>Battlecry:</b> If you've cast a\nNature spell while holding\nthis,& gain +1/+1 and\ndraw a card.",
           "normalizedText": "Battlecry: If you've cast a Nature spell while holding this, gain +1/+1 and draw a card.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Primus of Power",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "copy-transform",
-        "summon-tokens",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "BE_171",
-          "text": "[x]<b><b>Taunt</b>.</b> <b>Battlecry:</b> If you've\nplayed two different spell\nschools while holding this,\n summon a copy of this.",
-          "normalizedText": "Taunt. Battlecry: If you've played two different spell schools while holding this, summon a copy of this.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -19589,32 +19380,6 @@
       ]
     },
     {
-      "name": "Rock Master Voone",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform",
-        "history",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "ETC_121",
-          "text": "<b>Battlecry:</b> Copy each minion of a different type in your hand.",
-          "normalizedText": "Battlecry: Copy each minion of a different type in your hand.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Rowdy Fan",
       "primary": "ongoing",
       "lane": "system",
@@ -20313,31 +20078,6 @@
           "mechanics": [
             "BATTLECRY",
             "RUSH"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Scorchfist Scholar",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "BE_303",
-          "text": "[x]<b>Battlecry:</b> If you've played\ntwo different spell schools\nwhile holding this, deal 4\n  damage to all enemies.",
-          "normalizedText": "Battlecry: If you've played two different spell schools while holding this, deal 4 damage to all enemies.",
-          "mechanics": [
-            "BATTLECRY"
           ]
         }
       ]

@@ -1,4 +1,5 @@
 import { cardStats, type Card } from './cards';
+import { deathrattleFor } from './effects';
 import type { Game, Player, Unit, Target } from './engine';
 import type { CardFilter, ScriptStep } from './script-types';
 
@@ -28,6 +29,9 @@ export const foundationOperations = [
   'fatigue-payoff',
   'summon-sized',
   'menagerie',
+  'held-spells',
+  'discard-weapons-stats',
+  'deck-copy',
   'swap-extreme-attack',
   'burn-or-draw',
   'recruit-gain',
@@ -65,6 +69,49 @@ export function resolveFoundation(
     self = p.board.find((u) => u.uid === sourceUid);
   const op = step.op;
   if (!foundationOperations.includes(op)) return false;
+  if (op === 'held-spells') {
+    const spells = (s.events ?? []).filter(
+      (e, i) =>
+        i >= (source.heldSince ?? 0) &&
+        e.type === 'play' &&
+        e.player === player &&
+        e.card?.type === 'SPELL',
+    );
+    const count = step.distinct
+      ? new Set(spells.map((e) => e.card!.spellSchool).filter(Boolean)).size
+      : spells.length;
+    if (count >= amount) h.run(step.steps ?? []);
+  }
+  if (op === 'discard-weapons-stats') {
+    const weapons = p.hand.filter((c) => c.type === 'WEAPON');
+    p.hand = p.hand.filter((c) => c.type !== 'WEAPON');
+    for (const c of weapons) {
+      const { modifiers: _modifiers, printedCost, temporaryCosts: _costs, ...printed } = c;
+      p.grave.push({ ...printed, cost: printedCost ?? c.cost });
+      const stats = cardStats(c);
+      if (self)
+        h.buff(
+          self,
+          stats.attack,
+          (c.durability || c.health || 1) + (c.modifiers ?? []).reduce((n, m) => n + m.health, 0),
+        );
+      h.note(`${p.name} discards ${c.name}`);
+    }
+  }
+  if (op === 'deck-copy') {
+    const pool = p.deck.filter((c) => c.type === 'MINION' && c.name !== source.name);
+    if (pool.length)
+      h.run([
+        {
+          op: 'transform',
+          scope: 'self',
+          from: 'token',
+          token: pool[h.random(pool.length)].id,
+          attack: step.attack,
+          health: step.health,
+        },
+      ]);
+  }
   if (op === 'hand-limit') {
     p.maxHandSize = amount;
     h.note(`${p.name}'s hand limit is ${amount}`);
@@ -111,9 +158,13 @@ export function resolveFoundation(
   }
   if (op === 'menagerie') {
     const items =
-      step.zone === 'hand'
-        ? p.hand.filter((c) => c.type === 'MINION')
-        : p.board.filter((u) => u.health > 0 && u.uid !== sourceUid);
+      step.zone === 'played'
+        ? (s.events ?? []).flatMap((e) =>
+            e.type === 'play' && e.player === player && e.card?.type === 'MINION' ? [e.card] : [],
+          )
+        : step.zone === 'hand'
+          ? p.hand.filter((c) => c.type === 'MINION')
+          : p.board.filter((u) => u.health > 0 && u.uid !== sourceUid);
     const cards = items.map((x) => ('card' in x ? x.card : x));
     const all = [
       'BEAST',
@@ -152,8 +203,14 @@ export function resolveFoundation(
     };
     for (const i of order) assign(i, new Set());
     const selected = [...new Set(assignments.values())].slice(0, amount);
-    for (const i of selected) {
+    if (step.mode === 'self' && self)
+      h.buff(self, selected.length * (step.attack ?? 0), selected.length * (step.health ?? 0));
+    for (const i of step.mode === 'self' ? [] : selected) {
       const x = items[i];
+      if (step.mode === 'copy' && !('card' in x)) {
+        h.add(player, x);
+        continue;
+      }
       if ('card' in x) h.buff(x, step.attack ?? 0, step.health ?? 0);
       else
         (x.modifiers ??= []).push({
@@ -260,6 +317,18 @@ export function resolveFoundation(
         }
         c.printedCost ??= c.cost;
         c.cost = stat;
+      }
+      if (step.mode === 'self-damage') h.damage({ p: player }, c.cost);
+      if (step.mode === 'deathrattle' && self) {
+        const effect = deathrattleFor(c);
+        if (effect)
+          (self.grantedDeathrattles ??= []).push({
+            source: structuredClone(c),
+            steps:
+              effect.type === 'script'
+                ? structuredClone(effect.steps)
+                : [{ op: 'legacy-deathrattle', token: c.id }],
+          });
       }
       if (step.mode === 'armor') {
         p.armor += c.cost;

@@ -1327,6 +1327,22 @@
       }
     ]
   },
+  "BE_171": {
+    "text": "[x]<b><b>Taunt</b>.</b> <b>Battlecry:</b> If you've\nplayed two different spell\nschools while holding this,\n summon a copy of this.",
+    "steps": [
+      {
+        "op": "held-spells",
+        "amount": 2,
+        "distinct": true,
+        "steps": [
+          {
+            "op": "summon-self",
+            "amount": 1
+          }
+        ]
+      }
+    ]
+  },
   "BE_209": {
     "text": "<b>Battlecry:</b> For the rest of\nthe game, Elementals you summon have their stats set to 5/5.",
     "steps": [
@@ -1361,6 +1377,23 @@
         "amount": 2,
         "mode": "non-minion-elemental",
         "token": "VAC_509t"
+      }
+    ]
+  },
+  "BE_303": {
+    "text": "[x]<b>Battlecry:</b> If you've played\ntwo different spell schools\nwhile holding this, deal 4\n  damage to all enemies.",
+    "steps": [
+      {
+        "op": "held-spells",
+        "amount": 2,
+        "distinct": true,
+        "steps": [
+          {
+            "op": "damage",
+            "scope": "enemies",
+            "amount": 4
+          }
+        ]
       }
     ]
   },
@@ -4395,6 +4428,16 @@
       }
     ]
   },
+  "DAL_052": {
+    "text": "[x]<b>Battlecry:</b> Transform into\na 4/4 copy of a different\nminion in your deck.",
+    "steps": [
+      {
+        "op": "deck-copy",
+        "attack": 4,
+        "health": 4
+      }
+    ]
+  },
   "DAL_058": {
     "text": "<b>Taunt</b>\n<b>Battlecry:</b> Your opponent summons a minion from their deck.",
     "steps": [
@@ -4836,6 +4879,19 @@
     "steps": [
       {
         "op": "swap-extreme-attack"
+      }
+    ]
+  },
+  "DED_505": {
+    "text": "[x]<b>Battlecry and Deathrattle:</b>\nDraw a spell. Your hero takes\ndamage equal to its Cost.",
+    "steps": [
+      {
+        "op": "draw-linked",
+        "amount": 1,
+        "filter": {
+          "type": "SPELL"
+        },
+        "mode": "self-damage"
       }
     ]
   },
@@ -5960,6 +6016,20 @@
       }
     ]
   },
+  "EDR_238": {
+    "text": "[x]<b>Battlecry:</b> Resurrect all\ndifferent friendly minions\nthat cost (8) or more.",
+    "steps": [
+      {
+        "op": "resurrect",
+        "filter": {
+          "type": "MINION",
+          "minCost": 8
+        },
+        "amount": 7,
+        "distinct": true
+      }
+    ]
+  },
   "EDR_430": {
     "text": "[x]<b>Battlecry:</b> If 20 friendly\nminions have died this game,\ndeal 20 damage split among\nall enemies.@ <i>({0} left!)</i>@ <i>(Ready!)</i>",
     "steps": [
@@ -6293,6 +6363,17 @@
       }
     ]
   },
+  "ETC_121": {
+    "text": "<b>Battlecry:</b> Copy each minion of a different type in your hand.",
+    "steps": [
+      {
+        "op": "menagerie",
+        "zone": "hand",
+        "amount": 20,
+        "mode": "copy"
+      }
+    ]
+  },
   "ETC_209": {
     "text": "<b>Battlecry:</b> Deal 2 damage.\n<b>Finale:</b> To all enemies.",
     "steps": [
@@ -6401,6 +6482,19 @@
             }
           }
         ]
+      }
+    ]
+  },
+  "ETC_408": {
+    "text": "[x]<b>Rush</b>. <b>Battlecry:</b> Gain\n+1/+1 for each minion\nof a different type you've\nplayed this game.@ <i>(@)</i>",
+    "steps": [
+      {
+        "op": "menagerie",
+        "zone": "played",
+        "amount": 100,
+        "mode": "self",
+        "attack": 1,
+        "health": 1
       }
     ]
   },
@@ -8176,6 +8270,14 @@
         "filter": {
           "type": "MINION"
         }
+      }
+    ]
+  },
+  "ICC_096": {
+    "text": "<b>Battlecry:</b> Discard all weapons from your hand and gain their stats.",
+    "steps": [
+      {
+        "op": "discard-weapons-stats"
       }
     ]
   },
@@ -10166,6 +10268,27 @@
       }
     ]
   },
+  "NX2_026": {
+    "text": "[x]<b>Battlecry:</b> If you've cast three\nspells while holding this,\nsummon a different Demon\nfrom your deck.@ <i>({0} left!)</i>@ <i>(Ready!)</i>",
+    "steps": [
+      {
+        "op": "held-spells",
+        "amount": 3,
+        "steps": [
+          {
+            "op": "recruit",
+            "zone": "deck",
+            "filter": {
+              "type": "MINION",
+              "tribe": "DEMON",
+              "notName": "Felscale Evoker"
+            },
+            "amount": 1
+          }
+        ]
+      }
+    ]
+  },
   "NX2_027": {
     "text": "<b>Taunt</b>. <b>Battlecry:</b> If you have 5 or more Armor, summon a copy of this.",
     "steps": [
@@ -10597,6 +10720,20 @@
         },
         "amount": 1,
         "enemy": false
+      }
+    ]
+  },
+  "REV_310": {
+    "text": "<b>Battlecry:</b> Draw a <b>Deathrattle</b> minion and gain its <b>Deathrattle.</b>",
+    "steps": [
+      {
+        "op": "draw-linked",
+        "amount": 1,
+        "filter": {
+          "type": "MINION",
+          "keyword": "DEATHRATTLE"
+        },
+        "mode": "deathrattle"
       }
     ]
   },

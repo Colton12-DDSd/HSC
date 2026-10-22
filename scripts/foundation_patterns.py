@@ -12,6 +12,16 @@ def compile_foundation(t, compile, target, filt, num, keywords, refs, card, choo
     if t == 'Draw a Rush, Lifesteal, and Deathrattle card from your deck':return [dict(op='draw',amount=1,filter={'keyword':k}) for k in ('RUSH','LIFESTEAL','DEATHRATTLE')]
     if t == "Draw a card for each different spell school you've cast this game":return [dict(op='draw',amount={'count':'spell-schools-played'})]
     if t == 'If 20 friendly minions have died this game, deal 20 damage split among all enemies':return [dict(op='if',condition={'zone':'friendly-deaths','min':20},steps=[dict(op='missiles',scope='enemies',amount=20)])]
+    if t == 'Copy each minion of a different type in your hand':return [dict(op='menagerie',zone='hand',amount=20,mode='copy')]
+    if t == "Gain +1/+1 for each minion of a different type you've played this game":return [dict(op='menagerie',zone='played',amount=100,mode='self',attack=1,health=1)]
+    if t == "If you've cast three spells while holding this, summon a different Demon from your deck":return [dict(op='held-spells',amount=3,steps=[dict(op='recruit',zone='deck',filter={'type':'MINION','tribe':'DEMON','notName':card['name']},amount=1)])]
+    if t == "If you've played two different spell schools while holding this, summon a copy of this":return [dict(op='held-spells',amount=2,distinct=True,steps=[dict(op='summon-self',amount=1)])]
+    if t == "If you've played two different spell schools while holding this, deal 4 damage to all enemies":return [dict(op='held-spells',amount=2,distinct=True,steps=[dict(op='damage',scope='enemies',amount=4)])]
+    if t == 'Draw a Deathrattle minion and gain its Deathrattle':return [dict(op='draw-linked',amount=1,filter={'type':'MINION','keyword':'DEATHRATTLE'},mode='deathrattle')]
+    if t == 'Draw a spell. Your hero takes damage equal to its Cost':return [dict(op='draw-linked',amount=1,filter={'type':'SPELL'},mode='self-damage')]
+    if t == 'Discard all weapons from your hand and gain their stats':return [dict(op='discard-weapons-stats')]
+    if t == 'Transform into a 4/4 copy of a different minion in your deck':return [dict(op='deck-copy',attack=4,health=4)]
+    if t == 'Resurrect all different friendly minions that cost (8) or more':return [dict(op='resurrect',filter={'type':'MINION','minCost':8},amount=7,distinct=True)]
     m=re.fullmatch(r'Give your weapon \+(\d+) (Attack|Durability)',t)
     if m:return [dict(op='buff',attack=int(m[1]) if m[2]=='Attack' else 0,health=int(m[1]) if m[2]=='Durability' else 0,scope='weapon')]
     m=re.fullmatch(r'Remove (\d+) Durability from your opponent\x27s weapon',t)

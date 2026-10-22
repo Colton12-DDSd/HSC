@@ -1,6 +1,6 @@
 # Remaining Battlecries — 2026-10-22
 
-**975 unique Battlecry minion names remain unsupported** in the pinned collection. This list is an implementation backlog, not enabled content. Some require new systems (auras, Secrets, spell casting/repetition, hero powers, mana/health/corpse resources, custom card construction, Infuse, Forge, Herald, Ritual and other expansion mechanics); others need additional full-clause patterns or card-specific rules. Existing numeric templates alone cannot finish the list.
+**965 unique Battlecry minion names remain unsupported** in the pinned collection. This list is an implementation backlog, not enabled content. Some require new systems (auras, Secrets, spell casting/repetition, hero powers, mana/health/corpse resources, custom card construction, Infuse, Forge, Herald, Ritual and other expansion mechanics); others need additional full-clause patterns or card-specific rules. Existing numeric templates alone cannot finish the list.
 
 Unknown clauses remain blocked. Generated-card abilities are tracked independently from the source Battlecry. Local sandbox decks do not assert Wild legality. Run `npm run audit:battlecries` to regenerate both this backlog and the added-card manifest.
 
@@ -203,7 +203,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Darkfallen Neophyte | RLK_731 | Battlecry: Spend 2 Corpses to give all minions in your hand +2 Attack. |
 | Darkrider | EDR_456 | Battlecry: If you're holding a Dragon, Discover a Dragon with a Dark Gift. |
 | Darkspeaker | OG_102 | Battlecry: Swap stats with a friendly minion. |
-| Death Blossom Whomper | REV_310 | Battlecry: Draw a Deathrattle minion and gain its Deathrattle. |
 | Deathwing, Mad Aspect | DRG_026 | Battlecry: Attack ALL other minions. |
 | Decimator Olgra | REV_934 | Battlecry: Gain +1/+1 for each damaged minion, then attack all enemies. |
 | Deepminer Brann | DEEP_020 | Battlecry: If your deck started with no duplicates, your Battlecries trigger twice for the rest of the game. |
@@ -298,7 +297,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Fate Weaver | DRG_300 | Battlecry: If you've Invoked twice, reduce the Cost of cards in your hand by (1). |
 | Fatebreaker | TIME_028 | Lifesteal Battlecry: Cast a Shred of Time from your deck to gain +3/+3. |
 | Fearless Flamejuggler | VAC_942 | Battlecry: Gain stats equal to the damage your hero has taken this turn. |
-| Felscale Evoker | NX2_026 | Battlecry: If you've cast three spells while holding this, summon a different Demon from your deck. |
 | Felsoul Jailer | CS3_003 | Battlecry: Your opponent discards a minion. Deathrattle: Return it. |
 | Felwalker | AV_286 | Taunt. Battlecry: Cast the highest Cost Fel spell from your hand. |
 | Felwood Treant | CATA_131 | Battlecry: Gain a temporary Mana Crystal. If you spent 4 Mana while holding this, it's permanent. ({0} left!) |
@@ -319,7 +317,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Freebird | ETC_336 | Charge Battlecry: Gain +1/+1 for each other Freebird you've played this game. |
 | Frostburn Matriarch | FIR_901 | Battlecry: If you're holding a minion with a Dark Gift, summon two 4/4 Dragons with Taunt. |
 | Furbolg Mossbinder | LOOT_150 | Battlecry: Transform a friendly minion into a 6/6 Elemental. |
-| Furnacefire Colossus | ICC_096 | Battlecry: Discard all weapons from your hand and gain their stats. |
 | Future Emissary | WON_140 | Battlecry: Reduce the Cost of all Dragons in your hand by (1). Give them +1/+1. |
 | Futuristic Forefather | TIME_041 | Taunt. Battlecry: Look at 3 cards. Guess which one is in your opponent's hand to gain +4 Health. |
 | Fyrakk the Blazing | FIR_959 | Immune to Fire spells. Battlecry: Cast 15 Mana worth of Fire spells at random enemies. |
@@ -385,7 +382,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Horseshoe Slinger | WW_900 | Battlecry: Deal 2 damage to a random enemy minion. Quickdraw: And one of its neighbors. |
 | Hostile Invader | GDB_226 | Battlecry, Spellburst, and Deathrattle: Deal 2 damage to all other minions. |
 | Hot Spring Glider | TLC_428 | Battlecry: Your next Murloc costs (1) less. Kindred: And gains Divine Shield. |
-| Hullbreaker | DED_505 | Battlecry and Deathrattle: Draw a spell. Your hero takes damage equal to its Cost. |
 | Huntsman Altimor | REV_353 | Battlecry: Summon a Gargon Companion. Infuse ({0}): Summon another. Infuse ({1}): And another! |
 | Husk, Eternal Reaper | TIME_618 | Battlecry: Give your hero "Deathrattle: Spend up to 20 Corpses to resurrect with that much Health." |
 | Hydralisk | SC_008 | Battlecry: Deal 2 damage to a random enemy. Repeat for each other Zerg minion you control. |
@@ -520,7 +516,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Medivh, the Guardian | KAR_097 | Battlecry: Equip Atiesh, Greatstaff of the Guardian. |
 | Menagerie Warden | KAR_065, WON_305 | Battlecry: Choose a friendly Beast. Summon a copy of it. |
 | Merchant of Legend | TLC_514 | Battlecry: Discover a Legendary minion. Shuffle the other two into your deck. |
-| Merithra | EDR_238 | Battlecry: Resurrect all different friendly minions that cost (8) or more. |
 | Merithra of the Dream | CATA_140 | Battlecry: Fill your hand with random Dragons. If you spent 25 Mana while holding this, they cost (1). ({0} left!) |
 | Mes'Adune the Fractured | WW_429 | Battlecry: Draw an Elemental. Split it into two halves. |
 | Metamorfin | SW_451 | Taunt Battlecry: If you've cast a Fel spell this turn, gain +2/+2. |
@@ -548,7 +543,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Morchie | END_036 | Your Rewinds keep BOTH potential outcomes. Battlecry: Discover a Rewind card from any class. |
 | Mordresh Fire Eye | BAR_547 | Battlecry: If you've dealt 10 damage with your Hero Power this game, deal 10 damage to all enemies. |
 | Mothership | SC_762 | Taunt Battlecry and Deathrattle: Get two random Protoss minions. |
-| Muckmorpher | DAL_052 | Battlecry: Transform into a 4/4 copy of a different minion in your deck. |
 | Muradin, High King | TIME_209 | Fabled, Rush. Battlecry: Bring the High King's Hammer to ME! Deathrattle: Add it to your hand. |
 | Murloc Growfin | MIS_307 | Gigantify Battlecry: Summon a Tinyfin with Rush and stats equal to this minion's. |
 | Murloc Holmes | REV_022 | Battlecry: Solve 3 Clues about your opponent's cards to get copies of them. |
@@ -625,7 +619,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Portal Overfiend | DAL_565 | Battlecry: Shuffle 3 Portals into your deck. When drawn, summon a 2/2 Demon with Rush. |
 | Portal Vanguard | TIME_003 | Rewind Battlecry: Draw a random minion. Give it +2/+2. |
 | Portalmancer Skyla | WORK_063 | Rogue Tourist Battlecry: Swap the Costs of the lowest and highest Cost spells in your hand. |
-| Power Slider | ETC_408 | Rush. Battlecry: Gain +1/+1 for each minion of a different type you've played this game. |
 | Pozzik, Audio Engineer | ETC_425 | Battlecry: Add two 3/3 Bots to your opponent's hand. Deathrattle: Summon them for yourself. |
 | Prestor's Pyromancer | SW_112 | Battlecry: Your next Fire spell has Spell Damage +2. |
 | Pride Seeker | AV_296 | Battlecry: Your next Choose One card costs (2) less. |
@@ -633,7 +626,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Primalfin Challenger | TLC_251 | Battlecry: Your next Kindred triggers twice. |
 | Primordial Lord | CATA_EVENT_000 | Battlecry: Get a random Colossal minion from the past. |
 | Primordial Overseer | TIME_213 | Battlecry: If you've cast a Nature spell while holding this, gain +1/+1 and draw a card. |
-| Primus of Power | BE_171 | Taunt. Battlecry: If you've played two different spell schools while holding this, summon a copy of this. |
 | Prince Liam | GIL_694 | Battlecry: Transform all 1-Cost cards in your deck into Legendary minions. |
 | Princess Talanji | TRL_259 | Battlecry: Summon all minions from your hand that didn't start in your deck. |
 | Private Eye | REV_826 | Battlecry: Cast a Secret from your deck. Combo: Cast 2 instead. |
@@ -681,7 +673,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Rimescale Siren | NX2_035 | Battlecry: If you've cast three spells while holding this, Freeze 3 random enemy minions. |
 | Roach | SC_012 | When you draw this, get a copy of it. Battlecry: If you control another Zerg minion, gain +1/+2. |
 | Robocaller | WORK_006 | Battlecry: Draw an {0}, {1}, and {2}-Cost card. (Numbers dialed randomly each turn!) |
-| Rock Master Voone | ETC_121 | Battlecry: Copy each minion of a different type in your hand. |
 | Rowdy Fan | ETC_107 | Battlecry: Choose a minion. It has +4 Attack while this is alive. |
 | Royal Informant | TIME_036 | Battlecry: Look at the right- most card in your opponent's hand. Either get a copy of it or increase its Cost by (2). |
 | Royal Librarian | CORE_SW_066, SW_066 | Tradeable Battlecry: Silence a minion. |
@@ -707,7 +698,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | School Teacher | TSC_052 | Battlecry: Add a 1/1 Nagaling to your hand. Discover a spell that costs (3) or less to teach it. |
 | Scion of Insight | BE_298 | Battlecry: Discover a Blood, Frost or Unholy card. Gain Lifesteal, Reborn or Rush based on your choice. |
 | Scion of Ruin | DRG_019 | Rush. Battlecry: If you've Invoked twice, summon 2 copies of this. |
-| Scorchfist Scholar | BE_303 | Battlecry: If you've played two different spell schools while holding this, deal 4 damage to all enemies. |
 | Scorching Ravager | CATA_160 | Battlecry: Herald {0}. Give the Soldier Rush. |
 | Scourge Tamer | RLK_821 | Battlecry: Craft a custom Zombeast. |
 | Scrapbooking Student | VAC_529 | Battlecry: Summon a copy of a friendly location. |

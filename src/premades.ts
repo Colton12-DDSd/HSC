@@ -29,7 +29,7 @@ export const premades: Premade[] = [
     objectives: [
       'Place Alleycat or Desert Hare between two minions; their summons do not repeat Battlecries.',
       'Play Giggling Inventor, then Blood Knight; verify every consumed Shield adds +3/+3.',
-      'Fill the seven slots and verify excess summons stop without removing existing minions.',
+      'Play different tribes before Power Slider; use Rock Master Voone to copy one representative per tribe in hand.',
     ],
     opening: ['Alleycat', 'Desert Hare', 'Giggling Inventor', 'Blood Knight', 'Argent Braggart'],
     core: [
@@ -43,6 +43,8 @@ export const premades: Premade[] = [
       'Twin Tyrant',
       'Veranus',
       'Aessina',
+      'Power Slider',
+      'Rock Master Voone',
     ],
     operations: [
       'summon-token',
@@ -90,14 +92,14 @@ export const premades: Premade[] = [
     objectives: [
       'Use Excavation Specialist to discount a bottom-three card and put it on top; draw it next.',
       'Draw with Sharp-Eyed Lookout; check the discount disappears at the end of the turn.',
-      'Play Deepwater Evoker and compare Armor gained with the exact spell drawn.',
+      'Keep Primus in hand while casting Fire and Frost spells, then play it to summon a Taunt copy; Muckmorpher copies deck abilities without Battlecries.',
     ],
     opening: [
       'Excavation Specialist',
       'Novice Engineer',
       'Sharp-Eyed Lookout',
       'Deepwater Evoker',
-      'Sightless Watcher',
+      'Primus of Power',
     ],
     core: [
       'Igneous Lavagorger',
@@ -111,6 +113,13 @@ export const premades: Premade[] = [
       'Primal Dungeoneer',
       'Bright-Eyed Scout',
       'Envoy of Prosperity',
+      'Muckmorpher',
+      'Felscale Evoker',
+      'Primus of Power',
+      'Scorchfist Scholar',
+      'Fireball',
+      'Frostbolt',
+      'Shadow Bolt',
     ],
     operations: [
       'draw-linked',
@@ -172,7 +181,7 @@ export const premades: Premade[] = [
     description: 'Deathrattle tokens, copied Deathrattles, resurrection and Reborn.',
     objectives: [
       'Copy a Loot Hoarder Deathrattle with Mok’Nathal Lion, then kill the Lion.',
-      'Trigger a Deathrattle without killing its owner.',
+      'Use Whomper to draw and copy a Deathrattle; Hullbreaker draws a spell and damages your hero by its Cost on play and death.',
       'Resurrect a fallen minion; verify that its Battlecry does not repeat.',
     ],
     core: [
@@ -187,13 +196,16 @@ export const premades: Premade[] = [
       'Twilight Summoner',
       'Onyx Bishop',
       'Psychopomp',
+      'Death Blossom Whomper',
+      'Hullbreaker',
+      'Merithra',
     ],
     opening: [
       'Loot Hoarder',
       "Mok'Nathal Lion",
       'Haunted Creeper',
       'Elven Archer',
-      'Novice Engineer',
+      'Death Blossom Whomper',
     ],
     operations: [
       'resurrect',
@@ -213,7 +225,7 @@ export const premades: Premade[] = [
     objectives: [
       'Equip Fiery War Axe, then Air Guitarist and Bloodsail Raider; compare current Durability and Attack.',
       'Break or replace a weapon, then use Hoard Pillager or Rummaging Kobold; discarded weapons do not count.',
-      'Use Harrison Jones for Durability-based draws or Gluttonous Ooze for Attack-based Armor; both affect every living opponent.',
+      'Discard hand weapons with Furnacefire Colossus; compare Attack and Durability gained, then verify these were not destroyed weapons.',
     ],
     core: [
       'Crystallizer',
@@ -237,6 +249,7 @@ export const premades: Premade[] = [
       'Rummaging Kobold',
       'Luckydo Buccaneer',
       'Grimtotem Buzzkill',
+      'Furnacefire Colossus',
     ],
     opening: [
       'Fiery War Axe',

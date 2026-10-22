@@ -1,6 +1,6 @@
 # Battlecry expansion — 2026-10-22
 
-Added **378 unique names** beyond the 542-name baseline at e2bd7a0. Current coverage: **920 Battlecry names**. See [rules, tests and deck guide](TEST-DECKS.md).
+Added **388 unique names** beyond the 542-name baseline at e2bd7a0. Current coverage: **930 Battlecry names**. See [rules, tests and deck guide](TEST-DECKS.md).
 
 | Minion | Enabled printings | Printed rules |
 | --- | --- | --- |
@@ -86,6 +86,7 @@ Added **378 unique names** beyond the 542-name baseline at e2bd7a0. Current cove
 | Curious Grimlynx | BE_850t | Taunt. Battlecry: Summon a {0}/{1} Beast with Rush. (It has the opposite stats of this minion!) |
 | Darkshire Librarian | OG_109 | Battlecry: Discard a random card. Deathrattle: Draw a card. |
 | Darnassus Aspirant | AT_038 | Battlecry: Gain an empty Mana Crystal. Deathrattle: Lose a Mana Crystal. |
+| Death Blossom Whomper | REV_310 | Battlecry: Draw a Deathrattle minion and gain its Deathrattle. |
 | Deathwing | NEW1_030 | Battlecry: Destroy all other minions and discard your hand. |
 | Deathwing the Destroyer | LEG_CS3_036 | Battlecry: Destroy all other minions. Discard a card for each destroyed. |
 | Deepwater Evoker | DED_516 | Battlecry: Draw a spell. Gain Armor equal to its Cost. |
@@ -129,6 +130,7 @@ Added **378 unique names** beyond the 542-name baseline at e2bd7a0. Current cove
 | Felerin, the Forgotten | RLK_215 | Battlecry: Add a random Outcast card to the left and right sides of your hand. They cost (2) less. |
 | Felgorger | SW_043 | Battlecry: Draw a Fel spell. Reduce its Cost by (2). |
 | Felguard | EX1_301 | Taunt Battlecry: Destroy one of your Mana Crystals. |
+| Felscale Evoker | NX2_026 | Battlecry: If you've cast three spells while holding this, summon a different Demon from your deck. |
 | Fiddlefire Imp | JAM_032 | Battlecry: Add a random Fire Mage and Fire Warlock spell to your hand. |
 | Fight Promoter | CFM_328 | Battlecry: If you control a minion with 6 or more Health, draw two cards. |
 | Fire Breather | DMF_110 | Battlecry: Deal 2 damage to all minions except Demons. |
@@ -141,6 +143,7 @@ Added **378 unique names** beyond the 542-name baseline at e2bd7a0. Current cove
 | Frantic Forger | JAIL_986 | Battlecry: Get a random playable spell. It is Temporary. |
 | Frequency Oscillator | ETC_106 | Battlecry: The next Mech you play costs (1) less. |
 | Frostweave Dungeoneer | WC_805 | Battlecry: Draw a spell. If it's a Frost spell, summon two 1/1 Elementals that Freeze. |
+| Furnacefire Colossus | ICC_096 | Battlecry: Discard all weapons from your hand and gain their stats. |
 | Gadgetzan Jouster | AT_133 | Battlecry: Reveal a minion in each deck. If yours costs more, gain +1/+1. |
 | Gaslight Gatekeeper | WW_398 | Battlecry: Shuffle your hand into your deck, then draw that many cards. |
 | Getaway Hogdriver | JAIL_462 | Battlecry: Draw 2 cards. If they're both minions, gain Charge. |
@@ -179,6 +182,7 @@ Added **378 unique names** beyond the 542-name baseline at e2bd7a0. Current cove
 | Hodir, Father of Giants | TTN_752 | Battlecry: Set the stats of the next three minions you play to 8/8. |
 | Hologram Operator | GDB_723 | Battlecry: Get 3 random Temporary Draenei. |
 | Holy Cowboy | WW_335 | Battlecry: Your next Holy spell costs (2) less. |
+| Hullbreaker | DED_505 | Battlecry and Deathrattle: Draw a spell. Your hero takes damage equal to its Cost. |
 | Hungry Crab | NEW1_017 | Battlecry: Destroy a Murloc and gain +2/+2. |
 | Ice Cream Peddler | TRL_533 | Battlecry: If you control a Frozen minion, gain 8 Armor. |
 | Icebelt Magi | BE_270 | Battlecry: Draw two cards. For each that isn't a minion, summon a 3/6 Water Elemental. |
@@ -222,11 +226,13 @@ Added **378 unique names** beyond the 542-name baseline at e2bd7a0. Current cove
 | Meddlesome Servant | YOG_518 | Battlecry: If you've cast 5 or more spells this game, draw 2 cards. |
 | Menagerie Jug | WON_142 | Battlecry: Give 3 random friendly minions of different minion types +2/+2. |
 | Menagerie Mug | CORE_WON_141, WON_141 | Battlecry: Give 3 random friendly minions of different minion types +1/+1. |
+| Merithra | EDR_238 | Battlecry: Resurrect all different friendly minions that cost (8) or more. |
 | Mister Mukla | ETC_836 | Rush. Battlecry: Fill your opponent's hand with Bananas. |
 | Mistrunner | YOP_022 | Battlecry: Give a friendly minion +3/+3. Overload: (1) |
 | Mok'Nathal Lion | BT_212 | Rush. Battlecry: Choose a friendly minion. Gain a copy of its Deathrattle. |
 | Morchok | CATA_570 | Battlecry: Draw a card and reduce its Cost by (10). Repeat this with excess Cost reduction. |
 | Mossy Horror | GIL_124 | Battlecry: Destroy all other minions with 2 or less Attack. |
+| Muckmorpher | DAL_052 | Battlecry: Transform into a 4/4 copy of a different minion in your deck. |
 | Multicaster | DED_524 | Battlecry: Draw a card for each different spell school you've cast this game. |
 | Murkspark Eel | GIL_530 | Battlecry: If your deck has only even-Cost cards, deal 2 damage. |
 | Murkwater Scribe | TSC_823 | Battlecry: The next spell you play costs (1) less. |
@@ -257,9 +263,11 @@ Added **378 unique names** beyond the 542-name baseline at e2bd7a0. Current cove
 | Pet Collector | ONY_009 | Battlecry: Summon a Beast from your deck that costs (5) or less. |
 | Platebreaker | DRG_069 | Battlecry: Destroy your opponent's Armor. |
 | Possessifier | LEG_RLK_077 | Battlecry: Summon two 1/1 Fighters with Rush and Reborn. |
+| Power Slider | ETC_408 | Rush. Battlecry: Gain +1/+1 for each minion of a different type you've played this game. |
 | Primal Dungeoneer | WC_005 | Battlecry: Draw a spell. If it's a Nature spell, also draw an Elemental. |
 | Primal Rockfang | BE_731 | Battlecry: Gain the Deathrattles of adjacent minions. |
 | Primordial Protector | BAR_042 | Battlecry: Draw your highest Cost spell. Summon a random minion with the same Cost. |
+| Primus of Power | BE_171 | Taunt. Battlecry: If you've played two different spell schools while holding this, summon a copy of this. |
 | Princess Huhuran | OG_309 | Battlecry: Trigger a friendly minion's Deathrattle. |
 | Prison Breaker | YOG_411 | Battlecry: If you've cast 5 or more spells this game, deal 2 damage to all enemies. |
 | Prize Vendor | CORE_DMF_067, DMF_067 | Battlecry and Deathrattle: Each player draws a card. |
@@ -277,6 +285,7 @@ Added **378 unique names** beyond the 542-name baseline at e2bd7a0. Current cove
 | Reno Jackson | LOE_011 | Battlecry: If your deck has no duplicates, fully heal your hero. |
 | Revenant Rascal | DMF_115 | Battlecry: Destroy a Mana Crystal for each player. |
 | Riftcleaver | CORE_ULD_165, ULD_165 | Battlecry: Destroy a minion. Your hero takes damage equal to its Health. |
+| Rock Master Voone | ETC_121 | Battlecry: Copy each minion of a different type in your hand. |
 | Rocket Augmerchant | BT_723 | Battlecry: Deal 1 damage to a minion and give it Rush. |
 | Rockskipper | TLC_427 | Battlecry: Get a 1-Cost Rock that deals 3 damage. |
 | Rolling Stone | ETC_742 | Rush Battlecry: If the last card you played costs (1), gain +1/+1. |
@@ -294,6 +303,7 @@ Added **378 unique names** beyond the 542-name baseline at e2bd7a0. Current cove
 | Savage Ymirjar | RLK_535 | Rush Battlecry: Discard 2 cards. |
 | Scarlet Recruiter | JAIL_516 | Battlecry: Summon two minions from your deck that cost (2) or less. Give them Rush. |
 | Scavenging Shivarra | BT_732 | Battlecry: Deal 6 damage randomly split among all other minions. |
+| Scorchfist Scholar | BE_303 | Battlecry: If you've played two different spell schools while holding this, deal 4 damage to all enemies. |
 | Scourge Rager | RLK_900 | Reborn Battlecry: Die. |
 | Scrapsmith | AV_323 | Taunt Battlecry: Add two 2/4 Grunts with Taunt to your hand. |
 | Seafloor Savior | TSC_083 | Battlecry: Dredge. If it's a minion, give it this minion's Attack and Health. |
