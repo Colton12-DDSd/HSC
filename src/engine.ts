@@ -2278,11 +2278,11 @@ function runScript(
               fresh.maxHealth = fresh.health = step.health;
               fresh.modifiers = [];
             }
-            if (step.keyword)
+            for (const keyword of [...(step.pool ?? []), ...(step.keyword ? [step.keyword] : [])])
               runScript(
                 s,
                 owner,
-                [{ op: 'keyword', scope: 'target', target: 'minion', keyword: step.keyword }],
+                [{ op: 'keyword', scope: 'target', target: 'minion', keyword }],
                 { p: owner, uid },
                 position,
                 source,
@@ -2345,6 +2345,7 @@ function runScript(
           note(s, `${label} gains ${step.keyword}`);
         }
         if (step.op === 'silence') {
+          const damageTaken = Math.max(0, x.maxHealth - x.health);
           const usedAttacks = (unitMechanics(x).includes('WINDFURY') ? 2 : 1) - x.attacksRemaining;
           x.silenced = true;
           x.keywords = [];
@@ -2355,7 +2356,7 @@ function runScript(
           x.attackBase = x.card.attack ?? 0;
           x.attack = x.card.attack ?? 0;
           x.maxHealth = x.card.health ?? 1;
-          x.health = Math.min(x.health, x.maxHealth);
+          x.health = Math.max(0, x.maxHealth - damageTaken);
           x.shield = false;
           x.frozen = false;
           delete x.immuneUntilTurn;
@@ -2396,7 +2397,19 @@ function runScript(
         }
         if (step.op === 'shuffle-copy') {
           for (let i = 0; i < amount; i++) {
-            const c = { ...structuredClone(x.card), modifiers: structuredClone(x.modifiers ?? []) };
+            const c = {
+              ...structuredClone(x.card),
+              modifiers: step.mode === 'plain' ? [] : structuredClone(x.modifiers ?? []),
+            };
+            if (step.attack !== undefined && step.health !== undefined) {
+              const stats = cardStats(c);
+              (c.modifiers ??= []).push({
+                sourceCardId: source.id,
+                sourceName: source.name,
+                attack: step.attack - stats.attack,
+                health: step.health - stats.health,
+              });
+            }
             p.deck.splice(random(s, p.deck.length + 1), 0, c);
           }
         }
@@ -3000,6 +3013,19 @@ export function applyAction(state: Game, a: Action): Game {
     if (choice.step.reduction) {
       c.printedCost ??= c.cost;
       c.cost = Math.max(0, c.cost - choice.step.reduction);
+    }
+    if (
+      choice.step.mode === 'set-stats' &&
+      choice.step.attack !== undefined &&
+      choice.step.health !== undefined
+    ) {
+      const stats = cardStats(c);
+      (c.modifiers ??= []).push({
+        sourceCardId: choice.source.id,
+        sourceName: choice.source.name,
+        attack: choice.step.attack - stats.attack,
+        health: choice.step.health - stats.health,
+      });
     }
     if (choice.step.after === 'armor') {
       p.armor += c.cost;

@@ -142,6 +142,31 @@
       }
     ]
   },
+  "GDB_722": {
+    "text": "<b>Battlecry and Deathrattle:</b> Give all Draenei in your\nhand +2/+1.",
+    "steps": [
+      {
+        "op": "zone-buff",
+        "zone": "hand",
+        "filter": {
+          "tribe": "DRAENEI"
+        },
+        "attack": 2,
+        "health": 1
+      }
+    ]
+  },
+  "ICC_025": {
+    "text": "[x]<b>Battlecry:</b> Summon a\n5/5 Skeleton.\n<b>Deathrattle:</b> Summon one\nfor your opponent.",
+    "steps": [
+      {
+        "op": "summon-token",
+        "token": "ICC_025t",
+        "amount": 1,
+        "enemy": true
+      }
+    ]
+  },
   "LOOT_511": {
     "text": "<b>Battlecry and Deathrattle:</b> <b>Recruit</b> a Beast.",
     "steps": [
@@ -185,6 +210,23 @@
       }
     ]
   },
+  "RLK_592": {
+    "text": "[x]<b>Reborn</b>\n<b>Battlecry and Deathrattle:</b>\nGive another random friendly\n     Undead +5/+5 and <b>Taunt</b>.    ",
+    "steps": [
+      {
+        "op": "buff-keyword",
+        "scope": "friendly",
+        "other": true,
+        "random": 1,
+        "filter": {
+          "tribe": "UNDEAD"
+        },
+        "attack": 5,
+        "health": 5,
+        "keyword": "TAUNT"
+      }
+    ]
+  },
   "RLK_657": {
     "text": "[x]<b>Rush</b>\n<b>Battlecry and Deathrattle:</b>&\nGain 6 Armor.",
     "steps": [
@@ -200,6 +242,38 @@
       {
         "op": "draw",
         "amount": 1
+      }
+    ]
+  },
+  "SCH_526": {
+    "text": "[x]<b>Battlecry:</b> Set the Health\nof all other minions to 1.\n<b>Deathrattle:</b> Deal 1 damage\nto all minions.",
+    "steps": [
+      {
+        "op": "damage",
+        "amount": 1,
+        "scope": "all",
+        "other": false
+      }
+    ]
+  },
+  "SW_070": {
+    "text": "[x]<b>Battlecry:</b> Add a Coin\nto your hand.\n<b>Deathrattle:</b> Give your\nopponent one.",
+    "steps": [
+      {
+        "op": "generate-token",
+        "token": "GAME_005",
+        "amount": 1,
+        "enemy": true
+      }
+    ]
+  },
+  "SW_434": {
+    "text": "[x]<b>Battlecry:</b> Give your\nopponent a Coin.\n  <b>Deathrattle:</b> You get two.",
+    "steps": [
+      {
+        "op": "generate-token",
+        "token": "GAME_005",
+        "amount": 2
       }
     ]
   },
@@ -1518,8 +1592,7 @@
       {
         "op": "generate-token",
         "token": "GAME_005",
-        "amount": 1,
-        "enemy": false
+        "amount": 1
       }
     ]
   },

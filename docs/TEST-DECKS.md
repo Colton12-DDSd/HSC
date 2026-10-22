@@ -15,6 +15,7 @@ Open **Play** or **Testing**, choose **Test deck**, then press **New game**. Sta
 | Curiosity Cabinet | Brightwing | Generate a random legendary |
 | Spell Chronicle | Dragoncaller Alanna | Summon Dragons for expensive spells cast |
 | Mana Workshop | Captain Galvangar | Track lifetime Armor gain, then gain stats and Charge |
+| Mirror Menagerie | Sathrovarr | Copy a minion to hand, deck and battlefield |
 
 Commander names appear in the selector, and **Deck & test goals** includes a commander-specific test. Commanders are excluded from their own 100-card main decks. All four seats use different commanders in themed matches. Their costs, command tax and destination choices use the normal commander rules.
 
@@ -42,9 +43,11 @@ The [five-group batch](FIVE-GROUP-BATTLECRIES.md) adds tribal variety to Token W
 
 The [50-card batch](FIFTY-BATTLECRIES.md) adds **Spell Chronicle** and **Mana Workshop**. Spell Chronicle opens with Commander Sivara, Fireball, Frost Nova, Queensguard and Coral Keeper. Mana Workshop opens with Clownfish, two Murlocs, Swiftscale Trickster and Fireball. The Active effects panel shows remaining discounted casts, exact set Costs, and end-of-turn expiry.
 
+The [mirror batch](MIRROR-BATTLECRIES.md) adds **Mirror Menagerie**, led by Sathrovarr, with a guided opening of River Crocolisk, Northshire Farmer, Shadowcaster, Faceless Manipulator and Zola. Last Rites gains Anka, Crimson Commander, Invincible, Lord Barov, Scarlet Purifier, Snakebite, Wicked Skeleton, Rattling Rascal, Mailbox Dancer and Loan Shark. Swaps use live stats; copied Battlecries do not fire.
+
 ## Coverage and rules
 
-Current support: **980 Battlecry names / 1,052 collection printings** and **1,720 supported collection records**. The latest pass implements **250 of the original 315 foundation candidates** and 82 additional names. **65 of that batch remain blocked**; the [complete report](FOUNDATION-BATTLECRIES.md) lists each one and its next dependency. Across the whole collection, **915 Battlecry names remain unsupported**. No approximate effect substitutes for unrecognized rules.
+Current support: **1,030 Battlecry names / 1,106 collection printings** and **1,774 supported collection records**. The latest pass implements **250 of the original 315 foundation candidates** and 132 additional names. **65 of that batch remain blocked**; the [complete report](FOUNDATION-BATTLECRIES.md) lists each one and its next dependency. Across the whole collection, **865 Battlecry names remain unsupported**. No approximate effect substitutes for unrecognized rules.
 
 New shared families include consuming live stats, linked draws, Dredge rewards, temporary costs, Menagerie selection, future-play buffs, deck ordering, burn/draw replacement, expanded hand limits, hero Divine Shield and permanent Immunity. Boom Bot Deathrattles and Ice Shard/Water Elemental freezing are implemented. Generated cards can have separately unsupported abilities, labeled effects pending; those cards cannot be played. Named pools and special summoned passives require exact definitions.
 
@@ -52,8 +55,10 @@ Commander adaptations: untargeted effects involving the enemy or both/each playe
 
 ## Verification
 
-All eleven decks are checked for supported cards, singleton names, distinct themes, curve quotas, reproducible openings and full bot matches with identical replays. Independent outcome tests cover draws, cost expiry, Dredge movement, consumption, Shields, Freeze, queued buffs, hand limits and special tokens. The compiler rejects unknown riders and misleading token descriptions. The 315-card progress report is checked against every original printing in the live registry.
+All twelve decks are checked for supported cards, singleton names, distinct themes, curve quotas, reproducible openings and full bot matches with identical replays. Independent outcome tests cover draws, cost expiry, Dredge movement, consumption, Shields, Freeze, queued buffs, hand limits and special tokens. The compiler rejects unknown riders and misleading token descriptions. The 315-card progress report is checked against every original printing in the live registry.
 
 Browser verification traced Deck Laboratory → guided hand → Scenario mana → Excavation Specialist → bottom-three choice → Novice Engineer → selected card at its discounted cost. The board, hand and action history agreed, with no browser errors. The database and image storage were not changed. Run `npm test`, `npm run test:compiler`, `npm run test:battlecry-groups`, `npm run build`, `npm run audit:foundation` and `npm run group:battlecries` to reproduce the checks and reports.
 
-Latest browser check: Mana Workshop -> paused bots -> 10 scenario mana -> Clownfish. Both Murlocs displayed 0 mana; Active effects counted two remaining casts, then one after Murloc Raider. Spell Chronicle also opened successfully with five supported cards. The combined suite passes 3,353 tests, including all eleven premade matches and identical replays.
+Latest browser check: Mana Workshop -> paused bots -> 10 scenario mana -> Clownfish. Both Murlocs displayed 0 mana; Active effects counted two remaining casts, then one after Murloc Raider. Spell Chronicle also opened successfully with five supported cards. The combined suite passes 3,584 tests, including all twelve premade matches and identical replays.
+
+Mirror browser check: ten scenario mana -> River Crocolisk -> Shadowcaster -> choose Crocolisk. The original stayed 2/3 on board; the new hand copy displayed Cost 1 and stats 1/1. No browser errors.

@@ -3178,8 +3178,7 @@
           {
             "op": "generate-token",
             "token": "GAME_005",
-            "amount": 1,
-            "enemy": false
+            "amount": 1
           }
         ],
         "scope": "target",

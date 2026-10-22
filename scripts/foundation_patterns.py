@@ -1,8 +1,11 @@
 """Complete clauses built on the existing engine. Never discard an unknown rider."""
 import re
 from progression_patterns import compile_progression
+from mirror_patterns import compile_mirrors
 
 def compile_foundation(t, compile, target, filt, num, keywords, refs, card, choose):
+    mirrors=compile_mirrors(t,card)
+    if mirrors is not None:return mirrors
     progression=compile_progression(t)
     if progression is not None:return progression
     if t == "Choose a character. If it's friendly, restore 8 Health. If it's an enemy, deal 8 damage":return [dict(op='allegiance-effect',scope='target',target='character',amount=8)]

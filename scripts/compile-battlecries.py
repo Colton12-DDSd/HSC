@@ -473,7 +473,7 @@ def main():
  if isinstance(all_cards,dict):all_cards=all_cards.get('cards',[])
  catalog={c['id']:{k:v for k,v in c.items() if k in ['id','name','type','cost','attack','health','cardClass','classes','mechanics','race','races','rarity','set','text','spellSchool','collectible','dbfId','durability']} for c in all_cards}
  registry={};death_registry={};rejected=[]
- allowed=set(keywords.values())|{'BATTLECRY','DISCOVER','SILENCE','FREEZE','DEATHRATTLE','OVERLOAD','DREDGE'}
+ allowed=set(keywords.values())|{'BATTLECRY','DISCOVER','SILENCE','FREEZE','DEATHRATTLE','OVERLOAD','DREDGE','GRIMY_GOONS','KABAL','JADE_LOTUS'}
  for c in [*cards,*[c for c in all_cards if not c.get('collectible')]]:
   if c['type']!='MINION' or 'BATTLECRY' not in c.get('mechanics',[]):continue
   current_card=c
@@ -502,7 +502,7 @@ def main():
  def tokens(steps):
   for step in steps:
    if 'token' in step:yield step['token']
-   if 'pool' in step and step['op'] in ('generate','discover','shuffle-pool','summon-pool'):yield from step['pool']
+   if 'pool' in step and step['op'] in ('generate','discover','shuffle-pool','summon-pool','transform-random'):yield from step['pool']
    if 'steps' in step:yield from tokens(step['steps'])
    if 'elseSteps' in step:yield from tokens(step['elseSteps'])
  used={tid for e in [*registry.values(),*death_registry.values()] for tid in tokens(e['steps'])}

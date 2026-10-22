@@ -1,11 +1,13 @@
 import { cardCost, cardStats, type Card } from './cards';
 import { deathrattleFor } from './effects';
+import { mirrorOperations, resolveMirror } from './mirror-effects';
 import type { Game, Player, Unit, Target } from './engine';
 import type { CardFilter, ScriptStep } from './script-types';
 
 // Shared transactions that must retain a drawn/destroyed object's identity.
 // All randomness, damage and summons still use the authoritative engine helpers.
 export const foundationOperations = [
+  ...mirrorOperations,
   'battlefield-stats',
   'shield-harvest',
   'draw-linked',
@@ -42,7 +44,7 @@ export const foundationOperations = [
   'recruit-gain',
   'shuffle-hands',
 ];
-interface Helpers {
+export interface Helpers {
   random: (n: number) => number;
   shuffle: (cards: Card[]) => Card[];
   matches: (c: Card, f?: CardFilter, u?: Unit) => boolean;
@@ -74,6 +76,7 @@ export function resolveFoundation(
     self = p.board.find((u) => u.uid === sourceUid);
   const op = step.op;
   if (!foundationOperations.includes(op)) return false;
+  if (resolveMirror(s, player, step, source, sourceUid, target, h)) return true;
   if (op === 'history-cards') {
     const previous =
       (s.events ?? [])
@@ -110,6 +113,11 @@ export function resolveFoundation(
     h.note(`${source.name} unlocks ${total} Mana Crystals`);
   }
   if (op === 'resource-payoff') {
+    if (step.mode === 'spend-buff' && self) {
+      const n = p.mana;
+      p.mana = 0;
+      h.buff(self, n, n);
+    }
     if (step.mode === 'highest-spell')
       h.run([
         {

@@ -42,6 +42,7 @@ export interface ScriptStep {
   target?: string;
   filter?: CardFilter;
   other?: boolean;
+  resultFilter?: CardFilter;
   amount?: ScriptValue;
   attack?: number;
   health?: number;

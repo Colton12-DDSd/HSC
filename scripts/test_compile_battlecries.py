@@ -10,6 +10,11 @@ spec.loader.exec_module(compiler)
 compiler.current_card={'id':'TEST','set':'LEGACY'}
 
 class CompleteTextTests(unittest.TestCase):
+    def test_mirrors_keep_exact_targets_and_complete_generated_rules(self):
+        self.assertEqual(compiler.compile('Choose a friendly Beast. Shuffle three 3/3 copies into your deck.'),[{'op':'shuffle-copy','scope':'target','target':'friendly-minion','filter':{'tribe':'BEAST'},'amount':3,'attack':3,'health':3}])
+        self.assertEqual(compiler.compile('Transform all spells in your hand into ones that cost (3) more. (They keep their original Cost.)'),[{'op':'transform-zone','zone':'hand','filter':{'type':'SPELL'},'resultFilter':{'type':'SPELL'},'costDelta':3,'mode':'keep-cost'}])
+        self.assertIsNone(compiler.compile('Swap Health with another minion. Repeat an unknown effect.'))
+        self.assertIsNone(compiler.compile('Give your opponent one.'))
     def test_fifty_card_batch_keeps_limits_expiry_and_unknown_riders(self):
         self.assertEqual(compiler.compile('Your next two Murlocs cost (2) less.'),[{'op':'next-cost','reduction':2,'amount':2,'filter':{'tribe':'MURLOC'}}])
         self.assertEqual(compiler.compile('Your next spell this turn costs (0).'),[{'op':'next-cost','reduction':0,'setCost':0,'filter':{'type':'SPELL'},'expires':'turn'}])

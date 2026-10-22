@@ -1,8 +1,8 @@
 {
   "snapshot": "2026-10-22",
   "basis": "Pinned local collection; exact remaining-name membership from the support audit",
-  "supportedBattlecryNames": 980,
-  "totalRemaining": 915,
+  "supportedBattlecryNames": 1030,
+  "totalRemaining": 865,
   "replacementCharacterPrintings": 0,
   "lanes": [
     {
@@ -13,7 +13,7 @@
     {
       "id": "shared",
       "label": "Extend a shared engine family",
-      "count": 346
+      "count": 296
     },
     {
       "id": "system",
@@ -60,28 +60,28 @@
       "label": "Card costs, mana and ordinary discounts",
       "lane": "shared",
       "work": "Extend cost-setting, discount duration/counts, mana caps and multi-card cost relationships.",
-      "count": 28
+      "count": 24
     },
     {
       "id": "choices",
       "label": "Discover and other player choices",
       "lane": "shared",
       "work": "Extend existing choices with multiple selections, target/choice relationships, hidden selections and result-dependent riders.",
-      "count": 78
+      "count": 59
     },
     {
       "id": "copy-transform",
       "label": "Copies, transformations, swaps and control",
       "lane": "shared",
       "work": "Extend physical-card copying, stat preservation, owner/controller identity and linked swaps or transformations.",
-      "count": 40
+      "count": 23
     },
     {
       "id": "death-memory",
       "label": "Deathrattles, resurrection and remembered victims",
       "lane": "shared",
       "work": "Track the exact destroyed/discarded/chosen minion and carry that identity into later Deathrattles or resurrection.",
-      "count": 83
+      "count": 73
     },
     {
       "id": "weapons-combat",
@@ -221,42 +221,42 @@
     {
       "id": "damage-stats",
       "label": "Damage, healing, Armor and board stats",
-      "count": 397
+      "count": 377
     },
     {
       "id": "draw-zones",
       "label": "Draw, discard and hand/deck movement",
-      "count": 312
+      "count": 289
     },
     {
       "id": "summon-tokens",
       "label": "Summons, recruits and token definitions",
-      "count": 132
+      "count": 126
     },
     {
       "id": "generate-pools",
       "label": "Generated cards and named card pools",
-      "count": 98
+      "count": 90
     },
     {
       "id": "cost-mana",
       "label": "Card costs, mana and ordinary discounts",
-      "count": 186
+      "count": 172
     },
     {
       "id": "choices",
       "label": "Discover and other player choices",
-      "count": 169
+      "count": 150
     },
     {
       "id": "copy-transform",
       "label": "Copies, transformations, swaps and control",
-      "count": 141
+      "count": 111
     },
     {
       "id": "death-memory",
       "label": "Deathrattles, resurrection and remembered victims",
-      "count": 115
+      "count": 105
     },
     {
       "id": "weapons-combat",
@@ -266,7 +266,7 @@
     {
       "id": "history",
       "label": "History, thresholds and scaling conditions",
-      "count": 146
+      "count": 145
     },
     {
       "id": "scheduling",
@@ -1282,33 +1282,6 @@
       ]
     },
     {
-      "name": "Alara'shi",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform",
-        "cost-mana",
-        "draw-zones",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "EDR_493",
-          "text": "[x]<b>Battlecry:</b> Transform minions\nin your hand into random\nDemons. <i>(They keep their\n  original stats and Cost.)</I>",
-          "normalizedText": "Battlecry: Transform minions in your hand into random Demons. (They keep their original stats and Cost.)",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Aldor Attendant",
       "primary": "named-progression",
       "lane": "system",
@@ -1839,32 +1812,6 @@
       ]
     },
     {
-      "name": "Anka, the Buried",
-      "primary": "death-memory",
-      "lane": "shared",
-      "dependencies": [
-        "death-memory",
-        "cost-mana",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "ULD_288",
-          "text": "<b>Battlecry:</b> Change each <b>Deathrattle</b> minion in your hand into a 1/1 that costs (1).",
-          "normalizedText": "Battlecry: Change each Deathrattle minion in your hand into a 1/1 that costs (1).",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Annoying Fan",
       "primary": "ongoing",
       "lane": "system",
@@ -2129,33 +2076,6 @@
           "mechanics": [
             "BATTLECRY",
             "DISCOVER"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Arch-Villain Rafaam",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform",
-        "draw-zones",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Replace zone contents from a Legendary pool; no new deck-draw primitive is needed.",
-      "printings": [
-        {
-          "id": "DAL_422",
-          "text": "<b><b>Taunt</b>\nBattlecry:</b> Replace your hand and deck with <b>Legendary</b> minions.",
-          "normalizedText": "Taunt Battlecry: Replace your hand and deck with Legendary minions.",
-          "mechanics": [
-            "BATTLECRY",
-            "TAUNT"
           ]
         }
       ]
@@ -4262,31 +4182,6 @@
       ]
     },
     {
-      "name": "Cabaret Headliner",
-      "primary": "cost-mana",
-      "lane": "shared",
-      "dependencies": [
-        "cost-mana",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "VAC_954",
-          "text": "<b>Battlecry:</b> Reduce the Cost of a spell of each school in your hand by (2).",
-          "normalizedText": "Battlecry: Reduce the Cost of a spell of each school in your hand by (2).",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Cactus Cutter",
       "primary": "spell-casting",
       "lane": "system",
@@ -4575,59 +4470,6 @@
           "id": "BOT_531",
           "text": "<b>Battlecry:</b> Your next spell this turn has <b>Spell Damage +2</b>.",
           "normalizedText": "Battlecry: Your next spell this turn has Spell Damage +2.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Celestial Projectionist",
-      "primary": "choices",
-      "lane": "shared",
-      "dependencies": [
-        "choices",
-        "copy-transform",
-        "generate-pools",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TTN_742",
-          "text": "[x]<b>Battlecry:</b> Choose a\nfriendly minion. Add a\n<b>Temporary</b> copy of it\nto your hand.",
-          "normalizedText": "Battlecry: Choose a friendly minion. Add a Temporary copy of it to your hand.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Cera'thine Fleetrunner",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform",
-        "cost-mana",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Replacement minions and their reductions belong to one zone-transformation family.",
-      "printings": [
-        {
-          "id": "AV_403",
-          "text": "[x]<b>Battlecry:</b> Replace your\nminions in hand and deck\n with ones from other classes.\nThey cost (2) less.",
-          "normalizedText": "Battlecry: Replace your minions in hand and deck with ones from other classes. They cost (2) less.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -5799,33 +5641,6 @@
       ]
     },
     {
-      "name": "Crimson Commander",
-      "primary": "death-memory",
-      "lane": "shared",
-      "dependencies": [
-        "death-memory",
-        "draw-zones",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "GDB_722",
-          "text": "<b>Battlecry and Deathrattle:</b> Give all Draenei in your\nhand +2/+1.",
-          "normalizedText": "Battlecry and Deathrattle: Give all Draenei in your hand +2/+1.",
-          "mechanics": [
-            "BATTLECRY",
-            "DEATHRATTLE"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Cruise Captain Lora",
       "primary": "dormant-board",
       "lane": "system",
@@ -6273,31 +6088,6 @@
           "mechanics": [
             "BATTLECRY",
             "DISCOVER"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Darkspeaker",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "OG_102",
-          "text": "<b>Battlecry:</b> Swap stats with a friendly minion.",
-          "normalizedText": "Battlecry: Swap stats with a friendly minion.",
-          "mechanics": [
-            "BATTLECRY"
           ]
         }
       ]
@@ -6991,33 +6781,6 @@
             "BATTLECRY",
             "DEATHRATTLE",
             "DISCOVER"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Dragon Breeder",
-      "primary": "choices",
-      "lane": "shared",
-      "dependencies": [
-        "choices",
-        "copy-transform",
-        "generate-pools",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "DRG_070",
-          "text": "<b>Battlecry:</b> Choose a friendly Dragon. Add a copy of it to your hand.",
-          "normalizedText": "Battlecry: Choose a friendly Dragon. Add a copy of it to your hand.",
-          "mechanics": [
-            "BATTLECRY"
           ]
         }
       ]
@@ -7853,32 +7616,6 @@
       ]
     },
     {
-      "name": "Energy Shaper",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform",
-        "cost-mana",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "RLK_545",
-          "text": "[x]<b>Battlecry:</b> Transform all\nspells in your hand into ones\nthat cost (3) more. <i>(They keep\ntheir original Cost.)</i>",
-          "normalizedText": "Battlecry: Transform all spells in your hand into ones that cost (3) more. (They keep their original Cost.)",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Entomologist Toru",
       "primary": "draw-zones",
       "lane": "foundation",
@@ -7980,31 +7717,6 @@
           "mechanics": [
             "BATTLECRY",
             "TAUNT"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Envoy of the Glade",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "EDR_873",
-          "text": "[x]<b>Battlecry:</b> Transform all\nNeutral cards in your deck\n into random Druid ones.",
-          "normalizedText": "Battlecry: Transform all Neutral cards in your deck into random Druid ones.",
-          "mechanics": [
-            "BATTLECRY"
           ]
         }
       ]
@@ -8477,31 +8189,6 @@
       ]
     },
     {
-      "name": "Faceless Manipulator",
-      "primary": "choices",
-      "lane": "shared",
-      "dependencies": [
-        "choices",
-        "copy-transform"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "EX1_564",
-          "text": "<b>Battlecry:</b> Choose a minion and become a copy of it.",
-          "normalizedText": "Battlecry: Choose a minion and become a copy of it.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Fal'dorei Strider",
       "primary": "cast-when-drawn",
       "lane": "system",
@@ -8912,32 +8599,6 @@
       ]
     },
     {
-      "name": "Flowrider",
-      "primary": "choices",
-      "lane": "shared",
-      "dependencies": [
-        "choices",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "ETC_359",
-          "text": "[x]<b>Battlecry:</b> If you're\n<b>Overloaded</b>, <b>Discover</b> a\nspell from your deck.",
-          "normalizedText": "Battlecry: If you're Overloaded, Discover a spell from your deck.",
-          "mechanics": [
-            "BATTLECRY",
-            "DISCOVER"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Flutterwing Guardian",
       "primary": "hero-powers",
       "lane": "system",
@@ -8963,32 +8624,6 @@
             "BATTLECRY",
             "DIVINE_SHIELD",
             "TAUNT"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Forbidden Ancient",
-      "primary": "cost-mana",
-      "lane": "shared",
-      "dependencies": [
-        "cost-mana",
-        "history",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "OG_051",
-          "text": "<b>Battlecry:</b> Spend all your Mana. Gain +1/+1 for each Mana spent.",
-          "normalizedText": "Battlecry: Spend all your Mana. Gain +1/+1 for each Mana spent.",
-          "mechanics": [
-            "BATTLECRY"
           ]
         }
       ]
@@ -9190,30 +8825,6 @@
           "id": "FIR_901",
           "text": "<b>Battlecry:</b> If you're holding\na minion with a <b>Dark Gift</b>,& summon two 4/4 Dragons with <b>Taunt</b>.",
           "normalizedText": "Battlecry: If you're holding a minion with a Dark Gift, summon two 4/4 Dragons with Taunt.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Furbolg Mossbinder",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "LOOT_150",
-          "text": "<b>Battlecry:</b> Transform a friendly minion into a 6/6 Elemental.",
-          "normalizedText": "Battlecry: Transform a friendly minion into a 6/6 Elemental.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -10014,42 +9625,6 @@
       ]
     },
     {
-      "name": "Grimestreet Informant",
-      "primary": "choices",
-      "lane": "shared",
-      "dependencies": [
-        "choices"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": true,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "CFM_321",
-          "text": "[x]<b>Battlecry:</b> <b>Discover</b>\na Hunter, Paladin, or\nWarrior card.",
-          "normalizedText": "Battlecry: Discover a Hunter, Paladin, or Warrior card.",
-          "mechanics": [
-            "BATTLECRY",
-            "DISCOVER",
-            "GRIMY_GOONS"
-          ]
-        },
-        {
-          "id": "WON_331",
-          "text": "[x]<b>Battlecry:</b> <b>Discover</b>\na Hunter, Paladin, or\nWarrior card.",
-          "normalizedText": "Battlecry: Discover a Hunter, Paladin, or Warrior card.",
-          "mechanics": [
-            "BATTLECRY",
-            "DISCOVER",
-            "GRIMY_GOONS"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Grizzled Wizard",
       "primary": "hero-powers",
       "lane": "system",
@@ -10173,33 +9748,6 @@
           "normalizedText": "Battlecry: If your deck started with no duplicates, fire six 2 damage shots at minions in the enemy's hand.",
           "mechanics": [
             "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Gurubashi Hypemon",
-      "primary": "choices",
-      "lane": "shared",
-      "dependencies": [
-        "choices",
-        "copy-transform",
-        "cost-mana"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TRL_077",
-          "text": "<b>Battlecry:</b> <b>Discover</b> a 1/1 copy of a <b>Battlecry</b> minion. It costs (1).",
-          "normalizedText": "Battlecry: Discover a 1/1 copy of a Battlecry minion. It costs (1).",
-          "mechanics": [
-            "BATTLECRY",
-            "DISCOVER"
           ]
         }
       ]
@@ -10392,34 +9940,6 @@
           "mechanics": [
             "BATTLECRY",
             "MULTIPLY_BUFF_VALUE"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Hellraiser",
-      "primary": "choices",
-      "lane": "shared",
-      "dependencies": [
-        "choices",
-        "draw-zones",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "JAIL_734",
-          "text": "[x]<b>Battlecry:</b> <b>Discover</b> a card\nin your deck. If it's empty,\ngain +4/+4 instead.",
-          "normalizedText": "Battlecry: Discover a card in your deck. If it's empty, gain +4/+4 instead.",
-          "mechanics": [
-            "BATTLECRY",
-            "DISCOVER",
-            "TAUNT"
           ]
         }
       ]
@@ -11227,33 +10747,6 @@
       ]
     },
     {
-      "name": "Ini Stormcoil",
-      "primary": "choices",
-      "lane": "shared",
-      "dependencies": [
-        "choices",
-        "copy-transform",
-        "summon-tokens",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TSC_649",
-          "text": "[x]<b>Battlecry:</b> Choose a friendly\nMech. Summon a copy of it\nwith <b>Rush</b>, <b>Windfury</b>, and\n<b>Divine Shield</b>.",
-          "normalizedText": "Battlecry: Choose a friendly Mech. Summon a copy of it with Rush, Windfury, and Divine Shield.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Injured Hauler",
       "primary": "keyword-packages",
       "lane": "system",
@@ -11479,33 +10972,6 @@
           "normalizedText": "Battlecry: Resurrect two different friendly Mechs that cost (5) or more. They attack random enemies.",
           "mechanics": [
             "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Invincible",
-      "primary": "death-memory",
-      "lane": "shared",
-      "dependencies": [
-        "death-memory",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "RLK_592",
-          "text": "[x]<b>Reborn</b>\n<b>Battlecry and Deathrattle:</b>\nGive another random friendly\n     Undead +5/+5 and <b>Taunt</b>.    ",
-          "normalizedText": "Reborn Battlecry and Deathrattle: Give another random friendly Undead +5/+5 and Taunt.",
-          "mechanics": [
-            "BATTLECRY",
-            "DEATHRATTLE",
-            "REBORN"
           ]
         }
       ]
@@ -12039,42 +11505,6 @@
       ]
     },
     {
-      "name": "Kabal Courier",
-      "primary": "choices",
-      "lane": "shared",
-      "dependencies": [
-        "choices"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": true,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "CFM_649",
-          "text": "<b>Battlecry:</b> <b>Discover</b>\na Mage, Priest, or\nWarlock card.",
-          "normalizedText": "Battlecry: Discover a Mage, Priest, or Warlock card.",
-          "mechanics": [
-            "BATTLECRY",
-            "DISCOVER",
-            "KABAL"
-          ]
-        },
-        {
-          "id": "WON_130",
-          "text": "<b>Battlecry:</b> <b>Discover</b>\na Mage, Priest, or\nWarlock card.",
-          "normalizedText": "Battlecry: Discover a Mage, Priest, or Warlock card.",
-          "mechanics": [
-            "BATTLECRY",
-            "DISCOVER",
-            "KABAL"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Kabal Lackey",
       "primary": "secrets-counters",
       "lane": "system",
@@ -12123,32 +11553,6 @@
           "mechanics": [
             "BATTLECRY",
             "TAUNT"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Kaja'mite Creation",
-      "primary": "choices",
-      "lane": "shared",
-      "dependencies": [
-        "choices",
-        "cost-mana"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TTN_925",
-          "text": "<b>Battlecry:</b> <b>Discover</b> a spell from another class that costs (3) or less.",
-          "normalizedText": "Battlecry: Discover a spell from another class that costs (3) or less.",
-          "mechanics": [
-            "BATTLECRY",
-            "DISCOVER"
           ]
         }
       ]
@@ -12608,32 +12012,6 @@
       ]
     },
     {
-      "name": "King Phaoris",
-      "primary": "cost-mana",
-      "lane": "shared",
-      "dependencies": [
-        "cost-mana",
-        "summon-tokens",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "ULD_304",
-          "text": "[x]<b>Battlecry:</b> For each spell\nin your hand, summon a\nrandom minion of the\nsame Cost.",
-          "normalizedText": "Battlecry: For each spell in your hand, summon a random minion of the same Cost.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "King Tide",
       "primary": "scheduling",
       "lane": "shared",
@@ -13073,33 +12451,6 @@
       ]
     },
     {
-      "name": "Lady Prestor",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform",
-        "cost-mana",
-        "draw-zones",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "SW_078",
-          "text": "[x]<b>Battlecry:</b> Transform minions\nin your deck into random\nDragons. <i>(They keep their\n  original stats and Cost.)</I>",
-          "normalizedText": "Battlecry: Transform minions in your deck into random Dragons. (They keep their original stats and Cost.)",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Lamplighter",
       "primary": "scheduling",
       "lane": "shared",
@@ -13288,31 +12639,6 @@
       ]
     },
     {
-      "name": "Lilian Voss",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "ICC_811",
-          "text": "<b>Battlecry:</b> Replace spells in your hand with random spells <i>(from your opponent's class).</i>",
-          "normalizedText": "Battlecry: Replace spells in your hand with random spells (from your opponent's class).",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Living Garden",
       "primary": "hero-powers",
       "lane": "system",
@@ -13399,32 +12725,6 @@
       ]
     },
     {
-      "name": "Loan Shark",
-      "primary": "death-memory",
-      "lane": "shared",
-      "dependencies": [
-        "death-memory",
-        "generate-pools"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "SW_434",
-          "text": "[x]<b>Battlecry:</b> Give your\nopponent a Coin.\n  <b>Deathrattle:</b> You get two.",
-          "normalizedText": "Battlecry: Give your opponent a Coin. Deathrattle: You get two.",
-          "mechanics": [
-            "BATTLECRY",
-            "DEATHRATTLE"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Loatheb",
       "primary": "scheduling",
       "lane": "shared",
@@ -13503,32 +12803,6 @@
       ]
     },
     {
-      "name": "Lord Barov",
-      "primary": "death-memory",
-      "lane": "shared",
-      "dependencies": [
-        "death-memory",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "SCH_526",
-          "text": "[x]<b>Battlecry:</b> Set the Health\nof all other minions to 1.\n<b>Deathrattle:</b> Deal 1 damage\nto all minions.",
-          "normalizedText": "Battlecry: Set the Health of all other minions to 1. Deathrattle: Deal 1 damage to all minions.",
-          "mechanics": [
-            "BATTLECRY",
-            "DEATHRATTLE"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Lord Marrowgar",
       "primary": "corpses-runes",
       "lane": "system",
@@ -13579,42 +12853,6 @@
           "normalizedText": "Battlecry: For the rest of the game, after you summon a Silver Hand Recruit, give it Divine Shield.",
           "mechanics": [
             "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Lotus Agents",
-      "primary": "choices",
-      "lane": "shared",
-      "dependencies": [
-        "choices"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": true,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "CFM_852",
-          "text": "<b>Battlecry:</b> <b>Discover</b>\na Druid, Rogue, or\nShaman card.",
-          "normalizedText": "Battlecry: Discover a Druid, Rogue, or Shaman card.",
-          "mechanics": [
-            "BATTLECRY",
-            "DISCOVER",
-            "JADE_LOTUS"
-          ]
-        },
-        {
-          "id": "WON_332",
-          "text": "<b>Battlecry:</b> <b>Discover</b>\na Druid, Rogue, or\nShaman card.",
-          "normalizedText": "Battlecry: Discover a Druid, Rogue, or Shaman card.",
-          "mechanics": [
-            "BATTLECRY",
-            "DISCOVER",
-            "JADE_LOTUS"
           ]
         }
       ]
@@ -13891,33 +13129,6 @@
           "normalizedText": "Battlecry: Choose a minion. It goes Dormant for 2 turns.",
           "mechanics": [
             "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Mailbox Dancer",
-      "primary": "death-memory",
-      "lane": "shared",
-      "dependencies": [
-        "death-memory",
-        "generate-pools",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "SW_070",
-          "text": "[x]<b>Battlecry:</b> Add a Coin\nto your hand.\n<b>Deathrattle:</b> Give your\nopponent one.",
-          "normalizedText": "Battlecry: Add a Coin to your hand. Deathrattle: Give your opponent one.",
-          "mechanics": [
-            "BATTLECRY",
-            "DEATHRATTLE"
           ]
         }
       ]
@@ -14425,40 +13636,6 @@
       ]
     },
     {
-      "name": "Menagerie Warden",
-      "primary": "choices",
-      "lane": "shared",
-      "dependencies": [
-        "choices",
-        "copy-transform",
-        "summon-tokens"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": true,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "KAR_065",
-          "text": "<b>Battlecry:</b> Choose a friendly Beast. Summon a copy of it.",
-          "normalizedText": "Battlecry: Choose a friendly Beast. Summon a copy of it.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        },
-        {
-          "id": "WON_305",
-          "text": "<b>Battlecry:</b> Choose a friendly Beast. Summon a copy of it.",
-          "normalizedText": "Battlecry: Choose a friendly Beast. Summon a copy of it.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Merchant of Legend",
       "primary": "choices",
       "lane": "shared",
@@ -14762,32 +13939,6 @@
             "BATTLECRY",
             "OVERLOAD",
             "RUSH"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Mirage Caller",
-      "primary": "choices",
-      "lane": "shared",
-      "dependencies": [
-        "choices",
-        "copy-transform",
-        "summon-tokens"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "UNG_022",
-          "text": "<b>Battlecry:</b> Choose a minion. Summon a 1/1 copy of it.",
-          "normalizedText": "Battlecry: Choose a minion. Summon a 1/1 copy of it.",
-          "mechanics": [
-            "BATTLECRY"
           ]
         }
       ]
@@ -15918,32 +15069,6 @@
       ]
     },
     {
-      "name": "Northshire Farmer",
-      "primary": "choices",
-      "lane": "shared",
-      "dependencies": [
-        "choices",
-        "copy-transform",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "SW_064",
-          "text": "<b>Battlecry:</b> Choose a friendly Beast. Shuffle three 3/3 copies into your deck.",
-          "normalizedText": "Battlecry: Choose a friendly Beast. Shuffle three 3/3 copies into your deck.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Nostalgic Clown",
       "primary": "keyword-packages",
       "lane": "system",
@@ -16220,85 +15345,6 @@
             "COMBO",
             "DEATHRATTLE",
             "STEALTH"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Origami Crane",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TOY_895",
-          "text": "[x]<b>Taunt</b>\n<b>Battlecry:</b> Swap Health\nwith another minion.",
-          "normalizedText": "Taunt Battlecry: Swap Health with another minion.",
-          "mechanics": [
-            "BATTLECRY",
-            "TAUNT"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Origami Dragon",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TOY_896",
-          "text": "[x]<b>Divine Shield</b>, <b>Lifesteal</b>\n<b>Battlecry:</b> Swap stats\nwith another minion.",
-          "normalizedText": "Divine Shield, Lifesteal Battlecry: Swap stats with another minion.",
-          "mechanics": [
-            "BATTLECRY",
-            "DIVINE_SHIELD",
-            "LIFESTEAL"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Origami Frog",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TOY_894",
-          "text": "[x]<b>Rush</b>\n<b>Battlecry:</b> Swap Attack\nwith another minion.",
-          "normalizedText": "Rush Battlecry: Swap Attack with another minion.",
-          "mechanics": [
-            "BATTLECRY",
-            "RUSH"
           ]
         }
       ]
@@ -17279,32 +16325,6 @@
       ]
     },
     {
-      "name": "Prince Liam",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform",
-        "cost-mana",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "GIL_694",
-          "text": "[x]<b>Battlecry:</b> Transform all\n1-Cost cards in your deck\n into <b>Legendary</b> minions.",
-          "normalizedText": "Battlecry: Transform all 1-Cost cards in your deck into Legendary minions.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Princess Talanji",
       "primary": "summon-tokens",
       "lane": "foundation",
@@ -17940,32 +16960,6 @@
           "id": "WON_013",
           "text": "<b>Battlecry and Deathrattle:</b> Add two 1/1 Turtles with <b>Taunt</b> to your hand.",
           "normalizedText": "Battlecry and Deathrattle: Add two 1/1 Turtles with Taunt to your hand.",
-          "mechanics": [
-            "BATTLECRY",
-            "DEATHRATTLE"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Rattling Rascal",
-      "primary": "death-memory",
-      "lane": "shared",
-      "dependencies": [
-        "death-memory",
-        "summon-tokens"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "ICC_025",
-          "text": "[x]<b>Battlecry:</b> Summon a\n5/5 Skeleton.\n<b>Deathrattle:</b> Summon one\nfor your opponent.",
-          "normalizedText": "Battlecry: Summon a 5/5 Skeleton. Deathrattle: Summon one for your opponent.",
           "mechanics": [
             "BATTLECRY",
             "DEATHRATTLE"
@@ -18943,33 +17937,6 @@
       ]
     },
     {
-      "name": "Sathrovarr",
-      "primary": "choices",
-      "lane": "shared",
-      "dependencies": [
-        "choices",
-        "copy-transform",
-        "generate-pools",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "DRG_402",
-          "text": "<b>Battlecry:</b> Choose a friendly minion. Add a copy of it to your hand, deck, and battlefield.",
-          "normalizedText": "Battlecry: Choose a friendly minion. Add a copy of it to your hand, deck, and battlefield.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Sawbones",
       "primary": "keyword-packages",
       "lane": "system",
@@ -19047,31 +18014,6 @@
           "id": "TLC_454",
           "text": "[x]<b>Battlecry:</b> Destroy the\nlowest Attack enemy minion.\n<b>Kindred:</b> The highest\nAttack instead.",
           "normalizedText": "Battlecry: Destroy the lowest Attack enemy minion. Kindred: The highest Attack instead.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Scarlet Purifier",
-      "primary": "death-memory",
-      "lane": "shared",
-      "dependencies": [
-        "death-memory",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "GVG_101",
-          "text": "<b>Battlecry:</b> Deal 2 damage to all minions with <b>Deathrattle</b>.",
-          "normalizedText": "Battlecry: Deal 2 damage to all minions with Deathrattle.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -19613,34 +18555,6 @@
           "id": "BAR_080",
           "text": "<b>Battlecry:</b> Choose a minion. Swap it with a random one in its owner's hand.",
           "normalizedText": "Battlecry: Choose a minion. Swap it with a random one in its owner's hand.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Shadowcaster",
-      "primary": "choices",
-      "lane": "shared",
-      "dependencies": [
-        "choices",
-        "copy-transform",
-        "cost-mana",
-        "generate-pools",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "OG_291",
-          "text": "<b>Battlecry:</b> Choose a friendly minion. Add a 1/1 copy to your hand that costs (1).",
-          "normalizedText": "Battlecry: Choose a friendly minion. Add a 1/1 copy to your hand that costs (1).",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -20847,32 +19761,6 @@
       ]
     },
     {
-      "name": "Snakebite",
-      "primary": "death-memory",
-      "lane": "shared",
-      "dependencies": [
-        "death-memory",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "ETC_410",
-          "text": "<b>Rush</b>\n<b>Battlecry:</b> Gain +1/+1\nfor each minion that died this turn.@ <i>(@)</i>",
-          "normalizedText": "Rush Battlecry: Gain +1/+1 for each minion that died this turn.",
-          "mechanics": [
-            "BATTLECRY",
-            "RUSH"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Snoozin' Zookeeper",
       "primary": "weapons-combat",
       "lane": "shared",
@@ -21510,34 +20398,6 @@
           "id": "MEND_301",
           "text": "<b>Battlecry:</b>& Choose an Animal Companion to summon.",
           "normalizedText": "Battlecry: Choose an Animal Companion to summon.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Splintergraft",
-      "primary": "choices",
-      "lane": "shared",
-      "dependencies": [
-        "choices",
-        "copy-transform",
-        "cost-mana",
-        "generate-pools",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "GIL_658",
-          "text": "[x]<b>Battlecry:</b> Choose a friendly\nminion. Add a 10/10 copy to\nyour hand that costs (10).",
-          "normalizedText": "Battlecry: Choose a friendly minion. Add a 10/10 copy to your hand that costs (10).",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -22674,32 +21534,6 @@
       ]
     },
     {
-      "name": "The Nameless One",
-      "primary": "choices",
-      "lane": "shared",
-      "dependencies": [
-        "choices",
-        "copy-transform",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "DMF_116",
-          "text": "<b>Battlecry:</b> Choose a minion. Become a 4/4 copy of it, then <b>Silence</b> it.",
-          "normalizedText": "Battlecry: Choose a minion. Become a 4/4 copy of it, then Silence it.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "The One-Amalgam Band",
       "primary": "keyword-packages",
       "lane": "system",
@@ -23252,30 +22086,6 @@
           "id": "GVG_102",
           "text": "<b>Battlecry:</b> If you have a Mech, gain +1/+1 and add a <b>Spare Part</b> to your hand.",
           "normalizedText": "Battlecry: If you have a Mech, gain +1/+1 and add a Spare Part to your hand.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Tinkmaster Overspark",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "EX1_083",
-          "text": "[x]<b>Battlecry:</b> Transform\nanother random minion\ninto a 5/5 Devilsaur\n or a 1/1 Squirrel.",
-          "normalizedText": "Battlecry: Transform another random minion into a 5/5 Devilsaur or a 1/1 Squirrel.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -24062,31 +22872,6 @@
       ]
     },
     {
-      "name": "Twilight Acolyte",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "LOOT_528",
-          "text": "<b>Battlecry:</b> If you're holding\na Dragon, swap this minion's Attack with another minion's.",
-          "normalizedText": "Battlecry: If you're holding a Dragon, swap this minion's Attack with another minion's.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Twilight Darkmender",
       "primary": "named-progression",
       "lane": "system",
@@ -24426,33 +23211,6 @@
           "normalizedText": "Battlecry: If you've Invoked twice, add 3 Coins to your hand.",
           "mechanics": [
             "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Undefeated Champion",
-      "primary": "cost-mana",
-      "lane": "shared",
-      "dependencies": [
-        "cost-mana",
-        "summon-tokens",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TIME_872",
-          "text": "[x]<b>Rush</b>. <b>Battlecry:</b>& Fill your\nopponent's board with\n  random 1-Cost minions.",
-          "normalizedText": "Rush. Battlecry: Fill your opponent's board with random 1-Cost minions.",
-          "mechanics": [
-            "BATTLECRY",
-            "RUSH"
           ]
         }
       ]
@@ -24879,31 +23637,6 @@
           "mechanics": [
             "BATTLECRY",
             "TAUNT"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Vol'jin",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "GVG_014",
-          "text": "<b>Battlecry:</b> Swap Health with another minion.",
-          "normalizedText": "Battlecry: Swap Health with another minion.",
-          "mechanics": [
-            "BATTLECRY"
           ]
         }
       ]
@@ -25379,31 +24112,6 @@
       ]
     },
     {
-      "name": "Wicked Skeleton",
-      "primary": "death-memory",
-      "lane": "shared",
-      "dependencies": [
-        "death-memory",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "ICC_904",
-          "text": "<b>Battlecry:</b> Gain +1/+1 for each minion that died this turn.",
-          "normalizedText": "Battlecry: Gain +1/+1 for each minion that died this turn.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Wild Bloodstinger",
       "primary": "weapons-combat",
       "lane": "shared",
@@ -25780,31 +24488,6 @@
           "id": "ULD_269",
           "text": "[x]<b>Battlecry:</b> Destroy a friendly\nminion, then return it to life\nwith full Health.",
           "normalizedText": "Battlecry: Destroy a friendly minion, then return it to life with full Health.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Wyrmrest Purifier",
-      "primary": "copy-transform",
-      "lane": "shared",
-      "dependencies": [
-        "copy-transform",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "DRG_062",
-          "text": "[x]<b>Battlecry:</b> Transform all\nNeutral cards in your deck\ninto random cards from\nyour class.",
-          "normalizedText": "Battlecry: Transform all Neutral cards in your deck into random cards from your class.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -26239,33 +24922,6 @@
           "id": "ETC_386",
           "text": "[x]<b>Battlecry:</b> Summon two\n{0}/{1} Quilboar with <b>Taunt</b>.\n <i>(Improved by your hero Attack \n  \\& Armor gained this turn!)</i>",
           "normalizedText": "Battlecry: Summon two {0}/{1} Quilboar with Taunt. (Improved by your hero Attack \\ Armor gained this turn!)",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Zola the Gorgon",
-      "primary": "choices",
-      "lane": "shared",
-      "dependencies": [
-        "choices",
-        "copy-transform",
-        "generate-pools",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "LOOT_516",
-          "text": "<b>Battlecry:</b> Choose a friendly minion. Add a Golden copy of it to your hand.",
-          "normalizedText": "Battlecry: Choose a friendly minion. Add a Golden copy of it to your hand.",
           "mechanics": [
             "BATTLECRY"
           ]
