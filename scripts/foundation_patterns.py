@@ -2,8 +2,11 @@
 import re
 from progression_patterns import compile_progression
 from mirror_patterns import compile_mirrors
+from memory_patterns import compile_memory
 
 def compile_foundation(t, compile, target, filt, num, keywords, refs, card, choose):
+    memory=compile_memory(t,card)
+    if memory is not None:return memory
     mirrors=compile_mirrors(t,card)
     if mirrors is not None:return mirrors
     progression=compile_progression(t)

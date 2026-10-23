@@ -59,6 +59,8 @@ export interface Player {
   playEffects?: { source: Card; filter: CardFilter; remaining: number; steps: ScriptStep[] }[];
   overload?: number;
   lockedMana?: number;
+  manaCap?: number;
+  turnCosts?: { filter: CardFilter; set: number; turn: number; source: string }[];
   nextDiscounts?: {
     filter: CardFilter;
     amount: number;
@@ -127,6 +129,8 @@ export interface Game {
     healthDamage?: number;
     armorDamage?: number;
     blocked?: boolean;
+    playedAttack?: number;
+    playedHealth?: number;
   }[];
   choice?: {
     player: number;
@@ -194,6 +198,22 @@ function destroyWeapon(s: Game, player: number) {
   event(s, player, 'weapon-destroyed', undefined, card);
   delete owner.weapon;
 }
+function equipWeapon(s: Game, player: number, c: Card) {
+  destroyWeapon(s, player);
+  s.players[player].weapon = {
+    card: structuredClone(c),
+    attack: cardStats(c).attack,
+    durability:
+      (c.durability || c.health || 1) + (c.modifiers ?? []).reduce((n, m) => n + m.health, 0),
+  };
+}
+function previousOwnTurn(s: Game, player: number) {
+  return (
+    (s.events ?? [])
+      .filter((e) => e.type === 'turn' && e.player === player && e.turn < s.turn)
+      .at(-1)?.turn ?? -1
+  );
+}
 export const unitMechanics = (u: Unit) =>
   [
     ...new Set([
@@ -214,6 +234,8 @@ function matchesCard(c: Card, f: CardFilter = {}, player?: Player, unit?: Unit):
     (!f.hasTribe || !!c.race || !!c.races?.length) &&
     (!f.notName || c.name !== f.notName) &&
     (!f.nameSuffix || c.name.endsWith(f.nameSuffix)) &&
+    (!f.namePrefix || c.name.startsWith(f.namePrefix)) &&
+    (!f.temporary || c.temporaryUntilTurn !== undefined) &&
     (!f.notClass || !(c.classes ?? [c.cardClass]).includes(f.notClass)) &&
     (!f.any || f.any.some((part) => matchesCard(c, part, player, unit))) &&
     (!f.notTribe ||
@@ -249,6 +271,19 @@ function scriptCount(
   sourceUid?: number,
 ): number {
   const p = s.players[player];
+  if (zone === 'deaths-since-last-turn')
+    return (s.events ?? []).filter(
+      (e) =>
+        e.type === 'death' &&
+        e.player === player &&
+        e.turn > previousOwnTurn(s, player) &&
+        e.card &&
+        matchesCard(e.card, filter, p),
+    ).length;
+  if (zone === 'summoned')
+    return (s.events ?? []).filter(
+      (e) => e.type === 'summon' && e.player === player && e.card && matchesCard(e.card, filter, p),
+    ).length;
   if (zone === 'armor-gained' || zone === 'healed-game')
     return (s.events ?? [])
       .filter(
@@ -371,7 +406,8 @@ function scriptNumber(
 ): number {
   if (typeof value === 'number') return value;
   if (!value) return 0;
-  if (value.count) return scriptCount(s, player, value.count, value.filter, sourceUid);
+  if (value.count)
+    return scriptCount(s, player, value.count, value.filter, sourceUid) + (value.offset ?? 0);
   const p = s.players[player],
     u = p.board.find((u) => u.uid === sourceUid);
   return value.stat === 'attack'
@@ -577,6 +613,9 @@ export function commandCost(p: Player) {
   );
 }
 function applyNextCosts(p: Player, c: Card, base: number) {
+  base = (p.turnCosts ?? [])
+    .filter((e) => matchesCard(c, e.filter, p))
+    .reduce((_cost, e) => e.set, base);
   return (p.nextDiscounts ?? [])
     .filter((d) => matchesCard(c, d.filter, p))
     .reduce((cost, d) => d.set ?? Math.max(0, cost - d.amount), base);
@@ -853,6 +892,7 @@ function summon(
   });
   if (commander) x.zone = 'board';
   const unit = x.board[position];
+  event(s, p, 'summon', undefined, c);
   for (const e of x.summonEffects ?? [])
     if (matchesCard(c, e.filter, x, unit)) {
       if (e.set !== undefined) {
@@ -1334,6 +1374,22 @@ function runScript(
         get: (t) => getTarget(s, t),
         run: (e, t) => runScript(s, player, e, t, position, source, sourceUid),
         catalog,
+        position,
+        spawn: (owner, c, at) => {
+          const dest = s.players[owner];
+          if (dest.health <= 0 || dest.board.length >= 7) return undefined;
+          const uid = summon(
+            s,
+            owner,
+            c,
+            false,
+            Math.min(at ?? (owner === player ? position : dest.board.length), dest.board.length),
+          );
+          return dest.board.find((u) => u.uid === uid);
+        },
+        finishDeaths: () => settle(s),
+        destroyWeapon: (owner) => destroyWeapon(s, owner),
+        equip: (owner, c) => equipWeapon(s, owner, c),
       })
     )
       continue;
@@ -1544,6 +1600,7 @@ function runScript(
           (e) =>
             e.type === 'death' &&
             (step.mode !== 'this-turn' || e.turn === s.turn) &&
+            (step.mode !== 'since-last-turn' || e.turn > previousOwnTurn(s, player)) &&
             (step.allPlayers || e.player === player) &&
             e.card &&
             matchesCard(e.card, step.filter, p),
@@ -1731,10 +1788,10 @@ function runScript(
           step.mode === 'lose'
             ? Math.max(0, owner.maxMana - amount)
             : step.mode === 'set'
-              ? Math.min(10, amount)
+              ? Math.min(owner.manaCap ?? 10, amount)
               : step.mode === 'refresh'
                 ? owner.maxMana
-                : Math.min(10, owner.maxMana + amount);
+                : Math.min(owner.manaCap ?? 10, owner.maxMana + amount);
         owner.mana =
           step.mode === 'lose'
             ? Math.min(owner.mana, owner.maxMana)
@@ -2718,20 +2775,17 @@ function resolve(s: Game) {
         (t) => t.p === w.target!.p && t.uid === w.target!.uid,
       ));
   let sourceUid: number | undefined;
-  if (w.card.type === 'WEAPON') {
-    destroyWeapon(s, w.caster);
-    p.weapon = {
-      card: w.card,
-      attack: w.card.attack ?? 0,
-      durability: w.card.durability || w.card.health || 0,
-    };
-  }
+  if (w.card.type === 'WEAPON') equipWeapon(s, w.caster, w.card);
   if (w.card.type === 'MINION') {
     sourceUid = summon(s, w.caster, w.card, w.commander, w.position);
     p.board.find((u) => u.uid === sourceUid)!.playedCost = w.cost ?? handCost(p, w.card);
     if (w.command) p.casts++;
   }
   event(s, w.caster, 'play', undefined, w.card);
+  if (sourceUid !== undefined) {
+    const u = p.board.find((u) => u.uid === sourceUid)!;
+    Object.assign(s.events!.at(-1)!, { playedAttack: u.attack, playedHealth: u.health });
+  }
   if (sourceUid !== undefined) {
     const queued = [...(p.playEffects ?? [])];
     for (const q of queued)
@@ -2761,7 +2815,7 @@ function startTurn(s: Game) {
   const p = s.players[s.active];
   s.turn++;
   event(s, s.active, 'turn');
-  p.maxMana = Math.min(10, p.maxMana + 1);
+  p.maxMana = Math.min(p.manaCap ?? 10, p.maxMana + 1);
   p.lockedMana = Math.min(p.maxMana, p.overload ?? 0);
   p.overload = 0;
   p.mana = p.maxMana - p.lockedMana;
@@ -2797,6 +2851,7 @@ function advance(s: Game) {
   if (s.winner !== null) return;
   expireTurnModifiers(s);
   for (const owner of s.players) {
+    owner.turnCosts = (owner.turnCosts ?? []).filter((e) => e.turn > s.turn);
     owner.nextDiscounts = (owner.nextDiscounts ?? []).filter(
       (d) => d.expiresAtTurn === undefined || d.expiresAtTurn > s.turn,
     );
@@ -3027,6 +3082,15 @@ export function applyAction(state: Game, a: Action): Game {
         health: choice.step.health - stats.health,
       });
     }
+    if (choice.step.expires === 'turn') {
+      c.cost = choice.options[a.index].cost;
+      (c.temporaryCosts ??= []).push({
+        turn: s.turn,
+        set: choice.step.setCost ?? undefined,
+        reduction: choice.step.reduction,
+        source: choice.source.name,
+      });
+    }
     if (choice.step.after === 'armor') {
       p.armor += c.cost;
       event(s, a.p, 'armor-change', c.cost);
@@ -3051,6 +3115,13 @@ export function applyAction(state: Game, a: Action): Game {
         sourceName: choice.source.name,
         attack: self.attack,
         health: self.health,
+      });
+    if (matching && choice.step.after === 'fixed-buff-matching')
+      (c.modifiers ??= []).push({
+        sourceCardId: choice.source.id,
+        sourceName: choice.source.name,
+        attack: choice.step.attack ?? 0,
+        health: choice.step.health ?? 0,
       });
     if (matching && choice.step.after === 'damage-matching')
       runScript(
@@ -3294,7 +3365,10 @@ export function debugAction(state: Game, a: DebugAction): Game {
       if (!Number.isFinite(a.value)) throw Error('Invalid value');
       p[a.field] = Math.max(
         a.field === 'health' ? 0 : 0,
-        Math.min(a.field === 'reserve' ? 3 : a.field === 'mana' ? 10 : 999, Math.floor(a.value)),
+        Math.min(
+          a.field === 'reserve' ? 3 : a.field === 'mana' ? (p.manaCap ?? 10) : 999,
+          Math.floor(a.value),
+        ),
       );
       if (a.field === 'mana') p.maxMana = Math.max(p.maxMana, p.mana);
     } else if (a.type === 'add') {

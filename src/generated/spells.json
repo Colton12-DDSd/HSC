@@ -5201,6 +5201,15 @@
       }
     ]
   },
+  "YOP_029": {
+    "text": "[x]<b>Discover</b> a card with Cost\nequal to your remaining\nMana Crystals.",
+    "steps": [
+      {
+        "op": "dynamic-discover",
+        "mode": "mana"
+      }
+    ]
+  },
   "AV_136t": {
     "text": "Give a minion\n+2 Health.",
     "steps": [

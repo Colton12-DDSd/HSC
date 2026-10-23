@@ -2,17 +2,17 @@
   "summary": {
     "collectionRecords": 6470,
     "battlecryRecords": 2011,
-    "supportedBattlecryRecords": 1106,
+    "supportedBattlecryRecords": 1157,
     "battlecryNames": 1895,
-    "supportedBattlecryNames": 1030,
-    "additionalBattlecryNames": 994,
-    "remainingBattlecryNames": 865,
-    "supportedCollectionRecords": 1774,
+    "supportedBattlecryNames": 1080,
+    "additionalBattlecryNames": 1044,
+    "remainingBattlecryNames": 815,
+    "supportedCollectionRecords": 1826,
     "triggerRecords": 2521,
-    "supportedTriggerRecords": 1270,
+    "supportedTriggerRecords": 1321,
     "triggerNames": 2381,
-    "fullySupportedTriggerNames": 1183,
-    "remainingTriggerRecords": 1251
+    "fullySupportedTriggerNames": 1233,
+    "remainingTriggerRecords": 1200
   },
   "minions": [
     {
@@ -503,8 +503,8 @@
         {
           "id": "TSC_069",
           "text": "[x]<b>Battlecry:</b> Choose a friendly\nminion. <b>Discover</b> a minion\nof the same minion type.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -611,9 +611,9 @@
         {
           "id": "RLK_540",
           "text": "<b>Battlecry:</b> Discard a\nrandom Undead.\n<b>Deathrattle:</b> Summon a copy of it.",
-          "supported": false,
-          "battlecry": false,
-          "deathrattle": false
+          "supported": true,
+          "battlecry": true,
+          "deathrattle": true
         }
       ]
     },
@@ -1057,8 +1057,8 @@
         {
           "id": "EX1_089",
           "text": "<b>Charge</b>. <b>Battlecry:</b> Give your opponent a Mana Crystal.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -1642,8 +1642,8 @@
         {
           "id": "ETC_087",
           "text": "<b>Battlecry:</b> Set your maximum Mana and\nhand size to 11.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -2277,8 +2277,8 @@
         {
           "id": "AV_257",
           "text": "[x]<b>Battlecry:</b> For each Frost\nspell you've cast this game,\nsummon a 3/4 Elemental\nthat <b>Freezes</b>.@ <i>(@)</i>",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -3159,8 +3159,8 @@
         {
           "id": "RLK_123",
           "text": "[x]<b>Battlecry:</b> If a friendly\nUndead died after your last\nturn, deal 2 damage.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -3557,8 +3557,8 @@
         {
           "id": "EDR_457",
           "text": "<b>Battlecry:</b> If you're holding a\nDragon,& equip a 2/2 Sword.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -4166,9 +4166,9 @@
         {
           "id": "LOOT_161",
           "text": "<b>Battlecry:</b> Destroy\na friendly minion.\n<b>Deathrattle:</b> Summon 2 copies of it.",
-          "supported": false,
-          "battlecry": false,
-          "deathrattle": false
+          "supported": true,
+          "battlecry": true,
+          "deathrattle": true
         }
       ]
     },
@@ -6851,8 +6851,8 @@
         {
           "id": "END_021",
           "text": "<b>Battlecry:</b>& Give all minions and weapons in your hand +2 Attack.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -8187,8 +8187,8 @@
         {
           "id": "BE_870",
           "text": "<b>Battlecry:</b> <b>Discover</b> any\nspell with Cost equal to\nthis minion's Attack.\nIt costs (0) this turn.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -8878,9 +8878,9 @@
         {
           "id": "ULD_163",
           "text": "[x]<b>Battlecry:</b> Discard your\nhighest Cost card.\n<b>Deathrattle:</b> Add 2 copies\nof it to your hand.",
-          "supported": false,
-          "battlecry": false,
-          "deathrattle": false
+          "supported": true,
+          "battlecry": true,
+          "deathrattle": true
         }
       ]
     },
@@ -9981,15 +9981,15 @@
         {
           "id": "CORE_DMF_511",
           "text": "<b>Battlecry:</b> Your next\n<b>Combo</b> card this turn costs (2) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         },
         {
           "id": "DMF_511",
           "text": "<b>Battlecry:</b> Your next\n<b>Combo</b> card this turn costs (2) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -11024,9 +11024,9 @@
         {
           "id": "TRL_409",
           "text": "[x]<b>Battlecry:</b> Eat a minion in\nyour deck and gain its stats.\n<b>Deathrattle:</b> Add it to\nyour hand.",
-          "supported": false,
-          "battlecry": false,
-          "deathrattle": false
+          "supported": true,
+          "battlecry": true,
+          "deathrattle": true
         }
       ]
     },
@@ -12168,8 +12168,8 @@
         {
           "id": "RLK_832",
           "text": "<b>Battlecry:</b> Resurrect all friendly Undead that died after your last turn.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -13015,8 +13015,8 @@
         {
           "id": "GDB_135",
           "text": "[x]  <b>Battlecry:</b> The next Draenei  \nyou play refreshes Mana\nCrystals equal to its Attack.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -13130,8 +13130,8 @@
         {
           "id": "TTN_478",
           "text": "[x]<b>Battlecry:</b> Deal 1 damage\nto all enemy minions.\n<i>(Improved by each spell school\nyou've cast this game!)</i>",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -13642,8 +13642,8 @@
         {
           "id": "TOY_960",
           "text": "[x]<b>Battlecry:</b> Get copies of\nevery 1-Attack or 1-Health\nminion you've played\nthis game.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -13889,8 +13889,8 @@
         {
           "id": "BAR_077",
           "text": "[x]<b>Battlecry:</b> Summon a\n5/5 Lookout for each\nWatch Post you've\n  summoned this game.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -14414,8 +14414,8 @@
         {
           "id": "DRG_082",
           "text": "<b>Battlecry:</b> Steal your opponent's weapon.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -14608,8 +14608,8 @@
         {
           "id": "TSC_943",
           "text": "<b>Battlecry:</b> Give all weapons\nin your hand, deck, and battlefield +1/+1.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -15090,8 +15090,8 @@
         {
           "id": "WW_024",
           "text": "[x]<b>Battlecry:</b> If you played\nan Elemental last turn,\nsummon two 3/3\nCows with <b>Rush</b>.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -15507,8 +15507,8 @@
         {
           "id": "CFM_672",
           "text": "<b>Battlecry:</b> Choose a friendly\nminion. Summon any copies\nof it in your deck.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -16538,9 +16538,9 @@
         {
           "id": "DRG_308",
           "text": "<b>Battlecry:</b> Choose an\nenemy minion.\n<b>Deathrattle:</b> Summon a new copy of it.",
-          "supported": false,
-          "battlecry": false,
-          "deathrattle": false
+          "supported": true,
+          "battlecry": true,
+          "deathrattle": true
         }
       ]
     },
@@ -16761,9 +16761,9 @@
         {
           "id": "KAR_041",
           "text": "<b>Battlecry:</b> Destroy a minion. <b>Deathrattle:</b> Resummon it.",
-          "supported": false,
-          "battlecry": false,
-          "deathrattle": false
+          "supported": true,
+          "battlecry": true,
+          "deathrattle": true
         }
       ]
     },
@@ -17576,8 +17576,8 @@
         {
           "id": "RLK_956",
           "text": "[x]<b>Battlecry:</b> If a friendly\nUndead died after your\nlast turn, summon a\n2/2 Nerubian.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -17607,8 +17607,8 @@
         {
           "id": "RLK_834",
           "text": "[x]<b>Battlecry:</b> <b>Discover</b> a spell.\nIf a friendly Undead died\nafter your last turn,\nit costs (2) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -17897,8 +17897,8 @@
         {
           "id": "RLK_529",
           "text": "[x]<b>Poisonous</b>\n<b>Battlecry:</b> If a friendly Undead\ndied after your last turn, deal 1\ndamage to a minion.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -18024,8 +18024,8 @@
         {
           "id": "TSC_942",
           "text": "[x]<b>Battlecry:</b> <b>Dredge</b>. If it's\na minion or a weapon,\ngive it +1/+1.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -18691,8 +18691,8 @@
         {
           "id": "ICC_018",
           "text": "<b>Battlecry:</b> Gain stats equal to your weapon's.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -18998,8 +18998,8 @@
         {
           "id": "BOT_283",
           "text": "[x]<b>Battlecry:</b> Gain +2/+2 for\neach other Pogo-Hopper\nyou played this game.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -19190,8 +19190,8 @@
         {
           "id": "AV_296",
           "text": "[x]<b>Battlecry:</b> Your next\n<b>Choose One</b> card costs\n(2) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -20103,9 +20103,9 @@
         {
           "id": "TTN_754",
           "text": "<b>Battlecry:</b> Destroy\na friendly minion. <b>Deathrattle:</b> Summon a copy of it.",
-          "supported": false,
-          "battlecry": false,
-          "deathrattle": false
+          "supported": true,
+          "battlecry": true,
+          "deathrattle": true
         }
       ]
     },
@@ -21710,8 +21710,8 @@
         {
           "id": "TLC_461",
           "text": "[x]<b>Battlecry:</b>& <b>Discover</b> a\ncard with Cost equal to your\nremaining Mana Crystals.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -21854,8 +21854,8 @@
         {
           "id": "LOOT_520",
           "text": "<b>Battlecry:</b> Gain the <b>Deathrattle</b> of a random minion in your deck.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -21914,8 +21914,8 @@
         {
           "id": "WC_029",
           "text": "<b>Battlecry:</b> Equip a random weapon from your deck.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -22746,8 +22746,8 @@
         {
           "id": "SW_411",
           "text": "<b>Battlecry:</b> Gain +1/+1 for each other SI:7 card you've played this game.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -22770,8 +22770,8 @@
         {
           "id": "ONY_030",
           "text": "[x]<b>Battlecry:</b> Summon a random\n1-Cost minion. <i>(Upgraded\nfor each other SI:7 card you\n have played this game.)</i>",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -23717,8 +23717,8 @@
         {
           "id": "GDB_875",
           "text": "<b>Battlecry:</b> Your next <b>Combo</b> card costs (1) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -23947,8 +23947,8 @@
         {
           "id": "TLC_450",
           "text": "<b>Battlecry:</b>& Your next <b>Temporary</b> card costs\n(2) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -24434,8 +24434,8 @@
         {
           "id": "SCH_522",
           "text": "[x]<b>Battlecry:</b> Summon a random\nminion with Cost equal to\nyour weapon's Attack.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -25024,8 +25024,8 @@
         {
           "id": "VAC_701",
           "text": "<b>Battlecry:</b> Set the Attack and Durability of your weapon to 3.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -25079,8 +25079,8 @@
         {
           "id": "DMF_521",
           "text": "<b>Taunt</b>\n<b>Battlecry:</b> Equip a 3/2 Sword.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -25355,9 +25355,9 @@
         {
           "id": "BT_126",
           "text": "[x]<b>Battlecry:</b> Destroy all\nother friendly minions.\n<b>Deathrattle:</b> Resummon\nthem with +1/+1.",
-          "supported": false,
-          "battlecry": false,
-          "deathrattle": false
+          "supported": true,
+          "battlecry": true,
+          "deathrattle": true
         }
       ]
     },
@@ -27484,8 +27484,8 @@
         {
           "id": "RLK_552",
           "text": "[x]<b>Battlecry:</b> If a friendly\nUndead died after your\nlast turn, summon two\n3/2 Zombies.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -28220,9 +28220,9 @@
         {
           "id": "GIL_614",
           "text": "<b>Battlecry:</b> Choose a minion. <b>Deathrattle:</b> Destroy the chosen minion.",
-          "supported": false,
-          "battlecry": false,
-          "deathrattle": false
+          "supported": true,
+          "battlecry": true,
+          "deathrattle": true
         }
       ]
     },
@@ -28563,8 +28563,8 @@
         {
           "id": "VAC_924",
           "text": "<b>Battlecry:</b> If you control another Pirate, equip\na random weapon\nfrom your deck.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -28575,8 +28575,8 @@
         {
           "id": "MAW_029",
           "text": "<b>Battlecry:</b> If you have a weapon equipped, give it +1/+1. Otherwise, draw a weapon.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -28949,8 +28949,8 @@
         {
           "id": "TIME_057",
           "text": "<b>Battlecry:</b> Set the Cost of every card in both player's hands back to their original Costs.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -29081,8 +29081,8 @@
         {
           "id": "ULD_269",
           "text": "[x]<b>Battlecry:</b> Destroy a friendly\nminion, then return it to life\nwith full Health.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -29369,8 +29369,8 @@
         {
           "id": "BT_131",
           "text": "<b>Battlecry:</b> Your spells\ncost (1) this turn.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]

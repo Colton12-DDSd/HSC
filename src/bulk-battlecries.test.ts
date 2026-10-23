@@ -169,6 +169,8 @@ describe('500 additional distinct Battlecry names', () => {
           amount: count,
         },
       ];
+    if (condition.zone === 'deaths-since-last-turn')
+      s.events = [{ type: 'death', player: 0, turn: s.turn, card: find() }];
     if (condition.zone === 'friendly-deaths')
       s.events = Array.from({ length: count }, () => ({
         type: 'death',
@@ -210,6 +212,7 @@ describe('500 additional distinct Battlecry names', () => {
       }
     }
     p = s.players[0];
+    if (id === 'VAC_924') p.deck.push(card('CS2_106'));
     if (id === 'ONY_026') p.hand.push({ ...card('CS2_029'), spellSchool: 'SHADOW' });
     if (id === 'KAR_033') s.players[1].board[0].attack = 2;
     if (id === 'TRL_326')
@@ -717,6 +720,21 @@ describe('Independent mechanic and interaction checks', () => {
       'summon-sized',
       'menagerie',
       'held-spells',
+      'remember-cards',
+      'stored-deathrattle',
+      'release-cards',
+      'destroy-remembered',
+      'grant-return',
+      'reclaim',
+      'gain-zone-deathrattle',
+      'weapon-memory',
+      'enemy-mana',
+      'mana-limits',
+      'reset-hand-costs',
+      'turn-cost',
+      'history-sized-summon',
+      'dynamic-discover',
+      'recruit-copies',
       'transform-zone',
       'swap-source',
       'transform-random',

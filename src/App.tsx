@@ -1437,6 +1437,8 @@ export default function App() {
                           </div>
                           {p.effects?.length ||
                           p.nextDiscounts?.length ||
+                          p.turnCosts?.length ||
+                          p.manaCap ||
                           p.endEffects?.length ||
                           p.summonEffects?.length ||
                           p.playEffects?.length ||
@@ -1460,6 +1462,12 @@ export default function App() {
                                 {p.effects?.map((effect, index) => (
                                   <li key={index}>
                                     {effect.sourceName}: +{effect.amount} to your healing effects
+                                  </li>
+                                ))}
+                                {p.manaCap ? <li>Maximum Mana: {p.manaCap}</li> : null}
+                                {p.turnCosts?.map((e, i) => (
+                                  <li key={`turn-cost-${i}`}>
+                                    {e.source}: matching cards cost ({e.set}) · until end of turn
                                   </li>
                                 ))}
                                 {p.nextDiscounts?.map((e, i) => (

@@ -1,3 +1,4 @@
+import type { Card } from './cards';
 export interface CardFilter {
   type?: string;
   tribe?: string;
@@ -26,8 +27,12 @@ export interface CardFilter {
   notName?: string;
   nameSuffix?: string;
   notClass?: string;
+  temporary?: boolean;
+  namePrefix?: string;
 }
-export type ScriptValue = number | { count?: string; stat?: string; filter?: CardFilter };
+export type ScriptValue =
+  | number
+  | { count?: string; stat?: string; filter?: CardFilter; offset?: number };
 export interface ScriptCondition {
   zone?: string;
   filter?: CardFilter;
@@ -75,4 +80,6 @@ export interface ScriptStep {
   owner?: number;
   elseSteps?: ScriptStep[];
   pool?: string[];
+  cards?: Card[];
+  victimUid?: number;
 }

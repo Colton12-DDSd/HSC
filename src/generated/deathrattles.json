@@ -53,6 +53,14 @@
       }
     ]
   },
+  "BT_126": {
+    "text": "[x]<b>Battlecry:</b> Destroy all\nother friendly minions.\n<b>Deathrattle:</b> Resummon\nthem with +1/+1.",
+    "steps": [
+      {
+        "op": "stored-deathrattle"
+      }
+    ]
+  },
   "CFM_667": {
     "text": "[x]<b>Battlecry:</b> Deal 5 damage\nto an enemy minion.\n<b>Deathrattle:</b> Deal 5 damage\nto your hero.",
     "steps": [
@@ -132,6 +140,14 @@
       }
     ]
   },
+  "DRG_308": {
+    "text": "<b>Battlecry:</b> Choose an\nenemy minion.\n<b>Deathrattle:</b> Summon a new copy of it.",
+    "steps": [
+      {
+        "op": "stored-deathrattle"
+      }
+    ]
+  },
   "EDR_459": {
     "text": "[x]<b>Battlecry:</b> Deal 3 damage\nto all other friendly minions.\n<b>Deathrattle:</b> Deal 3 damage\nto all enemy minions.",
     "steps": [
@@ -156,6 +172,14 @@
       }
     ]
   },
+  "GIL_614": {
+    "text": "<b>Battlecry:</b> Choose a minion. <b>Deathrattle:</b> Destroy the chosen minion.",
+    "steps": [
+      {
+        "op": "stored-deathrattle"
+      }
+    ]
+  },
   "ICC_025": {
     "text": "[x]<b>Battlecry:</b> Summon a\n5/5 Skeleton.\n<b>Deathrattle:</b> Summon one\nfor your opponent.",
     "steps": [
@@ -164,6 +188,22 @@
         "token": "ICC_025t",
         "amount": 1,
         "enemy": true
+      }
+    ]
+  },
+  "KAR_041": {
+    "text": "<b>Battlecry:</b> Destroy a minion. <b>Deathrattle:</b> Resummon it.",
+    "steps": [
+      {
+        "op": "stored-deathrattle"
+      }
+    ]
+  },
+  "LOOT_161": {
+    "text": "<b>Battlecry:</b> Destroy\na friendly minion.\n<b>Deathrattle:</b> Summon 2 copies of it.",
+    "steps": [
+      {
+        "op": "stored-deathrattle"
       }
     ]
   },
@@ -207,6 +247,14 @@
         "amount": 2,
         "scope": "enemies",
         "random": 1
+      }
+    ]
+  },
+  "RLK_540": {
+    "text": "<b>Battlecry:</b> Discard a\nrandom Undead.\n<b>Deathrattle:</b> Summon a copy of it.",
+    "steps": [
+      {
+        "op": "stored-deathrattle"
       }
     ]
   },
@@ -283,6 +331,30 @@
       {
         "op": "lowest-health-damage",
         "amount": 3
+      }
+    ]
+  },
+  "TRL_409": {
+    "text": "[x]<b>Battlecry:</b> Eat a minion in\nyour deck and gain its stats.\n<b>Deathrattle:</b> Add it to\nyour hand.",
+    "steps": [
+      {
+        "op": "stored-deathrattle"
+      }
+    ]
+  },
+  "TTN_754": {
+    "text": "<b>Battlecry:</b> Destroy\na friendly minion. <b>Deathrattle:</b> Summon a copy of it.",
+    "steps": [
+      {
+        "op": "stored-deathrattle"
+      }
+    ]
+  },
+  "ULD_163": {
+    "text": "[x]<b>Battlecry:</b> Discard your\nhighest Cost card.\n<b>Deathrattle:</b> Add 2 copies\nof it to your hand.",
+    "steps": [
+      {
+        "op": "stored-deathrattle"
       }
     ]
   },

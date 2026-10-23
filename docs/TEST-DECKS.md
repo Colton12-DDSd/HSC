@@ -16,6 +16,7 @@ Open **Play** or **Testing**, choose **Test deck**, then press **New game**. Sta
 | Spell Chronicle | Dragoncaller Alanna | Summon Dragons for expensive spells cast |
 | Mana Workshop | Captain Galvangar | Track lifetime Armor gain, then gain stats and Charge |
 | Mirror Menagerie | Sathrovarr | Copy a minion to hand, deck and battlefield |
+| Stored Secrets | Teron Gorefiend | Store friendly minions and resummon them with +1/+1 |
 
 Commander names appear in the selector, and **Deck & test goals** includes a commander-specific test. Commanders are excluded from their own 100-card main decks. All four seats use different commanders in themed matches. Their costs, command tax and destination choices use the normal commander rules.
 
@@ -47,7 +48,7 @@ The [mirror batch](MIRROR-BATTLECRIES.md) adds **Mirror Menagerie**, led by Sath
 
 ## Coverage and rules
 
-Current support: **1,030 Battlecry names / 1,106 collection printings** and **1,774 supported collection records**. The latest pass implements **250 of the original 315 foundation candidates** and 132 additional names. **65 of that batch remain blocked**; the [complete report](FOUNDATION-BATTLECRIES.md) lists each one and its next dependency. Across the whole collection, **865 Battlecry names remain unsupported**. No approximate effect substitutes for unrecognized rules.
+Current support: **1,080 Battlecry names / 1,157 collection printings** and **1,826 supported collection records**. The latest pass implements **250 of the original 315 foundation candidates** and 182 additional names. **65 of that batch remain blocked**; the [complete report](FOUNDATION-BATTLECRIES.md) lists each one and its next dependency. Across the whole collection, **815 Battlecry names remain unsupported**. No approximate effect substitutes for unrecognized rules.
 
 New shared families include consuming live stats, linked draws, Dredge rewards, temporary costs, Menagerie selection, future-play buffs, deck ordering, burn/draw replacement, expanded hand limits, hero Divine Shield and permanent Immunity. Boom Bot Deathrattles and Ice Shard/Water Elemental freezing are implemented. Generated cards can have separately unsupported abilities, labeled effects pending; those cards cannot be played. Named pools and special summoned passives require exact definitions.
 
@@ -55,10 +56,14 @@ Commander adaptations: untargeted effects involving the enemy or both/each playe
 
 ## Verification
 
-All twelve decks are checked for supported cards, singleton names, distinct themes, curve quotas, reproducible openings and full bot matches with identical replays. Independent outcome tests cover draws, cost expiry, Dredge movement, consumption, Shields, Freeze, queued buffs, hand limits and special tokens. The compiler rejects unknown riders and misleading token descriptions. The 315-card progress report is checked against every original printing in the live registry.
+All thirteen decks are checked for supported cards, singleton names, distinct themes, curve quotas, reproducible openings and full bot matches with identical replays. Independent outcome tests cover draws, cost expiry, Dredge movement, consumption, Shields, Freeze, queued buffs, hand limits and special tokens. The compiler rejects unknown riders and misleading token descriptions. The 315-card progress report is checked against every original printing in the live registry.
 
 Browser verification traced Deck Laboratory → guided hand → Scenario mana → Excavation Specialist → bottom-three choice → Novice Engineer → selected card at its discounted cost. The board, hand and action history agreed, with no browser errors. The database and image storage were not changed. Run `npm test`, `npm run test:compiler`, `npm run test:battlecry-groups`, `npm run build`, `npm run audit:foundation` and `npm run group:battlecries` to reproduce the checks and reports.
 
 Latest browser check: Mana Workshop -> paused bots -> 10 scenario mana -> Clownfish. Both Murlocs displayed 0 mana; Active effects counted two remaining casts, then one after Murloc Raider. Spell Chronicle also opened successfully with five supported cards. The combined suite passes 3,584 tests, including all twelve premade matches and identical replays.
 
 Mirror browser check: ten scenario mana -> River Crocolisk -> Shadowcaster -> choose Crocolisk. The original stayed 2/3 on board; the new hand copy displayed Cost 1 and stats 1/1. No browser errors.
+
+The [memory batch](MEMORY-BATTLECRIES.md) adds **Stored Secrets**, led by Teron Gorefiend. Its guided opening is Loot Hoarder, Carnivorous Cube, Expired Merchant, Fireball and Voodoo Doll. Iron Reserve, Mana Workshop and Spell Chronicle also gain examples from this batch. Captured names appear in the granted Deathrattle preview; Active effects shows maximum Mana and turn-wide spell Costs.
+
+Memory browser check: paused bots, ten scenario Mana, Loot Hoarder -> Carnivorous Cube targeting Hoarder. The Cube preview named Loot Hoarder. Adding and playing Sanguine Reveler targeting Cube returned two fresh 2/1 Hoarders and left a 3/3 Reveler. No browser errors. The latest suite passes **3,818 tests**, including all thirteen premade matches and identical replays.

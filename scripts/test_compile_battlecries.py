@@ -10,6 +10,15 @@ spec.loader.exec_module(compiler)
 compiler.current_card={'id':'TEST','set':'LEGACY'}
 
 class CompleteTextTests(unittest.TestCase):
+    def test_memory_clauses_require_exact_printed_context_and_complete_rewards(self):
+        original=compiler.current_card
+        try:
+            compiler.current_card={'id':'LOOT_161','name':'Carnivorous Cube','set':'LOOTAPALOOZA'}
+            self.assertEqual(compiler.compile('Destroy a friendly minion.'),[{'op':'remember-cards','scope':'target','target':'friendly-minion','mode':'summon','amount':2}])
+            self.assertEqual(compiler.compile('Summon 2 copies of it.'),[{'op':'stored-deathrattle'}])
+            self.assertIsNone(compiler.compile('Summon 2 copies of it. Ignore an unknown rider.'))
+        finally:compiler.current_card=original
+        self.assertEqual(compiler.compile('Set your maximum Mana and hand size to 11.'),[{'op':'mana-limits','amount':11}])
     def test_mirrors_keep_exact_targets_and_complete_generated_rules(self):
         self.assertEqual(compiler.compile('Choose a friendly Beast. Shuffle three 3/3 copies into your deck.'),[{'op':'shuffle-copy','scope':'target','target':'friendly-minion','filter':{'tribe':'BEAST'},'amount':3,'attack':3,'health':3}])
         self.assertEqual(compiler.compile('Transform all spells in your hand into ones that cost (3) more. (They keep their original Cost.)'),[{'op':'transform-zone','zone':'hand','filter':{'type':'SPELL'},'resultFilter':{'type':'SPELL'},'costDelta':3,'mode':'keep-cost'}])

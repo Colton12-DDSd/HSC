@@ -1,5 +1,6 @@
 import { cardCost, cardStats, type Card } from './cards';
 import { deathrattleFor } from './effects';
+import { memoryOperations, resolveMemory } from './memory-effects';
 import { mirrorOperations, resolveMirror } from './mirror-effects';
 import type { Game, Player, Unit, Target } from './engine';
 import type { CardFilter, ScriptStep } from './script-types';
@@ -8,6 +9,7 @@ import type { CardFilter, ScriptStep } from './script-types';
 // All randomness, damage and summons still use the authoritative engine helpers.
 export const foundationOperations = [
   ...mirrorOperations,
+  ...memoryOperations,
   'battlefield-stats',
   'shield-harvest',
   'draw-linked',
@@ -61,6 +63,11 @@ export interface Helpers {
   get: (t: Target) => Player | Unit;
   run: (steps: ScriptStep[], t?: Target) => void;
   catalog: Card[];
+  position: number;
+  spawn: (owner: number, c: Card, position?: number) => Unit | undefined;
+  finishDeaths: () => void;
+  destroyWeapon: (owner: number) => void;
+  equip: (owner: number, c: Card) => void;
 }
 export function resolveFoundation(
   s: Game,
@@ -77,6 +84,7 @@ export function resolveFoundation(
   const op = step.op;
   if (!foundationOperations.includes(op)) return false;
   if (resolveMirror(s, player, step, source, sourceUid, target, h)) return true;
+  if (resolveMemory(s, player, step, source, sourceUid, target, h)) return true;
   if (op === 'history-cards') {
     const previous =
       (s.events ?? [])
@@ -90,7 +98,16 @@ export function resolveFoundation(
         e.type === 'play' &&
         e.player === player &&
         e.card &&
-        h.matches(e.card, step.filter) &&
+        h.matches(
+          step.after === 'played-stats'
+            ? {
+                ...e.card,
+                attack: e.playedAttack ?? e.card.attack,
+                health: e.playedHealth ?? e.card.health,
+              }
+            : e.card,
+          step.filter,
+        ) &&
         (step.zone !== 'held' || i >= (source.heldSince ?? 0)) &&
         (step.zone !== 'previous' || e.turn === previous),
     );
