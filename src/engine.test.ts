@@ -137,8 +137,8 @@ describe('Turns and combat', () => {
   });
   it('blocks unsupported effects and seven-slot overflow', () => {
     const s = setup();
-    s.players[0].hand = [card('CS2_024')];
-    expect(supported(card('CS2_024'))).toBe(false);
+    s.players[0].hand = [card('EX1_287')];
+    expect(supported(card('EX1_287'))).toBe(false);
     expect(() => applyAction(s, { type: 'cast', p: 0, index: 0, target: { p: 1 } })).toThrow(
       /not implemented/,
     );

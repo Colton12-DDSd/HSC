@@ -7,6 +7,7 @@ export type EffectTarget =
   | 'character'
   | 'minion'
   | 'friendly-minion'
+  | 'friendly-character'
   | 'enemy-hero'
   | 'enemy-character'
   | 'enemy-minion';

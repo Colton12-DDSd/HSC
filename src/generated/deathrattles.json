@@ -2050,6 +2050,18 @@
       }
     ]
   },
+  "TRL_503": {
+    "text": "<b>Deathrattle:</b> Summon three 1/1 Scarabs.",
+    "steps": [
+      {
+        "op": "summon-token",
+        "token": "TRL_503t",
+        "amount": 3,
+        "enemy": false,
+        "allPlayers": false
+      }
+    ]
+  },
   "TRL_505": {
     "text": "<b>Deathrattle:</b> Reduce the Cost of a Beast in your hand by (1).",
     "steps": [
@@ -2160,6 +2172,16 @@
         "op": "heal",
         "amount": 3,
         "scope": "hero"
+      }
+    ]
+  },
+  "ULD_250": {
+    "text": "<b>Taunt</b>\n<b>Deathrattle:</b> Add two 1/1 Scarabs with <b>Taunt</b> to your hand.",
+    "steps": [
+      {
+        "op": "generate-token",
+        "token": "ULD_215t",
+        "amount": 2
       }
     ]
   },

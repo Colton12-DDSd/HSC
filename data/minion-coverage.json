@@ -7,12 +7,12 @@
     "supportedBattlecryNames": 1080,
     "additionalBattlecryNames": 1044,
     "remainingBattlecryNames": 815,
-    "supportedCollectionRecords": 1826,
+    "supportedCollectionRecords": 2049,
     "triggerRecords": 2521,
-    "supportedTriggerRecords": 1321,
+    "supportedTriggerRecords": 1323,
     "triggerNames": 2381,
-    "fullySupportedTriggerNames": 1233,
-    "remainingTriggerRecords": 1200
+    "fullySupportedTriggerNames": 1235,
+    "remainingTriggerRecords": 1198
   },
   "minions": [
     {
@@ -12955,9 +12955,9 @@
         {
           "id": "ULD_250",
           "text": "<b>Taunt</b>\n<b>Deathrattle:</b> Add two 1/1 Scarabs with <b>Taunt</b> to your hand.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },
@@ -21470,9 +21470,9 @@
         {
           "id": "TRL_503",
           "text": "<b>Deathrattle:</b> Summon three 1/1 Scarabs.",
-          "supported": false,
+          "supported": true,
           "battlecry": null,
-          "deathrattle": false
+          "deathrattle": true
         }
       ]
     },

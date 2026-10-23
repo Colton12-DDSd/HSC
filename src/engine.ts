@@ -935,12 +935,13 @@ export function effectTargets(s: Game, player: number, card: Card): Target[] {
             ...(rule === 'minion' ||
             rule === 'enemy-minion' ||
             rule === 'friendly-minion' ||
+            (rule === 'friendly-character' && index !== player) ||
             (['enemy-hero', 'enemy-character'].includes(rule) && index === player)
               ? []
               : [{ p: index }]),
             ...(rule === 'enemy-hero' ||
             (['enemy-minion', 'enemy-character'].includes(rule) && index === player) ||
-            (rule === 'friendly-minion' && index !== player)
+            (['friendly-minion', 'friendly-character'].includes(rule) && index !== player)
               ? []
               : p.board.filter((u) => u.health > 0).map((u) => ({ p: index, uid: u.uid }))),
           ],
@@ -1857,9 +1858,12 @@ function runScript(
         const costs = p[zone].filter((c) => matchesCard(c, step.filter, p)).map((c) => c.cost);
         const selectedCost =
           step.order === 'highest Cost' ? Math.max(...costs) : Math.min(...costs);
+        const eligible = p[zone].filter((c) => matchesCard(c, step.filter, p) && (!step.order || c.cost === selectedCost));
+        const selected = step.random && eligible.length ? eligible[random(s, eligible.length)] : undefined;
         p[zone] = p[zone].map((c) => {
           if (!matchesCard(c, step.filter, p)) return c;
           if (step.order && c.cost !== selectedCost) return c;
+          if (step.random && c !== selected) return c;
           const copy = structuredClone(c);
           if (step.op === 'cost') {
             copy.printedCost ??= copy.cost;
@@ -1941,6 +1945,8 @@ function runScript(
       }
       const zone = step.zone as 'hand' | 'deck';
       const recruitedSets = new Set<string>();
+      const recruitedCards = new Set<Card>();
+      let sameCard: Card | undefined;
       for (let i = 0; i < amount && p.board.length < 7; i++) {
         const options = p[zone]
           .map((c, index) => ({ c, index }))
@@ -1949,11 +1955,15 @@ function runScript(
               o.c.type === 'MINION' &&
               matchesCard(o.c, step.filter, p) &&
               (!step.distinct || !recruitedSets.has(o.c.set)) &&
+              (step.mode !== 'different-cards' || !recruitedCards.has(o.c)) &&
+              (!sameCard || o.c === sameCard) &&
               (step.mode !== 'affordable' || handCost(p, o.c) <= p.mana),
           );
         if (!options.length) break;
         const { c, index } = options[random(s, options.length)];
         recruitedSets.add(c.set);
+        recruitedCards.add(c);
+        if (step.mode === 'same-card') sameCard = c;
         if (!step.copy) p[zone].splice(index, 1);
         const uid = summon(s, player, c, false, Math.min(position + i, p.board.length));
         if (step.attack !== undefined && step.health !== undefined) {
@@ -2022,10 +2032,10 @@ function runScript(
       return;
     }
     if (step.op === 'draw') {
-      if (step.allPlayers) {
+      if (step.allPlayers || step.enemy) {
         for (let i = 0; i < s.players.length; i++)
-          if (s.players[i].health > 0)
-            runScript(s, i, [{ ...step, allPlayers: false }], undefined, 0, source);
+          if (s.players[i].health > 0 && (step.allPlayers || i !== player))
+            runScript(s, i, [{ ...step, allPlayers: false, enemy: false }], undefined, 0, source);
         continue;
       }
       let count =
@@ -2039,7 +2049,7 @@ function runScript(
             );
       const drawnNames = new Set<string>();
       for (let i = 0; i < count && p.health > 0; i++) {
-        if (step.filter || step.mode || step.summon) {
+        if (step.filter || step.mode || step.summon || step.reduction || step.setCost != null || step.expires) {
           let candidates = p.deck
             .map((c, index) => ({ c, index }))
             .filter(

@@ -2,6 +2,7 @@
 import json, re, hashlib
 from battlecry_patterns import compile_more
 from foundation_patterns import compile_foundation
+from spell_patterns import compile_spell
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 cards=json.loads((ROOT/'public/data/cards.json').read_text(encoding='utf8'))
@@ -514,7 +515,8 @@ def main():
   if tok.get('type')!='SPELL':continue
   current_card=tok
   text=clean(tok.get('text',''))
-  e=compile(text)
+  e=compile_spell(tok,compile,clean,target,filt,num,all_cards,choose_token)
+  if e is None:e=compile(text)
   if tid=='RLK_843':e=[{'op':'if','condition':{'stat':'mana','min':8},'steps':[{'op':'damage','scope':'target','target':'character','amount':3}]},{'op':'if','condition':{'stat':'mana','max':7},'steps':[{'op':'damage','scope':'target','target':'character','amount':2}]}]
   def needs_unit(steps):return any(x.get('scope')=='self' or x['op']=='summon-self' or x.get('from')=='self' or needs_unit(x.get('steps',[])) for x in steps)
   if e is not None and not needs_unit(e):spells[tid]={'text':tok.get('text',''),'steps':e}
