@@ -50,6 +50,8 @@ export class AuthoritativeMatch {
           deck: undefined,
           handCount: p.hand.length,
           hand: i === seat ? structuredClone(p.hand) : undefined,
+          startingHand: i === seat ? structuredClone(p.startingHand) : undefined,
+          startingDeck: i === seat ? structuredClone(p.startingDeck) : undefined,
         })),
       },
     };

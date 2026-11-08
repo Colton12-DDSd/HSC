@@ -1,19 +1,19 @@
 {
   "snapshot": "2026-10-22",
   "basis": "Pinned local collection; exact remaining-name membership from the support audit",
-  "supportedBattlecryNames": 1080,
-  "totalRemaining": 815,
+  "supportedBattlecryNames": 1090,
+  "totalRemaining": 805,
   "replacementCharacterPrintings": 0,
   "lanes": [
     {
       "id": "foundation",
       "label": "Existing foundations: pattern, value, filter or sequencing extensions",
-      "count": 65
+      "count": 56
     },
     {
       "id": "shared",
       "label": "Extend a shared engine family",
-      "count": 246
+      "count": 245
     },
     {
       "id": "system",
@@ -32,28 +32,28 @@
       "label": "Damage, healing, Armor and board stats",
       "lane": "foundation",
       "work": "Extend numeric expressions, target-dependent branches, tribal filters and compound stat effects.",
-      "count": 17
+      "count": 16
     },
     {
       "id": "draw-zones",
       "label": "Draw, discard and hand/deck movement",
       "lane": "foundation",
       "work": "Extend existing zone operations: draws, burns, ordering, bottom-of-deck placement and hand replacement.",
-      "count": 21
+      "count": 20
     },
     {
       "id": "summon-tokens",
       "label": "Summons, recruits and token definitions",
       "lane": "foundation",
       "work": "Add exact token definitions, variable summon stats, filtered recruitment and placement rules. Generated minion abilities need their own coverage.",
-      "count": 14
+      "count": 12
     },
     {
       "id": "generate-pools",
       "label": "Generated cards and named card pools",
       "lane": "foundation",
       "work": "Define precise named/tribal/class/school pools and generated-card metadata; implement any required token abilities.",
-      "count": 13
+      "count": 8
     },
     {
       "id": "cost-mana",
@@ -95,7 +95,7 @@
       "label": "History, thresholds and scaling conditions",
       "lane": "shared",
       "work": "Extend public history, while-held counters, distinct schools/types, spent mana, starting decks and previous-turn queries.",
-      "count": 23
+      "count": 22
     },
     {
       "id": "scheduling",
@@ -221,37 +221,37 @@
     {
       "id": "damage-stats",
       "label": "Damage, healing, Armor and board stats",
-      "count": 353
+      "count": 351
     },
     {
       "id": "draw-zones",
       "label": "Draw, discard and hand/deck movement",
-      "count": 277
+      "count": 270
     },
     {
       "id": "summon-tokens",
       "label": "Summons, recruits and token definitions",
-      "count": 114
+      "count": 112
     },
     {
       "id": "generate-pools",
       "label": "Generated cards and named card pools",
-      "count": 87
+      "count": 80
     },
     {
       "id": "cost-mana",
       "label": "Card costs, mana and ordinary discounts",
-      "count": 157
+      "count": 156
     },
     {
       "id": "choices",
       "label": "Discover and other player choices",
-      "count": 143
+      "count": 142
     },
     {
       "id": "copy-transform",
       "label": "Copies, transformations, swaps and control",
-      "count": 103
+      "count": 102
     },
     {
       "id": "death-memory",
@@ -266,7 +266,7 @@
     {
       "id": "history",
       "label": "History, thresholds and scaling conditions",
-      "count": 131
+      "count": 129
     },
     {
       "id": "scheduling",
@@ -799,10 +799,9 @@
     },
     {
       "label": "Chaotic Tendrils",
-      "count": 2,
+      "count": 1,
       "names": [
-        "Chaotic Tendril",
-        "Eye of Chaos"
+        "Chaotic Tendril"
       ]
     },
     {
@@ -872,14 +871,6 @@
         "Raptor Herald",
         "Shadowflame Stalker",
         "Treacherous Tormentor"
-      ]
-    },
-    {
-      "label": "Dream cards",
-      "count": 2,
-      "names": [
-        "Hopeful Dryad",
-        "Ysera the Dreamer"
       ]
     },
     {
@@ -1036,9 +1027,8 @@
     },
     {
       "label": "Spare Parts",
-      "count": 2,
+      "count": 1,
       "names": [
-        "Tinkertown Technician",
         "Toshley"
       ]
     },
@@ -7229,32 +7219,6 @@
       ]
     },
     {
-      "name": "Elise, Badlands Savior",
-      "primary": "summon-tokens",
-      "lane": "foundation",
-      "dependencies": [
-        "summon-tokens",
-        "copy-transform",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "WW_392",
-          "text": "[x]<b>Battlecry:</b> If your deck started\nwith no duplicates, summon\n5/5 copies of 4 random\nminions in your deck.",
-          "normalizedText": "Battlecry: If your deck started with no duplicates, summon 5/5 copies of 4 random minions in your deck.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Elite Tauren Chieftain",
       "primary": "generate-pools",
       "lane": "foundation",
@@ -7759,32 +7723,6 @@
           "id": "GDB_229",
           "text": "[x] <b>Battlecry:</b> The next Draenei \nyou play immediately\nattacks a random enemy.",
           "normalizedText": "Battlecry: The next Draenei you play immediately attacks a random enemy.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Eye of Chaos",
-      "primary": "generate-pools",
-      "lane": "foundation",
-      "dependencies": [
-        "generate-pools"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [
-        "Chaotic Tendrils"
-      ],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "YOG_515",
-          "text": "<b>Battlecry:</b> Get two\n1/1 Chaotic Tendrils.",
-          "normalizedText": "Battlecry: Get two 1/1 Chaotic Tendrils.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -9704,32 +9642,6 @@
       ]
     },
     {
-      "name": "Hexmarshal",
-      "primary": "generate-pools",
-      "lane": "foundation",
-      "dependencies": [
-        "generate-pools",
-        "cost-mana",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "JAIL_806",
-          "text": "[x]<b>Battlecry:</b> Get a random\n spell that costs (5) or more.\nIf your deck started with no\n  spells, it costs (5) less.",
-          "normalizedText": "Battlecry: Get a random spell that costs (5) or more. If your deck started with no spells, it costs (5) less.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Hideous Husk",
       "primary": "ongoing",
       "lane": "system",
@@ -9917,32 +9829,6 @@
           "mechanics": [
             "BATTLECRY",
             "HONORABLE_KILL"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Hopeful Dryad",
-      "primary": "generate-pools",
-      "lane": "foundation",
-      "dependencies": [
-        "generate-pools"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [
-        "Dream cards"
-      ],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "EDR_001",
-          "text": "<b>Battlecry:</b> Get a random Dream card.",
-          "normalizedText": "Battlecry: Get a random Dream card.",
-          "mechanics": [
-            "BATTLECRY"
           ]
         }
       ]
@@ -16360,33 +16246,6 @@
       ]
     },
     {
-      "name": "Relic Miner",
-      "primary": "draw-zones",
-      "lane": "foundation",
-      "dependencies": [
-        "draw-zones",
-        "choices",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TLC_109",
-          "text": "[x]<b>Battlecry:</b> Destroy the top\ncard of your deck. <b>Discover</b> a\ncard of the same Rarity.",
-          "normalizedText": "Battlecry: Destroy the top card of your deck. Discover a card of the same Rarity.",
-          "mechanics": [
-            "BATTLECRY",
-            "DISCOVER"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Reliquary Researcher",
       "primary": "quests-upgrades",
       "lane": "system",
@@ -19004,32 +18863,6 @@
       ]
     },
     {
-      "name": "Soulwarden",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "generate-pools",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TRL_247",
-          "text": "<b>Battlecry:</b> Add 3 random cards you discarded this game to your hand.",
-          "normalizedText": "Battlecry: Add 3 random cards you discarded this game to your hand.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Sparkjoy Cheat",
       "primary": "secrets-counters",
       "lane": "system",
@@ -19517,32 +19350,6 @@
           "mechanics": [
             "BATTLECRY",
             "TRADEABLE"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Starlight Whelp",
-      "primary": "generate-pools",
-      "lane": "foundation",
-      "dependencies": [
-        "generate-pools",
-        "history",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TTN_718",
-          "text": "<b>Battlecry:</b> Get a\nrandom card from your starting hand.",
-          "normalizedText": "Battlecry: Get a random card from your starting hand.",
-          "mechanics": [
-            "BATTLECRY"
           ]
         }
       ]
@@ -20740,30 +20547,6 @@
       ]
     },
     {
-      "name": "Time Adm'ral Hooktail",
-      "primary": "summon-tokens",
-      "lane": "foundation",
-      "dependencies": [
-        "summon-tokens"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TIME_713",
-          "text": "<b>Battlecry:</b> Summon a 0/8 Chest for your opponent. <i>It's FULL of Coins!</i>",
-          "normalizedText": "Battlecry: Summon a 0/8 Chest for your opponent. It's FULL of Coins!",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Time-Lost Raptor",
       "primary": "keyword-packages",
       "lane": "system",
@@ -20922,34 +20705,6 @@
           "id": "TOY_385",
           "text": "[x]<b>Battlecry:</b> Once per game,\nif you've played 8 other\nDragons, take an extra turn.@\n<i>({0} left!)</i>@\n<i>(Ready!)</i>",
           "normalizedText": "Battlecry: Once per game, if you've played 8 other Dragons, take an extra turn.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Tinkertown Technician",
-      "primary": "damage-stats",
-      "lane": "foundation",
-      "dependencies": [
-        "damage-stats",
-        "generate-pools",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [
-        "Spare Parts"
-      ],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "GVG_102",
-          "text": "<b>Battlecry:</b> If you have a Mech, gain +1/+1 and add a <b>Spare Part</b> to your hand.",
-          "normalizedText": "Battlecry: If you have a Mech, gain +1/+1 and add a Spare Part to your hand.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -23422,33 +23177,6 @@
           "id": "DMF_004",
           "text": "[x]<b>Battlecry:</b> If you've cast\n10 spells this game, spin\nthe Wheel of Yogg-Saron.@\n<i>({0} left!)</i>@\n<i>(Ready!)</i>",
           "normalizedText": "Battlecry: If you've cast 10 spells this game, spin the Wheel of Yogg-Saron.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Ysera the Dreamer",
-      "primary": "generate-pools",
-      "lane": "foundation",
-      "dependencies": [
-        "generate-pools",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [
-        "Dream cards"
-      ],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "LEG_CS3_033",
-          "text": "<b>Battlecry:</b> Add one of each Dream card to your hand.",
-          "normalizedText": "Battlecry: Add one of each Dream card to your hand.",
           "mechanics": [
             "BATTLECRY"
           ]

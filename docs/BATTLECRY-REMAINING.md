@@ -1,6 +1,6 @@
 # Remaining Battlecries — 2026-10-22
 
-**815 unique Battlecry minion names remain unsupported** in the pinned collection. This list is an implementation backlog, not enabled content. Some require new systems (auras, Secrets, spell casting/repetition, hero powers, mana/health/corpse resources, custom card construction, Infuse, Forge, Herald, Ritual and other expansion mechanics); others need additional full-clause patterns or card-specific rules. Existing numeric templates alone cannot finish the list.
+**805 unique Battlecry minion names remain unsupported** in the pinned collection. This list is an implementation backlog, not enabled content. Some require new systems (auras, Secrets, spell casting/repetition, hero powers, mana/health/corpse resources, custom card construction, Infuse, Forge, Herald, Ritual and other expansion mechanics); others need additional full-clause patterns or card-specific rules. Existing numeric templates alone cannot finish the list.
 
 Unknown clauses remain blocked. Generated-card abilities are tracked independently from the source Battlecry. Local sandbox decks do not assert Wild legality. Run `npm run audit:battlecries` to regenerate both this backlog and the added-card manifest.
 
@@ -227,7 +227,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Elise Starseeker | LOE_079 | Battlecry: Shuffle the 'Map to the Golden Monkey' into your deck. |
 | Elise the Navigator | TLC_100 | Battlecry: If your deck started with 10 cards of different Costs, craft a custom location. |
 | Elise the Trailblazer | UNG_851 | Battlecry: Shuffle a sealed Un'Goro pack into your deck. If your deck has no duplicates, draw it. |
-| Elise, Badlands Savior | WW_392 | Battlecry: If your deck started with no duplicates, summon 5/5 copies of 4 random minions in your deck. |
 | Elite Tauren Chieftain | PRO_001 | Battlecry: Give both players the power to ROCK! (with a Power Chord card) |
 | Emberscarred Whelp | FIR_927 | Battlecry: Discover a 5-Cost card. Gain 1 Mana Crystal next turn only.~GAMEPLAY ASPROXY FIR 927 |
 | Endbringer Umbra | TLC_106 | Battlecry: Trigger the Deathrattles of 5 friendly minions that died this game. |
@@ -247,7 +246,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Exarch Othaar | GDB_856 | Battlecry: If you're building a Starship, get 3 different Arcane spells and reduce their Costs by (2). |
 | Exotic Houndmaster | EDR_226 | Battlecry: Draw a Beast. Imbue your Hero Power. |
 | Expedition Sergeant | GDB_229 | Battlecry: The next Draenei you play immediately attacks a random enemy. |
-| Eye of Chaos | YOG_515 | Battlecry: Get two 1/1 Chaotic Tendrils. |
 | Eyes in the Sky | TLC_521 | Battlecry: Look at 3 cards in your enemy's deck. Pick one to put on top. |
 | F3TCH3R | BE_044 | Battlecry: Assemble a 4-Cost minion. |
 | Face Collector | GIL_677 | Echo Battlecry: Add a random Legendary minion to your hand. |
@@ -318,7 +316,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Hematurge | CORE_RLK_066, RLK_066 | Battlecry: Spend a Corpse to Discover a Blood Rune card.~GAMEPLAY ASPROXY CORE RLK 066 |
 | Herald of Shadows | TID_717 | Battlecry: If you've cast a Shadow spell while holding this, steal 2 Health from a minion. |
 | Hex Lord Malacrass | TRL_318 | Battlecry: Add a copy of your opening hand to your hand (except this card). |
-| Hexmarshal | JAIL_806 | Battlecry: Get a random spell that costs (5) or more. If your deck started with no spells, it costs (5) less. |
 | Hideous Husk | EDR_810 | Your Leeches steal 1 more Health from their victims. Battlecry: Summon two 0/2 Leeches. |
 | High Cultist Herenn | TLC_810 | Battlecry: Summon two Deathrattle minions from your deck. They fight! |
 | High Templar | SC_765 | Battlecry: Deal 2 damage to all enemies. Play another Templar to merge into an Archon! |
@@ -326,7 +323,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Hijacked Securitybot | JAIL_457 | Prepare Battlecry: Give your other minions +1/+1. |
 | Hipster | ETC_103 | Battlecry: Discover a spell from your opponent's class that isn't in their deck. |
 | Hollow Abomination | AV_313 | Battlecry: Deal 1 damage to all enemy minions. Honorable Kill: Gain the minion's Attack. |
-| Hopeful Dryad | EDR_001 | Battlecry: Get a random Dream card. |
 | Horde Operative | BAR_430 | Battlecry: Copy your opponent's Secrets and put them into play. |
 | Horseshoe Slinger | WW_900 | Battlecry: Deal 2 damage to a random enemy minion. Quickdraw: And one of its neighbors. |
 | Hostile Invader | GDB_226 | Battlecry, Spellburst, and Deathrattle: Deal 2 damage to all other minions. |
@@ -559,7 +555,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Razidir | TLC_463 | Battlecry: Discard a random card from your hand. Kindred: Your opponent's hand instead. |
 | Reckless Apprentice | BAR_544 | Battlecry: Fire your Hero Power at all enemies. |
 | Reefwalker | TSC_640 | Battlecry and Deathrattle: Summon a 1/1 Piranha Swarmer. |
-| Relic Miner | TLC_109 | Battlecry: Destroy the top card of your deck. Discover a card of the same Rarity. |
 | Reliquary Researcher | WW_432 | Battlecry: If you've Excavated twice, cast two random Mage Secrets. |
 | Remnant of Rage | END_004 | Costs (1) less for each minion that died this turn. Battlecry: Draw 2 cards. |
 | Renferal, the Malignant | EDR_526 | Battlecry: Trap 1 random card in your opponent's hand for a turn. (Improved for each time you've played this.) |
@@ -655,7 +650,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Soulciologist Malicia | SCH_703 | Battlecry: For each Soul Fragment in your deck, summon a 3/3 Soul with Rush. |
 | Soulshard Lapidary | SCH_704 | Battlecry: Destroy a Soul Fragment in your deck to give your hero +5 Attack this turn. |
 | Soulstealer | RLK_741 | Battlecry: Destroy all other minions. Gain 1 Corpse for each enemy destroyed. |
-| Soulwarden | TRL_247 | Battlecry: Add 3 random cards you discarded this game to your hand. |
 | Sparkjoy Cheat | YOP_016 | Battlecry: If you're holding a Secret, cast it and draw a card. |
 | Spawn of C'Thun | BE_014 | Battlecry: If C'Thun started in your deck, choose one of its abilities to trigger. |
 | Spawn of Shadows | AT_012, WON_058 | Battlecry and Inspire: Deal 4 damage to each hero. |
@@ -673,7 +667,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Squashling | GIL_835 | Echo Battlecry: Restore 2 Health. |
 | Stadium Announcer | TIME_034 | Rewind Battlecry: Both players equip a random weapon. Give yours +1/+1. |
 | Star Vulpera | GDB_340 | Tradeable Battlecry: Destroy an enemy Starship or Starship Piece. |
-| Starlight Whelp | TTN_718 | Battlecry: Get a random card from your starting hand. |
 | Steamcleaner | CORE_REV_946, REV_946 | Battlecry: Destroy ALL cards in both players' decks that didn't start there. |
 | Steward of Scrolls | SCH_245 | Spell Damage +1 Battlecry: Discover a spell. |
 | Steward of the Vale | BE_851 | Battlecry: Assemble a Beast. |
@@ -717,14 +710,12 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Tichondrius | CORE_CATA_001 | Your hero is Immune. Battlecry: Your next Demon this turn costs (0). |
 | Tickatus | DMF_118 | Battlecry: Remove the top 5 cards from your deck. Corrupt: Your opponent's deck instead. |
 | Tidepool Pupil | VAC_304 | Battlecry: If you've cast 3 spells while holding this, Discover one of them. |
-| Time Adm'ral Hooktail | TIME_713 | Battlecry: Summon a 0/8 Chest for your opponent. It's FULL of Coins! |
 | Time-Lost Raptor | WON_027 | Echo Battlecry: Adapt your Time-Lost Raptors. |
 | Timelooper Toki | TIME_861 | Battlecry: Get 3 random spells from the past. When you play ALL 3, get another Timelooper Toki. |
 | Timethief Rafaam | TIME_005 | Fabled+. Your deck size is 40, but has 10 Rafaams! Battlecry: If you played the rest, destroy the enemy hero. |
 | Timewarden | RLK_527 | Battlecry: Until the end of your next turn, Dragons you summon gain Taunt and Divine Shield. |
 | Timeway Warden | TIME_442 | Battlecry: Imprison an enemy minion. It goes Dormant for 10,000 turns. Deathrattle: Awaken it. |
 | Timewinder Zarimi | TOY_385 | Battlecry: Once per game, if you've played 8 other Dragons, take an extra turn. |
-| Tinkertown Technician | GVG_102 | Battlecry: If you have a Mech, gain +1/+1 and add a Spare Part to your hand. |
 | Toki, Time-Tinker | GIL_549 | Battlecry: Add a random Legendary minion from the past to your hand. |
 | Tol'vir Carver | CATA_566 | Battlecry: Choose a card in your hand. At the start of your turns, reduce its Cost by (1). |
 | Tomb Lurker | ICC_098 | Battlecry: Add a random Deathrattle minion that died this game to your hand. |
@@ -814,7 +805,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Yamato Cannon | SC_406 | Starship Piece Battlecry: Destroy a random enemy minion. Also triggers on launch. |
 | Yogg-Saron, Hope's End | OG_134 | Battlecry: Cast a random spell for each spell you've cast this game (targets chosen randomly). |
 | Yogg-Saron, Master of Fate | DMF_004 | Battlecry: If you've cast 10 spells this game, spin the Wheel of Yogg-Saron. |
-| Ysera the Dreamer | LEG_CS3_033 | Battlecry: Add one of each Dream card to your hand. |
 | Ysera, Emerald Aspect | EDR_000 | Start of Game: Increase both players'maximum Mana by 5. Battlecry: Gain 3 Mana Crystals. |
 | Ysera, Unleashed | DRG_320 | Battlecry: Shuffle 7 Dream Portals into your deck. When drawn, summon a random Dragon. |
 | Za'qul | TSC_959 | Your Abyssal Curses heal you for the damage they deal. Battlecry: Give your opponent an Abyssal Curse. |

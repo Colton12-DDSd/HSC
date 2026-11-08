@@ -54,6 +54,8 @@ export interface Unit {
   commander: boolean;
 }
 export interface Player {
+  startingHand?: Card[];
+  startingDeck?: { singleton: boolean; spells: number };
   shield?: boolean;
   maxHandSize?: number;
   playEffects?: { source: Card; filter: CardFilter; remaining: number; steps: ScriptStep[] }[];
@@ -1364,7 +1366,7 @@ function runScript(
         add: (i, c) => addGenerated(s, i, c),
         draw: () => draw(s, player),
         note: (t) => note(s, t),
-        event: (t, n) => event(s, player, t, n),
+        event: (t, n, c) => event(s, player, t, n, c),
         damage: (t, n, u) =>
           scriptedDamage(s, player, t, n, u?.card ?? source, u?.uid ?? sourceUid),
         heal: (u, n) => heal(u, n, p, s),
@@ -1824,6 +1826,7 @@ function runScript(
         p.hand.splice(index, 1);
         p.grave.push(printedCard(c));
         note(s, `${p.name} discards ${c.name}`);
+        event(s, player, 'discard', undefined, c);
       }
       continue;
     }
@@ -3012,6 +3015,10 @@ export function createGame(
       fatigue: 0,
       hand: [],
       deck,
+      startingDeck: {
+        singleton: new Set(deck.map((c) => c.name)).size === deck.length,
+        spells: deck.filter((c) => c.type === 'SPELL').length,
+      },
       board: [],
       grave: [],
       commander: seat?.commander ?? (i === 0 && commander ? commander : fallback),
@@ -3027,6 +3034,7 @@ export function createGame(
     };
     s.players.push(p);
     for (let j = 0; j < 4; j++) draw(s, i);
+    p.startingHand = structuredClone(p.hand);
   }
   startTurn(s);
   return s;

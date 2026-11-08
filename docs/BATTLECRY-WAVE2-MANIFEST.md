@@ -1,6 +1,6 @@
 # Battlecry expansion — 2026-10-22
 
-Added **538 unique names** beyond the 542-name baseline at e2bd7a0. Current coverage: **1080 Battlecry names**. See [rules, tests and deck guide](TEST-DECKS.md).
+Added **548 unique names** beyond the 542-name baseline at e2bd7a0. Current coverage: **1090 Battlecry names**. See [rules, tests and deck guide](TEST-DECKS.md).
 
 | Minion | Enabled printings | Printed rules |
 | --- | --- | --- |
@@ -148,6 +148,7 @@ Added **538 unique names** beyond the 542-name baseline at e2bd7a0. Current cove
 | Elder Nadox | RLK_658 | Battlecry: Destroy a friendly Undead. Your minions gain its Attack. |
 | Elemental of Madness | BE_870 | Battlecry: Discover any spell with Cost equal to this minion's Attack. It costs (0) this turn. |
 | Elise the Enlightened | ULD_139 | Battlecry: If your deck has no duplicates, duplicate your hand. |
+| Elise, Badlands Savior | WW_392 | Battlecry: If your deck started with no duplicates, summon 5/5 copies of 4 random minions in your deck. |
 | Elitist Snob | REV_961 | Battlecry: For each Paladin card in your hand, randomly gain Divine Shield, Lifesteal, Rush, or Taunt. |
 | Endangered Dodo | TIME_703 | Taunt Battlecry: If you have 10 or less Health, gain +5/+5 and summon a copy of this. |
 | Energy Shaper | RLK_545 | Battlecry: Transform all spells in your hand into ones that cost (3) more. (They keep their original Cost.) |
@@ -163,6 +164,7 @@ Added **538 unique names** beyond the 542-name baseline at e2bd7a0. Current cove
 | Excavation Specialist | TSC_911 | Battlecry: Dredge. Reduce its Cost by (1). |
 | Expired Merchant | ULD_163 | Battlecry: Discard your highest Cost card. Deathrattle: Add 2 copies of it to your hand. |
 | Explodinator | BOT_532 | Battlecry: Summon two 0/2 Goblin Bombs. |
+| Eye of Chaos | YOG_515 | Battlecry: Get two 1/1 Chaotic Tendrils. |
 | Faceless Manipulator | EX1_564 | Battlecry: Choose a minion and become a copy of it. |
 | Fearless Flamejuggler | VAC_942 | Battlecry: Gain stats equal to the damage your hero has taken this turn. |
 | Felerin, the Forgotten | RLK_215 | Battlecry: Add a random Outcast card to the left and right sides of your hand. They cost (2) less. |
@@ -224,6 +226,7 @@ Added **538 unique names** beyond the 542-name baseline at e2bd7a0. Current cove
 | Hellraiser | JAIL_734 | Battlecry: Discover a card in your deck. If it's empty, gain +4/+4 instead. |
 | Hench-Clan Hag | DAL_087 | Battlecry: Summon two 1/1 Amalgams with all minion types. |
 | Herald Volazj | OG_316 | Battlecry: Summon a 1/1 copy of each of your other minions. |
+| Hexmarshal | JAIL_806 | Battlecry: Get a random spell that costs (5) or more. If your deck started with no spells, it costs (5) less. |
 | High Cultist Basaleph | RLK_832 | Battlecry: Resurrect all friendly Undead that died after your last turn. |
 | High Exarch Yrel | DMF_241 | Battlecry: If your deck has no Neutral cards, gain Rush, Lifesteal, Taunt, and Divine Shield. |
 | High Inquisitor Whitemane | EX1_190 | Battlecry: Summon all friendly minions that died this turn. |
@@ -233,6 +236,7 @@ Added **538 unique names** beyond the 542-name baseline at e2bd7a0. Current cove
 | Hodir, Father of Giants | TTN_752 | Battlecry: Set the stats of the next three minions you play to 8/8. |
 | Hologram Operator | GDB_723 | Battlecry: Get 3 random Temporary Draenei. |
 | Holy Cowboy | WW_335 | Battlecry: Your next Holy spell costs (2) less. |
+| Hopeful Dryad | EDR_001 | Battlecry: Get a random Dream card. |
 | Hullbreaker | DED_505 | Battlecry and Deathrattle: Draw a spell. Your hero takes damage equal to its Cost. |
 | Hungry Crab | NEW1_017 | Battlecry: Destroy a Murloc and gain +2/+2. |
 | Ice Cream Peddler | TRL_533 | Battlecry: If you control a Frozen minion, gain 8 Armor. |
@@ -385,6 +389,7 @@ Added **538 unique names** beyond the 542-name baseline at e2bd7a0. Current cove
 | Reckless Diretroll | TRL_551 | Taunt Battlecry: Discard your lowest Cost card. |
 | Reflecto Engineer | AV_256 | Battlecry: Swap the Attack and Health of all minions in both players' hands. |
 | Relentless Wrathguard | GDB_132 | Battlecry: Deal 2 damage to an enemy minion. If it dies, Discover a Demon. |
+| Relic Miner | TLC_109 | Battlecry: Destroy the top card of your deck. Discover a card of the same Rarity. |
 | Reno Jackson | LOE_011 | Battlecry: If your deck has no duplicates, fully heal your hero. |
 | Revenant Rascal | DMF_115 | Battlecry: Destroy a Mana Crystal for each player. |
 | Riftcleaver | CORE_ULD_165, ULD_165 | Battlecry: Destroy a minion. Your hero takes damage equal to its Health. |
@@ -438,6 +443,7 @@ Added **538 unique names** beyond the 542-name baseline at e2bd7a0. Current cove
 | Smolderthorn Lancer | TRL_326 | Battlecry: If you're holding a Dragon, destroy a damaged enemy minion. |
 | Snakebite | ETC_410 | Rush Battlecry: Gain +1/+1 for each minion that died this turn. |
 | Snapdragon | TID_710 | Battlecry: Give all Battlecry minions in your deck +1/+1. |
+| Soulwarden | TRL_247 | Battlecry: Add 3 random cards you discarded this game to your hand. |
 | Southsea Scoundrel | BAR_081 | Battlecry: Discover a card in your opponent's deck. They draw theirs as well. |
 | Spacerock Collector | GDB_875 | Battlecry: Your next Combo card costs (1) less. |
 | Spammy Arcanist | AV_222 | Battlecry: Deal 1 damage to all other minions. If any die, repeat this. |
@@ -451,6 +457,7 @@ Added **538 unique names** beyond the 542-name baseline at e2bd7a0. Current cove
 | Splintergraft | GIL_658 | Battlecry: Choose a friendly minion. Add a 10/10 copy to your hand that costs (10). |
 | Star Aligner | BOT_552 | Battlecry: If you control 3 minions with 7 Health, deal 7 damage to all enemies. |
 | Starlight Wanderer | GDB_720 | Battlecry: The next Draenei you play gains +2/+1. |
+| Starlight Whelp | TTN_718 | Battlecry: Get a random card from your starting hand. |
 | Steeldancer | SCH_522 | Battlecry: Summon a random minion with Cost equal to your weapon's Attack. |
 | Stone Sentinel | UNG_208 | Battlecry: If you played an Elemental last turn, summon two 2/3 Elementals with Taunt. |
 | Stone Trogg | BE_994 | Battlecry: Deal 6 damage to a minion. If it survives, gain +6 Health and Taunt. ~GAMEPLAY ASPROXY BE 994 |
@@ -476,7 +483,9 @@ Added **538 unique names** beyond the 542-name baseline at e2bd7a0. Current cove
 | The Unknowable One | BE_725 | Battlecry: Set the Attack and Health of all Combo minions in your hand to 6. |
 | Thorim, Stormlord | TTN_835 | Battlecry: Unlock your Overloaded Mana Crystals. Draw that many cards. |
 | Tidelost Burrower | TID_003 | Battlecry: Dredge. If it's a Murloc, summon a 2/2 copy of it. |
+| Time Adm'ral Hooktail | TIME_713 | Battlecry: Summon a 0/8 Chest for your opponent. It's FULL of Coins! |
 | Timeless Causality | TIME_061 | Battlecry: Reverse the order of your deck. |
+| Tinkertown Technician | GVG_102 | Battlecry: If you have a Mech, gain +1/+1 and add a Spare Part to your hand. |
 | Tinkmaster Overspark | EX1_083 | Battlecry: Transform another random minion into a 5/5 Devilsaur or a 1/1 Squirrel. |
 | Togwaggle, Smuggler King | JAIL_852 | Battlecry: Shuffle both players' hands together. |
 | Torghast Custodian | MAW_030 | Battlecry: For each enemy minion, randomly gain Rush, Divine Shield, or Windfury. |
@@ -535,6 +544,7 @@ Added **538 unique names** beyond the 542-name baseline at e2bd7a0. Current cove
 | Wyrmrest Purifier | DRG_062 | Battlecry: Transform all Neutral cards in your deck into random cards from your class. |
 | Xyrella | BAR_735 | Battlecry: If you've restored Health this turn, deal that much damage to all enemy minions. |
 | Yelling Yodeler | JAM_005 | Battlecry: Trigger a friendly minion's Deathrattle twice. |
+| Ysera the Dreamer | LEG_CS3_033 | Battlecry: Add one of each Dream card to your hand. |
 | Ysiel Windsinger | BT_131 | Battlecry: Your spells cost (1) this turn. |
 | Zakajz the Corruptor | BE_728 | Battlecry: Reduce the Cost of minions in your hand and deck by (1) and increase the Cost of spells by (1). |
 | Zandalari Templar | TRL_545 | Battlecry: If you've restored 10 Health this game, gain +4/+4 and Taunt. |

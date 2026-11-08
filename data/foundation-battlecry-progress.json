@@ -1,9 +1,9 @@
 {
   "baselineCommit": "667d3f0",
   "target": 315,
-  "completed": 250,
-  "remaining": 65,
-  "supportedBattlecryNames": 1080,
+  "completed": 259,
+  "remaining": 56,
+  "supportedBattlecryNames": 1090,
   "additionalOutsideBatch": [
     "Aessina",
     "Air Guitarist",
@@ -151,6 +151,7 @@
     "SI:7 Informant",
     "SI:7 Smuggler",
     "Snakebite",
+    "Soulwarden",
     "Spacerock Collector",
     "Spelunker",
     "Spire Security",
@@ -966,12 +967,11 @@
     {
       "name": "Elise, Badlands Savior",
       "group": "summon-tokens",
-      "complete": false,
+      "complete": true,
       "ids": [
         "WW_392"
       ],
-      "text": "Battlecry: If your deck started with no duplicates, summon 5/5 copies of 4 random minions in your deck.",
-      "dependency": "Original-card identity, starting snapshots or while-held progression"
+      "text": "Battlecry: If your deck started with no duplicates, summon 5/5 copies of 4 random minions in your deck."
     },
     {
       "name": "Elite Tauren Chieftain",
@@ -1077,12 +1077,11 @@
     {
       "name": "Eye of Chaos",
       "group": "generate-pools",
-      "complete": false,
+      "complete": true,
       "ids": [
         "YOG_515"
       ],
-      "text": "Battlecry: Get two 1/1 Chaotic Tendrils.",
-      "dependency": "Generated-card keyword/subsystem and its complete lifecycle"
+      "text": "Battlecry: Get two 1/1 Chaotic Tendrils."
     },
     {
       "name": "Felerin, the Forgotten",
@@ -1427,12 +1426,11 @@
     {
       "name": "Hexmarshal",
       "group": "generate-pools",
-      "complete": false,
+      "complete": true,
       "ids": [
         "JAIL_806"
       ],
-      "text": "Battlecry: Get a random spell that costs (5) or more. If your deck started with no spells, it costs (5) less.",
-      "dependency": "Original-card identity, starting snapshots or while-held progression"
+      "text": "Battlecry: Get a random spell that costs (5) or more. If your deck started with no spells, it costs (5) less."
     },
     {
       "name": "High Exarch Yrel",
@@ -1482,12 +1480,11 @@
     {
       "name": "Hopeful Dryad",
       "group": "generate-pools",
-      "complete": false,
+      "complete": true,
       "ids": [
         "EDR_001"
       ],
-      "text": "Battlecry: Get a random Dream card.",
-      "dependency": "Verified named pool and complete generated-card behavior"
+      "text": "Battlecry: Get a random Dream card."
     },
     {
       "name": "Hungry Crab",
@@ -2188,12 +2185,11 @@
     {
       "name": "Relic Miner",
       "group": "draw-zones",
-      "complete": false,
+      "complete": true,
       "ids": [
         "TLC_109"
       ],
-      "text": "Battlecry: Destroy the top card of your deck. Discover a card of the same Rarity.",
-      "dependency": "Authored complete transaction, target relationship and independent outcome tests"
+      "text": "Battlecry: Destroy the top card of your deck. Discover a card of the same Rarity."
     },
     {
       "name": "Reno Jackson",
@@ -2521,12 +2517,11 @@
     {
       "name": "Starlight Whelp",
       "group": "generate-pools",
-      "complete": false,
+      "complete": true,
       "ids": [
         "TTN_718"
       ],
-      "text": "Battlecry: Get a random card from your starting hand.",
-      "dependency": "Original-card identity, starting snapshots or while-held progression"
+      "text": "Battlecry: Get a random card from your starting hand."
     },
     {
       "name": "Steamcleaner",
@@ -2688,12 +2683,11 @@
     {
       "name": "Time Adm'ral Hooktail",
       "group": "summon-tokens",
-      "complete": false,
+      "complete": true,
       "ids": [
         "TIME_713"
       ],
-      "text": "Battlecry: Summon a 0/8 Chest for your opponent. It's FULL of Coins!",
-      "dependency": "Special token, passive, start/end trigger or Aura lifecycle"
+      "text": "Battlecry: Summon a 0/8 Chest for your opponent. It's FULL of Coins!"
     },
     {
       "name": "Timeless Causality",
@@ -2707,12 +2701,11 @@
     {
       "name": "Tinkertown Technician",
       "group": "damage-stats",
-      "complete": false,
+      "complete": true,
       "ids": [
         "GVG_102"
       ],
-      "text": "Battlecry: If you have a Mech, gain +1/+1 and add a Spare Part to your hand.",
-      "dependency": "Verified named pool and complete generated-card behavior"
+      "text": "Battlecry: If you have a Mech, gain +1/+1 and add a Spare Part to your hand."
     },
     {
       "name": "Togwaggle, Smuggler King",
@@ -3078,12 +3071,11 @@
     {
       "name": "Ysera the Dreamer",
       "group": "generate-pools",
-      "complete": false,
+      "complete": true,
       "ids": [
         "LEG_CS3_033"
       ],
-      "text": "Battlecry: Add one of each Dream card to your hand.",
-      "dependency": "Verified named pool and complete generated-card behavior"
+      "text": "Battlecry: Add one of each Dream card to your hand."
     },
     {
       "name": "Zer'Ontu",

@@ -5,6 +5,25 @@ from mirror_patterns import compile_mirrors
 from memory_patterns import compile_memory
 
 def compile_foundation(t, compile, target, filt, num, keywords, refs, card, choose):
+    dream=['DREAM_01','DREAM_02','DREAM_03','DREAM_04','DREAM_05']
+    if t=='Get a random Dream card':return [dict(op='generate',amount=1,pool=dream)]
+    if t=='Add one of each Dream card to your hand':return [dict(op='generate-token',token=k,amount=1) for k in dream]
+    if t=='Get a random card from your starting hand':return [dict(op='reveal-linked',mode='starting-hand')]
+    if t=='Add 3 random cards you discarded this game to your hand':return [dict(op='reveal-linked',mode='discard-history',amount=3)]
+    if t=='If your deck started with no duplicates, summon 5/5 copies of 4 random minions in your deck':return [dict(op='reveal-linked',mode='starting-singleton',steps=[dict(op='recruit',zone='deck',copy=True,mode='different-cards',amount=4,attack=5,health=5)])]
+    if t=='Get a random spell that costs (5) or more. If your deck started with no spells, it costs (5) less':
+        gen=dict(op='generate',filter={'type':'SPELL','minCost':5},amount=1)
+        return [dict(op='reveal-linked',mode='starting-spells',steps=[dict(gen,reduction=5)],elseSteps=[gen])]
+    if t=='Destroy the top card of your deck. Discover a card of the same Rarity':return [dict(op='reveal-linked',mode='burn-rarity')]
+    if t=='If you have a Mech, gain +1/+1 and add a Spare Part to your hand':return [dict(op='if',condition={'zone':'friendly','filter':{'tribe':'MECHANICAL'},'min':1},steps=[dict(op='buff',scope='self',attack=1,health=1),dict(op='generate',amount=1,pool=[f'PART_{i:03}' for i in range(1,8)])])]
+    if t=="Summon a 0/8 Chest for your opponent. It's FULL of Coins!":return [dict(op='summon-token',token='TIME_713t',amount=1,enemy=True)]
+    if t=="Fill your opponent's hand with Coins":return [dict(op='generate-token',token='GAME_005',amount=1,enemy=True,until=11)]
+    if t=='Get two 1/1 Chaotic Tendrils' and card.get('name')=='Eye of Chaos':
+        choices=[c for c in refs if c.get('name')=='Chaotic Tendril' and c.get('attack')==1 and c.get('health')==1]
+        if choices:return [dict(op='generate-token',token=choices[0]['id'],amount=2)]
+    if t=='Draw a minion. Restore Health to your hero equal to its Cost':return [dict(op='draw-linked',mode='heal-cost',amount=1,filter={'type':'MINION'})]
+    if t=='Draw a card, then add a copy of it to your hand':return [dict(op='draw-linked',mode='copy-drawn',amount=1)]
+    if t=='Draw a card. Add 2 extra copies of it to your hand':return [dict(op='draw-linked',mode='copy-drawn',amount=1,until=2)]
     memory=compile_memory(t,card)
     if memory is not None:return memory
     mirrors=compile_mirrors(t,card)

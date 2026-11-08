@@ -202,6 +202,19 @@
       }
     ]
   },
+  "AV_213": {
+    "text": "Draw a minion.\nRestore Health to your hero equal to its Cost.",
+    "steps": [
+      {
+        "op": "draw-linked",
+        "mode": "heal-cost",
+        "amount": 1,
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
   "AV_218": {
     "text": "Transform all minions into 1/1 Sheep.",
     "steps": [
@@ -5954,6 +5967,17 @@
       }
     ]
   },
+  "OG_073": {
+    "text": "Draw a card. Add 2 extra copies of it to your hand.",
+    "steps": [
+      {
+        "op": "draw-linked",
+        "mode": "copy-drawn",
+        "amount": 1,
+        "until": 2
+      }
+    ]
+  },
   "OG_081": {
     "text": "Destroy a <b>Frozen</b> minion.",
     "steps": [
@@ -7818,6 +7842,16 @@
       }
     ]
   },
+  "UNG_060": {
+    "text": "Draw a card, then add a copy of it to your hand.",
+    "steps": [
+      {
+        "op": "draw-linked",
+        "mode": "copy-drawn",
+        "amount": 1
+      }
+    ]
+  },
   "UNG_823": {
     "text": "Give your weapon <b>Poisonous</b>.",
     "steps": [
@@ -8632,6 +8666,20 @@
       }
     ]
   },
+  "DREAM_04": {
+    "text": "Return a minion to its owner's hand.",
+    "steps": [
+      {
+        "op": "bounce",
+        "reduction": 0,
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
   "EX1_014t": {
     "text": "Give a minion +1/+1.",
     "steps": [
@@ -8639,6 +8687,85 @@
         "op": "buff",
         "attack": 1,
         "health": 1,
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "PART_001": {
+    "text": "Give a minion +1 Health.",
+    "steps": [
+      {
+        "op": "buff",
+        "attack": 0,
+        "health": 1,
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "PART_002": {
+    "text": "Return a friendly minion to your hand.",
+    "steps": [
+      {
+        "op": "bounce",
+        "scope": "target",
+        "target": "friendly-minion",
+        "attack": 0,
+        "health": 0
+      }
+    ]
+  },
+  "PART_003": {
+    "text": "Give a minion <b>Taunt</b>.",
+    "steps": [
+      {
+        "op": "keyword",
+        "keyword": "TAUNT",
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "PART_005": {
+    "text": "<b>Freeze</b> a minion.",
+    "steps": [
+      {
+        "op": "freeze",
+        "scope": "target",
+        "target": "minion",
+        "filter": {
+          "type": "MINION"
+        }
+      }
+    ]
+  },
+  "PART_006": {
+    "text": "Swap a minion's Attack and Health.",
+    "steps": [
+      {
+        "op": "swap",
+        "scope": "target",
+        "target": "minion"
+      }
+    ]
+  },
+  "PART_007": {
+    "text": "Give a minion +1 Attack.",
+    "steps": [
+      {
+        "op": "buff",
+        "attack": 1,
+        "health": 0,
         "scope": "target",
         "target": "minion",
         "filter": {

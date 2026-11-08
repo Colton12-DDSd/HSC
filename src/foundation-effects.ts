@@ -13,6 +13,7 @@ export const foundationOperations = [
   'battlefield-stats',
   'shield-harvest',
   'draw-linked',
+  'reveal-linked',
   'shuffle-hand-draw',
   'board-shots',
   'random-keyword',
@@ -53,7 +54,7 @@ export interface Helpers {
   add: (owner: number, c: Card) => void;
   draw: () => void;
   note: (text: string) => void;
-  event: (type: string, amount: number) => void;
+  event: (type: string, amount?: number, card?: Card) => void;
   damage: (t: Target, amount: number, source?: Unit) => number;
   heal: (u: Player | Unit, amount: number) => number;
   healingBonus: number;
@@ -83,6 +84,30 @@ export function resolveFoundation(
     self = p.board.find((u) => u.uid === sourceUid);
   const op = step.op;
   if (!foundationOperations.includes(op)) return false;
+  if (op === 'reveal-linked') {
+    if (step.mode === 'discard-history') {
+      const pool = (s.events ?? []).flatMap((e) =>
+        e.type === 'discard' && e.player === player && e.card ? [e.card] : [],
+      );
+      for (let i = 0; i < amount && pool.length; i++)
+        h.add(player, pool.splice(h.random(pool.length), 1)[0]);
+    } else if (step.mode === 'starting-hand') {
+      const hand = p.startingHand ?? [];
+      if (hand.length) h.add(player, hand[h.random(hand.length)]);
+    } else if (step.mode === 'burn-rarity') {
+      const burned = p.deck.shift();
+      if (burned) {
+        p.grave.push(burned);
+        h.note(`${source.name} destroys ${burned.name} from the top of the deck`);
+        h.run([{ op: 'discover', filter: { rarity: burned.rarity } }]);
+      }
+    } else if (step.mode === 'starting-singleton' && p.startingDeck?.singleton) {
+      h.run(step.steps ?? []);
+    } else if (step.mode === 'starting-spells') {
+      h.run((p.startingDeck?.spells === 0 ? step.steps : step.elseSteps) ?? []);
+    }
+    return true;
+  }
   if (resolveMirror(s, player, step, source, sourceUid, target, h)) return true;
   if (resolveMemory(s, player, step, source, sourceUid, target, h)) return true;
   if (op === 'history-cards') {
@@ -201,6 +226,7 @@ export function resolveFoundation(
           (c.durability || c.health || 1) + (c.modifiers ?? []).reduce((n, m) => n + m.health, 0),
         );
       h.note(`${p.name} discards ${c.name}`);
+      h.event('discard', undefined, c);
     }
   }
   if (op === 'deck-copy') {
@@ -426,6 +452,7 @@ export function resolveFoundation(
         c.cost = stat;
       }
       if (step.mode === 'self-damage') h.damage({ p: player }, c.cost);
+      if (step.mode === 'heal-cost') h.heal(p, c.cost);
       if (step.mode === 'deathrattle' && self) {
         const effect = deathrattleFor(c);
         if (effect)
@@ -456,6 +483,8 @@ export function resolveFoundation(
           : player;
       const before = s.players[recipient].hand.length;
       h.add(recipient, c);
+      if (step.mode === 'copy-drawn' && p.hand.length > before)
+        for (let j = 0; j < (step.until ?? 1); j++) h.add(player, c);
       if (step.mode === 'temporary-copy')
         h.add(player, { ...structuredClone(c), temporaryUntilTurn: s.turn });
       if (step.mode === 'transform-board')

@@ -2,17 +2,17 @@
   "summary": {
     "collectionRecords": 6470,
     "battlecryRecords": 2011,
-    "supportedBattlecryRecords": 1157,
+    "supportedBattlecryRecords": 1167,
     "battlecryNames": 1895,
-    "supportedBattlecryNames": 1080,
-    "additionalBattlecryNames": 1044,
-    "remainingBattlecryNames": 815,
-    "supportedCollectionRecords": 2049,
+    "supportedBattlecryNames": 1090,
+    "additionalBattlecryNames": 1054,
+    "remainingBattlecryNames": 805,
+    "supportedCollectionRecords": 2062,
     "triggerRecords": 2521,
-    "supportedTriggerRecords": 1323,
+    "supportedTriggerRecords": 1333,
     "triggerNames": 2381,
-    "fullySupportedTriggerNames": 1235,
-    "remainingTriggerRecords": 1198
+    "fullySupportedTriggerNames": 1245,
+    "remainingTriggerRecords": 1188
   },
   "minions": [
     {
@@ -8259,8 +8259,8 @@
         {
           "id": "WW_392",
           "text": "[x]<b>Battlecry:</b> If your deck started\nwith no duplicates, summon\n5/5 copies of 4 random\nminions in your deck.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -8938,8 +8938,8 @@
         {
           "id": "YOG_515",
           "text": "<b>Battlecry:</b> Get two\n1/1 Chaotic Tendrils.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -12132,8 +12132,8 @@
         {
           "id": "JAIL_806",
           "text": "[x]<b>Battlecry:</b> Get a random\n spell that costs (5) or more.\nIf your deck started with no\n  spells, it costs (5) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -12427,8 +12427,8 @@
         {
           "id": "EDR_001",
           "text": "<b>Battlecry:</b> Get a random Dream card.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -20343,8 +20343,8 @@
         {
           "id": "TLC_109",
           "text": "[x]<b>Battlecry:</b> Destroy the top\ncard of your deck. <b>Discover</b> a\ncard of the same Rarity.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -23657,8 +23657,8 @@
         {
           "id": "TRL_247",
           "text": "<b>Battlecry:</b> Add 3 random cards you discarded this game to your hand.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -24355,8 +24355,8 @@
         {
           "id": "TTN_718",
           "text": "<b>Battlecry:</b> Get a\nrandom card from your starting hand.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -25976,8 +25976,8 @@
         {
           "id": "TIME_713",
           "text": "<b>Battlecry:</b> Summon a 0/8 Chest for your opponent. <i>It's FULL of Coins!</i>",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -26108,8 +26108,8 @@
         {
           "id": "GVG_102",
           "text": "<b>Battlecry:</b> If you have a Mech, gain +1/+1 and add a <b>Spare Part</b> to your hand.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -29333,8 +29333,8 @@
         {
           "id": "LEG_CS3_033",
           "text": "<b>Battlecry:</b> Add one of each Dream card to your hand.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]

@@ -6593,6 +6593,22 @@
       }
     ]
   },
+  "EDR_001": {
+    "text": "<b>Battlecry:</b> Get a random Dream card.",
+    "steps": [
+      {
+        "op": "generate",
+        "amount": 1,
+        "pool": [
+          "DREAM_01",
+          "DREAM_02",
+          "DREAM_03",
+          "DREAM_04",
+          "DREAM_05"
+        ]
+      }
+    ]
+  },
   "EDR_230": {
     "text": "<b>Battlecry:</b>& Give +4/+4 to the top 3 minions in your deck.",
     "steps": [
@@ -9072,6 +9088,42 @@
       }
     ]
   },
+  "GVG_102": {
+    "text": "<b>Battlecry:</b> If you have a Mech, gain +1/+1 and add a <b>Spare Part</b> to your hand.",
+    "steps": [
+      {
+        "op": "if",
+        "condition": {
+          "zone": "friendly",
+          "filter": {
+            "tribe": "MECHANICAL"
+          },
+          "min": 1
+        },
+        "steps": [
+          {
+            "op": "buff",
+            "scope": "self",
+            "attack": 1,
+            "health": 1
+          },
+          {
+            "op": "generate",
+            "amount": 1,
+            "pool": [
+              "PART_001",
+              "PART_002",
+              "PART_003",
+              "PART_004",
+              "PART_005",
+              "PART_006",
+              "PART_007"
+            ]
+          }
+        ]
+      }
+    ]
+  },
   "GVG_107": {
     "text": "<b>Battlecry:</b> Give your other minions <b>Windfury</b>, <b>Taunt</b>, or <b>Divine Shield</b>\n<i>(at random)</i>.",
     "steps": [
@@ -9798,6 +9850,36 @@
       }
     ]
   },
+  "JAIL_806": {
+    "text": "[x]<b>Battlecry:</b> Get a random\n spell that costs (5) or more.\nIf your deck started with no\n  spells, it costs (5) less.",
+    "steps": [
+      {
+        "op": "reveal-linked",
+        "mode": "starting-spells",
+        "steps": [
+          {
+            "op": "generate",
+            "filter": {
+              "type": "SPELL",
+              "minCost": 5
+            },
+            "amount": 1,
+            "reduction": 5
+          }
+        ],
+        "elseSteps": [
+          {
+            "op": "generate",
+            "filter": {
+              "type": "SPELL",
+              "minCost": 5
+            },
+            "amount": 1
+          }
+        ]
+      }
+    ]
+  },
   "JAIL_852": {
     "text": "[x]<b>Battlecry:</b> Shuffle both\n players' hands together.",
     "steps": [
@@ -10220,6 +10302,36 @@
         "scope": "target",
         "target": "character",
         "amount": 8
+      }
+    ]
+  },
+  "LEG_CS3_033": {
+    "text": "<b>Battlecry:</b> Add one of each Dream card to your hand.",
+    "steps": [
+      {
+        "op": "generate-token",
+        "token": "DREAM_01",
+        "amount": 1
+      },
+      {
+        "op": "generate-token",
+        "token": "DREAM_02",
+        "amount": 1
+      },
+      {
+        "op": "generate-token",
+        "token": "DREAM_03",
+        "amount": 1
+      },
+      {
+        "op": "generate-token",
+        "token": "DREAM_04",
+        "amount": 1
+      },
+      {
+        "op": "generate-token",
+        "token": "DREAM_05",
+        "amount": 1
       }
     ]
   },
@@ -13717,6 +13829,17 @@
       }
     ]
   },
+  "TIME_713": {
+    "text": "<b>Battlecry:</b> Summon a 0/8 Chest for your opponent. <i>It's FULL of Coins!</i>",
+    "steps": [
+      {
+        "op": "summon-token",
+        "token": "TIME_713t",
+        "amount": 1,
+        "enemy": true
+      }
+    ]
+  },
   "TIME_720": {
     "text": "<b>Taunt</b>\n<b>Battlecry:</b>& Double this minion's Health.",
     "steps": [
@@ -13796,6 +13919,15 @@
             "random": 1
           }
         ]
+      }
+    ]
+  },
+  "TLC_109": {
+    "text": "[x]<b>Battlecry:</b> Destroy the top\ncard of your deck. <b>Discover</b> a\ncard of the same Rarity.",
+    "steps": [
+      {
+        "op": "reveal-linked",
+        "mode": "burn-rarity"
       }
     ]
   },
@@ -14277,6 +14409,16 @@
         "amount": {
           "stat": "hero-attack"
         }
+      }
+    ]
+  },
+  "TRL_247": {
+    "text": "<b>Battlecry:</b> Add 3 random cards you discarded this game to your hand.",
+    "steps": [
+      {
+        "op": "reveal-linked",
+        "mode": "discard-history",
+        "amount": 3
       }
     ]
   },
@@ -15462,6 +15604,15 @@
           "keyword": "MAGNETIC"
         },
         "reduction": 2
+      }
+    ]
+  },
+  "TTN_718": {
+    "text": "<b>Battlecry:</b> Get a\nrandom card from your starting hand.",
+    "steps": [
+      {
+        "op": "reveal-linked",
+        "mode": "starting-hand"
       }
     ]
   },
@@ -17531,6 +17682,26 @@
       }
     ]
   },
+  "WW_392": {
+    "text": "[x]<b>Battlecry:</b> If your deck started\nwith no duplicates, summon\n5/5 copies of 4 random\nminions in your deck.",
+    "steps": [
+      {
+        "op": "reveal-linked",
+        "mode": "starting-singleton",
+        "steps": [
+          {
+            "op": "recruit",
+            "zone": "deck",
+            "copy": true,
+            "mode": "different-cards",
+            "amount": 4,
+            "attack": 5,
+            "health": 5
+          }
+        ]
+      }
+    ]
+  },
   "WW_394": {
     "text": "<b>Battlecry:</b> Copy each\n1-Cost card in your hand.",
     "steps": [
@@ -17957,6 +18128,16 @@
           "damaged": true,
           "type": "MINION"
         }
+      }
+    ]
+  },
+  "YOG_515": {
+    "text": "<b>Battlecry:</b> Get two\n1/1 Chaotic Tendrils.",
+    "steps": [
+      {
+        "op": "generate-token",
+        "token": "YOG_514",
+        "amount": 2
       }
     ]
   },

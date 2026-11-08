@@ -65,6 +65,7 @@ export function resolveMemory(
         if (zone === 'hand') {
           p.grave.push(plain(c));
           h.note(`${p.name} discards ${c.name}`);
+          h.event('discard', undefined, c);
         } else h.note(`${source.name} eats ${c.name}`);
         if (step.after === 'stats') {
           const stats = cardStats(c);

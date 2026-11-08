@@ -450,6 +450,18 @@
       }
     ]
   },
+  "TIME_713t": {
+    "text": "<b>Deathrattle:</b> Fill your opponent's hand\nwith Coins.",
+    "steps": [
+      {
+        "op": "generate-token",
+        "token": "GAME_005",
+        "amount": 1,
+        "enemy": true,
+        "until": 11
+      }
+    ]
+  },
   "TLC_249": {
     "text": "<b>Deathrattle:</b>& Deal 2 damage randomly split among all enemies.",
     "steps": [

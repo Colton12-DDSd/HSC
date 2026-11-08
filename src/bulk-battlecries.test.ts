@@ -699,6 +699,7 @@ describe('Independent mechanic and interaction checks', () => {
       'battlefield-stats',
       'shield-harvest',
       'draw-linked',
+      'reveal-linked',
       'shuffle-hand-draw',
       'board-shots',
       'random-keyword',
