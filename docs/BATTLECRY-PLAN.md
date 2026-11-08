@@ -1,11 +1,13 @@
 # Battlecry implementation backlog
-Progress: 14 of the original 65 foundation candidates and 2 of the 712 reusable-mechanic candidates are now supported. The original lists below are retained for tracking; the current remaining names are in [BATTLECRY-GROUPS.md](BATTLECRY-GROUPS.md).
+Progress: 19 of the original 65 foundation candidates and 2 of the 712 reusable-mechanic candidates are now supported. The original lists below are retained for tracking; the current remaining names are in [BATTLECRY-GROUPS.md](BATTLECRY-GROUPS.md).
 
 Completed foundation cards: Elise, Badlands Savior; Eye of Chaos; Hexmarshal; Hopeful Dryad; Relic Miner; Starlight Whelp; Time Adm'ral Hooktail; Tinkertown Technician; Ysera the Dreamer. Completed shared card: Soulwarden.
 
 Starting-deck tracking adds Dreamwarden, Sharp-Eyed Seeker, Stowaway, Steamcleaner, and Princess Talanji from the foundation queue, plus Archimonde from the shared queue and the spell Dragonscale Armaments. An original card retains its starting owner when moved; a generated copy does not inherit it.
 
-Next prerequisites: shared Kindred detection for Chillspine Stegodon, Ravenous Devilsaur, Razidir, Scalehide Kodo, and Windpeak Wyrm; multi-target and cross-zone choices for Night Elf Huntress, Grunty, and Gruesome Nightmare. Named pools use exact token lists, but generated cards with unsupported effects remain unplayable.
+Shared Kindred tracking adds Chillspine Stegodon, Ravenous Devilsaur, Razidir, Scalehide Kodo, and Windpeak Wyrm. The engine uses the player's previous own turn, matching either minion type on dual-type cards or a matching spell school. In Commander, Razidir's untargeted enemy discard applies once per living opponent.
+
+Next prerequisites include multi-target and cross-zone choices for Night Elf Huntress, Grunty, and Gruesome Nightmare. Named pools use exact token lists, but generated cards with unsupported effects remain unplayable.
 
 
 Based on the pinned audit: 815 unsupported names, 1080 supported. Every pending name appears once. This is a work queue; no cards are banned by this document.

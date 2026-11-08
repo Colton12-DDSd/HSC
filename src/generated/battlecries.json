@@ -5489,6 +5489,15 @@
       }
     ]
   },
+  "DINO_413": {
+    "text": "[x]<b>Battlecry:</b> Deal 2 damage to\ntwo random enemy minions.\n <b>Kindred:</b> And <b>Freeze</b> them.",
+    "steps": [
+      {
+        "op": "kindred",
+        "mode": "strike"
+      }
+    ]
+  },
   "DINO_419": {
     "text": "<b>Battlecry:</b> Give a friendly Beast +2/+2 and <b>Rush</b>.",
     "steps": [
@@ -14029,12 +14038,50 @@
       }
     ]
   },
+  "TLC_454": {
+    "text": "[x]<b>Battlecry:</b> Destroy the\nlowest Attack enemy minion.\n<b>Kindred:</b> The highest\nAttack instead.",
+    "steps": [
+      {
+        "op": "kindred",
+        "mode": "extreme"
+      }
+    ]
+  },
   "TLC_461": {
     "text": "[x]<b>Battlecry:</b>& <b>Discover</b> a\ncard with Cost equal to your\nremaining Mana Crystals.",
     "steps": [
       {
         "op": "dynamic-discover",
         "mode": "mana"
+      }
+    ]
+  },
+  "TLC_463": {
+    "text": "[x]<b>Battlecry:</b> Discard a random\ncard from your hand.\n<b>Kindred:</b> Your opponent's\nhand instead.",
+    "steps": [
+      {
+        "op": "kindred",
+        "mode": "discard"
+      }
+    ]
+  },
+  "TLC_600": {
+    "text": "[x]<b>Battlecry:</b> Deal 5 damage\nand gain 5 Armor.\n<b>Kindred:</b> Costs (2) less.",
+    "steps": [
+      {
+        "op": "damage",
+        "scope": "target",
+        "target": "character",
+        "amount": 5
+      },
+      {
+        "op": "armor",
+        "amount": 5
+      },
+      {
+        "op": "kindred",
+        "mode": "discount",
+        "amount": 2
       }
     ]
   },
@@ -14084,6 +14131,17 @@
           "hasTribe": true
         },
         "amount": 6
+      }
+    ]
+  },
+  "TLC_829": {
+    "text": "[x]<b>Battlecry:</b> Destroy a minion.\n<b>Kindred:</b> Gain its stats.",
+    "steps": [
+      {
+        "op": "kindred",
+        "mode": "consume",
+        "scope": "target",
+        "target": "minion"
       }
     ]
   },

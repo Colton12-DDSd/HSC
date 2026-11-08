@@ -701,6 +701,7 @@ describe('Independent mechanic and interaction checks', () => {
       'draw-linked',
       'reveal-linked',
       'starting-origin',
+      'kindred',
       'shuffle-hand-draw',
       'board-shots',
       'random-keyword',

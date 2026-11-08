@@ -1,6 +1,6 @@
 # Remaining Battlecries — 2026-10-22
 
-**799 unique Battlecry minion names remain unsupported** in the pinned collection. This list is an implementation backlog, not enabled content. Some require new systems (auras, Secrets, spell casting/repetition, hero powers, mana/health/corpse resources, custom card construction, Infuse, Forge, Herald, Ritual and other expansion mechanics); others need additional full-clause patterns or card-specific rules. Existing numeric templates alone cannot finish the list.
+**794 unique Battlecry minion names remain unsupported** in the pinned collection. This list is an implementation backlog, not enabled content. Some require new systems (auras, Secrets, spell casting/repetition, hero powers, mana/health/corpse resources, custom card construction, Infuse, Forge, Herald, Ritual and other expansion mechanics); others need additional full-clause patterns or card-specific rules. Existing numeric templates alone cannot finish the list.
 
 Unknown clauses remain blocked. Generated-card abilities are tracked independently from the source Battlecry. Local sandbox decks do not assert Wild legality. Run `npm run audit:battlecries` to regenerate both this backlog and the added-card manifest.
 
@@ -125,7 +125,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Chatty Macaw | VAC_407 | Battlecry: Repeat the last spell you cast at an enemy (at a random enemy if possible). |
 | Chief Inspector | GIL_648 | Battlecry: Destroy all enemy Secrets. |
 | Chillin' Vol'jin | VAC_957 | Hunter Tourist Battlecry: Choose 2 minions. Swap their stats. |
-| Chillspine Stegodon | DINO_413 | Battlecry: Deal 2 damage to two random enemy minions. Kindred: And Freeze them. |
 | Cho'gall | OG_121, WON_105 | Battlecry: Return all cards you discarded this game to your hand. They cost Health instead of Mana. |
 | Chromatic Egg | DRG_086 | Battlecry: Secretly Discover a Dragon to hatch into. Deathrattle: Hatch! |
 | Chromie, Timehopper | WON_041 | Battlecry: Visit a Historical Epoch. Shuffle the others into your deck. |
@@ -545,11 +544,9 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Raptor Herald | CORE_EDR_004, CORE_EDR_004_2026 | Rewind Battlecry: Discover a Beast with a Dark Gift. Kindred: It costs (1) less. |
 | Rat Sensei | WON_013 | Battlecry and Deathrattle: Add two 1/1 Turtles with Taunt to your hand. |
 | Ravasaur Runt | UNG_009 | Battlecry: If you control at least 2 other minions, Adapt. |
-| Ravenous Devilsaur | TLC_829 | Battlecry: Destroy a minion. Kindred: Gain its stats. |
 | Ravenous Pterrordax | UNG_047 | Battlecry: Destroy a friendly minion to Adapt twice. |
 | Raza the Chained | CFM_020 | Battlecry: If your deck has no duplicates, your Hero Power costs (0) this game. |
 | Raza the Resealed | TOY_383 | Battlecry: Shuffle copies of 5 random friendly minions that died this game into your deck. They cost (0). |
-| Razidir | TLC_463 | Battlecry: Discard a random card from your hand. Kindred: Your opponent's hand instead. |
 | Reckless Apprentice | BAR_544 | Battlecry: Fire your Hero Power at all enemies. |
 | Reefwalker | TSC_640 | Battlecry and Deathrattle: Summon a 1/1 Piranha Swarmer. |
 | Reliquary Researcher | WW_432 | Battlecry: If you've Excavated twice, cast two random Mage Secrets. |
@@ -579,7 +576,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Sasquawk | VAC_415 | Battlecry: Repeat each card you played last turn. |
 | Sawbones | JAIL_444 | Prepare. Battlecry: Destroy all your other minions. Draw a card and refresh a Mana for each one destroyed. |
 | Sayge, Seer of Darkmoon | DMF_109 | Battlecry: Draw 1 card. (Upgraded for each friendly Secret that has triggered this game!) |
-| Scalehide Kodo | TLC_454 | Battlecry: Destroy the lowest Attack enemy minion. Kindred: The highest Attack instead. |
 | Scarlet Subjugator | EX1_196 | Battlecry: Give an enemy minion -2 Attack until your next turn. |
 | School Teacher | TSC_052 | Battlecry: Add a 1/1 Nagaling to your hand. Discover a spell that costs (3) or less to teach it. |
 | Scion of Insight | BE_298 | Battlecry: Discover a Blood, Frost or Unholy card. Gain Lifesteal, Reborn or Rush based on your choice. |
@@ -784,7 +780,6 @@ Unknown clauses remain blocked. Generated-card abilities are tracked independent
 | Wind-Up Musician | TOY_509 | Tradeable Battlecry: Deal 1 damage to all enemy minions. (Trade to upgrade!) |
 | Wind-Up Sapling | TOY_802 | Tradeable Battlecry: Refresh 1 Mana Crystal. (Trade to upgrade!) |
 | Window Shopper | TOY_652 | Miniaturize Battlecry: Discover a Demon. Set its stats and Cost to this minion's. |
-| Windpeak Wyrm | TLC_600 | Battlecry: Deal 5 damage and gain 5 Armor. Kindred: Costs (2) less. |
 | Windshear Stormcaller | LOOT_518 | Battlecry: If you control all 4 basic Totems, summon Al'Akir the Windlord. |
 | Wing Commander Ichman | AV_336 | Battlecry: Summon a Beast from your deck and give it Rush. If it kills a minion this turn, repeat. |
 | Wisprider | EDR_519 | Battlecry: Imbue your Hero Power, then trigger it. |

@@ -1,9 +1,9 @@
 {
   "baselineCommit": "667d3f0",
   "target": 315,
-  "completed": 264,
-  "remaining": 51,
-  "supportedBattlecryNames": 1096,
+  "completed": 269,
+  "remaining": 46,
+  "supportedBattlecryNames": 1101,
   "additionalOutsideBatch": [
     "Aessina",
     "Air Guitarist",
@@ -542,12 +542,11 @@
     {
       "name": "Chillspine Stegodon",
       "group": "damage-stats",
-      "complete": false,
+      "complete": true,
       "ids": [
         "DINO_413"
       ],
-      "text": "Battlecry: Deal 2 damage to two random enemy minions. Kindred: And Freeze them.",
-      "dependency": "Kindred activation, history and dependent targeting/costs"
+      "text": "Battlecry: Deal 2 damage to two random enemy minions. Kindred: And Freeze them."
     },
     {
       "name": "Chromie, Timehopper",
@@ -2155,22 +2154,20 @@
     {
       "name": "Ravenous Devilsaur",
       "group": "damage-stats",
-      "complete": false,
+      "complete": true,
       "ids": [
         "TLC_829"
       ],
-      "text": "Battlecry: Destroy a minion. Kindred: Gain its stats.",
-      "dependency": "Kindred activation, history and dependent targeting/costs"
+      "text": "Battlecry: Destroy a minion. Kindred: Gain its stats."
     },
     {
       "name": "Razidir",
       "group": "draw-zones",
-      "complete": false,
+      "complete": true,
       "ids": [
         "TLC_463"
       ],
-      "text": "Battlecry: Discard a random card from your hand. Kindred: Your opponent's hand instead.",
-      "dependency": "Kindred activation, history and dependent targeting/costs"
+      "text": "Battlecry: Discard a random card from your hand. Kindred: Your opponent's hand instead."
     },
     {
       "name": "Razorpetal Lasher",
@@ -2322,12 +2319,11 @@
     {
       "name": "Scalehide Kodo",
       "group": "damage-stats",
-      "complete": false,
+      "complete": true,
       "ids": [
         "TLC_454"
       ],
-      "text": "Battlecry: Destroy the lowest Attack enemy minion. Kindred: The highest Attack instead.",
-      "dependency": "Kindred activation, history and dependent targeting/costs"
+      "text": "Battlecry: Destroy the lowest Attack enemy minion. Kindred: The highest Attack instead."
     },
     {
       "name": "Scarlet Recruiter",
@@ -3000,12 +2996,11 @@
     {
       "name": "Windpeak Wyrm",
       "group": "damage-stats",
-      "complete": false,
+      "complete": true,
       "ids": [
         "TLC_600"
       ],
-      "text": "Battlecry: Deal 5 damage and gain 5 Armor. Kindred: Costs (2) less.",
-      "dependency": "Kindred activation, history and dependent targeting/costs"
+      "text": "Battlecry: Deal 5 damage and gain 5 Armor. Kindred: Costs (2) less."
     },
     {
       "name": "Windshear Stormcaller",

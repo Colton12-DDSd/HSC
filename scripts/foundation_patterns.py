@@ -5,6 +5,15 @@ from mirror_patterns import compile_mirrors
 from memory_patterns import compile_memory
 
 def compile_foundation(t, compile, target, filt, num, keywords, refs, card, choose):
+    kindred={
+        'Deal 2 damage to two random enemy minions. Kindred: And Freeze them':dict(op='kindred',mode='strike'),
+        'Destroy a minion. Kindred: Gain its stats':dict(op='kindred',mode='consume',scope='target',target='minion'),
+        'Discard a random card from your hand. Kindred: Your opponent\'s hand instead':dict(op='kindred',mode='discard'),
+        'Destroy the lowest Attack enemy minion. Kindred: The highest Attack instead':dict(op='kindred',mode='extreme'),
+    }
+    if t in kindred:return [kindred[t]]
+    if t=='Deal 5 damage and gain 5 Armor. Kindred: Costs (2) less':
+        return [dict(op='damage',scope='target',target='character',amount=5),dict(op='armor',amount=5),dict(op='kindred',mode='discount',amount=2)]
     origins={
         "If there is a card in your deck that didn't start there, draw it":('draw-added',1),
         "If there is a card in your deck that didn't start there, draw it and gain +2/+2":('draw-buff',1),

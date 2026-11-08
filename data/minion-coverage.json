@@ -2,17 +2,17 @@
   "summary": {
     "collectionRecords": 6470,
     "battlecryRecords": 2011,
-    "supportedBattlecryRecords": 1174,
+    "supportedBattlecryRecords": 1179,
     "battlecryNames": 1895,
-    "supportedBattlecryNames": 1096,
-    "additionalBattlecryNames": 1060,
-    "remainingBattlecryNames": 799,
-    "supportedCollectionRecords": 2070,
+    "supportedBattlecryNames": 1101,
+    "additionalBattlecryNames": 1065,
+    "remainingBattlecryNames": 794,
+    "supportedCollectionRecords": 2075,
     "triggerRecords": 2521,
-    "supportedTriggerRecords": 1340,
+    "supportedTriggerRecords": 1345,
     "triggerNames": 2381,
-    "fullySupportedTriggerNames": 1251,
-    "remainingTriggerRecords": 1181
+    "fullySupportedTriggerNames": 1256,
+    "remainingTriggerRecords": 1176
   },
   "minions": [
     {
@@ -4485,8 +4485,8 @@
         {
           "id": "DINO_413",
           "text": "[x]<b>Battlecry:</b> Deal 2 damage to\ntwo random enemy minions.\n <b>Kindred:</b> And <b>Freeze</b> them.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -20079,8 +20079,8 @@
         {
           "id": "TLC_829",
           "text": "[x]<b>Battlecry:</b> Destroy a minion.\n<b>Kindred:</b> Gain its stats.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -20151,8 +20151,8 @@
         {
           "id": "TLC_463",
           "text": "[x]<b>Battlecry:</b> Discard a random\ncard from your hand.\n<b>Kindred:</b> Your opponent's\nhand instead.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -21422,8 +21422,8 @@
         {
           "id": "TLC_454",
           "text": "[x]<b>Battlecry:</b> Destroy the\nlowest Attack enemy minion.\n<b>Kindred:</b> The highest\nAttack instead.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -28803,8 +28803,8 @@
         {
           "id": "TLC_600",
           "text": "[x]<b>Battlecry:</b> Deal 5 damage\nand gain 5 Armor.\n<b>Kindred:</b> Costs (2) less.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]

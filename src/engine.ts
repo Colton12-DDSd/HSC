@@ -54,6 +54,8 @@ export interface Unit {
   commander: boolean;
 }
 export interface Player {
+  kindredPrevious?: string[];
+  kindredCurrent?: string[];
   startingHand?: Card[];
   startingDeck?: { singleton: boolean; spells: number };
   shield?: boolean;
@@ -612,7 +614,7 @@ export function commandCost(p: Player) {
   return applyNextCosts(
     p,
     p.commander,
-    Math.max(1, p.commander.cost + 2 * p.casts - p.reduction - p.handReduction),
+    Math.max(1, p.commander.cost + 2 * p.casts - p.reduction - p.handReduction - kindredDiscount(p, p.commander)),
   );
 }
 function applyNextCosts(p: Player, c: Card, base: number) {
@@ -624,7 +626,22 @@ function applyNextCosts(p: Player, c: Card, base: number) {
     .reduce((cost, d) => d.set ?? Math.max(0, cost - d.amount), base);
 }
 export function handCost(p: Player, c: Card) {
-  return applyNextCosts(p, c, Math.max(0, cardCost(c) - p.reduction - p.handReduction));
+  return applyNextCosts(p, c, Math.max(0, cardCost(c) - p.reduction - p.handReduction - kindredDiscount(p, c)));
+}
+
+function kindredTags(c: Card): string[] {
+  return c.type === 'MINION' ? (c.races?.length ? c.races : c.race ? [c.race] : []).filter((r) => r !== 'INVALID').map((r) => `tribe:${r}`)
+    : c.type === 'SPELL' && c.spellSchool ? [`school:${c.spellSchool}`] : [];
+}
+export function kindredActive(p: Player, c: Card): boolean {
+  return kindredTags(c).some((tag) => (p.kindredPrevious ?? []).some((previous) =>
+    tag === previous || (tag.startsWith('tribe:') && previous.startsWith('tribe:') && (tag === 'tribe:ALL' || previous === 'tribe:ALL')),
+  ));
+}
+function kindredDiscount(p: Player, c: Card): number {
+  const effect = effectFor(c);
+  const step = effect?.type === 'script' && effect.steps.find((s) => s.op === 'kindred' && s.mode === 'discount');
+  return step && kindredActive(p, c) && typeof step.amount === 'number' ? step.amount : 0;
 }
 
 function getTarget(s: Game, t: Target) {
@@ -1361,6 +1378,7 @@ function runScript(
     }
     if (
       resolveFoundation(s, player, step, source, sourceUid, amount, target, {
+        kindred: step.op === 'kindred' && kindredActive(p, source),
         random: (n) => (n > 0 ? random(s, n) : 0),
         shuffle: (cs) => shuffle(s, cs),
         matches: (c, f, u) => matchesCard(c, f, p, u),
@@ -2801,6 +2819,7 @@ function resolve(s: Game) {
     if (w.command) p.casts++;
   }
   event(s, w.caster, 'play', undefined, w.card);
+  if (w.caster === s.active) p.kindredCurrent = [...new Set([...(p.kindredCurrent ?? []), ...kindredTags(w.card)])];
   if (sourceUid !== undefined) {
     const u = p.board.find((u) => u.uid === sourceUid)!;
     Object.assign(s.events!.at(-1)!, { playedAttack: u.attack, playedHealth: u.health });
@@ -2832,6 +2851,8 @@ function resolve(s: Game) {
 }
 function startTurn(s: Game) {
   const p = s.players[s.active];
+  p.kindredPrevious = p.kindredCurrent ?? [];
+  p.kindredCurrent = [];
   s.turn++;
   event(s, s.active, 'turn');
   p.maxMana = Math.min(p.manaCap ?? 10, p.maxMana + 1);

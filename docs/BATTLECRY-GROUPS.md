@@ -1,14 +1,14 @@
 # Remaining Battlecries grouped for implementation
 
-Audit date: **2026-10-22**. Reviewed the complete pinned backlog: **799 unique minion names** across **837 printings**. **1096 names are already supported** and excluded here. Matching Core printings do not count as extra names.
+Audit date: **2026-10-22**. Reviewed the complete pinned backlog: **794 unique minion names** across **832 printings**. **1101 names are already supported** and excluded here. Matching Core printings do not count as extra names.
 
-Every remaining name has **one primary group**, so the primary counts add up to 799. Extra dependencies, keywords and named families can overlap: their counts must not be added together. Group membership is a planning judgment based on the complete printed card, including passives, separate Deathrattles and attached keywords. It does not enable a card or prove that a whole group shares one identical script.
+Every remaining name has **one primary group**, so the primary counts add up to 794. Extra dependencies, keywords and named families can overlap: their counts must not be added together. Group membership is a planning judgment based on the complete printed card, including passives, separate Deathrattles and attached keywords. It does not enable a card or prove that a whole group shares one identical script.
 
 ## Implementation lanes
 
 | Lane | Names |
 | --- | --- |
-| Existing foundations: pattern, value, filter or sequencing extensions | 51 |
+| Existing foundations: pattern, value, filter or sequencing extensions | 46 |
 | Extend a shared engine family | 244 |
 | Add or complete a game subsystem | 466 |
 | Card-specific design or manual rules review | 38 |
@@ -19,8 +19,8 @@ Every remaining name has **one primary group**, so the primary counts add up to 
 
 | Group | Names | Implementation lane |
 | --- | --- | --- |
-| [Damage, healing, Armor and board stats](#damage-stats) | 15 | Existing foundations: pattern, value, filter or sequencing extensions |
-| [Draw, discard and hand/deck movement](#draw-zones) | 17 | Existing foundations: pattern, value, filter or sequencing extensions |
+| [Damage, healing, Armor and board stats](#damage-stats) | 11 | Existing foundations: pattern, value, filter or sequencing extensions |
+| [Draw, discard and hand/deck movement](#draw-zones) | 16 | Existing foundations: pattern, value, filter or sequencing extensions |
 | [Summons, recruits and token definitions](#summon-tokens) | 11 | Existing foundations: pattern, value, filter or sequencing extensions |
 | [Generated cards and named card pools](#generate-pools) | 8 | Existing foundations: pattern, value, filter or sequencing extensions |
 | [Card costs, mana and ordinary discounts](#cost-mana) | 15 | Extend a shared engine family |
@@ -73,9 +73,9 @@ These counts answer “how many remaining names mention or require this kind of 
 
 | Dependency | Names touching it |
 | --- | --- |
-| Damage, healing, Armor and board stats | 349 |
-| Draw, discard and hand/deck movement | 265 |
-| Card costs, mana and ordinary discounts | 156 |
+| Damage, healing, Armor and board stats | 345 |
+| Draw, discard and hand/deck movement | 264 |
+| Card costs, mana and ordinary discounts | 155 |
 | Extra keywords and attached mechanics | 143 |
 | Discover and other player choices | 142 |
 | History, thresholds and scaling conditions | 128 |
@@ -120,7 +120,7 @@ A Battlecry that looks simple can still require an attached keyword. For example
 | Honorable Kill | 2 | 0 | 2 | Hollow Abomination; Knight-Captain |
 | Infuse | 9 | 0 | 9 | Artificer Xy'mox; Buffet Biggun; Famished Fool; Huntsman Altimor; Imp King Rafaam; Insatiable Devourer; Mischievous Imp; Sire Denathrius; Sylvanas, the Accused |
 | Inspire | 3 | 0 | 3 | Confessor Paletress; Spawn of Shadows; Thunder Bluff Valiant |
-| Kindred | 0 | 12 | 12 | Chillspine Stegodon; Dread Raptor; Hot Spring Glider; Primalfin Challenger; Raptor Herald; Ravenous Devilsaur; Razidir; Scalehide Kodo; Slagclaw; Torga; Volcanic Thrasher; Windpeak Wyrm |
+| Kindred | 0 | 7 | 7 | Dread Raptor; Hot Spring Glider; Primalfin Challenger; Raptor Herald; Slagclaw; Torga; Volcanic Thrasher |
 | Magnetic | 0 | 1 | 1 | Drone Deconstructor |
 | Manathirst | 4 | 0 | 4 | Astalor Bloodsworn; Coroner; Knight of the Dead; Sunfury Clergy |
 | Miniaturize / Gigantify | 11 | 0 | 11 | Murloc Growfin; Nostalgic Clown; Sand Art Elemental; Sandbox Scoundrel; Shudderblock; Sleet Skater; Sweetened Snowflurry; Tabletop Roleplayer; Toy Captain Tarim; Toysnatching Geist; Window Shopper |
@@ -168,13 +168,12 @@ A Battlecry that looks simple can still require an attached keyword. For example
 
 <a id="damage-stats"></a>
 
-### Damage, healing, Armor and board stats — 15
+### Damage, healing, Armor and board stats — 11
 
 Extend numeric expressions, target-dependent branches, tribal filters and compound stat effects.
 
 | Minion | Candidate IDs | Other dependencies | Complete printed rules |
 | --- | --- | --- | --- |
-| Chillspine Stegodon | DINO_413 |  · References: Kindred | Battlecry: Deal 2 damage to two random enemy minions. Kindred: And Freeze them. |
 | City Chief Esho | TLC_110 | Draw, discard and hand/deck movement | Battlecry: If every minion in your deck shares a minion type, give your other minions +2/+2 (wherever they are). |
 | Dissolving Ooze | TLC_252 | Draw, discard and hand/deck movement | Battlecry: Destroy a friendly minion. Spit out the Bones of its Attack and Health into your hand. |
 | Gruesome Nightmare | CATA_161 | Draw, discard and hand/deck movement | Battlecry: Give a minion in your hand or battlefield Attack equal to this minion's Attack. |
@@ -182,17 +181,14 @@ Extend numeric expressions, target-dependent branches, tribal filters and compou
 | Malefic Rook | TOY_526 |  | Battlecry: Attack YOUR hero. |
 | Manifested Timeways | TIME_019 |  | Battlecry: If you control an Aura, deal 3 damage to all enemies. |
 | Night Elf Huntress | TOY_101 | Discover and other player choices | Battlecry: Deal 3 damage to three different enemies. (You pick the targets!) |
-| Ravenous Devilsaur | TLC_829 |  · References: Kindred | Battlecry: Destroy a minion. Kindred: Gain its stats. |
-| Scalehide Kodo | TLC_454 |  · References: Kindred | Battlecry: Destroy the lowest Attack enemy minion. Kindred: The highest Attack instead. |
 | Shadowtouched Kvaldir | YOG_300 |  | Battlecry: Your next healing effect deals damage instead. |
 | Sheriff Barrelbrim | WW_359 |  | Battlecry: If you have 20 or less Health, open the Badlands Jail. |
 | Tomb Traitor | TTN_455 | Draw, discard and hand/deck movement | Battlecry: Destroy a Plague in your opponent's deck to deal 3 damage to all enemy minions. |
 | Trenchstalker | TSC_659 |  | Battlecry: Attack three different random enemies. |
-| Windpeak Wyrm | TLC_600 | Card costs, mana and ordinary discounts · References: Kindred | Battlecry: Deal 5 damage and gain 5 Armor. Kindred: Costs (2) less. |
 
 <a id="draw-zones"></a>
 
-### Draw, discard and hand/deck movement — 17
+### Draw, discard and hand/deck movement — 16
 
 Extend existing zone operations: draws, burns, ordering, bottom-of-deck placement and hand replacement.
 
@@ -212,7 +208,6 @@ Extend existing zone operations: draws, burns, ordering, bottom-of-deck placemen
 | Pebbly Page | WON_090 |  | Battlecry: Draw an Overload card. You can't be Overloaded this turn. |
 | Photographer Fizzle | ETC_113 |  | Battlecry: Take a Snapshot of your current hand and shuffle it into your deck. (Once per game) |
 | Rainbow Seamstress | TOY_823 | Damage, healing, Armor and board stats | Battlecry: If your deck started with a Blood, Frost, or Unholy card, gain Lifesteal, Reborn, or Rush respectively. |
-| Razidir | TLC_463 |  · References: Kindred | Battlecry: Discard a random card from your hand. Kindred: Your opponent's hand instead. |
 | Shadowcloaked Assailant | EDR_524 |  | Battlecry: If you're holding one of the same cards as your opponent, shuffle theirs into their deck. |
 | Torga | TLC_102 |  · References: Kindred | Battlecry: Draw a Kindred card and another card that activates it. |
 

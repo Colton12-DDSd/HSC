@@ -2,10 +2,60 @@ import {it,expect} from 'vitest';
 import {readFileSync} from 'node:fs';
 import type {Card} from './cards';
 import {supported} from './effects';
-import {createGame,debugAction,applyAction,effectTargets} from './engine';
+import {createGame,debugAction,applyAction,effectTargets,handCost,kindredActive} from './engine';
 const cards=JSON.parse(readFileSync('public/data/cards.json','utf8')) as Card[];
 const names=JSON.parse(readFileSync('data/spell-foundation-batch.json','utf8')).names as string[];
 const card=(n:string)=>structuredClone(cards.find(c=>c.name===n)!);
+it('Kindred uses the previous own turn and either tribe on a dual-type card', () => {
+  let s = setup();
+  s.players[0].hand = [card('River Crocolisk')];
+  s = applyAction(s,{type:'cast',p:0,index:0});
+  const stegodon = card('Chillspine Stegodon');
+  expect(kindredActive(s.players[0],stegodon)).toBe(false);
+  for (let i=0;i<4;i++) s = applyAction(s,{type:'end',p:i});
+  expect(kindredActive(s.players[0],stegodon)).toBe(true);
+  for (let i=0;i<4;i++) s = applyAction(s,{type:'end',p:i});
+  expect(kindredActive(s.players[0],stegodon)).toBe(false);
+});
+it('Windpeak Wyrm receives its Kindred discount and deals 5 damage plus 5 Armor', () => {
+  const s = setup();
+  const wyrm = card('Windpeak Wyrm');
+  expect(handCost(s.players[0],wyrm)).toBe(wyrm.cost);
+  s.players[0].kindredPrevious = ['tribe:DRAGON'];
+  s.players[0].hand = [wyrm];
+  const n = applyAction(s,{type:'cast',p:0,index:0,target:{p:1}});
+  expect(s.players[0].mana - n.players[0].mana).toBe(wyrm.cost-2);
+  expect(n.players[1].health).toBe(195);
+  expect(n.players[0].armor).toBe(5);
+});
+it('Chillspine Stegodon freezes exactly the two minions it damages', () => {
+  let s=setup();
+  for (const p of [1,2,3]) s=debugAction(s,{type:'summon',p,card:card('Chillwind Yeti')});
+  s.players[0].kindredPrevious=['tribe:ELEMENTAL'];
+  s.players[0].hand=[card('Chillspine Stegodon')];
+  const n=applyAction(s,{type:'cast',p:0,index:0});
+  const units=n.players.slice(1).flatMap(p=>p.board);
+  expect(units.filter(u=>u.health===3)).toHaveLength(2);
+  expect(units.filter(u=>u.frozen).map(u=>u.uid)).toEqual(units.filter(u=>u.health===3).map(u=>u.uid));
+});
+it.each([false,true])('Kindred=%s selects the right Kodo extreme, discard side and Devilsaur reward', active => {
+  let s=setup();
+  s=debugAction(s,{type:'summon',p:1,card:card('Wisp')});
+  s=debugAction(s,{type:'summon',p:2,card:card('Chillwind Yeti')});
+  s.players[0].kindredPrevious=active?['tribe:BEAST']:[];
+  s.players[0].hand=[card('Scalehide Kodo'),card('Razidir'),card('Ravenous Devilsaur'),card('Wisp')];
+  s.players[1].hand=[card('Fireball')];
+  s=applyAction(s,{type:'cast',p:0,index:0});
+  expect(s.players[active?2:1].board).toHaveLength(0);
+  const remaining=active?1:2;
+  const victim=s.players[remaining].board[0];
+  s=applyAction(s,{type:'cast',p:0,index:1,target:{p:remaining,uid:victim.uid}});
+  const base=card('Ravenous Devilsaur');
+  expect(s.players[0].board.find(u=>u.card.id===base.id)?.attack).toBe(base.attack!+(active?victim.attack:0));
+  s=applyAction(s,{type:'cast',p:0,index:0});
+  expect(s.players[0].hand.length).toBe(active?1:0);
+  expect(s.players[1].hand.length).toBe(active?0:1);
+});
 it('Steamcleaner distinguishes original cards from identical added copies across seats', () => {
   const s = setup();
   for (const [i,p] of s.players.entries())

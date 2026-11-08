@@ -15,6 +15,7 @@ export const foundationOperations = [
   'draw-linked',
   'reveal-linked',
   'starting-origin',
+  'kindred',
   'shuffle-hand-draw',
   'board-shots',
   'random-keyword',
@@ -49,6 +50,7 @@ export const foundationOperations = [
   'shuffle-hands',
 ];
 export interface Helpers {
+  kindred: boolean;
   random: (n: number) => number;
   shuffle: (cards: Card[]) => Card[];
   matches: (c: Card, f?: CardFilter, u?: Unit) => boolean;
@@ -85,6 +87,33 @@ export function resolveFoundation(
     self = p.board.find((u) => u.uid === sourceUid);
   const op = step.op;
   if (!foundationOperations.includes(op)) return false;
+  if (op === 'kindred') {
+    if (step.mode === 'strike') {
+      const targets = h.targets({ op: 'damage', scope: 'enemy', random: 2 });
+      for (const t of targets) {
+        h.run([{ op:'damage', scope:'target', target:'enemy-minion', amount:2 }], t);
+        if (h.kindred) h.run([{ op:'freeze', scope:'target', target:'enemy-minion' }], t);
+      }
+    } else if (step.mode === 'consume') {
+      h.run([{ op:h.kindred ? 'consume' : 'destroy', mode:'stats', scope:'target', target:'minion' }], target);
+    } else if (step.mode === 'extreme') {
+      const targets = h.targets({ op:'destroy', scope:'enemy' });
+      const attacks = targets.map(t => (h.get(t) as Unit).attack);
+      const extreme = (h.kindred ? Math.max : Math.min)(...attacks);
+      const tied = targets.filter((_, i) => attacks[i] === extreme);
+      if (tied.length) h.run([{ op:'destroy', scope:'target', target:'enemy-minion' }], tied[h.random(tied.length)]);
+    } else if (step.mode === 'discard') {
+      if (!h.kindred) h.run([{ op:'discard', amount:1 }]);
+      else for (const [i, enemy] of s.players.entries()) {
+        if (i === player || enemy.health <= 0 || !enemy.hand.length) continue;
+        const [c] = enemy.hand.splice(h.random(enemy.hand.length), 1);
+        enemy.grave.push(c);
+        (s.events ??= []).push({type:'discard', player:i, turn:s.turn, card:structuredClone(c)});
+        h.note(`${enemy.name} discards ${c.name}`);
+      }
+    }
+    return true;
+  }
   if (op === 'starting-origin') {
     if (step.mode === 'clean-decks') {
       for (const [i, owner] of s.players.entries()) {

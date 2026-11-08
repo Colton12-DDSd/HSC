@@ -1,6 +1,6 @@
 # Battlecry expansion — 2026-10-22
 
-Added **554 unique names** beyond the 542-name baseline at e2bd7a0. Current coverage: **1096 Battlecry names**. See [rules, tests and deck guide](TEST-DECKS.md).
+Added **559 unique names** beyond the 542-name baseline at e2bd7a0. Current coverage: **1101 Battlecry names**. See [rules, tests and deck guide](TEST-DECKS.md).
 
 | Minion | Enabled printings | Printed rules |
 | --- | --- | --- |
@@ -83,6 +83,7 @@ Added **554 unique names** beyond the 542-name baseline at e2bd7a0. Current cove
 | Cera'thine Fleetrunner | AV_403 | Battlecry: Replace your minions in hand and deck with ones from other classes. They cost (2) less. |
 | Chalk Artist | TOY_388 | Battlecry: Draw a minion. Transform it into a random Legendary one (keeping its original stats and Cost). |
 | Chef Nomi | DAL_554 | Battlecry: If your deck is empty, summon six 6/6 Greasefire Elementals. |
+| Chillspine Stegodon | DINO_413 | Battlecry: Deal 2 damage to two random enemy minions. Kindred: And Freeze them. |
 | Cloud Serpent | TLC_888 | Battlecry: Get a copy of another Elemental or Dragon in your hand. |
 | Clownfish | TID_004 | Battlecry: Your next two Murlocs cost (2) less. |
 | Cobalt Spellkin | DRG_075 | Battlecry: Add two 1-Cost spells from your class to your hand. |
@@ -386,7 +387,9 @@ Added **554 unique names** beyond the 542-name baseline at e2bd7a0. Current cove
 | Ratcatcher | GIL_515 | Rush Battlecry: Destroy a friendly minion and gain its Attack and Health. |
 | Rattling Rascal | ICC_025 | Battlecry: Summon a 5/5 Skeleton. Deathrattle: Summon one for your opponent. |
 | Raven Familiar | LOOT_170 | Battlecry: Reveal a spell in each deck. If yours costs more, draw it. |
+| Ravenous Devilsaur | TLC_829 | Battlecry: Destroy a minion. Kindred: Gain its stats. |
 | Ravenous Kraken | TTN_754 | Battlecry: Destroy a friendly minion. Deathrattle: Summon a copy of it. |
+| Razidir | TLC_463 | Battlecry: Discard a random card from your hand. Kindred: Your opponent's hand instead. |
 | Razorpetal Lasher | UNG_058 | Battlecry: Add a Razorpetal to your hand that deals 2 damage. |
 | Razzle-Dazzler | VAC_301 | Battlecry: Summon a random 5-Cost minion. Repeat for each spell school you've cast this game. |
 | Reckless Diretroll | TRL_551 | Taunt Battlecry: Discard your lowest Cost card. |
@@ -414,6 +417,7 @@ Added **554 unique names** beyond the 542-name baseline at e2bd7a0. Current cove
 | Sathrovarr | DRG_402 | Battlecry: Choose a friendly minion. Add a copy of it to your hand, deck, and battlefield. |
 | Savage Striker | CORE_TRL_240, TRL_240 | Battlecry: Deal damage to an enemy minion equal to your hero's Attack. |
 | Savage Ymirjar | RLK_535 | Rush Battlecry: Discard 2 cards. |
+| Scalehide Kodo | TLC_454 | Battlecry: Destroy the lowest Attack enemy minion. Kindred: The highest Attack instead. |
 | Scarlet Purifier | GVG_101 | Battlecry: Deal 2 damage to all minions with Deathrattle. |
 | Scarlet Recruiter | JAIL_516 | Battlecry: Summon two minions from your deck that cost (2) or less. Give them Rush. |
 | Scavenging Shivarra | BT_732 | Battlecry: Deal 6 damage randomly split among all other minions. |
@@ -539,6 +543,7 @@ Added **554 unique names** beyond the 542-name baseline at e2bd7a0. Current cove
 | Weapons Expert | MAW_029 | Battlecry: If you have a weapon equipped, give it +1/+1. Otherwise, draw a weapon. |
 | Whirliglider | BOT_431 | Battlecry: Summon a 0/2 Goblin Bomb. |
 | Wicked Skeleton | ICC_904 | Battlecry: Gain +1/+1 for each minion that died this turn. |
+| Windpeak Wyrm | TLC_600 | Battlecry: Deal 5 damage and gain 5 Armor. Kindred: Costs (2) less. |
 | Witch of the Arch-Thief | WON_104 | Battlecry: Summon a 1/3 Voidwalker with Taunt. If your opponent has more minions, repeat. |
 | Witchwood Grizzly | CORE_GIL_623, GIL_623 | Taunt Battlecry: Lose 1 Health for each card in your opponent's hand. |
 | Witchwood Piper | GIL_584 | Battlecry: Draw the lowest Cost minion from your deck. |

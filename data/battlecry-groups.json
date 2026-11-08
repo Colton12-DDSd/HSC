@@ -1,14 +1,14 @@
 {
   "snapshot": "2026-10-22",
   "basis": "Pinned local collection; exact remaining-name membership from the support audit",
-  "supportedBattlecryNames": 1096,
-  "totalRemaining": 799,
+  "supportedBattlecryNames": 1101,
+  "totalRemaining": 794,
   "replacementCharacterPrintings": 0,
   "lanes": [
     {
       "id": "foundation",
       "label": "Existing foundations: pattern, value, filter or sequencing extensions",
-      "count": 51
+      "count": 46
     },
     {
       "id": "shared",
@@ -32,14 +32,14 @@
       "label": "Damage, healing, Armor and board stats",
       "lane": "foundation",
       "work": "Extend numeric expressions, target-dependent branches, tribal filters and compound stat effects.",
-      "count": 15
+      "count": 11
     },
     {
       "id": "draw-zones",
       "label": "Draw, discard and hand/deck movement",
       "lane": "foundation",
       "work": "Extend existing zone operations: draws, burns, ordering, bottom-of-deck placement and hand replacement.",
-      "count": 17
+      "count": 16
     },
     {
       "id": "summon-tokens",
@@ -221,12 +221,12 @@
     {
       "id": "damage-stats",
       "label": "Damage, healing, Armor and board stats",
-      "count": 349
+      "count": 345
     },
     {
       "id": "draw-zones",
       "label": "Draw, discard and hand/deck movement",
-      "count": 265
+      "count": 264
     },
     {
       "id": "summon-tokens",
@@ -241,7 +241,7 @@
     {
       "id": "cost-mana",
       "label": "Card costs, mana and ordinary discounts",
-      "count": 156
+      "count": 155
     },
     {
       "id": "choices",
@@ -566,23 +566,18 @@
     },
     {
       "label": "Kindred",
-      "count": 12,
+      "count": 7,
       "names": [
-        "Chillspine Stegodon",
         "Dread Raptor",
         "Hot Spring Glider",
         "Primalfin Challenger",
         "Raptor Herald",
-        "Ravenous Devilsaur",
-        "Razidir",
-        "Scalehide Kodo",
         "Slagclaw",
         "Torga",
-        "Volcanic Thrasher",
-        "Windpeak Wyrm"
+        "Volcanic Thrasher"
       ],
       "attachedCount": 0,
-      "referenceOnlyCount": 12
+      "referenceOnlyCount": 7
     },
     {
       "label": "Magnetic",
@@ -4385,34 +4380,6 @@
           "id": "VAC_957",
           "text": "[x]<b>Hunter Tourist</b>\n<b>Battlecry:</b> Choose 2 minions.\nSwap their stats.",
           "normalizedText": "Hunter Tourist Battlecry: Choose 2 minions. Swap their stats.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Chillspine Stegodon",
-      "primary": "damage-stats",
-      "lane": "foundation",
-      "dependencies": [
-        "damage-stats"
-      ],
-      "keywordTags": [
-        "Kindred"
-      ],
-      "attachedKeywords": [],
-      "referencedKeywords": [
-        "Kindred"
-      ],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "DINO_413",
-          "text": "[x]<b>Battlecry:</b> Deal 2 damage to\ntwo random enemy minions.\n <b>Kindred:</b> And <b>Freeze</b> them.",
-          "normalizedText": "Battlecry: Deal 2 damage to two random enemy minions. Kindred: And Freeze them.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -15980,34 +15947,6 @@
       ]
     },
     {
-      "name": "Ravenous Devilsaur",
-      "primary": "damage-stats",
-      "lane": "foundation",
-      "dependencies": [
-        "damage-stats"
-      ],
-      "keywordTags": [
-        "Kindred"
-      ],
-      "attachedKeywords": [],
-      "referencedKeywords": [
-        "Kindred"
-      ],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TLC_829",
-          "text": "[x]<b>Battlecry:</b> Destroy a minion.\n<b>Kindred:</b> Gain its stats.",
-          "normalizedText": "Battlecry: Destroy a minion. Kindred: Gain its stats.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Ravenous Pterrordax",
       "primary": "keyword-packages",
       "lane": "system",
@@ -16084,34 +16023,6 @@
           "id": "TOY_383",
           "text": "[x]<b>Battlecry:</b> Shuffle copies of 5\nrandom friendly minions that\ndied this game into your\ndeck. They cost (0).",
           "normalizedText": "Battlecry: Shuffle copies of 5 random friendly minions that died this game into your deck. They cost (0).",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Razidir",
-      "primary": "draw-zones",
-      "lane": "foundation",
-      "dependencies": [
-        "draw-zones"
-      ],
-      "keywordTags": [
-        "Kindred"
-      ],
-      "attachedKeywords": [],
-      "referencedKeywords": [
-        "Kindred"
-      ],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TLC_463",
-          "text": "[x]<b>Battlecry:</b> Discard a random\ncard from your hand.\n<b>Kindred:</b> Your opponent's\nhand instead.",
-          "normalizedText": "Battlecry: Discard a random card from your hand. Kindred: Your opponent's hand instead.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -16915,34 +16826,6 @@
           "id": "DMF_109",
           "text": "<b>Battlecry:</b> Draw 1 card.\n<i>(Upgraded for each\nfriendly <b>Secret</b> that has\ntriggered this game!)</i>",
           "normalizedText": "Battlecry: Draw 1 card. (Upgraded for each friendly Secret that has triggered this game!)",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Scalehide Kodo",
-      "primary": "damage-stats",
-      "lane": "foundation",
-      "dependencies": [
-        "damage-stats"
-      ],
-      "keywordTags": [
-        "Kindred"
-      ],
-      "attachedKeywords": [],
-      "referencedKeywords": [
-        "Kindred"
-      ],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TLC_454",
-          "text": "[x]<b>Battlecry:</b> Destroy the\nlowest Attack enemy minion.\n<b>Kindred:</b> The highest\nAttack instead.",
-          "normalizedText": "Battlecry: Destroy the lowest Attack enemy minion. Kindred: The highest Attack instead.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -22616,35 +22499,6 @@
             "BATTLECRY",
             "DISCOVER",
             "MINIATURIZE"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Windpeak Wyrm",
-      "primary": "damage-stats",
-      "lane": "foundation",
-      "dependencies": [
-        "damage-stats",
-        "cost-mana"
-      ],
-      "keywordTags": [
-        "Kindred"
-      ],
-      "attachedKeywords": [],
-      "referencedKeywords": [
-        "Kindred"
-      ],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TLC_600",
-          "text": "[x]<b>Battlecry:</b> Deal 5 damage\nand gain 5 Armor.\n<b>Kindred:</b> Costs (2) less.",
-          "normalizedText": "Battlecry: Deal 5 damage and gain 5 Armor. Kindred: Costs (2) less.",
-          "mechanics": [
-            "BATTLECRY"
           ]
         }
       ]
