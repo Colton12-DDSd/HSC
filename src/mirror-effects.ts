@@ -51,6 +51,7 @@ export function resolveMirror(
         ];
         if (!pool.length) return old;
         const fresh = structuredClone(pool[h.random(pool.length)]);
+        fresh.startingOwner = old.startingOwner;
         if (step.mode === 'keep-stats-cost') {
           const from = cardStats(old),
             to = cardStats(fresh);

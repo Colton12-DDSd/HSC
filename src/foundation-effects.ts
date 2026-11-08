@@ -14,6 +14,7 @@ export const foundationOperations = [
   'shield-harvest',
   'draw-linked',
   'reveal-linked',
+  'starting-origin',
   'shuffle-hand-draw',
   'board-shots',
   'random-keyword',
@@ -51,7 +52,7 @@ export interface Helpers {
   random: (n: number) => number;
   shuffle: (cards: Card[]) => Card[];
   matches: (c: Card, f?: CardFilter, u?: Unit) => boolean;
-  add: (owner: number, c: Card) => void;
+  add: (owner: number, c: Card, moved?: boolean) => void;
   draw: () => void;
   note: (text: string) => void;
   event: (type: string, amount?: number, card?: Card) => void;
@@ -84,6 +85,43 @@ export function resolveFoundation(
     self = p.board.find((u) => u.uid === sourceUid);
   const op = step.op;
   if (!foundationOperations.includes(op)) return false;
+  if (op === 'starting-origin') {
+    if (step.mode === 'clean-decks') {
+      for (const [i, owner] of s.players.entries()) {
+        if (owner.health <= 0) continue;
+        const removed = owner.deck.filter((c) => c.startingOwner !== i);
+        owner.deck = owner.deck.filter((c) => c.startingOwner === i);
+        owner.grave.push(...removed);
+        h.note(`${source.name} destroys ${removed.length} added cards in ${owner.name}'s deck`);
+      }
+    } else if (step.mode === 'recruit-added') {
+      for (const c of [...p.hand]) {
+        if (c.type !== 'MINION' || c.startingOwner === player) continue;
+        if (!h.spawn(player, c, p.board.length)) break;
+        p.hand.splice(p.hand.indexOf(c), 1);
+      }
+    } else if (step.mode === 'played-demons') {
+      const played = (s.events ?? []).flatMap((e) =>
+        e.type === 'play' && e.player === player && e.card && h.matches(e.card, { type: 'MINION', tribe: 'DEMON' }) && e.card.startingOwner !== player ? [e.card] : [],
+      );
+      for (const c of played) {
+        if (!h.spawn(player, { ...c, startingOwner: undefined }, p.board.length)) break;
+      }
+    } else {
+      const filters = step.mode === 'spell-pair' ? [true, false] : Array(amount).fill(false);
+      for (const original of filters) {
+        const options = p.deck.filter((c) =>
+          (c.startingOwner === player) === original && (step.mode !== 'spell-pair' || c.type === 'SPELL'),
+        );
+        if (!options.length) continue;
+        const [c] = p.deck.splice(p.deck.indexOf(options[h.random(options.length)]), 1);
+        h.add(player, c, true);
+        h.note(`${source.name} draws ${c.name}`);
+        if (step.mode === 'draw-buff' && self) h.buff(self, 2, 2);
+      }
+    }
+    return true;
+  }
   if (op === 'reveal-linked') {
     if (step.mode === 'discard-history') {
       const pool = (s.events ?? []).flatMap((e) =>
@@ -482,7 +520,7 @@ export function resolveFoundation(
           ? enemies[h.random(enemies.length)]
           : player;
       const before = s.players[recipient].hand.length;
-      h.add(recipient, c);
+      h.add(recipient, c, true);
       if (step.mode === 'copy-drawn' && p.hand.length > before)
         for (let j = 0; j < (step.until ?? 1); j++) h.add(player, c);
       if (step.mode === 'temporary-copy')

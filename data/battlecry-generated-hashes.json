@@ -1,6 +1,6 @@
 {
-  "src/generated/battlecries.json": "fb0aac82e3feec8056c42002ba8f84c676566d4fcb5a2b361d31526e04214361",
+  "src/generated/battlecries.json": "80e6f97324d6ffd1e5d982906ea25d875c474927a52a7e0f5a4cf0c0740f9636",
   "src/generated/catalog.json": "d8398ceea933c54a849a7fc946e5da566e383d844b2151f88653fffb73739778",
   "src/generated/deathrattles.json": "762eaa98f471e42504b8a5b59af6d2406736f64b0a1556405c0d3c8207259a4f",
-  "src/generated/spells.json": "c09e8cc0a5c36ba74a600d88e06c176fb87501ee9907c7c5ac8bd082f683ac62"
+  "src/generated/spells.json": "f8cf1b4f16fbaa67783517eb44d168b70c6ba4853fffe51a01e751c2ade3c341"
 }

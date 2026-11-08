@@ -6,6 +6,27 @@ import {createGame,debugAction,applyAction,effectTargets} from './engine';
 const cards=JSON.parse(readFileSync('public/data/cards.json','utf8')) as Card[];
 const names=JSON.parse(readFileSync('data/spell-foundation-batch.json','utf8')).names as string[];
 const card=(n:string)=>structuredClone(cards.find(c=>c.name===n)!);
+it('Steamcleaner distinguishes original cards from identical added copies across seats', () => {
+  const s = setup();
+  for (const [i,p] of s.players.entries())
+    p.deck = [{...card('Wisp'), startingOwner:i}, card('Wisp')];
+  s.players[0].hand = [card('Steamcleaner')];
+  const n = applyAction(s, {type:'cast',p:0,index:0});
+  for (const [i,p] of n.players.entries()) {
+    expect(p.deck.map(c=>c.startingOwner)).toEqual([i]);
+    expect(p.grave.some(c=>c.name==='Wisp' && c.startingOwner===undefined)).toBe(true);
+  }
+});
+it('a hand copy loses starting origin while the physical draw keeps it', () => {
+  const s = setup();
+  s.players[0].deck = [{...card('Wisp'), startingOwner:0}];
+  s.players[0].hand = [card('Mimic Pod'),card('Princess Talanji')];
+  const n = applyAction(s, {type:'cast',p:0,index:0});
+  expect(n.players[0].hand.slice(1).map(c=>c.startingOwner)).toEqual([0,undefined]);
+  const result = applyAction(n, {type:'cast',p:0,index:0});
+  expect(result.players[0].board.map(u=>u.card.name)).toContain('Wisp');
+  expect(result.players[0].hand.map(c=>c.startingOwner)).toEqual([0]);
+});
 it('Vitality Surge heals for the drawn minion, ignoring a spell on top', () => {
   const s = setup();
   s.players[0].deck = [card('Fireball'), card('Chillwind Yeti')];

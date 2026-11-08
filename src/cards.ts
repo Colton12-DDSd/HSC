@@ -6,6 +6,7 @@ export interface StatModifier {
   health: number;
 }
 export interface Card {
+  startingOwner?: number;
   spellSchool?: string;
   heldSince?: number;
   heldTurn?: number;

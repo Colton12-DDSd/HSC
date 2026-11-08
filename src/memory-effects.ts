@@ -118,12 +118,12 @@ export function resolveMemory(
       for (const c of step.cards ?? [])
         for (let i = 0; i < (typeof step.amount === 'number' ? step.amount : 1); i++) {
           if (step.mode === 'hand') {
-            h.add(owner, c);
+            h.add(owner, c, source.id === 'TRL_126');
             h.note(`${source.name} returns ${c.name} to ${s.players[owner].name}'s hand`);
           } else {
             const fresh = h.spawn(
               owner,
-              structuredClone(c),
+              { ...structuredClone(c), startingOwner: undefined },
               owner === player ? h.position + offset : undefined,
             );
             if (fresh) {

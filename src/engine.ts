@@ -532,9 +532,10 @@ function scriptTargets(
   }
   return ts;
 }
-function addGenerated(s: Game, player: number, c: Card) {
+function addGenerated(s: Game, player: number, c: Card, moved = false) {
   const p = s.players[player],
     copy = { ...structuredClone(c), heldSince: s.events?.length ?? 0, heldTurn: s.turn };
+  if (!moved) delete copy.startingOwner;
   if (p.hand.length < (p.maxHandSize ?? 10)) p.hand.push(copy);
   else {
     p.grave.push(printedCard(copy));
@@ -1363,7 +1364,7 @@ function runScript(
         random: (n) => (n > 0 ? random(s, n) : 0),
         shuffle: (cs) => shuffle(s, cs),
         matches: (c, f, u) => matchesCard(c, f, p, u),
-        add: (i, c) => addGenerated(s, i, c),
+        add: (i, c, moved) => addGenerated(s, i, c, moved),
         draw: () => draw(s, player),
         note: (t) => note(s, t),
         event: (t, n, c) => event(s, player, t, n, c),
@@ -1620,7 +1621,7 @@ function runScript(
         const uid = summon(
           s,
           player,
-          printedCard(c),
+          { ...printedCard(c), startingOwner: undefined },
           false,
           Math.min(position + i, p.board.length),
         );
@@ -1661,7 +1662,7 @@ function runScript(
       if (win && own) {
         if (step.after === 'draw') {
           p.deck.splice(p.deck.indexOf(own), 1);
-          addGenerated(s, player, own);
+          addGenerated(s, player, own, true);
         }
         runScript(s, player, step.steps ?? [], target, position, source, sourceUid);
       }
@@ -1900,7 +1901,8 @@ function runScript(
     }
     if (step.op === 'copy-enemy-decks') {
       for (const [i, owner] of s.players.entries())
-        if (i !== player && owner.health > 0) p.deck.push(...structuredClone(owner.deck));
+        if (i !== player && owner.health > 0)
+          p.deck.push(...owner.deck.map((c) => ({ ...structuredClone(c), startingOwner: undefined })));
       shuffle(s, p.deck);
       continue;
     }
@@ -1968,7 +1970,7 @@ function runScript(
         recruitedCards.add(c);
         if (step.mode === 'same-card') sameCard = c;
         if (!step.copy) p[zone].splice(index, 1);
-        const uid = summon(s, player, c, false, Math.min(position + i, p.board.length));
+        const uid = summon(s, player, step.copy ? { ...c, startingOwner: undefined } : c, false, Math.min(position + i, p.board.length));
         if (step.attack !== undefined && step.health !== undefined) {
           const u = p.board.find((u) => u.uid === uid)!;
           u.attackBase = u.attack = step.attack;
@@ -2097,7 +2099,7 @@ function runScript(
           }
           if (step.summon && copy.type === 'MINION' && p.board.length < 7)
             summon(s, player, copy, false, Math.min(position, p.board.length));
-          else addGenerated(s, player, copy);
+          else addGenerated(s, player, copy, true);
         } else draw(s, player);
       }
       note(s, `${p.name} resolves ${source.name}'s draw`);
@@ -2208,6 +2210,7 @@ function runScript(
                 ready,
                 summonedTurn: s.turn,
               });
+              delete copy.card.startingOwner;
             }
           }
         }
@@ -2343,6 +2346,7 @@ function runScript(
               attacksRemaining,
               summonedTurn: s.turn,
             });
+            delete fresh.card.startingOwner;
             if (step.attack !== undefined && step.health !== undefined) {
               fresh.attackBase = fresh.attack = step.attack;
               fresh.maxHealth = fresh.health = step.health;
@@ -2469,6 +2473,7 @@ function runScript(
           for (let i = 0; i < amount; i++) {
             const c = {
               ...structuredClone(x.card),
+              startingOwner: undefined,
               modifiers: step.mode === 'plain' ? [] : structuredClone(x.modifiers ?? []),
             };
             if (step.attack !== undefined && step.health !== undefined) {
@@ -2524,6 +2529,7 @@ function runScript(
               Object.assign(fresh, structuredClone(templateUnit));
               fresh.commander = dest.commander;
             }
+            fresh.card.startingOwner = dest.card.startingOwner;
             Object.assign(fresh, {
               uid: dest.uid,
               commanderOwner: dest.commanderOwner,
@@ -3014,7 +3020,7 @@ export function createGame(
       reserve: 0,
       fatigue: 0,
       hand: [],
-      deck,
+      deck: deck.map((c) => ({ ...c, startingOwner: i })),
       startingDeck: {
         singleton: new Set(deck.map((c) => c.name)).size === deck.length,
         spells: deck.filter((c) => c.type === 'SPELL').length,
@@ -3177,13 +3183,13 @@ export function applyAction(state: Game, a: Action): Game {
     if (choice.step.destination === 'shuffle') {
       p.deck.splice(random(s, p.deck.length + 1), 0, c);
       note(s, `${choice.source.name} shuffles the chosen card into ${p.name}'s deck`);
-    } else if (matching && choice.step.after === 'draw-matching') addGenerated(s, a.p, c);
+    } else if (matching && choice.step.after === 'draw-matching') addGenerated(s, a.p, c, true);
     else if (summonChosen && choice.step.after === 'summon-matching') {
       /* Card moved from deck to board. */
     } else if (choice.step.destination === 'top') {
       s.players[destinationOwner].deck.unshift(c);
       note(s, `${choice.source.name} arranges ${p.name}'s next draw`);
-    } else addGenerated(s, a.p, c);
+    } else addGenerated(s, a.p, c, !choice.step.copy && ['deck', 'hand'].includes(choice.step.zone ?? ''));
     note(s, `${p.name} completes ${choice.source.name}'s card choice`);
     runScript(
       s,

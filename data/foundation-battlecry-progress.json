@@ -1,9 +1,9 @@
 {
   "baselineCommit": "667d3f0",
   "target": 315,
-  "completed": 259,
-  "remaining": 56,
-  "supportedBattlecryNames": 1090,
+  "completed": 264,
+  "remaining": 51,
+  "supportedBattlecryNames": 1096,
   "additionalOutsideBatch": [
     "Aessina",
     "Air Guitarist",
@@ -15,6 +15,7 @@
     "Arathi Weaponsmith",
     "Arcane Golem",
     "Arch-Villain Rafaam",
+    "Archimonde",
     "Astral Vigilant",
     "Audio Amplifier",
     "Baleful Blazer",
@@ -900,12 +901,11 @@
     {
       "name": "Dreamwarden",
       "group": "draw-zones",
-      "complete": false,
+      "complete": true,
       "ids": [
         "EDR_256"
       ],
-      "text": "Taunt. Battlecry: If there is a card in your deck that didn't start there, draw it and gain +2/+2.",
-      "dependency": "Original-card identity, starting snapshots or while-held progression"
+      "text": "Taunt. Battlecry: If there is a card in your deck that didn't start there, draw it and gain +2/+2."
     },
     {
       "name": "Drek'Thar",
@@ -2100,12 +2100,11 @@
     {
       "name": "Princess Talanji",
       "group": "summon-tokens",
-      "complete": false,
+      "complete": true,
       "ids": [
         "TRL_259"
       ],
-      "text": "Battlecry: Summon all minions from your hand that didn't start in your deck.",
-      "dependency": "Original-card identity, starting snapshots or while-held progression"
+      "text": "Battlecry: Summon all minions from your hand that didn't start in your deck."
     },
     {
       "name": "Quartermaster",
@@ -2398,12 +2397,11 @@
     {
       "name": "Sharp-Eyed Seeker",
       "group": "draw-zones",
-      "complete": false,
+      "complete": true,
       "ids": [
         "TTN_712"
       ],
-      "text": "Battlecry: If there is a card in your deck that didn't start there, draw it.",
-      "dependency": "Original-card identity, starting snapshots or while-held progression"
+      "text": "Battlecry: If there is a card in your deck that didn't start there, draw it."
     },
     {
       "name": "Sheriff Barrelbrim",
@@ -2526,13 +2524,12 @@
     {
       "name": "Steamcleaner",
       "group": "damage-stats",
-      "complete": false,
+      "complete": true,
       "ids": [
         "CORE_REV_946",
         "REV_946"
       ],
-      "text": "Battlecry: Destroy ALL cards in both players' decks that didn't start there.",
-      "dependency": "Original-card identity, starting snapshots or while-held progression"
+      "text": "Battlecry: Destroy ALL cards in both players' decks that didn't start there."
     },
     {
       "name": "Stone Trogg",
@@ -2555,12 +2552,11 @@
     {
       "name": "Stowaway",
       "group": "draw-zones",
-      "complete": false,
+      "complete": true,
       "ids": [
         "DRG_034"
       ],
-      "text": "Battlecry: If there are cards in your deck that didn't start there, draw 2 of them.",
-      "dependency": "Original-card identity, starting snapshots or while-held progression"
+      "text": "Battlecry: If there are cards in your deck that didn't start there, draw 2 of them."
     },
     {
       "name": "Stranded Spaceman",

@@ -3814,6 +3814,16 @@
       }
     ]
   },
+  "EDR_251": {
+    "text": "Draw a spell that started in your deck and one that didn't.",
+    "steps": [
+      {
+        "op": "starting-origin",
+        "mode": "spell-pair",
+        "amount": 1
+      }
+    ]
+  },
   "EDR_270": {
     "text": "[x]<b>Discover</b> a Nature spell.\nIt costs (2) less.",
     "steps": [

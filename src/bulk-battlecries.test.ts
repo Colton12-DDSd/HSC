@@ -700,6 +700,7 @@ describe('Independent mechanic and interaction checks', () => {
       'shield-harvest',
       'draw-linked',
       'reveal-linked',
+      'starting-origin',
       'shuffle-hand-draw',
       'board-shots',
       'random-keyword',

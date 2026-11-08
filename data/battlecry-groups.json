@@ -1,19 +1,19 @@
 {
   "snapshot": "2026-10-22",
   "basis": "Pinned local collection; exact remaining-name membership from the support audit",
-  "supportedBattlecryNames": 1090,
-  "totalRemaining": 805,
+  "supportedBattlecryNames": 1096,
+  "totalRemaining": 799,
   "replacementCharacterPrintings": 0,
   "lanes": [
     {
       "id": "foundation",
       "label": "Existing foundations: pattern, value, filter or sequencing extensions",
-      "count": 56
+      "count": 51
     },
     {
       "id": "shared",
       "label": "Extend a shared engine family",
-      "count": 245
+      "count": 244
     },
     {
       "id": "system",
@@ -32,21 +32,21 @@
       "label": "Damage, healing, Armor and board stats",
       "lane": "foundation",
       "work": "Extend numeric expressions, target-dependent branches, tribal filters and compound stat effects.",
-      "count": 16
+      "count": 15
     },
     {
       "id": "draw-zones",
       "label": "Draw, discard and hand/deck movement",
       "lane": "foundation",
       "work": "Extend existing zone operations: draws, burns, ordering, bottom-of-deck placement and hand replacement.",
-      "count": 20
+      "count": 17
     },
     {
       "id": "summon-tokens",
       "label": "Summons, recruits and token definitions",
       "lane": "foundation",
       "work": "Add exact token definitions, variable summon stats, filtered recruitment and placement rules. Generated minion abilities need their own coverage.",
-      "count": 12
+      "count": 11
     },
     {
       "id": "generate-pools",
@@ -95,7 +95,7 @@
       "label": "History, thresholds and scaling conditions",
       "lane": "shared",
       "work": "Extend public history, while-held counters, distinct schools/types, spent mana, starting decks and previous-turn queries.",
-      "count": 22
+      "count": 21
     },
     {
       "id": "scheduling",
@@ -221,17 +221,17 @@
     {
       "id": "damage-stats",
       "label": "Damage, healing, Armor and board stats",
-      "count": 351
+      "count": 349
     },
     {
       "id": "draw-zones",
       "label": "Draw, discard and hand/deck movement",
-      "count": 270
+      "count": 265
     },
     {
       "id": "summon-tokens",
       "label": "Summons, recruits and token definitions",
-      "count": 112
+      "count": 110
     },
     {
       "id": "generate-pools",
@@ -266,7 +266,7 @@
     {
       "id": "history",
       "label": "History, thresholds and scaling conditions",
-      "count": 129
+      "count": 128
     },
     {
       "id": "scheduling",
@@ -2036,32 +2036,6 @@
           "id": "EDR_491",
           "text": "<b>Battlecry:</b> Gain the\n<b>Deathrattles</b> of your minions\nthat died this turn.",
           "normalizedText": "Battlecry: Gain the Deathrattles of your minions that died this turn.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Archimonde",
-      "primary": "history",
-      "lane": "shared",
-      "dependencies": [
-        "history",
-        "summon-tokens",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "GDB_128",
-          "text": "[x]<b>Battlecry:</b> Summon every\nDemon you played this\ngame that didn't start\nin your deck.",
-          "normalizedText": "Battlecry: Summon every Demon you played this game that didn't start in your deck.",
           "mechanics": [
             "BATTLECRY"
           ]
@@ -6756,32 +6730,6 @@
           "normalizedText": "Battlecry: Choose a Travel Tour to get two potentially perfect cards from it.",
           "mechanics": [
             "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Dreamwarden",
-      "primary": "draw-zones",
-      "lane": "foundation",
-      "dependencies": [
-        "draw-zones",
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "EDR_256",
-          "text": "[x]<b>Taunt</b>. <b>Battlecry:</b> If there\nis a card in your deck that\ndidn't start there, draw it\nand gain +2/+2.",
-          "normalizedText": "Taunt. Battlecry: If there is a card in your deck that didn't start there, draw it and gain +2/+2.",
-          "mechanics": [
-            "BATTLECRY",
-            "TAUNT"
           ]
         }
       ]
@@ -15386,31 +15334,6 @@
       ]
     },
     {
-      "name": "Princess Talanji",
-      "primary": "summon-tokens",
-      "lane": "foundation",
-      "dependencies": [
-        "summon-tokens",
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TRL_259",
-          "text": "<b>Battlecry:</b> Summon all minions from your hand that didn't start in your deck.",
-          "normalizedText": "Battlecry: Summon all minions from your hand that didn't start in your deck.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Private Eye",
       "primary": "secrets-counters",
       "lane": "system",
@@ -17745,30 +17668,6 @@
       ]
     },
     {
-      "name": "Sharp-Eyed Seeker",
-      "primary": "draw-zones",
-      "lane": "foundation",
-      "dependencies": [
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "TTN_712",
-          "text": "<b>Battlecry:</b> If there is a card in your deck that didn't start there, draw it.",
-          "normalizedText": "Battlecry: If there is a card in your deck that didn't start there, draw it.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Shattershambler",
       "primary": "death-memory",
       "lane": "shared",
@@ -19355,38 +19254,6 @@
       ]
     },
     {
-      "name": "Steamcleaner",
-      "primary": "damage-stats",
-      "lane": "foundation",
-      "dependencies": [
-        "damage-stats"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": true,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "CORE_REV_946",
-          "text": "<b>Battlecry:</b> Destroy ALL cards in both players' decks that didn't start there.",
-          "normalizedText": "Battlecry: Destroy ALL cards in both players' decks that didn't start there.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        },
-        {
-          "id": "REV_946",
-          "text": "<b>Battlecry:</b> Destroy ALL cards in both players' decks that didn't start there.",
-          "normalizedText": "Battlecry: Destroy ALL cards in both players' decks that didn't start there.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
       "name": "Steward of Scrolls",
       "primary": "spell-power",
       "lane": "system",
@@ -19483,30 +19350,6 @@
           "id": "DMF_229",
           "text": "[x]<b>Battlecry:</b> Draw a card. If you\nplay it this turn, give your\nhero +4 Attack this turn.",
           "normalizedText": "Battlecry: Draw a card. If you play it this turn, give your hero +4 Attack this turn.",
-          "mechanics": [
-            "BATTLECRY"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Stowaway",
-      "primary": "draw-zones",
-      "lane": "foundation",
-      "dependencies": [
-        "draw-zones"
-      ],
-      "keywordTags": [],
-      "attachedKeywords": [],
-      "referencedKeywords": [],
-      "familyTags": [],
-      "multiPrinting": false,
-      "note": "Planning classification; every additional clause must work before enabling the card.",
-      "printings": [
-        {
-          "id": "DRG_034",
-          "text": "[x]<b>Battlecry:</b> If there are cards\nin your deck that didn't start\nthere, draw 2 of them.",
-          "normalizedText": "Battlecry: If there are cards in your deck that didn't start there, draw 2 of them.",
           "mechanics": [
             "BATTLECRY"
           ]

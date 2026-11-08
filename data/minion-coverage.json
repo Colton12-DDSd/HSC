@@ -2,17 +2,17 @@
   "summary": {
     "collectionRecords": 6470,
     "battlecryRecords": 2011,
-    "supportedBattlecryRecords": 1167,
+    "supportedBattlecryRecords": 1174,
     "battlecryNames": 1895,
-    "supportedBattlecryNames": 1090,
-    "additionalBattlecryNames": 1054,
-    "remainingBattlecryNames": 805,
-    "supportedCollectionRecords": 2062,
+    "supportedBattlecryNames": 1096,
+    "additionalBattlecryNames": 1060,
+    "remainingBattlecryNames": 799,
+    "supportedCollectionRecords": 2070,
     "triggerRecords": 2521,
-    "supportedTriggerRecords": 1333,
+    "supportedTriggerRecords": 1340,
     "triggerNames": 2381,
-    "fullySupportedTriggerNames": 1245,
-    "remainingTriggerRecords": 1188
+    "fullySupportedTriggerNames": 1251,
+    "remainingTriggerRecords": 1181
   },
   "minions": [
     {
@@ -1189,8 +1189,8 @@
         {
           "id": "GDB_128",
           "text": "[x]<b>Battlecry:</b> Summon every\nDemon you played this\ngame that didn't start\nin your deck.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -7731,8 +7731,8 @@
         {
           "id": "EDR_256",
           "text": "[x]<b>Taunt</b>. <b>Battlecry:</b> If there\nis a card in your deck that\ndidn't start there, draw it\nand gain +2/+2.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -19456,8 +19456,8 @@
         {
           "id": "TRL_259",
           "text": "<b>Battlecry:</b> Summon all minions from your hand that didn't start in your deck.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -22415,8 +22415,8 @@
         {
           "id": "TTN_712",
           "text": "<b>Battlecry:</b> If there is a card in your deck that didn't start there, draw it.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -24403,15 +24403,15 @@
         {
           "id": "CORE_REV_946",
           "text": "<b>Battlecry:</b> Destroy ALL cards in both players' decks that didn't start there.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         },
         {
           "id": "REV_946",
           "text": "<b>Battlecry:</b> Destroy ALL cards in both players' decks that didn't start there.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]
@@ -24705,8 +24705,8 @@
         {
           "id": "DRG_034",
           "text": "[x]<b>Battlecry:</b> If there are cards\nin your deck that didn't start\nthere, draw 2 of them.",
-          "supported": false,
-          "battlecry": false,
+          "supported": true,
+          "battlecry": true,
           "deathrattle": null
         }
       ]

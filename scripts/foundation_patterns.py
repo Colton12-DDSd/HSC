@@ -5,6 +5,18 @@ from mirror_patterns import compile_mirrors
 from memory_patterns import compile_memory
 
 def compile_foundation(t, compile, target, filt, num, keywords, refs, card, choose):
+    origins={
+        "If there is a card in your deck that didn't start there, draw it":('draw-added',1),
+        "If there is a card in your deck that didn't start there, draw it and gain +2/+2":('draw-buff',1),
+        "If there are cards in your deck that didn't start there, draw 2 of them":('draw-added',2),
+        "Destroy ALL cards in both players' decks that didn't start there":('clean-decks',1),
+        "Summon all minions from your hand that didn't start in your deck":('recruit-added',1),
+        "Summon every Demon you played this game that didn't start in your deck":('played-demons',1),
+        "Draw a spell that started in your deck and one that didn't":('spell-pair',1),
+    }
+    if t in origins:
+        mode,n=origins[t]
+        return [dict(op='starting-origin',mode=mode,amount=n)]
     dream=['DREAM_01','DREAM_02','DREAM_03','DREAM_04','DREAM_05']
     if t=='Get a random Dream card':return [dict(op='generate',amount=1,pool=dream)]
     if t=='Add one of each Dream card to your hand':return [dict(op='generate-token',token=k,amount=1) for k in dream]

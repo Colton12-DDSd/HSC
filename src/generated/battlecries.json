@@ -4321,6 +4321,16 @@
       }
     ]
   },
+  "CORE_REV_946": {
+    "text": "<b>Battlecry:</b> Destroy ALL cards in both players' decks that didn't start there.",
+    "steps": [
+      {
+        "op": "starting-origin",
+        "mode": "clean-decks",
+        "amount": 1
+      }
+    ]
+  },
   "CORE_RLK_062": {
     "text": "[x]<b>Taunt</b>\n<b>Battlecry:</b> Summon two\ncopies of this minion.",
     "steps": [
@@ -5994,6 +6004,16 @@
       }
     ]
   },
+  "DRG_034": {
+    "text": "[x]<b>Battlecry:</b> If there are cards\nin your deck that didn't start\nthere, draw 2 of them.",
+    "steps": [
+      {
+        "op": "starting-origin",
+        "mode": "draw-added",
+        "amount": 2
+      }
+    ]
+  },
   "DRG_035": {
     "text": "<b>Battlecry:</b> Add two 1/1 Pirates to your hand.",
     "steps": [
@@ -6635,6 +6655,16 @@
         },
         "amount": 7,
         "distinct": true
+      }
+    ]
+  },
+  "EDR_256": {
+    "text": "[x]<b>Taunt</b>. <b>Battlecry:</b> If there\nis a card in your deck that\ndidn't start there, draw it\nand gain +2/+2.",
+    "steps": [
+      {
+        "op": "starting-origin",
+        "mode": "draw-buff",
+        "amount": 1
       }
     ]
   },
@@ -7970,6 +8000,16 @@
         "op": "silence",
         "scope": "friendly",
         "other": true
+      }
+    ]
+  },
+  "GDB_128": {
+    "text": "[x]<b>Battlecry:</b> Summon every\nDemon you played this\ngame that didn't start\nin your deck.",
+    "steps": [
+      {
+        "op": "starting-origin",
+        "mode": "played-demons",
+        "amount": 1
       }
     ]
   },
@@ -12238,6 +12278,16 @@
       }
     ]
   },
+  "REV_946": {
+    "text": "<b>Battlecry:</b> Destroy ALL cards in both players' decks that didn't start there.",
+    "steps": [
+      {
+        "op": "starting-origin",
+        "mode": "clean-decks",
+        "amount": 1
+      }
+    ]
+  },
   "REV_947": {
     "text": "<b>Taunt</b>\n<b>Battlecry:</b> <b>Discover</b> a Paladin card.",
     "steps": [
@@ -14431,6 +14481,16 @@
       }
     ]
   },
+  "TRL_259": {
+    "text": "<b>Battlecry:</b> Summon all minions from your hand that didn't start in your deck.",
+    "steps": [
+      {
+        "op": "starting-origin",
+        "mode": "recruit-added",
+        "amount": 1
+      }
+    ]
+  },
   "TRL_260": {
     "text": "[x]<b>Battlecry:</b> Draw 1-Cost\nminions from your deck\nuntil your hand is full.",
     "steps": [
@@ -15576,6 +15636,16 @@
           "count": "spell-schools-played",
           "offset": 1
         }
+      }
+    ]
+  },
+  "TTN_712": {
+    "text": "<b>Battlecry:</b> If there is a card in your deck that didn't start there, draw it.",
+    "steps": [
+      {
+        "op": "starting-origin",
+        "mode": "draw-added",
+        "amount": 1
       }
     ]
   },
